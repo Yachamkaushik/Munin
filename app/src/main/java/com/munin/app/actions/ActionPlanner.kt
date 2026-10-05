@@ -10,7 +10,7 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-enum class ActionKind { CALENDAR, CALL, MAPS, SHARE, WEB }
+enum class ActionKind { CALENDAR, CALL, MAPS, SHARE, WEB, ALARM, TIMER }
 
 /** A fact plus enough context to act on it. Built from an answer card or from the item detail screen. */
 data class ActionSubject(
@@ -34,6 +34,8 @@ sealed interface ActionPayload {
     data class Maps(val query: String) : ActionPayload
     data class Share(val text: String, val subject: String) : ActionPayload
     data class Web(val query: String) : ActionPayload
+    data class Alarm(val hour: Int, val minute: Int) : ActionPayload
+    data class Timer(val seconds: Int) : ActionPayload
 }
 
 /**
@@ -48,6 +50,8 @@ data class ActionPlan(
     val details: List<Pair<String, String>>,
     val notes: List<String>,
     val payload: ActionPayload,
+    /** True when the values were read from an image by OCR; the dialog then says so. */
+    val fromOcr: Boolean = true,
 )
 
 /** Decides which actions a fact offers and what each one will do. [today] and [zone] are injectable for tests. */
@@ -72,13 +76,29 @@ class ActionPlanner(
     fun webSearch(query: String) = ActionPlan(
         ActionKind.WEB, "Search the web", "Search the web?", "Open browser", listOf("Search text" to query),
         listOf("This leaves your phone: your browser sends this text to its search engine. Nothing from your files is sent, only the words above."),
-        ActionPayload.Web(query),
+        ActionPayload.Web(query), fromOcr = false,
     )
+
+    /** "alarm 6:30 am": opens the clock app's own alarm screen with the time filled in; the alarm exists only after you save it there. */
+    fun alarm(c: com.munin.app.commands.QuickCommand.Alarm): ActionPlan {
+        val h12 = if (c.hour % 12 == 0) 12 else c.hour % 12
+        val shown = "%d:%02d %s (%02d:%02d)".format(h12, c.minute, if (c.hour < 12) "AM" else "PM", c.hour, c.minute)
+        return ActionPlan(ActionKind.ALARM, "Set alarm", "Set an alarm for $shown?", "Open clock app", listOf("Alarm time" to shown),
+            listOf("Opens your clock app with this time filled in. The alarm is only set when you save it there."), ActionPayload.Alarm(c.hour, c.minute), fromOcr = false)
+    }
+
+    /** "timer 10 minutes": opens the clock app's timer with the length filled in. */
+    fun timer(c: com.munin.app.commands.QuickCommand.Timer): ActionPlan {
+        val s = c.seconds
+        val shown = listOfNotNull(if (s / 3600 > 0) "${s / 3600} h" else null, if (s % 3600 / 60 > 0) "${s % 3600 / 60} min" else null, if (s % 60 > 0) "${s % 60} s" else null).joinToString(" ")
+        return ActionPlan(ActionKind.TIMER, "Start timer", "Start a timer for $shown?", "Open clock app", listOf("Length" to shown),
+            listOf("Opens your clock app with this length filled in. It starts there."), ActionPayload.Timer(s), fromOcr = false)
+    }
 
     /** Calling a saved contact: opens the dialer with the number filled in; the user still presses call. */
     fun callContact(name: String, number: String) = ActionPlan(
         ActionKind.CALL, "Call", "Call $name?", "Open dialer", listOf("Contact" to name, "Number" to number),
-        listOf("Opens the dialer with this number. You still have to press call."), ActionPayload.Call(number.filter { it.isDigit() || it == '+' }),
+        listOf("Opens the dialer with this number. You still have to press call."), ActionPayload.Call(number.filter { it.isDigit() || it == '+' }), fromOcr = false,
     )
 
     // ---- calendar --------------------------------------------------------------------------------------------------

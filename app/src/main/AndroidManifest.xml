@@ -20,6 +20,8 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- Asked only when the user types a person's name or a family nickname and taps Allow; names stay in memory. -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- Normal permission, granted at install with no prompt: lets Munin hand a time or length to the clock app. Nothing is set without your tap there. -->
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
 
     <queries>

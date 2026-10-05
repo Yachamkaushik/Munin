@@ -370,3 +370,8 @@ Typing a family nickname ("amma", "అమ్మ", "माँ", "mom", "nanna", "
 opens the dialer with the number filled in (you still press call). **READ_CONTACTS is asked only when you type a nickname or "call ..." and tap Allow**, with a line saying what it is for; if you say
 no, Munin says so and does not ask again until the app restarts. Names are held in memory only, never copied into Munin's database. Limits: nickname lists are fixed (no custom nicknames yet);
 only the whole input is matched, so "amma" will not find a contact saved as "Ammamma"; settings shortcuts exist only for screens with a standard Android action (no hotspot).
+
+**Quick commands** (`commands/`): "alarm 6:30 am", "alarm 7", "timer 10 minutes", "1 hour 30 min timer", and Telugu/Hindi words (అలారం, टाइमर, ఉదయం, शाम) show a button; tapping it shows what will happen and
+only its confirm button opens your clock app with the time or length filled in, and the alarm or timer exists only after you save or start it there. A time with no am/pm ("alarm 7") offers both
+7:00 AM and 7:00 PM instead of guessing; a timer needs a unit ("timer 10" is not guessed). Calling is the contacts feature above ("call ravi"). This uses the install-time `SET_ALARM`
+permission (a normal permission: no prompt, and the clock app does the actual setting). Limits: no "tomorrow"/weekday alarms, no alarm labels, number words ("ten minutes") are not read yet, and a clock app must be installed.

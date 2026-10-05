@@ -64,7 +64,7 @@ fun ActionConfirmDialog(plan: ActionPlan, onClose: () -> Unit) {
                     }
                 }
                 for (n in plan.notes) Text(n, style = MaterialTheme.typography.bodySmall)
-                if (plan.kind != ActionKind.WEB) Text("Values are read from the image by OCR.", style = MaterialTheme.typography.labelSmall)
+                if (plan.fromOcr) Text("Values are read from the image by OCR.", style = MaterialTheme.typography.labelSmall)
             }
         },
         confirmButton = {

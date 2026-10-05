@@ -68,6 +68,8 @@ data class SearchUiState(
     /** Saved contacts matching the input (only when the user has allowed contacts). */
     val contacts: List<com.munin.app.contacts.ContactEntry> = emptyList(),
     val settings: List<com.munin.app.shortcuts.SettingsShortcut> = emptyList(),
+    /** Alarm or timer commands read from the input; each needs the user's confirmation before the clock app is opened. */
+    val commands: List<com.munin.app.commands.QuickCommand> = emptyList(),
     val contactsGranted: Boolean = false,
     /** The user said no to the contacts permission this session; Munin will not ask again until the app restarts. */
     val contactsDenied: Boolean = false,
@@ -140,8 +142,9 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
 
     private fun SearchUiState.routed(): SearchUiState {
         val d = QueryRouter.route(query, mode, calculator, allowCalculator = !calcIgnored, apps = muninApp.appIndex.search(query),
-            contacts = muninApp.contactIndex.search(query), settings = com.munin.app.shortcuts.SettingsShortcuts.search(query))
-        return copy(understood = d.understood, calc = d.calc, apps = d.apps, contacts = d.contacts, settings = d.settings, contactsGranted = muninApp.contactIndex.granted())
+            contacts = muninApp.contactIndex.search(query), settings = com.munin.app.shortcuts.SettingsShortcuts.search(query),
+            commands = com.munin.app.commands.CommandParser.parse(query))
+        return copy(understood = d.understood, calc = d.calc, apps = d.apps, contacts = d.contacts, settings = d.settings, commands = d.commands, contactsGranted = muninApp.contactIndex.granted())
     }
 
     fun onQuery(q: String) { _state.update { it.copy(query = q, calcIgnored = false, calcNote = null).routed() }; run(debounce = true) }

@@ -3,6 +3,7 @@ package com.munin.app.actions
 import android.app.SearchManager
 import android.content.Intent
 import android.net.Uri
+import android.provider.AlarmClock
 import android.provider.CalendarContract
 
 /**
@@ -23,6 +24,9 @@ object IntentFactory {
         is ActionPayload.Call -> Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + payload.number))
         is ActionPayload.Maps -> Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + Uri.encode(payload.query)))
         is ActionPayload.Web -> Intent(Intent.ACTION_WEB_SEARCH).putExtra(SearchManager.QUERY, payload.query)
+        // The clock app shows its own screen (EXTRA_SKIP_UI is false), so nothing is set without the user's tap there.
+        is ActionPayload.Alarm -> Intent(AlarmClock.ACTION_SET_ALARM).putExtra(AlarmClock.EXTRA_HOUR, payload.hour).putExtra(AlarmClock.EXTRA_MINUTES, payload.minute).putExtra(AlarmClock.EXTRA_SKIP_UI, false)
+        is ActionPayload.Timer -> Intent(AlarmClock.ACTION_SET_TIMER).putExtra(AlarmClock.EXTRA_LENGTH, payload.seconds).putExtra(AlarmClock.EXTRA_SKIP_UI, false)
         is ActionPayload.Share -> Intent.createChooser(
             Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, payload.text).putExtra(Intent.EXTRA_SUBJECT, payload.subject),
             null,

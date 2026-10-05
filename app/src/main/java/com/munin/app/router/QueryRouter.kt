@@ -2,6 +2,7 @@ package com.munin.app.router
 
 import com.munin.app.answer.QuestionParser
 import com.munin.app.apps.AppMatch
+import com.munin.app.commands.QuickCommand
 import com.munin.app.contacts.ContactEntry
 import com.munin.app.shortcuts.SettingsShortcut
 import com.munin.app.calc.CalcOutcome
@@ -17,6 +18,8 @@ import com.munin.app.search.SearchMode
 enum class RouteKind {
     /** The input names an installed app: offered above the file results, launched on tap. */
     APP,
+    /** The input is an alarm or timer command: shown as a button that asks first. */
+    COMMAND,
     /** The input is a saved contact's name or a family nickname (amma, nanna): shown with a confirm-first call. */
     CONTACT,
     /** The input names a system settings screen (wifi, bluetooth): one tap opens it. */
@@ -32,7 +35,7 @@ enum class RouteKind {
 }
 
 /** The router's reading of one input. [understood] is shown under the search box in plain words. */
-data class RouteDecision(val kinds: List<RouteKind>, val understood: String?, val calc: CalcOutcome? = null, val apps: List<AppMatch> = emptyList(), val contacts: List<ContactEntry> = emptyList(), val settings: List<SettingsShortcut> = emptyList()) {
+data class RouteDecision(val kinds: List<RouteKind>, val understood: String?, val calc: CalcOutcome? = null, val apps: List<AppMatch> = emptyList(), val contacts: List<ContactEntry> = emptyList(), val settings: List<SettingsShortcut> = emptyList(), val commands: List<QuickCommand> = emptyList()) {
     fun has(kind: RouteKind) = kind in kinds
 }
 
@@ -41,7 +44,7 @@ object QueryRouter {
      * [calculator] is asked first: a calculation is not searched for in files. [allowCalculator] is false when the user chose "search my files
      * for this instead", so a query like "2026-45" can still be searched.
      */
-    fun route(input: String, mode: SearchMode = SearchMode.MERGED, calculator: Calculator? = Calculator(), allowCalculator: Boolean = true, apps: List<AppMatch> = emptyList(), contacts: List<ContactEntry> = emptyList(), settings: List<SettingsShortcut> = emptyList()): RouteDecision {
+    fun route(input: String, mode: SearchMode = SearchMode.MERGED, calculator: Calculator? = Calculator(), allowCalculator: Boolean = true, apps: List<AppMatch> = emptyList(), contacts: List<ContactEntry> = emptyList(), settings: List<SettingsShortcut> = emptyList(), commands: List<QuickCommand> = emptyList()): RouteDecision {
         val q = input.trim()
         if (q.isEmpty()) return RouteDecision(emptyList(), null)
 
@@ -79,19 +82,25 @@ object QueryRouter {
             SearchMode.MEANING -> "by meaning only"
             SearchMode.KEYWORDS -> "by exact words only"
         }
-        if (apps.isNotEmpty() || contacts.isNotEmpty() || settings.isNotEmpty()) {
+        if (commands.isNotEmpty() || apps.isNotEmpty() || contacts.isNotEmpty() || settings.isNotEmpty()) {
             val kinds = buildList {
+                if (commands.isNotEmpty()) add(RouteKind.COMMAND)
                 if (settings.isNotEmpty()) add(RouteKind.SETTINGS)
                 if (contacts.isNotEmpty()) add(RouteKind.CONTACT)
                 if (apps.isNotEmpty()) add(RouteKind.APP)
                 add(RouteKind.FILE_SEARCH)
+            }
+            if (commands.isNotEmpty() && contacts.isEmpty() && settings.isEmpty() && apps.isEmpty()) {
+                val c = commands.first()
+                val said = when (c) { is QuickCommand.Alarm -> "an alarm"; is QuickCommand.Timer -> "a timer" }
+                return RouteDecision(kinds, "Reads this as a request to set $said. Nothing is set until you confirm.", commands = commands)
             }
             val what = buildList {
                 if (settings.isNotEmpty()) add("the settings screen “${settings.first().label}”")
                 if (contacts.isNotEmpty()) add("the contact “${contacts.first().name}”")
                 if (apps.isNotEmpty()) add("the app “${apps.first().app.label}”")
             }.joinToString(" or ")
-            return RouteDecision(kinds, "Matches $what. Also looking in your files for “$q”, $how.", apps = apps, contacts = contacts, settings = settings)
+            return RouteDecision(kinds, "Matches $what. Also looking in your files for “$q”, $how.", apps = apps, contacts = contacts, settings = settings, commands = commands)
         }
         return RouteDecision(listOf(RouteKind.FILE_SEARCH), "Looking in your files for “$q”, $how.")
     }

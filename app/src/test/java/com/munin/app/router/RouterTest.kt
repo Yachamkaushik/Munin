@@ -50,7 +50,7 @@ class QueryRouterTest {
     }
 
     @Test fun neverClaimsAKindThatIsNotBuilt() { // later steps add kinds; today these are the only ones
-        assertEquals(setOf("APP", "CONTACT", "SETTINGS", "CALCULATOR", "FILE_SEARCH", "QUESTION", "SPENDING"), RouteKind.entries.map { it.name }.toSet())
+        assertEquals(setOf("APP", "COMMAND", "CONTACT", "SETTINGS", "CALCULATOR", "FILE_SEARCH", "QUESTION", "SPENDING"), RouteKind.entries.map { it.name }.toSet())
     }
 }
 

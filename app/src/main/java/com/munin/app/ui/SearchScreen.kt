@@ -93,6 +93,10 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
             Text("Search by what the text says, not by file name.", style = MaterialTheme.typography.bodyMedium)
         } else {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                if (ui.commands.isNotEmpty()) {
+                    item { GroupHeader("Quick command") }
+                    items(ui.commands) { c -> CommandRow(c) }
+                }
                 if (ui.settings.isNotEmpty()) {
                     item { GroupHeader("Settings") }
                     items(ui.settings, key = { it.action }) { s -> ShortcutRow(s.label, "Open this settings screen") { if (!vm.openSettings(s)) android.widget.Toast.makeText(context, "This phone has no ${s.label} screen to open.", android.widget.Toast.LENGTH_SHORT).show() } }
@@ -191,6 +195,16 @@ private fun AppRow(app: com.munin.app.apps.AppEntry, onOpen: (com.munin.app.apps
             Text("Open this app", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
+}
+
+/** An alarm or timer. Tapping asks first; only the dialog's confirm button opens the clock app, and the clock app still waits for your save. */
+@Composable
+private fun CommandRow(c: com.munin.app.commands.QuickCommand) {
+    var plan by remember { mutableStateOf<ActionPlan?>(null) }
+    val planner = remember { ActionPlanner() }
+    val p = when (c) { is com.munin.app.commands.QuickCommand.Alarm -> planner.alarm(c); is com.munin.app.commands.QuickCommand.Timer -> planner.timer(c) }
+    ShortcutRow(p.dialogTitle.removeSuffix("?"), "Tap to review, then it opens in your clock app") { plan = p }
+    plan?.let { ActionConfirmDialog(it) { plan = null } }
 }
 
 @Composable
