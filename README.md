@@ -359,3 +359,8 @@ use Indian digit grouping and add "= 25 lakh". **Currency only works with a rate
 cannot look rates up; every result shows how old your rate is. An ordinary search is never hijacked: the whole input must be a calculation, and digits joined only by hyphens
 or slashes ("040-23456789", "12-09") are left alone (write "100 - 20" with spaces to calculate). "Search my files instead" is one tap away.
 Limits: Hindi/Telugu number words cover common spellings only; unit names are Latin; "of" needs a percentage on its left; no equation solving.
+
+**App search** (`apps/`): short inputs that sound like an installed app's name show an **Apps** group above the files; tap to open the app. Matching is fuzzy and
+works across scripts ("whatsap", "వాట్సాప్", "जीमेल" all find the right app) through a small phonetic key and a typo-tolerant distance. The list of apps comes from the
+system's launcher list; Munin declares a narrow `<queries>` entry for that rather than the broad all-apps permission, so no permission prompt appears and nothing leaves the phone.
+Limits: only apps with a launcher icon; inputs of more than three words are never treated as app names; romanised-Telugu/Hindi spellings are covered only where they sound like the app's label.

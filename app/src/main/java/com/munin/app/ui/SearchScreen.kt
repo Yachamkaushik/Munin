@@ -5,6 +5,10 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.core.content.ContextCompat
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -59,7 +63,9 @@ import com.munin.app.search.WhyThis
 @Composable
 fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?) -> Unit, vm: SearchViewModel = viewModel(), indexVersion: Int = 0) {
     val ui by vm.state.collectAsState()
+    val context = LocalContext.current
     LaunchedEffect(indexVersion) { vm.refresh() }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { vm.refreshApps() } // apps may have been installed or removed while away
 
     Column(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text("Munin", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(top = 24.dp))
@@ -87,6 +93,10 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
             Text("Search by what the text says, not by file name.", style = MaterialTheme.typography.bodyMedium)
         } else {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                if (ui.apps.isNotEmpty()) {
+                    item { GroupHeader("Apps") }
+                    items(ui.apps, key = { it.app.component }) { AppRow(it.app) { app -> if (!vm.openApp(app)) android.widget.Toast.makeText(context, "Could not open ${app.label}.", android.widget.Toast.LENGTH_SHORT).show() } }
+                }
                 val calc = ui.calc
                 when {
                     calc != null -> {
@@ -147,6 +157,28 @@ private fun CalculatorCard(c: CalcOutcome, onSaveRate: () -> Unit) {
                     Button(onClick = onSaveRate) { Text("Save this rate") }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun AppRow(app: com.munin.app.apps.AppEntry, onOpen: (com.munin.app.apps.AppEntry) -> Unit) {
+    val context = LocalContext.current
+    val icon by androidx.compose.runtime.produceState<androidx.compose.ui.graphics.ImageBitmap?>(null, app.packageName) {
+        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            runCatching {
+                val d = context.packageManager.getApplicationIcon(app.packageName)
+                val bmp = android.graphics.Bitmap.createBitmap(96, 96, android.graphics.Bitmap.Config.ARGB_8888)
+                d.setBounds(0, 0, 96, 96); d.draw(android.graphics.Canvas(bmp))
+                bmp.asImageBitmap()
+            }.getOrNull()
+        }
+    }
+    Row(Modifier.fillMaxWidth().clickable { onOpen(app) }, horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+        androidx.compose.foundation.layout.Box(Modifier.size(48.dp)) { icon?.let { androidx.compose.foundation.Image(it, null, Modifier.fillMaxSize()) } }
+        Column(Modifier.weight(1f)) {
+            Text(app.label, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
+            Text("Open this app", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }

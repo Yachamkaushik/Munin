@@ -1,6 +1,7 @@
 package com.munin.app.router
 
 import com.munin.app.answer.QuestionParser
+import com.munin.app.apps.AppMatch
 import com.munin.app.calc.CalcOutcome
 import com.munin.app.calc.Calculator
 import com.munin.app.extract.FactType
@@ -12,6 +13,8 @@ import com.munin.app.search.SearchMode
  * contacts, settings, commands) adds its own kind when it is built, so the "what I understood" line never claims something Munin cannot do.
  */
 enum class RouteKind {
+    /** The input names an installed app: offered above the file results, launched on tap. */
+    APP,
     /** Arithmetic, a unit conversion, date maths or a currency conversion with the user's own rate: worked out on the phone, no file search. */
     CALCULATOR,
     /** Look for files whose text matches or is close in meaning to the input. Always applies to non-blank input. */
@@ -23,7 +26,7 @@ enum class RouteKind {
 }
 
 /** The router's reading of one input. [understood] is shown under the search box in plain words. */
-data class RouteDecision(val kinds: List<RouteKind>, val understood: String?, val calc: CalcOutcome? = null) {
+data class RouteDecision(val kinds: List<RouteKind>, val understood: String?, val calc: CalcOutcome? = null, val apps: List<AppMatch> = emptyList()) {
     fun has(kind: RouteKind) = kind in kinds
 }
 
@@ -32,7 +35,7 @@ object QueryRouter {
      * [calculator] is asked first: a calculation is not searched for in files. [allowCalculator] is false when the user chose "search my files
      * for this instead", so a query like "2026-45" can still be searched.
      */
-    fun route(input: String, mode: SearchMode = SearchMode.MERGED, calculator: Calculator? = Calculator(), allowCalculator: Boolean = true): RouteDecision {
+    fun route(input: String, mode: SearchMode = SearchMode.MERGED, calculator: Calculator? = Calculator(), allowCalculator: Boolean = true, apps: List<AppMatch> = emptyList()): RouteDecision {
         val q = input.trim()
         if (q.isEmpty()) return RouteDecision(emptyList(), null)
 
@@ -69,6 +72,10 @@ object QueryRouter {
             SearchMode.MERGED -> "by words and by meaning"
             SearchMode.MEANING -> "by meaning only"
             SearchMode.KEYWORDS -> "by exact words only"
+        }
+        if (apps.isNotEmpty()) {
+            val names = apps.take(2).joinToString(" or ") { "“${it.app.label}”" } + if (apps.size > 2) " and ${apps.size - 2} more" else ""
+            return RouteDecision(listOf(RouteKind.APP, RouteKind.FILE_SEARCH), "Matches the app $names. Also looking in your files for “$q”, $how.", apps = apps)
         }
         return RouteDecision(listOf(RouteKind.FILE_SEARCH), "Looking in your files for “$q”, $how.")
     }

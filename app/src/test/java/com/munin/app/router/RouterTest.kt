@@ -50,7 +50,21 @@ class QueryRouterTest {
     }
 
     @Test fun neverClaimsAKindThatIsNotBuilt() { // later steps add kinds; today these are the only ones
-        assertEquals(setOf("CALCULATOR", "FILE_SEARCH", "QUESTION", "SPENDING"), RouteKind.entries.map { it.name }.toSet())
+        assertEquals(setOf("APP", "CALCULATOR", "FILE_SEARCH", "QUESTION", "SPENDING"), RouteKind.entries.map { it.name }.toSet())
+    }
+}
+
+class RouterAppTest {
+    private val chrome = com.munin.app.apps.AppMatch(com.munin.app.apps.AppEntry("Chrome", "com.android.chrome", "a/b"), 1.0)
+
+    @Test fun anAppMatchIsOfferedAlongsideTheFileSearch() {
+        val d = QueryRouter.route("chrome", apps = listOf(chrome))
+        assertEquals(listOf(RouteKind.APP, RouteKind.FILE_SEARCH), d.kinds)
+        assertTrue(d.understood!!.contains("Chrome"))
+    }
+
+    @Test fun noAppMatchLeavesRoutingUnchanged() {
+        assertEquals(listOf(RouteKind.FILE_SEARCH), QueryRouter.route("hostel fee").kinds)
     }
 }
 

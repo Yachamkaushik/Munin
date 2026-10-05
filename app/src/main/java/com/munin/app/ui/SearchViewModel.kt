@@ -63,6 +63,8 @@ data class SearchUiState(
     /** The user chose to search files for an input that also parses as a calculation. */
     val calcIgnored: Boolean = false,
     val calcNote: String? = null,
+    /** Installed apps whose names match the input, offered above the file results. */
+    val apps: List<com.munin.app.apps.AppMatch> = emptyList(),
     val error: String? = null,
     val showDebug: Boolean = true,
     val voice: VoiceState = VoiceState.Idle,
@@ -91,6 +93,7 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
     init {
         viewModelScope.launch { voice.state.collect { v -> _state.update { it.copy(voice = v) } } }
         refreshVoiceSupport()
+        refreshApps()
         // Loading the model takes seconds the first time; do it now so the first search is not the slow one.
         viewModelScope.launch(Dispatchers.Default) {
             runCatching { muninApp.embedder }
@@ -100,6 +103,12 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
         }
         viewModelScope.launch(Dispatchers.IO) { muninApp.database.backfillFacts() }
     }
+
+    /** Reads the installed apps off the main thread, then re-reads the current input against them. */
+    fun refreshApps() { viewModelScope.launch(Dispatchers.IO) { muninApp.appIndex.refresh(); _state.update { it.routed() } } }
+
+    /** Opens an app the user tapped. */
+    fun openApp(app: com.munin.app.apps.AppEntry): Boolean = muninApp.appIndex.launch(app)
 
     fun startVoice() = voice.start(_state.value.voiceLang)
     fun stopVoice() = voice.stop()
@@ -114,8 +123,8 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
     private val calculator by lazy { Calculator(rates = PrefsRateBook(muninApp)) }
 
     private fun SearchUiState.routed(): SearchUiState {
-        val d = QueryRouter.route(query, mode, calculator, allowCalculator = !calcIgnored)
-        return copy(understood = d.understood, calc = d.calc)
+        val d = QueryRouter.route(query, mode, calculator, allowCalculator = !calcIgnored, apps = muninApp.appIndex.search(query))
+        return copy(understood = d.understood, calc = d.calc, apps = d.apps)
     }
 
     fun onQuery(q: String) { _state.update { it.copy(query = q, calcIgnored = false, calcNote = null).routed() }; run(debounce = true) }
