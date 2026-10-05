@@ -392,4 +392,10 @@ the OCR text can contain mistakes (the card says so). Tested with adb intents; t
 and, only on confirm, opens your calendar app pre-filled (you save it there; Munin has no calendar permission); *Not now* hides it for good. Copies of one document with the same date and label count once.
 It is a read-only query over existing data (no schema change). Limits: dates without a year are skipped; the label must look like a deadline, so a bare "Date" is never suggested; it is an event, not a timed
 alarm (your calendar's default reminder applies); OCR can misread a date, which the card and dialog say.
+
+**Background setup** (`setup/`, **Background setup** link under the instant-indexing switch on the Index tab): a screen of links to the phone's own settings so the system is allowed to wake Munin. Everywhere it offers
+the battery-optimisation list (with the one thing Munin can read, whether it is currently restricted) and Munin's app info page. On a vivo or iQOO phone (detected from the manufacturer or brand) it also offers
+the Funtouch OS **auto-start** and **background power** screens and a tip about locking Munin in the recent-apps view. Munin cannot change or read those settings; it says so. **The Funtouch screens use component names other apps
+are known to use and have not been verified on a real iQOO by Munin's author.** Each button tries its candidates in turn and, if none exists, opens Munin's app info page and says so (checked on the emulator with a
+non-existent screen, which falls back correctly). It adds no permission, in particular not the restricted "ignore battery optimisations" permission, which Play policy limits.
 force-stop from Settings cancels all scheduled work until Munin is next opened; it indexes every new image, not only screenshots; the Android 12+ rules mean the progress notification may not show for a wake-up run.

@@ -34,7 +34,7 @@ import com.munin.app.index.MediaAccess
 import com.munin.app.index.MediaAccessState
 
 @Composable
-fun IndexScreen(vm: IndexViewModel = viewModel()) {
+fun IndexScreen(vm: IndexViewModel = viewModel(), onOpenSetup: () -> Unit = {}) {
     val ui by vm.state.collectAsState()
 
     val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
@@ -60,7 +60,7 @@ fun IndexScreen(vm: IndexViewModel = viewModel()) {
         }
         item { AccessCard(ui.access, onGrant = ::requestAccess) }
         item { ProgressCard(ui, onStart = { if (ui.access == MediaAccessState.NONE) requestAccess() else vm.startIndexing() }, onClear = vm::clearIndex) }
-        item { AutoCard(ui.autoOn, enabled = ui.access != MediaAccessState.NONE, onChange = vm::setAuto) }
+        item { AutoCard(ui.autoOn, enabled = ui.access != MediaAccessState.NONE, onChange = vm::setAuto, onOpenSetup = onOpenSetup) }
         item { TeluguCard(ui.teluguOn, vm::setTelugu) }
         item {
             Text(
@@ -75,7 +75,7 @@ fun IndexScreen(vm: IndexViewModel = viewModel()) {
 }
 
 @Composable
-private fun AutoCard(on: Boolean, enabled: Boolean, onChange: (Boolean) -> Unit) {
+private fun AutoCard(on: Boolean, enabled: Boolean, onChange: (Boolean) -> Unit, onOpenSetup: () -> Unit) {
     Card(Modifier.fillMaxWidth()) {
         Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -86,6 +86,7 @@ private fun AutoCard(on: Boolean, enabled: Boolean, onChange: (Boolean) -> Unit)
                     else "Allow photo access first.",
                     style = MaterialTheme.typography.bodySmall,
                 )
+                if (enabled) androidx.compose.material3.TextButton(onClick = onOpenSetup) { Text("Background setup: help it run on time") }
             }
             androidx.compose.material3.Switch(checked = on, onCheckedChange = onChange, enabled = enabled)
         }

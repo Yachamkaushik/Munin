@@ -26,6 +26,7 @@ import com.munin.app.ui.IndexScreen
 import com.munin.app.ui.ItemDetailScreen
 import com.munin.app.ui.LedgerScreen
 import com.munin.app.ui.SearchScreen
+import com.munin.app.ui.SetupScreen
 
 class MainActivity : ComponentActivity() {
     /** What another app handed us (selected text, shared text or image); null once the search screen has taken it. */
@@ -55,13 +56,14 @@ class MainActivity : ComponentActivity() {
                     var indexVersion by rememberSaveable { mutableIntStateOf(0) }
                     var ledgerMonth by remember { mutableStateOf<java.time.YearMonth?>(null) }
                     var detailId by rememberSaveable { mutableStateOf<Long?>(null) }
+                    var showSetup by rememberSaveable { mutableStateOf(false) }
                     // Something arrived from another app: show the search tab, where the search screen picks it up.
                     LaunchedEffect(incoming) { if (incoming != null) { tab = 0; detailId = null } }
-                    BackHandler(enabled = detailId != null) { detailId = null }
+                    BackHandler(enabled = detailId != null || showSetup) { if (showSetup) showSetup = false else detailId = null }
                     Scaffold(bottomBar = {
                         NavigationBar {
                             NavigationBarItem(selected = tab == 0, onClick = { tab = 0; indexVersion++ }, icon = {}, label = { Text("Search") })
-                            NavigationBarItem(selected = tab == 1, onClick = { tab = 1 }, icon = {}, label = { Text("Index") })
+                            NavigationBarItem(selected = tab == 1, onClick = { tab = 1; showSetup = false }, icon = {}, label = { Text("Index") })
                             NavigationBarItem(selected = tab == 2, onClick = { tab = 2 }, icon = {}, label = { Text("Ledger") })
                         }
                     }) { padding ->
@@ -71,7 +73,8 @@ class MainActivity : ComponentActivity() {
                                 open != null -> ItemDetailScreen(open, onBack = { detailId = null })
                                 tab == 0 -> SearchScreen(onOpenItem = { detailId = it }, onOpenLedger = { ledgerMonth = it; tab = 2 }, indexVersion = indexVersion, incoming = incoming, onIncomingTaken = { incoming = null })
                                 tab == 2 -> LedgerScreen(initialMonth = ledgerMonth, onOpenItem = { detailId = it })
-                                else -> IndexScreen()
+                                showSetup && tab == 1 -> SetupScreen(onBack = { showSetup = false })
+                                else -> IndexScreen(onOpenSetup = { showSetup = true })
                             }
                         }
                     }
