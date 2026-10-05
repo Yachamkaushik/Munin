@@ -6,6 +6,11 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import com.munin.app.ui.theme.Stat
+import com.munin.app.ui.theme.ShortcutTile
+import com.munin.app.ui.theme.EnterOnce
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -99,7 +104,7 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
     LazyColumn(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
         item {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                LargeTitle("Munin", "Find anything you saved, in any language")
+                LargeTitle("Munin", "Find anything you saved, in any language", mark = true)
                 SearchField(
                     value = ui.query, onValueChange = vm::onQuery, placeholder = "Describe what you are looking for",
                     modifier = Modifier.focusRequester(searchFocus), trailing = { MicButton(ui, vm) },
@@ -166,7 +171,7 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
                 if (r.results.isEmpty()) item { Footnote("No matches for “${r.query}” in your files.") }
                 else item {
                     Section("Files (${r.results.size})") {
-                        r.results.forEachIndexed { i, res -> if (i > 0) GroupDivider(84.dp); ResultRow(res, ui.showDebug, onOpenItem) }
+                        r.results.forEachIndexed { i, res -> if (i > 0) GroupDivider(92.dp); ResultRow(res, ui.showDebug, onOpenItem) }
                     }
                 }
             }
@@ -178,15 +183,44 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
     }
 }
 
-/** What shows before anything is typed: how to use it, voice language, and the technical-details switch. */
+/** What shows before anything is typed: a library summary, colourful one-tap shortcuts, voice language, and the technical-details switch. */
 @Composable
 private fun HomeSections(ui: SearchUiState, vm: SearchViewModel) {
+    val c = Munin.colors
     Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
-        Section("Try", footer = "Munin reads text in your screenshots and photos on this phone, so you can search by what it says, not by file name.") {
-            for ((i, e) in listOf("hostel fee receipt", "when is the electricity bill due", "how much did I spend in September", "wifi", "alarm 6:30 am").withIndex()) {
-                if (i > 0) GroupDivider(16.dp)
-                ListRow(e, leading = { Icon(IosIcons.Search, Munin.colors.tertiaryLabel, 16.dp) }, onClick = { vm.onQuery(e) })
+        EnterOnce(0) {
+            IosCard {
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Stat("${ui.indexedDocs}", "indexed", c.tint, Modifier.weight(1f))
+                    Box(Modifier.size(width = 0.5.dp, height = 32.dp).background(c.separator))
+                    Stat("${ui.reminders.size}", "coming up", c.orange, Modifier.weight(1f))
+                }
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally), verticalAlignment = Alignment.CenterVertically) {
+                    Icon(IosIcons.Lock, c.secondaryLabel, 13.dp)
+                    Text("Typed searches stay on this phone", style = MaterialTheme.typography.bodySmall, color = c.secondaryLabel)
+                }
             }
+        }
+        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Text("TRY", Modifier.padding(start = 16.dp), style = MaterialTheme.typography.bodySmall, color = c.secondaryLabel)
+            val tiles = listOf(
+                Triple("Receipts", "hostel fee receipt", IosIcons.Receipt) to (c.tint to c.indigo),
+                Triple("Bills due", "when is the electricity bill due", IosIcons.Calendar) to (c.orange to c.pink),
+                Triple("Spending", "how much did I spend", IosIcons.Ledger) to (c.green to c.teal),
+                Triple("Calculator", "20% of 4500", IosIcons.Calculator) to (c.purple to c.indigo),
+                Triple("Wi-Fi", "wifi", IosIcons.Globe) to (c.teal to c.tint),
+                Triple("Alarm", "alarm 6:30 am", IosIcons.Clock) to (c.pink to c.orange),
+            )
+            tiles.chunked(2).forEachIndexed { row, pair ->
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    pair.forEachIndexed { col, (t, colors) ->
+                        EnterOnce(80 + (row * 2 + col) * 70, Modifier.weight(1f)) {
+                            ShortcutTile(t.first, t.second, t.third, colors.first, colors.second, onClick = { vm.onQuery(t.second) }, modifier = Modifier.fillMaxWidth())
+                        }
+                    }
+                }
+            }
+            Footnote("Munin reads text in your screenshots and photos on this phone, so you can search by what it says, not by file name.", Modifier.padding(horizontal = 16.dp))
         }
         Section("Voice", footer = ui.voiceSupport?.let { PackStatuses.explain(it, ui.voiceLang) } ?: "Checking what voice input this phone supports…") {
             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -195,7 +229,7 @@ private fun HomeSections(ui: SearchUiState, vm: SearchViewModel) {
         }
         Footnote("Typed searches never leave the phone. Pick the language you will speak; mixed-language speech may be heard imperfectly, and you can edit the text before searching again.", Modifier.padding(horizontal = 16.dp))
         Section {
-            ListRow("Technical details", subtitle = "Timings and ranks under results", trailing = { IosSwitch(ui.showDebug, vm::onDebug) })
+            ListRow("Technical details", subtitle = "Timings and ranks under results", leading = { IconTile(IosIcons.Gear, c.secondaryLabel) }, trailing = { IosSwitch(ui.showDebug, vm::onDebug) })
         }
     }
 }
@@ -443,10 +477,10 @@ private fun ResultRow(r: SearchResult, debug: Boolean, onOpen: (Long) -> Unit) {
         Modifier.fillMaxWidth().pressable(onClick = { onOpen(r.itemId) }).padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Thumbnail(r.uri, 56, Modifier.clip(RoundedCornerShape(10.dp)))
+        Thumbnail(r.uri, 64, Modifier.clip(RoundedCornerShape(12.dp)).border(0.5.dp, Munin.colors.separator, RoundedCornerShape(12.dp)))
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(r.displayName, style = MaterialTheme.typography.bodySmall, color = Munin.colors.secondaryLabel, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            Text(highlighted(r.snippet), style = MaterialTheme.typography.bodyLarge, color = Munin.colors.label, maxLines = 3, overflow = TextOverflow.Ellipsis)
+            Text(highlighted(r.snippet, Munin.colors.tint.copy(alpha = 0.18f)), style = MaterialTheme.typography.bodyLarge, color = Munin.colors.label, maxLines = 3, overflow = TextOverflow.Ellipsis)
             Text(WhyThis.explain(r), style = MaterialTheme.typography.bodySmall, color = Munin.colors.tertiaryLabel)
             if (debug) {
                 val meaning = r.meaningRank?.let { "meaning #$it (%.2f)".format(r.meaningScore) } ?: "meaning –"
@@ -457,11 +491,11 @@ private fun ResultRow(r: SearchResult, debug: Boolean, onOpen: (Long) -> Unit) {
     }
 }
 
-private fun highlighted(s: Snippet): AnnotatedString = buildAnnotatedString {
+private fun highlighted(s: Snippet, mark: androidx.compose.ui.graphics.Color): AnnotatedString = buildAnnotatedString {
     var at = 0
     for (h in s.highlights) {
         if (h.first > at) append(s.text.substring(at, h.first))
-        withStyle(SpanStyle(fontWeight = FontWeight.Bold)) { append(s.text.substring(h.first, h.last + 1)) }
+        withStyle(SpanStyle(fontWeight = FontWeight.Bold, background = mark)) { append(s.text.substring(h.first, h.last + 1)) }
         at = h.last + 1
     }
     if (at < s.text.length) append(s.text.substring(at))

@@ -21,6 +21,15 @@ import androidx.compose.runtime.LaunchedEffect
 import com.munin.app.incoming.Incoming
 import com.munin.app.incoming.IncomingParser
 import androidx.activity.enableEdgeToEdge
+import com.munin.app.ui.theme.HeroBackground
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -96,6 +105,7 @@ class MainActivity : ComponentActivity() {
                     },
                 ) { padding ->
                     Box(Modifier.fillMaxSize()) {
+                      HeroBackground()
                       Box(Modifier.fillMaxSize().padding(padding)) {
                         val open = detailId
                         when {
@@ -107,7 +117,7 @@ class MainActivity : ComponentActivity() {
                         }
                       }
                       // A soft cover behind the status bar so scrolled content does not run under the clock and icons.
-                      Box(Modifier.fillMaxWidth().windowInsetsTopHeight(WindowInsets.statusBars).background(Munin.colors.groupedBackground.copy(alpha = 0.94f)))
+                      Box(Modifier.fillMaxWidth().windowInsetsTopHeight(WindowInsets.statusBars).background(Brush.verticalGradient(listOf(Munin.colors.groupedBackground.copy(alpha = 0.55f), Color.Transparent))))
                     }
                 }
             }
@@ -115,7 +125,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-/** The bottom tab bar, iOS style: a translucent bar with a hairline above it, a thin-line icon and a small label per tab, the chosen one in the tint colour. */
+/** The bottom tab bar, iOS style: a translucent bar with a hairline above it, a thin-line icon and a small label per tab; the chosen tab sits on a soft blue pill. */
 @Composable
 private fun TabBar(selected: Int, onSelect: (Int) -> Unit) {
     val tabs = listOf("Search" to IosIcons.Search, "Index" to IosIcons.Photos, "Ledger" to IosIcons.Ledger)
@@ -123,13 +133,16 @@ private fun TabBar(selected: Int, onSelect: (Int) -> Unit) {
         Box(Modifier.fillMaxWidth().height(0.5.dp).background(Munin.colors.separator))
         Row(Modifier.fillMaxWidth().navigationBarsPadding().padding(top = 6.dp, bottom = 4.dp)) {
             tabs.forEachIndexed { i, (label, icon) ->
-                val color = if (i == selected) Munin.colors.tint else Munin.colors.secondaryLabel
+                val on = i == selected
+                val color by animateColorAsState(if (on) Munin.colors.tint else Munin.colors.secondaryLabel, label = "tab-color")
+                val pill by animateColorAsState(if (on) Munin.colors.tintSoft else Color.Transparent, label = "tab-pill")
+                val lift by animateFloatAsState(if (on) 1.08f else 1f, spring(dampingRatio = 0.55f, stiffness = 500f), label = "tab-lift")
                 Column(
                     Modifier.weight(1f).clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) { onSelect(i) }.padding(vertical = 2.dp),
                     horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(2.dp),
                 ) {
-                    Icon(icon, color, 26.dp)
-                    Text(label, style = MaterialTheme.typography.labelSmall, color = color, fontWeight = if (i == selected) FontWeight.SemiBold else FontWeight.Medium, fontSize = 10.sp)
+                    Box(Modifier.clip(RoundedCornerShape(50)).background(pill).padding(horizontal = 18.dp, vertical = 3.dp).scale(lift)) { Icon(icon, color, 25.dp) }
+                    Text(label, style = MaterialTheme.typography.labelSmall, color = color, fontWeight = if (on) FontWeight.SemiBold else FontWeight.Medium, fontSize = 10.sp)
                 }
             }
         }

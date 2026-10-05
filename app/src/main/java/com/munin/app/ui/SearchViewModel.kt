@@ -59,6 +59,8 @@ data class SearchUiState(
     val mode: SearchMode = SearchMode.MERGED,
     val modelReady: Boolean = false,
     val indexedChunks: Int = 0,
+    /** How many documents are indexed, for the summary on the home screen. */
+    val indexedDocs: Int = 0,
     val response: SearchResponse? = null,
     /** Whether the query was a value question, and what we answered; null until a search has run. */
     val answer: AnswerOutcome? = null,
@@ -193,7 +195,7 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
     fun onDebug(on: Boolean) { _state.update { it.copy(showDebug = on) } }
 
     /** Re-runs the current query, e.g. after indexing added items. */
-    fun refresh() { run(debounce = false); refreshReminders() }
+    fun refresh() { run(debounce = false); refreshReminders(); viewModelScope.launch { refreshCounts() } }
 
     /** Looks for upcoming deadlines among the dates already read. Read-only; the user decides what, if anything, goes to the calendar. */
     fun refreshReminders() {
@@ -260,7 +262,8 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
 
     private suspend fun refreshCounts() {
         val n = withContext(Dispatchers.IO) { muninApp.database.embeddings().count() }
-        _state.update { it.copy(indexedChunks = n) }
+        val docs = withContext(Dispatchers.IO) { muninApp.database.items().indexedCount() }
+        _state.update { it.copy(indexedChunks = n, indexedDocs = docs) }
     }
 
     private companion object {
