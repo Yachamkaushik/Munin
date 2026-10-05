@@ -47,6 +47,8 @@ data class ItemEntity(
     val ocrMs: Long? = null,
     val embedMs: Long? = null,
     val textLength: Int? = null,
+    /** [com.munin.app.extract.FactExtractor.VERSION] the facts were extracted with; 0 = never. */
+    @ColumnInfo(defaultValue = "0") val factsVersion: Int = 0,
 )
 
 @Entity(
@@ -78,7 +80,7 @@ data class EmbeddingEntity(
     override fun hashCode() = 31 * (31 * chunkId.hashCode() + modelVersion.hashCode()) + vector.contentHashCode()
 }
 
-/** Extracted facts (amounts, dates, ...). Created now, filled from step 4 onwards. */
+/** A value read from an item's text (an amount, date, phone number or address); see [com.munin.app.extract.ExtractedFact]. */
 @Entity(
     tableName = "facts",
     foreignKeys = [ForeignKey(ItemEntity::class, ["id"], ["itemId"], onDelete = ForeignKey.CASCADE)],
@@ -87,7 +89,12 @@ data class EmbeddingEntity(
 data class FactEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val itemId: Long,
+    /** A [com.munin.app.extract.FactType] name. */
     val name: String,
+    /** Normalized value (plain decimal, ISO date, +91 phone, joined address). */
     val value: String,
     val confidence: Float,
+    @ColumnInfo(defaultValue = "''") val raw: String = "",
+    val label: String? = null,
+    @ColumnInfo(defaultValue = "0") val lineIndex: Int = 0,
 )

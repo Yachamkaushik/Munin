@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -31,6 +33,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.munin.app.answer.Answer
+import com.munin.app.answer.AnswerOutcome
 import com.munin.app.search.SearchMode
 import com.munin.app.search.SearchResult
 import com.munin.app.search.SearchTimings
@@ -67,8 +71,51 @@ fun SearchScreen(vm: SearchViewModel = viewModel(), indexVersion: Int = 0) {
             ui.query.isBlank() -> Text("Search by what the text says, not by file name.", style = MaterialTheme.typography.bodyMedium)
             r != null && r.results.isEmpty() -> Text("No matches for “${r.query}”.")
             r != null -> LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                when (val a = ui.answer) {
+                    is AnswerOutcome.Found -> item { AnswerCard(a.answer) }
+                    // It was a question but we will not guess: say so, then fall back to the list.
+                    is AnswerOutcome.Declined -> item {
+                        Text(
+                            "No direct answer: ${a.reason}. Showing matching items instead.",
+                            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    else -> Unit
+                }
                 items(r.results, key = { it.itemId }) { ResultRow(it, ui.showDebug) }
             }
+        }
+    }
+}
+
+@Composable
+private fun AnswerCard(a: Answer) {
+    val context = LocalContext.current
+    Card(
+        Modifier.fillMaxWidth().clickable {
+            val view = Intent(Intent.ACTION_VIEW).setDataAndType(Uri.parse(a.source.uri), "image/*").addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            runCatching { context.startActivity(view) }
+        },
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+    ) {
+        Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(a.display, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+                Text(
+                    listOfNotNull(a.label, a.raw.takeIf { it.isNotBlank() && it != a.display }).joinToString(": ").ifEmpty { a.kind.name.lowercase() },
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                Text("From ${a.source.displayName}", style = MaterialTheme.typography.labelMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                a.caveat?.let { Text(it, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Medium) }
+                if (a.alternatives.isNotEmpty()) {
+                    Text(
+                        "Also in this item: " + a.alternatives.joinToString(", ") { alt -> alt.label?.let { "${alt.display} ($it)" } ?: alt.display },
+                        style = MaterialTheme.typography.labelSmall,
+                    )
+                }
+                Text("Read from the image by OCR, so check it against the source (tap to open).", style = MaterialTheme.typography.labelSmall)
+            }
+            Thumbnail(a.source.uri, 72)
         }
     }
 }

@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.munin.app.MuninApp
+import com.munin.app.answer.AnswerEngine
+import com.munin.app.answer.AnswerOutcome
 import com.munin.app.search.SearchEngine
 import com.munin.app.search.SearchMode
 import com.munin.app.search.SearchResponse
@@ -22,6 +24,8 @@ data class SearchUiState(
     val modelReady: Boolean = false,
     val indexedChunks: Int = 0,
     val response: SearchResponse? = null,
+    /** Whether the query was a value question, and what we answered; null until a search has run. */
+    val answer: AnswerOutcome? = null,
     val error: String? = null,
     val showDebug: Boolean = true,
 )
@@ -29,6 +33,7 @@ data class SearchUiState(
 class SearchViewModel(app: Application) : AndroidViewModel(app) {
     private val muninApp = app as MuninApp
     private val engine by lazy { SearchEngine(muninApp.database, muninApp.embedder) }
+    private val answers by lazy { AnswerEngine(muninApp.database) }
     private val _state = MutableStateFlow(SearchUiState())
     val state: StateFlow<SearchUiState> = _state
     private var job: Job? = null
@@ -41,6 +46,7 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
                 .onFailure { e -> _state.update { it.copy(error = "Could not load the embedding model: ${e.message}") } }
             refreshCounts()
         }
+        viewModelScope.launch(Dispatchers.IO) { muninApp.database.backfillFacts() }
     }
 
     fun onQuery(q: String) { _state.update { it.copy(query = q) }; run(debounce = true) }
@@ -55,11 +61,15 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
         job = viewModelScope.launch {
             if (debounce) delay(DEBOUNCE_MS)
             val s = _state.value
-            if (s.query.isBlank()) { _state.update { it.copy(response = null, error = null) }; return@launch }
+            if (s.query.isBlank()) { _state.update { it.copy(response = null, answer = null, error = null) }; return@launch }
             if (!s.modelReady) return@launch
             try {
-                val r = withContext(Dispatchers.Default) { engine.search(s.query, s.mode) }
-                _state.update { it.copy(response = r, error = null) }
+                val (r, a) = withContext(Dispatchers.Default) {
+                    val r = engine.search(s.query, s.mode)
+                    // Answers come from the merged ranking only; the single-leg modes are for comparing retrieval.
+                    r to if (s.mode == SearchMode.MERGED) answers.answer(s.query, r) else AnswerOutcome.NotAQuestion
+                }
+                _state.update { it.copy(response = r, answer = a, error = null) }
             } catch (e: kotlinx.coroutines.CancellationException) {
                 throw e
             } catch (e: Exception) {

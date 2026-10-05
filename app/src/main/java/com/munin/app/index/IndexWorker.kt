@@ -27,6 +27,7 @@ class IndexWorker(context: Context, params: WorkerParameters) : CoroutineWorker(
 
         val db = app.database
         db.items().retryFailed()
+        db.backfillFacts()
         MediaScanner(applicationContext, db).scan(access)
 
         app.ocrEngine.warmUp()

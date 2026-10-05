@@ -113,6 +113,25 @@ interface EmbeddingDao {
 
 @Dao
 interface FactDao {
+    @Insert
+    suspend fun insertAll(facts: List<FactEntity>)
+
+    @Query("DELETE FROM facts WHERE itemId = :itemId")
+    suspend fun deleteForItem(itemId: Long)
+
+    @Query("SELECT * FROM facts WHERE itemId IN (:itemIds) AND name = :type ORDER BY lineIndex, id")
+    suspend fun forItems(itemIds: List<Long>, type: String): List<FactEntity>
+
     @Query("SELECT COUNT(*) FROM facts")
     suspend fun count(): Int
+
+    /** Items whose facts are missing or were extracted by older rules; their saved text is re-read, no OCR needed. */
+    @Query("SELECT id FROM items WHERE status = 'INDEXED' AND factsVersion < :version")
+    suspend fun itemsNeedingFacts(version: Int): List<Long>
+
+    @Query("SELECT text FROM chunks WHERE itemId = :itemId ORDER BY ordinal")
+    suspend fun chunkTexts(itemId: Long): List<String>
+
+    @Query("UPDATE items SET factsVersion = :version WHERE id = :itemId")
+    suspend fun markExtracted(itemId: Long, version: Int)
 }

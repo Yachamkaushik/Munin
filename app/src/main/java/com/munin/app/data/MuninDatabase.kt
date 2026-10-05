@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import androidx.room.withTransaction
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.munin.app.extract.ExtractedFact
+import com.munin.app.extract.FactExtractor
 
 @Database(
     entities = [ItemEntity::class, ChunkEntity::class, EmbeddingEntity::class, FactEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false,
 )
 abstract class MuninDatabase : RoomDatabase() {
@@ -49,14 +52,38 @@ abstract class MuninDatabase : RoomDatabase() {
             ids
         }
 
+    /** Replaces an item's facts with [facts] and records which rule version produced them. */
+    suspend fun replaceFacts(itemId: Long, facts: List<ExtractedFact>, version: Int = FactExtractor.VERSION) = withTransaction {
+        facts().deleteForItem(itemId)
+        facts().insertAll(facts.map { FactEntity(itemId = itemId, name = it.type.name, value = it.value, confidence = it.confidence, raw = it.raw, label = it.label, lineIndex = it.line) })
+        facts().markExtracted(itemId, version)
+    }
+
+    /** Extracts facts for indexed items that have none yet (e.g. indexed before this feature). Returns how many. */
+    suspend fun backfillFacts(): Int {
+        val ids = facts().itemsNeedingFacts(FactExtractor.VERSION)
+        for (id in ids) replaceFacts(id, FactExtractor.extract(facts().chunkTexts(id).joinToString("\n")))
+        return ids.size
+    }
+
     fun matchCount(match: String) = KeywordIndex.matchCount(sql, match)
 
     companion object {
+        /** v1 -> v2: facts gain their source text, label and line; items remember which extraction rules were applied. */
+        val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE items ADD COLUMN factsVersion INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE facts ADD COLUMN raw TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE facts ADD COLUMN label TEXT")
+                db.execSQL("ALTER TABLE facts ADD COLUMN lineIndex INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
         fun create(context: Context, name: String? = "munin.db"): MuninDatabase {
             val builder = if (name == null) Room.inMemoryDatabaseBuilder(context, MuninDatabase::class.java)
             else Room.databaseBuilder(context, MuninDatabase::class.java, name)
             lateinit var db: MuninDatabase
-            db = builder.addCallback(object : Callback() {
+            db = builder.addMigrations(MIGRATION_1_2).addCallback(object : Callback() {
                 override fun onOpen(db0: SupportSQLiteDatabase) {
                     db.keywordEngine = KeywordIndex.ensure(db0)
                 }

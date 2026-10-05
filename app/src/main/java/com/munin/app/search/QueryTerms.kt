@@ -9,7 +9,7 @@ object QueryTerms {
     )
 
     /** Letters, digits, Indic combining marks and joiners make up a word; everything else separates words. */
-    fun tokens(query: String): List<String> {
+    fun tokens(query: String, keepAll: Boolean = false): List<String> {
         val out = LinkedHashSet<String>()
         val cur = StringBuilder()
         fun flush() {
@@ -17,7 +17,7 @@ object QueryTerms {
             val t = cur.toString().lowercase()
             cur.setLength(0)
             val asciiOnly = t.all { it.code < 128 }
-            if (asciiOnly && (t.length < 2 || t in STOPWORDS)) return
+            if (!keepAll && asciiOnly && (t.length < 2 || t in STOPWORDS)) return
             out += t
         }
         var i = 0

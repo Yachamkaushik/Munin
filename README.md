@@ -3,8 +3,8 @@
 Offline, on-device semantic search for screenshots, document photos and PDFs on Android, in Telugu, Hindi,
 English, Roman-script Telugu, or a mix. No INTERNET permission; models are bundled in the APK.
 
-Status: **step 3 of 7** (search). Photos are indexed (step 2) and searchable by meaning and by keywords, merged.
-No answer extraction, actions, ledger or voice yet.
+Status: **step 4 of 7** (answers). Photos are indexed, searchable by meaning and keywords, and value questions
+("how much was the hostel fee") are answered with the source. No actions, ledger or voice yet.
 
 ## Setup
 
@@ -128,3 +128,53 @@ only" and "Keywords only" chips switch legs (used for the later keyword vs embed
 - First query after launch pays the model load (the screen says so) and a cold embedding (~150 ms in the UI).
 - Tapping a result opens the file in the gallery app. There is no item detail screen yet.
 - The mode chips and debug switch are developer controls, not final UI.
+
+## Step 4: answer extraction
+
+At index time, rules and regexes (`extract/FactExtractor`) read **amounts, dates, phone numbers and addresses** out of each
+item's text into the `facts` table (normalized value, the text as read, its label, line, confidence). At query time
+`answer/QuestionParser` decides whether the query asks for a value (English, Hindi, Telugu, Roman-script Telugu/Hindi, or
+mixed), then `AnswerEngine` answers from the **top search hit only**, and only when it clearly is the right item and has
+that field. Otherwise it says why and shows the normal result list. No language model is involved.
+
+- Amounts: `₹`, `Rs`, `INR`, `रु`, `రూ`, `/-`, Indian and Western grouping, decimals, Devanagari/Telugu digits. When OCR dropped
+  the rupee sign, a labelled number ("Amount due: 1,250", conf 0.7) or a bare number on its own line ("I2,499", conf 0.45) is
+  still read, with lower confidence and a caveat on the card. IDs, dates and phone numbers are never read as amounts.
+- Dates: `12/09/2026`, `12 Sep 2026`, `September 12, 2026`, 2-digit years, Hindi and Telugu month names, a time right after the
+  date. Day-first (India). A date without a year is stored as `--11-03` and flagged "year not read".
+- Phones: Indian mobiles (`+91`, spaced, Devanagari digits), toll-free 1800, STD landlines. 10-digit numbers under an
+  ID-like label (Transaction ID, Ref No) are not phones.
+- Addresses: lines after an `Address:` / `చిరునామా` / `पता` label, or lines ending in a PIN code (lower confidence).
+- Spending questions ("how much did I spend in September") are deliberately left to the ledger (step 6).
+
+| Check | Result |
+|---|---|
+| Tests | 81 JVM (28 extractor, 25 question/selector/format) and 33 on-device, all pass |
+| `how much was the hostel fee` (real UI, real OCR of the sample screenshot) | **₹45,000**, "Amount paid: Rs 45,000", from the source file; 19 ms |
+| Same question in Hindi / Telugu / Roman Telugu / mixed (test corpus) | ₹45,000 / ₹45,000 / ₹1,250 for `current bill entha` / ₹45,000 |
+| `when is the electricity bill due` | 15 Oct 2026, label "Due date" |
+| Phone number and address from a clinic card | +91 98765 43210; "Road No 36, Jubilee Hills, Hyderabad 500033" |
+| Item has no such field (`flight booking phone number`) | declined: "the best match (flight) has no phone in the text that was read" |
+| Unrelated questions (car insurance, rent, pizza, laptop, school bus fee) | all declined |
+| Upgrade from a schema-v1 database with 42 items | migrated in place; all 39 indexed items had their facts back-filled from saved text |
+
+### Limits (read before trusting a demo)
+
+- **The value is not highlighted on the image.** That needs OCR bounding boxes, which are not stored. The card shows the
+  label and the text as the OCR read it, and tapping opens the source file.
+- **Wordless paraphrases are declined.** "dormitory charges how much" or "lodging cost" share no word with a hostel receipt, and
+  the meaning scores are too close to trust (lead 0.001-0.011), so no answer is given. This trades recall for never answering
+  from the wrong document.
+- **The confidence gate was tuned on a handful of queries** (unrelated queries led by at most 0.029, so the minimum lead is 0.05;
+  at least half of the question's topic words must appear as whole words in the item). The evaluation step must re-measure it.
+  The first version (prefix keyword matches plus a 0.03 lead) would have answered "school bus fee" from the hostel receipt and
+  "car insurance" from a card that said "card"; the calibration log caught that.
+- Only the top result is ever answered from. Extraction was checked on synthetic screenshots and on text the OCR actually
+  returned; real UPI apps, bills and forms will have layouts the rules have not seen. Extraction accuracy is measured properly
+  in the evaluation step.
+- A guessed amount (rupee sign not read) is only answered when the item also matches by words, and then carries a caveat.
+- Telugu text inside images still is not read (step 2), so Telugu answers only come from Telugu text that OCR could read.
+- Date ambiguity: `04/03/2026` is read as 4 March (day first); `12/25/2026` is read as 25 December at lower confidence.
+
+Schema is now v2 (`MIGRATION_1_2`); `FactExtractor.VERSION` marks which rules produced stored facts, so a rule change
+re-extracts from saved text without redoing OCR.
