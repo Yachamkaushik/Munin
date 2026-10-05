@@ -1,7 +1,5 @@
 package com.munin.app.ui
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,7 +22,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -33,6 +30,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.munin.app.actions.toSubject
 import com.munin.app.answer.Answer
 import com.munin.app.answer.AnswerOutcome
 import com.munin.app.search.SearchMode
@@ -41,7 +39,7 @@ import com.munin.app.search.SearchTimings
 import com.munin.app.search.Snippet
 
 @Composable
-fun SearchScreen(vm: SearchViewModel = viewModel(), indexVersion: Int = 0) {
+fun SearchScreen(onOpenItem: (Long) -> Unit, vm: SearchViewModel = viewModel(), indexVersion: Int = 0) {
     val ui by vm.state.collectAsState()
     LaunchedEffect(indexVersion) { vm.refresh() }
 
@@ -72,7 +70,7 @@ fun SearchScreen(vm: SearchViewModel = viewModel(), indexVersion: Int = 0) {
             r != null && r.results.isEmpty() -> Text("No matches for “${r.query}”.")
             r != null -> LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 when (val a = ui.answer) {
-                    is AnswerOutcome.Found -> item { AnswerCard(a.answer) }
+                    is AnswerOutcome.Found -> item { AnswerCard(a.answer, onOpenItem) }
                     // It was a question but we will not guess: say so, then fall back to the list.
                     is AnswerOutcome.Declined -> item {
                         Text(
@@ -82,40 +80,39 @@ fun SearchScreen(vm: SearchViewModel = viewModel(), indexVersion: Int = 0) {
                     }
                     else -> Unit
                 }
-                items(r.results, key = { it.itemId }) { ResultRow(it, ui.showDebug) }
+                items(r.results, key = { it.itemId }) { ResultRow(it, ui.showDebug, onOpenItem) }
             }
         }
     }
 }
 
 @Composable
-private fun AnswerCard(a: Answer) {
-    val context = LocalContext.current
+private fun AnswerCard(a: Answer, onOpenItem: (Long) -> Unit) {
     Card(
-        Modifier.fillMaxWidth().clickable {
-            val view = Intent(Intent.ACTION_VIEW).setDataAndType(Uri.parse(a.source.uri), "image/*").addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            runCatching { context.startActivity(view) }
-        },
+        Modifier.fillMaxWidth().clickable { onOpenItem(a.source.itemId) },
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
     ) {
-        Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(a.display, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
-                Text(
-                    listOfNotNull(a.label, a.raw.takeIf { it.isNotBlank() && it != a.display }).joinToString(": ").ifEmpty { a.kind.name.lowercase() },
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-                Text("From ${a.source.displayName}", style = MaterialTheme.typography.labelMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                a.caveat?.let { Text(it, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Medium) }
-                if (a.alternatives.isNotEmpty()) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(a.display, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
                     Text(
-                        "Also in this item: " + a.alternatives.joinToString(", ") { alt -> alt.label?.let { "${alt.display} ($it)" } ?: alt.display },
-                        style = MaterialTheme.typography.labelSmall,
+                        listOfNotNull(a.label, a.raw.replace('\n', ' ').takeIf { it.isNotBlank() && it != a.display && it != a.display.replace(", ", " ") }).joinToString(": ").ifEmpty { a.kind.name.lowercase() },
+                        style = MaterialTheme.typography.bodyMedium,
                     )
+                    Text("From ${a.source.displayName}", style = MaterialTheme.typography.labelMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    a.caveat?.let { Text(it, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Medium) }
+                    if (a.alternatives.isNotEmpty()) {
+                        Text(
+                            "Also in this item: " + a.alternatives.joinToString(", ") { alt -> alt.label?.let { "${alt.display} ($it)" } ?: alt.display },
+                            style = MaterialTheme.typography.labelSmall,
+                        )
+                    }
                 }
-                Text("Read from the image by OCR, so check it against the source (tap to open).", style = MaterialTheme.typography.labelSmall)
+                Thumbnail(a.source.uri, 72)
             }
-            Thumbnail(a.source.uri, 72)
+            ActionButtons(a.toSubject())
+            Text("Read from the image by OCR, so check it against the source (tap the card to see it).", style = MaterialTheme.typography.labelSmall)
         }
     }
 }
@@ -125,14 +122,9 @@ private fun debugLine(mode: SearchMode, t: SearchTimings) =
         .format(t.embedMs, t.meaningMs, t.keywordMs, t.fuseMs, t.totalMs)
 
 @Composable
-private fun ResultRow(r: SearchResult, debug: Boolean) {
-    val context = LocalContext.current
+private fun ResultRow(r: SearchResult, debug: Boolean, onOpen: (Long) -> Unit) {
     Row(
-        Modifier.fillMaxWidth().clickable {
-            // Opens the file in the gallery; the app never copies or edits it.
-            val view = Intent(Intent.ACTION_VIEW).setDataAndType(Uri.parse(r.uri), "image/*").addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            runCatching { context.startActivity(view) }
-        },
+        Modifier.fillMaxWidth().clickable { onOpen(r.itemId) },
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Thumbnail(r.uri, 88)

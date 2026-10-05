@@ -8,12 +8,15 @@ import java.util.Locale
 
 /** How a normalized fact value is shown to the user. The stored value is never changed; this is display only. */
 object AnswerFormat {
-    fun display(kind: FactType, value: String): String = when (kind) {
-        FactType.AMOUNT -> "₹" + indianGrouping(value)
-        FactType.DATE -> date(value)
-        FactType.PHONE -> phone(value)
-        FactType.ADDRESS -> value
-    }
+    /** Falls back to the stored text if a value is malformed, so a bad row can never crash the screen. */
+    fun display(kind: FactType, value: String): String = runCatching {
+        when (kind) {
+            FactType.AMOUNT -> "₹" + indianGrouping(value)
+            FactType.DATE -> date(value)
+            FactType.PHONE -> phone(value)
+            FactType.ADDRESS -> value
+        }
+    }.getOrDefault(value)
 
     /** "1250000" -> "12,50,000"; "2499.5" -> "2,499.50". */
     fun indianGrouping(plain: String): String {

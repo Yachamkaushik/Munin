@@ -34,6 +34,9 @@ interface ItemDao {
     @Query("SELECT * FROM items WHERE status = 'PENDING' ORDER BY addedAt DESC, id DESC LIMIT 1")
     suspend fun nextPending(): ItemEntity?
 
+    @Query("SELECT * FROM items WHERE id = :id")
+    suspend fun byId(id: Long): ItemEntity?
+
     @Query("SELECT COUNT(*) FROM items WHERE status = 'PENDING'")
     suspend fun pendingCount(): Int
 
@@ -121,6 +124,9 @@ interface FactDao {
 
     @Query("SELECT * FROM facts WHERE itemId IN (:itemIds) AND name = :type ORDER BY lineIndex, id")
     suspend fun forItems(itemIds: List<Long>, type: String): List<FactEntity>
+
+    @Query("SELECT * FROM facts WHERE itemId = :itemId ORDER BY lineIndex, id")
+    suspend fun allForItem(itemId: Long): List<FactEntity>
 
     @Query("SELECT COUNT(*) FROM facts")
     suspend fun count(): Int

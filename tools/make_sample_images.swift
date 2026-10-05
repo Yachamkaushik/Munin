@@ -41,6 +41,9 @@ render("sample_hi_hostel_fee", lines: [
 render("sample_te_hostel_fee", lines: [
     ("హాస్టల్ ఫీజు రసీదు", 70, true), ("విద్యార్థి: రవి కుమార్", 52, false), ("చెల్లించిన మొత్తం: రూ. 45,000", 56, true),
     ("తేదీ: 12 సెప్టెంబర్ 2026", 52, false)])
+render("sample_en_clinic_card", lines: [
+    ("Apollo Clinic", 70, true), ("Appointment card", 52, false), ("Address: Road No 36, Jubilee Hills", 52, false),
+    ("Hyderabad 500033", 52, false), ("Phone: 98765 43210", 56, true), ("Appointment: 20 Sep 2026, 10:30 AM", 52, false)])
 render("sample_no_text", lines: [], footer: false)
 render("sample_tiny_icon", width: 96, height: 96, lines: [("Hi", 30, true)], footer: false)
 print("wrote images to \(out)")

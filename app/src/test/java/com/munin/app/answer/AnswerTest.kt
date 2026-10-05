@@ -186,6 +186,11 @@ class AnswerFormatTest {
         assertEquals("3 Nov (year not read), 6:45 AM", AnswerFormat.display(DATE, "--11-03T06:45"))
     }
 
+    @Test fun malformedValuesAreShownAsStored() {
+        assertEquals("garbage", AnswerFormat.display(DATE, "garbage"))
+        assertEquals("12abc", AnswerFormat.display(AMOUNT, "12abc"))
+    }
+
     @Test fun phones() {
         assertEquals("+91 98765 43210", AnswerFormat.display(PHONE, "+919876543210"))
         assertEquals("18001234567", AnswerFormat.display(PHONE, "18001234567"))

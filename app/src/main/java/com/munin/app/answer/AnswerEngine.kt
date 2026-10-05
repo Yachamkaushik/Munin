@@ -2,6 +2,7 @@ package com.munin.app.answer
 
 import com.munin.app.data.MuninDatabase
 import com.munin.app.extract.ExtractedFact
+import com.munin.app.extract.FactExtractor
 import com.munin.app.extract.FactType
 import com.munin.app.search.SearchResponse
 import com.munin.app.search.SearchResult
@@ -19,8 +20,13 @@ data class Answer(
     /** The text as the OCR read it, e.g. "Rs 45,000". */
     val raw: String,
     val source: SearchResult,
+    /** Overall confidence in the answer (right item and right value). */
     val confidence: Float,
+    /** The extractor's own confidence in the value alone; low means a guessed amount, a missing year, etc. */
+    val factConfidence: Float,
     val alternatives: List<AlternativeValue>,
+    /** The item's first line of text, e.g. "Electricity Bill"; used to name calendar events and shares. */
+    val itemTitle: String,
     /** Set when the value is less certain than usual, in words the user can act on. */
     val caveat: String?,
 )
@@ -62,7 +68,7 @@ class AnswerEngine(private val db: MuninDatabase) {
         val others = ranked.drop(1).filter { it.fact.value != f.value }.distinctBy { it.fact.value }.take(3)
             .map { AlternativeValue(AnswerFormat.display(q.kind, it.fact.value), it.fact.label) }
         return AnswerOutcome.Found(
-            Answer(q.kind, AnswerFormat.display(q.kind, f.value), f.value, f.label, f.raw, top, confidence, others, caveat(q.kind, f, others.isNotEmpty())),
+            Answer(q.kind, AnswerFormat.display(q.kind, f.value), f.value, f.label, f.raw, top, confidence, f.confidence, others, FactExtractor.lines(itemText).firstOrNull().orEmpty(), caveat(q.kind, f, others.isNotEmpty())),
         )
     }
 

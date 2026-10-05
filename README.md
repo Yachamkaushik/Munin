@@ -3,8 +3,8 @@
 Offline, on-device semantic search for screenshots, document photos and PDFs on Android, in Telugu, Hindi,
 English, Roman-script Telugu, or a mix. No INTERNET permission; models are bundled in the APK.
 
-Status: **step 4 of 7** (answers). Photos are indexed, searchable by meaning and keywords, and value questions
-("how much was the hostel fee") are answered with the source. No actions, ledger or voice yet.
+Status: **step 5 of 7** (smart actions). Photos are indexed, searchable by meaning and keywords, value questions are
+answered with the source, and facts offer confirm-first actions (calendar, call, maps, share). No ledger or voice yet.
 
 ## Setup
 
@@ -178,3 +178,46 @@ that field. Otherwise it says why and shows the normal result list. No language 
 
 Schema is now v2 (`MIGRATION_1_2`); `FactExtractor.VERSION` marks which rules produced stored facts, so a rule change
 re-extracts from saved text without redoing OCR.
+
+## Step 5: smart actions
+
+Facts become actions, on the answer card and on a new **item detail screen** (tap a result or the card): the image, every
+fact found, the recognized text, and "Open in gallery".
+
+| Fact | Action | How |
+|---|---|---|
+| Date | Add to calendar | `ACTION_INSERT` on the calendar, title / date / notes filled in; all-day, or a 1-hour event if a time was read |
+| Phone number | Call | `ACTION_DIAL` (never `ACTION_CALL`), so the dialer opens with the number and **you press call** |
+| Address | Open in maps | `geo:0,0?q=<address>` |
+| Anything | Share | system share sheet with a short text naming the value, item and source file |
+
+**Every action asks first.** Tapping a button only opens a dialog that shows the exact value (and, for the calendar, the title,
+date and notes; for share, the exact text) plus what will happen. Only the dialog's confirm button hands anything to another app,
+and each target app then has its own final step (Save, Call, choose a share target). None needs a permission, and the app still has
+no network permission. Low-confidence values (a guessed amount, a missing year, a shaky OCR read) say so in the dialog.
+
+- **Dates without a year** ("3 November") use the next upcoming 3 November and the dialog says so. Past dates are allowed but flagged.
+- If no app can handle an action, a message says so instead of failing silently.
+
+| Check | Result |
+|---|---|
+| Tests | 96 JVM and 38 on-device, all pass |
+| Planner (14 tests) | all-day vs timed, yearless dates, leap day, past dates, titles, which actions each fact offers |
+| Intents (5 tests, on device) | calendar extras and all-day flag, `ACTION_DIAL` not `CALL`, geo query encoding, share chooser |
+| Real UI, tap Add to calendar, Cancel | nothing launched (Munin stayed in front) |
+| Real UI, confirm Call | Google Dialer opened with `+91 98765 43210`; no call placed |
+| Real UI, confirm Open in maps | Google Maps launched |
+| Real UI, confirm Add to calendar | Google Calendar launched (see limit below) |
+
+### Limits
+
+- **I did not see the calendar's pre-filled form.** This emulator has no Google account, so Google Calendar immediately redirects
+  to account setup. The intent's contents are checked in a test and the launch is confirmed, but the on-screen form still needs a
+  look on a phone with a calendar account. The same goes for the maps search results and the share sheet (not exercised in the UI).
+- All values come from OCR. Dialogs say so, but a wrong read can still reach another app if you confirm without checking.
+- Munin does not check that a maps app, dialer or calendar exists beforehand (Android 11+ hides that without extra manifest
+  declarations); it handles the failure when launching.
+- The detail screen is deliberately small: no text editing, no correcting facts, no deleting.
+
+Bugs found on the way: `AnswerFormat.display` threw on a malformed stored date (now falls back to the stored text); address labels
+kept their colon ("Address::"), fixed and re-extracted via `FactExtractor.VERSION = 2`.

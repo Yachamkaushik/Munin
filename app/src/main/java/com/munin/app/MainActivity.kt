@@ -2,6 +2,7 @@ package com.munin.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.munin.app.ui.IndexScreen
+import com.munin.app.ui.ItemDetailScreen
 import com.munin.app.ui.SearchScreen
 
 class MainActivity : ComponentActivity() {
@@ -28,6 +30,8 @@ class MainActivity : ComponentActivity() {
                 Surface(Modifier.fillMaxSize()) {
                     var tab by rememberSaveable { mutableStateOf(0) }
                     var indexVersion by rememberSaveable { mutableIntStateOf(0) }
+                    var detailId by rememberSaveable { mutableStateOf<Long?>(null) }
+                    BackHandler(enabled = detailId != null) { detailId = null }
                     Scaffold(bottomBar = {
                         NavigationBar {
                             NavigationBarItem(selected = tab == 0, onClick = { tab = 0; indexVersion++ }, icon = {}, label = { Text("Search") })
@@ -35,7 +39,12 @@ class MainActivity : ComponentActivity() {
                         }
                     }) { padding ->
                         Surface(Modifier.padding(padding)) {
-                            if (tab == 0) SearchScreen(indexVersion = indexVersion) else IndexScreen()
+                            val open = detailId
+                            when {
+                                open != null -> ItemDetailScreen(open, onBack = { detailId = null })
+                                tab == 0 -> SearchScreen(onOpenItem = { detailId = it }, indexVersion = indexVersion)
+                                else -> IndexScreen()
+                            }
                         }
                     }
                 }

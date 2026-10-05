@@ -147,6 +147,7 @@ class FactExtractorTest {
         val a = one(text, ADDRESS)
         assertEquals("Sunrise Hostel, Plot 12, Jubilee Hills, Hyderabad 500033", a.value)
         assertEquals(0.8f, a.confidence, 0f)
+        assertEquals("Address", a.label) // no trailing colon
     }
 
     @Test fun addressHeadedByAHindiOrTeluguLabel() {

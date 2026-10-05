@@ -12,7 +12,7 @@ import java.time.LocalDate
  */
 object FactExtractor {
     /** Bump when the rules change; stored items with an older version are re-extracted from their saved text. */
-    const val VERSION = 1
+    const val VERSION = 2
 
     /** Splits text into the same trimmed, non-empty lines the chunker produces, so line numbers agree. */
     fun lines(text: String): List<String> = text.lines().map { it.trim().replace(WS, " ") }.filter { it.isNotEmpty() }
@@ -220,7 +220,7 @@ object FactExtractor {
             while (j < lines.size && block.size < 4 && !ANY_LABELLED_LINE.containsMatchIn(lines[j]) && !ADDRESS_LABEL.containsMatchIn(lines[j])) { block += lines[j]; j++ }
             if (block.isEmpty()) return@forEachIndexed
             (i until j).forEach(used::add)
-            found += ExtractedFact(FactType.ADDRESS, block.joinToString(", "), block.joinToString("\n"), m.value, i, 0.8f)
+            found += ExtractedFact(FactType.ADDRESS, block.joinToString(", "), block.joinToString("\n"), m.value.trimEnd(':', 'ः', '-', '–', ' '), i, 0.8f)
         }
         lines.forEachIndexed { i, original ->
             if (i in used || ID_LABEL.containsMatchIn(original.substringBefore(':')) && ':' in original) return@forEachIndexed
