@@ -18,6 +18,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <!-- Voice queries only. Munin never records unless Speak is pressed, and never stores audio. -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- Asked only when the user types a person's name or a family nickname and taps Allow; names stay in memory. -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
 
     <queries>

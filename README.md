@@ -364,3 +364,9 @@ Limits: Hindi/Telugu number words cover common spellings only; unit names are La
 works across scripts ("whatsap", "వాట్సాప్", "जीमेल" all find the right app) through a small phonetic key and a typo-tolerant distance. The list of apps comes from the
 system's launcher list; Munin declares a narrow `<queries>` entry for that rather than the broad all-apps permission, so no permission prompt appears and nothing leaves the phone.
 Limits: only apps with a launcher icon; inputs of more than three words are never treated as app names; romanised-Telugu/Hindi spellings are covered only where they sound like the app's label.
+
+**Contacts and settings shortcuts** (`contacts/`, `shortcuts/`): typing "wifi", "bluetooth", "battery", "వైఫై" or "बैटरी" shows the matching system settings screen; one tap opens it.
+Typing a family nickname ("amma", "అమ్మ", "माँ", "mom", "nanna", "dad", "akka", "anna" and a few more) or "call ravi" looks in your saved contacts; tapping a contact asks first and
+opens the dialer with the number filled in (you still press call). **READ_CONTACTS is asked only when you type a nickname or "call ..." and tap Allow**, with a line saying what it is for; if you say
+no, Munin says so and does not ask again until the app restarts. Names are held in memory only, never copied into Munin's database. Limits: nickname lists are fixed (no custom nicknames yet);
+only the whole input is matched, so "amma" will not find a contact saved as "Ammamma"; settings shortcuts exist only for screens with a standard Android action (no hotspot).

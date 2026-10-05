@@ -30,6 +30,12 @@ object AppMatcher {
             .sortedWith(compareByDescending<AppMatch> { it.score }.thenBy { it.app.label.lowercase() }).take(limit)
     }
 
+    /** How well [q] names [label] (0 to 1): spelling, typos and, across scripts, sound. Shared with contact and settings matching. */
+    internal fun nameScore(q: String, label: String): Double {
+        val l = label.lowercase(); val query = q.lowercase()
+        return maxOf(textScore(norm(query), norm(l), tokens(l)), phoneticScore(query, l))
+    }
+
     private fun score(q: String, app: AppEntry): Double {
         val label = app.label.lowercase()
         var best = textScore(norm(q), norm(label), tokens(label))

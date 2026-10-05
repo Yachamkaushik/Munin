@@ -75,6 +75,12 @@ class ActionPlanner(
         ActionPayload.Web(query),
     )
 
+    /** Calling a saved contact: opens the dialer with the number filled in; the user still presses call. */
+    fun callContact(name: String, number: String) = ActionPlan(
+        ActionKind.CALL, "Call", "Call $name?", "Open dialer", listOf("Contact" to name, "Number" to number),
+        listOf("Opens the dialer with this number. You still have to press call."), ActionPayload.Call(number.filter { it.isDigit() || it == '+' }),
+    )
+
     // ---- calendar --------------------------------------------------------------------------------------------------
 
     private fun calendar(s: ActionSubject): ActionPlan? {

@@ -93,6 +93,16 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
             Text("Search by what the text says, not by file name.", style = MaterialTheme.typography.bodyMedium)
         } else {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                if (ui.settings.isNotEmpty()) {
+                    item { GroupHeader("Settings") }
+                    items(ui.settings, key = { it.action }) { s -> ShortcutRow(s.label, "Open this settings screen") { if (!vm.openSettings(s)) android.widget.Toast.makeText(context, "This phone has no ${s.label} screen to open.", android.widget.Toast.LENGTH_SHORT).show() } }
+                }
+                if (ui.contacts.isNotEmpty()) {
+                    item { GroupHeader("Contacts") }
+                    items(ui.contacts, key = { "${it.id}/${it.number}" }) { c -> ContactRow(c) }
+                } else if (ContactsOffer.applies(ui)) {
+                    item { ContactsOfferCard(ui, vm) }
+                }
                 if (ui.apps.isNotEmpty()) {
                     item { GroupHeader("Apps") }
                     items(ui.apps, key = { it.app.component }) { AppRow(it.app) { app -> if (!vm.openApp(app)) android.widget.Toast.makeText(context, "Could not open ${app.label}.", android.widget.Toast.LENGTH_SHORT).show() } }
@@ -179,6 +189,52 @@ private fun AppRow(app: com.munin.app.apps.AppEntry, onOpen: (com.munin.app.apps
         Column(Modifier.weight(1f)) {
             Text(app.label, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
             Text("Open this app", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+    }
+}
+
+@Composable
+private fun ShortcutRow(title: String, subtitle: String, onClick: () -> Unit) {
+    Card(Modifier.fillMaxWidth().clickable(onClick = onClick)) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(title, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
+            Text(subtitle, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+    }
+}
+
+/** A saved contact. Tapping asks first, then opens the dialer with the number filled in; the call itself still needs your tap there. */
+@Composable
+private fun ContactRow(c: com.munin.app.contacts.ContactEntry) {
+    var plan by remember { mutableStateOf<ActionPlan?>(null) }
+    ShortcutRow(c.name, "${c.number}  ·  tap to call") { plan = ActionPlanner().callContact(c.name, c.number) }
+    plan?.let { ActionConfirmDialog(it) { plan = null } }
+}
+
+/** When to offer the contacts permission: only when the input looks like a person (a family nickname, or "call ..."), never for ordinary searches. */
+private object ContactsOffer {
+    fun applies(ui: SearchUiState): Boolean {
+        if (ui.contactsGranted) return false
+        val q = ui.query.trim()
+        if (q.isEmpty() || q.length > 40) return false
+        val words = q.split(Regex("\\s+"))
+        val callWord = words.size > 1 && words.first().lowercase() in com.munin.app.contacts.ContactMatcher.NOISE
+        return callWord || com.munin.app.contacts.ContactMatcher.nicknameGroup(q) != null
+    }
+}
+
+@Composable
+private fun ContactsOfferCard(ui: SearchUiState, vm: SearchViewModel) {
+    val ask = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { vm.contactsAnswered(it) }
+    Card(Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text("Find people in your contacts?", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
+            if (ui.contactsDenied) {
+                Text("Contacts access was not allowed, so Munin cannot look up names. You can allow it in the phone's Settings, under Apps, Munin, Permissions.", style = MaterialTheme.typography.bodySmall)
+            } else {
+                Text("Munin would read your contacts on this phone only, to match names like amma or nanna. They are not copied anywhere or sent anywhere.", style = MaterialTheme.typography.bodySmall)
+                Button(onClick = { ask.launch(android.Manifest.permission.READ_CONTACTS) }) { Text("Allow contacts") }
+            }
         }
     }
 }

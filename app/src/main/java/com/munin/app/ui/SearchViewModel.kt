@@ -65,6 +65,12 @@ data class SearchUiState(
     val calcNote: String? = null,
     /** Installed apps whose names match the input, offered above the file results. */
     val apps: List<com.munin.app.apps.AppMatch> = emptyList(),
+    /** Saved contacts matching the input (only when the user has allowed contacts). */
+    val contacts: List<com.munin.app.contacts.ContactEntry> = emptyList(),
+    val settings: List<com.munin.app.shortcuts.SettingsShortcut> = emptyList(),
+    val contactsGranted: Boolean = false,
+    /** The user said no to the contacts permission this session; Munin will not ask again until the app restarts. */
+    val contactsDenied: Boolean = false,
     val error: String? = null,
     val showDebug: Boolean = true,
     val voice: VoiceState = VoiceState.Idle,
@@ -105,7 +111,17 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     /** Reads the installed apps off the main thread, then re-reads the current input against them. */
-    fun refreshApps() { viewModelScope.launch(Dispatchers.IO) { muninApp.appIndex.refresh(); _state.update { it.routed() } } }
+    fun refreshApps() { viewModelScope.launch(Dispatchers.IO) { muninApp.appIndex.refresh(); muninApp.contactIndex.refresh(); _state.update { it.routed() } } }
+
+    /** Called with the system's answer to the contacts permission prompt. */
+    fun contactsAnswered(granted: Boolean) {
+        if (granted) refreshApps() else _state.update { it.copy(contactsDenied = true) }
+    }
+
+    /** Opens a settings screen the user tapped. */
+    fun openSettings(s: com.munin.app.shortcuts.SettingsShortcut): Boolean = runCatching {
+        muninApp.startActivity(android.content.Intent(s.action).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)); true
+    }.getOrDefault(false)
 
     /** Opens an app the user tapped. */
     fun openApp(app: com.munin.app.apps.AppEntry): Boolean = muninApp.appIndex.launch(app)
@@ -123,8 +139,9 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
     private val calculator by lazy { Calculator(rates = PrefsRateBook(muninApp)) }
 
     private fun SearchUiState.routed(): SearchUiState {
-        val d = QueryRouter.route(query, mode, calculator, allowCalculator = !calcIgnored, apps = muninApp.appIndex.search(query))
-        return copy(understood = d.understood, calc = d.calc, apps = d.apps)
+        val d = QueryRouter.route(query, mode, calculator, allowCalculator = !calcIgnored, apps = muninApp.appIndex.search(query),
+            contacts = muninApp.contactIndex.search(query), settings = com.munin.app.shortcuts.SettingsShortcuts.search(query))
+        return copy(understood = d.understood, calc = d.calc, apps = d.apps, contacts = d.contacts, settings = d.settings, contactsGranted = muninApp.contactIndex.granted())
     }
 
     fun onQuery(q: String) { _state.update { it.copy(query = q, calcIgnored = false, calcNote = null).routed() }; run(debounce = true) }
