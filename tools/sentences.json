@@ -1,0 +1,40 @@
+[
+ {"id":"en-01","lang":"en","text":"Hostel fee receipt for the second semester, Rs 45,000 paid on 12 Sep 2026"},
+ {"id":"en-02","lang":"en","text":"Electricity bill due on 15/10/2026, amount ₹1,250"},
+ {"id":"en-03","lang":"en","text":"Your flight to Hyderabad is confirmed for 3 November at 6:45 AM"},
+ {"id":"en-04","lang":"en","text":"Payment of ₹2,499 to Amazon Pay successful. Transaction ID 4821937560"},
+ {"id":"en-05","lang":"en","text":"Doctor appointment at Apollo Clinic, Jubilee Hills, on Friday 10:30 AM"},
+ {"id":"en-06","lang":"en","text":"Meeting notes: submit the project report by Monday"},
+
+ {"id":"hi-01","lang":"hi","text":"छात्रावास शुल्क की रसीद, ₹45,000 जमा किए गए"},
+ {"id":"hi-02","lang":"hi","text":"बिजली का बिल 15 अक्टूबर तक जमा करें, राशि 1,250 रुपये"},
+ {"id":"hi-03","lang":"hi","text":"आपकी हैदराबाद की उड़ान 3 नवंबर को सुबह 6:45 बजे है"},
+ {"id":"hi-04","lang":"hi","text":"भुगतान सफल रहा। लेन-देन संख्या 4821937560"},
+ {"id":"hi-05","lang":"hi","text":"डॉक्टर के साथ अपॉइंटमेंट शुक्रवार सुबह साढ़े दस बजे"},
+
+ {"id":"te-01","lang":"te","text":"హాస్టల్ ఫీజు రసీదు, రూ. 45,000 చెల్లించారు"},
+ {"id":"te-02","lang":"te","text":"కరెంటు బిల్లు అక్టోబర్ 15 లోపు చెల్లించాలి, మొత్తం రూ. 1,250"},
+ {"id":"te-03","lang":"te","text":"మీ హైదరాబాద్ విమానం నవంబర్ 3న ఉదయం 6:45కి ఉంది"},
+ {"id":"te-04","lang":"te","text":"చెల్లింపు విజయవంతమైంది. లావాదేవీ సంఖ్య 4821937560"},
+ {"id":"te-05","lang":"te","text":"శుక్రవారం ఉదయం 10:30కి డాక్టర్ అపాయింట్‌మెంట్"},
+ {"id":"te-06","lang":"te","text":"కాలేజీ ఫీజు చివరి తేదీ సెప్టెంబర్ 30"},
+
+ {"id":"rte-01","lang":"te-roman","text":"hostel fee receipt ekkada undi, 45,000 kattanu"},
+ {"id":"rte-02","lang":"te-roman","text":"current bill entha, 15 lopu kattali"},
+ {"id":"rte-03","lang":"te-roman","text":"naa flight Hyderabad ki November 3 ki undi"},
+ {"id":"rte-04","lang":"te-roman","text":"payment ayyindi, transaction id 4821937560"},
+ {"id":"rte-05","lang":"te-roman","text":"friday udayam doctor appointment undi"},
+ {"id":"rte-06","lang":"te-roman","text":"college fee last date eppudu"},
+
+ {"id":"mix-01","lang":"mixed","text":"hostel fee రసీదు చూపించు"},
+ {"id":"mix-02","lang":"mixed","text":"मेरा electricity bill कितना आया था"},
+ {"id":"mix-03","lang":"mixed","text":"ఈ month ఎంత spend చేశాను"},
+ {"id":"mix-04","lang":"mixed","text":"UPI payment screenshot చూపించు, amount ₹500"},
+ {"id":"mix-05","lang":"mixed","text":"fee receipt दिखाओ, హాస్టల్ ఫీజు"},
+
+ {"id":"edge-01","lang":"edge","text":"  Multiple   spaces\tand\nnewlines  "},
+ {"id":"edge-02","lang":"edge","text":"ﬁnance ① ² Ｆｕｌｌｗｉｄｔｈ ＡＢＣ １２３ ½"},
+ {"id":"edge-03","lang":"edge","text":"Rs.45,000/- paid @ 10:30 #receipt (ref: AB-123/XY)"},
+ {"id":"edge-04","lang":"edge","text":"😀 emoji and 日本語 and ᚠᚢᚦ rare scripts"},
+ {"id":"edge-05","lang":"edge","text":"Zero​width and soft­hyphen and nbsp here"}
+]

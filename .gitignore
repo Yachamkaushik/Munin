@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.gradle/
+build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+.kotlin/
+models/
+app/src/main/assets/models/*.onnx
+app/src/main/assets/models/*.model
