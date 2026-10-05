@@ -9,10 +9,14 @@ query intent; the other 289 are template-generated fillers of the SAME types (ot
 bills, ...), so a query has plenty of confusable near-misses. Anchor-specific words are excluded from fillers, and the
 script asserts that, so each query has exactly one correct document.
 """
-import json, random, pathlib, collections
+import json, random, pathlib, collections, sys
+
+SET = sys.argv[1] if len(sys.argv) > 1 else "dev"      # "dev" (tuning set) or "heldout" (new anchors, new queries, new seed)
+HELD = SET == "heldout"
+PREFIX = "heldout_" if HELD else ""
 
 OUT = pathlib.Path(__file__).parent / "data"
-R = random.Random(2026)
+R = random.Random(7777 if HELD else 2026)
 
 MONTH_EN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 MONTH_HI = ["जनवरी","फरवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"]
@@ -49,25 +53,42 @@ def add(type_, lang, title_lines, facts=None, extra=None, anchor=None, upi=None)
     docs.append({"id": f"d{len(docs)+1:03d}", "type": type_, "lang": lang, "lines": title_lines, "facts": facts or {}, "anchor": anchor, "upi": upi, **(extra or {})})
 
 # ---------------------------------------------------------------- anchors (one per query intent) ----------------------
-add("fee_receipt", "en", [("Sai Vidya Hostel", "b"), "Fee Receipt", "Student: Karthik Reddy", "Room: B-214", "Amount paid: Rs 45,000", "Paid on: 12 Sep 2026", "Receipt No: SV-20931"],
-    {"AMOUNT": "45000", "DATE": "2026-09-12"}, anchor="A1")
-add("utility_bill", "en", [("Southern Power Distribution", "b"), "Electricity Bill", "Consumer No: 2210045", "Billing month: September 2026", "Amount due: Rs 1,842", "Due date: 15 Oct 2026"],
-    {"AMOUNT": "1842", "DATE": "2026-10-15"}, anchor="A2")
-add("ticket", "en", [("IndiGo 6E 5214", "b"), "E-ticket", "Hyderabad (HYD) to Visakhapatnam (VTZ)", "Date: 21 Oct 2026", "Departure 07:35", "PNR: QX7M2K"],
-    {"DATE": "2026-10-21"}, anchor="A3")
-add("utility_bill", "en", [("Metro Water Board", "b"), "Water Bill", "Consumer: 88123", "Amount due: Rs 460", "Due date: 3 Nov 2026"],
-    {"AMOUNT": "460", "DATE": "2026-11-03"}, anchor="A4")
-add("notes", "en", [("Organic Chemistry - Lecture 7", "b"), "SN1 and SN2 reaction mechanisms", "Carbocation stability order", "Nucleophile strength and solvent effects", "Revision: Markovnikov's rule"], anchor="A5")
-add("appointment", "en", [("Apollo Clinic", "b"), "Appointment card", "Dr. Meera Rao, Cardiology", "Address: Road No 36, Jubilee Hills", "Hyderabad 500033", "Phone: 98480 12345", "Appointment: 24 Sep 2026, 10:30 AM"],
-    {"PHONE": "+919848012345", "DATE": "2026-09-24", "ADDRESS": "Road No 36, Jubilee Hills, Hyderabad 500033"}, anchor="A6")
-# A7 is a UPI payment, added below with the other payments (needs the layout renderer)
-add("timetable", "en", [("Semester Exam Timetable", "b"), "B.Tech III Year", "2 Dec 2026  Operating Systems", "4 Dec 2026  Computer Networks", "7 Dec 2026  Database Systems", "9 Dec 2026  Software Engineering"],
-    {"DATE": "2026-12-02"}, anchor="A8")
-add("fee_receipt", "hi", [("सरस्वती विद्या मंदिर", "b"), "शुल्क रसीद", "छात्र: आरव शर्मा", "जमा राशि: ₹12,500", "दिनांक: 18 अगस्त 2026"],
-    {"AMOUNT": "12500", "DATE": "2026-08-18"}, anchor="A9")
-add("notes", "hi", [("इतिहास नोट्स - मुगल साम्राज्य", "b"), "अकबर की नीतियाँ", "सुलह-ए-कुल और धार्मिक सहिष्णुता", "मनसबदारी व्यवस्था", "राजस्व प्रणाली"], anchor="A10")
-add("fee_receipt", "te", [("శ్రీ చైతన్య జూనియర్ కాలేజీ", "b"), "ఫీజు రసీదు", "విద్యార్థి: అనిల్ కుమార్", "చెల్లించిన మొత్తం: రూ. 28,000", "తేదీ: 5 ఆగస్టు 2026"],
-    {"AMOUNT": "28000", "DATE": "2026-08-05"}, anchor="A11")
+def dev_anchors():
+    add("fee_receipt", "en", [("Sai Vidya Hostel", "b"), "Fee Receipt", "Student: Karthik Reddy", "Room: B-214", "Amount paid: Rs 45,000", "Paid on: 12 Sep 2026", "Receipt No: SV-20931"],
+        {"AMOUNT": "45000", "DATE": "2026-09-12"}, anchor="A1")
+    add("utility_bill", "en", [("Southern Power Distribution", "b"), "Electricity Bill", "Consumer No: 2210045", "Billing month: September 2026", "Amount due: Rs 1,842", "Due date: 15 Oct 2026"],
+        {"AMOUNT": "1842", "DATE": "2026-10-15"}, anchor="A2")
+    add("ticket", "en", [("IndiGo 6E 5214", "b"), "E-ticket", "Hyderabad (HYD) to Visakhapatnam (VTZ)", "Date: 21 Oct 2026", "Departure 07:35", "PNR: QX7M2K"],
+        {"DATE": "2026-10-21"}, anchor="A3")
+    add("utility_bill", "en", [("Metro Water Board", "b"), "Water Bill", "Consumer: 88123", "Amount due: Rs 460", "Due date: 3 Nov 2026"],
+        {"AMOUNT": "460", "DATE": "2026-11-03"}, anchor="A4")
+    add("notes", "en", [("Organic Chemistry - Lecture 7", "b"), "SN1 and SN2 reaction mechanisms", "Carbocation stability order", "Nucleophile strength and solvent effects", "Revision: Markovnikov's rule"], anchor="A5")
+    add("appointment", "en", [("Apollo Clinic", "b"), "Appointment card", "Dr. Meera Rao, Cardiology", "Address: Road No 36, Jubilee Hills", "Hyderabad 500033", "Phone: 98480 12345", "Appointment: 24 Sep 2026, 10:30 AM"],
+        {"PHONE": "+919848012345", "DATE": "2026-09-24", "ADDRESS": "Road No 36, Jubilee Hills, Hyderabad 500033"}, anchor="A6")
+    # A7 is a UPI payment, added below with the other payments (needs the layout renderer)
+    add("timetable", "en", [("Semester Exam Timetable", "b"), "B.Tech III Year", "2 Dec 2026  Operating Systems", "4 Dec 2026  Computer Networks", "7 Dec 2026  Database Systems", "9 Dec 2026  Software Engineering"],
+        {"DATE": "2026-12-02"}, anchor="A8")
+    add("fee_receipt", "hi", [("सरस्वती विद्या मंदिर", "b"), "शुल्क रसीद", "छात्र: आरव शर्मा", "जमा राशि: ₹12,500", "दिनांक: 18 अगस्त 2026"],
+        {"AMOUNT": "12500", "DATE": "2026-08-18"}, anchor="A9")
+    add("notes", "hi", [("इतिहास नोट्स - मुगल साम्राज्य", "b"), "अकबर की नीतियाँ", "सुलह-ए-कुल और धार्मिक सहिष्णुता", "मनसबदारी व्यवस्था", "राजस्व प्रणाली"], anchor="A10")
+    add("fee_receipt", "te", [("శ్రీ చైతన్య జూనియర్ కాలేజీ", "b"), "ఫీజు రసీదు", "విద్యార్థి: అనిల్ కుమార్", "చెల్లించిన మొత్తం: రూ. 28,000", "తేదీ: 5 ఆగస్టు 2026"],
+        {"AMOUNT": "28000", "DATE": "2026-08-05"}, anchor="A11")
+
+def heldout_anchors():
+    add("rent_receipt", "en", [("Rent Receipt", "b"), "Gokul Residency, Flat 3B", "Tenant: Rohit Jain", "Month: Oct 2026", "Rent received: Rs 14,000", "Date: 3 Oct 2026"], {"AMOUNT": "14000", "DATE": "2026-10-03"}, anchor="H1")
+    add("ticket", "en", [("Vaigai Express 12635", "b"), "Train e-ticket", "Chennai to Madurai", "Journey date: 3 Nov 2026", "Coach S4  Berth 21", "PNR: 4412907785"], {"DATE": "2026-11-03"}, anchor="H2")
+    add("insurance", "en", [("Bright Life Insurance", "b"), "Premium reminder", "Policy no: 55667788", "Premium due: Rs 18,600", "Due date: 28 Nov 2026"], {"AMOUNT": "18600", "DATE": "2026-11-28"}, anchor="H3")
+    add("notes", "en", [("Computer Networks - Lecture 11", "b"), "TCP congestion control", "Slow start and congestion avoidance", "Fast retransmit and recovery", "Revision: flow control"], anchor="H4")
+    add("appointment", "en", [("Sunrise Dental Care", "b"), "Appointment card", "Dr. Vikram Shetty, Dentistry", "Address: Plot 18, Kondapur", "Hyderabad 500084", "Phone: 90030 55512", "Appointment: 19 Nov 2026, 11:00"],
+        {"PHONE": "+919003055512", "DATE": "2026-11-19", "ADDRESS": "Plot 18, Kondapur, Hyderabad 500084"}, anchor="H5")
+    # H6 is a UPI payment, added with the other payments
+    add("recipe", "en", [("Recipe: Gongura pachadi", "b"), "gongura leaves 2 bunches", "red chillies and garlic", "roast and grind with salt", "temper with mustard seeds"], anchor="H7")
+    add("utility_bill", "hi", [("पश्चिम विद्युत निगम", "b"), "बिजली का बिल", "उपभोक्ता संख्या: 5521907", "देय राशि: ₹2,340", "अंतिम तिथि: 9 नवंबर 2026"], {"AMOUNT": "2340", "DATE": "2026-11-09"}, anchor="H8")
+    add("notes", "hi", [("रसायन विज्ञान - अम्ल और क्षार", "b"), "pH स्केल और संकेतक", "तटस्थीकरण अभिक्रिया", "दैनिक जीवन में अम्ल"], anchor="H9")
+    add("appointment", "te", [("శ్రీ లక్ష్మి డెంటల్ క్లినిక్", "b"), "అపాయింట్‌మెంట్ కార్డ్", "డాక్టర్ రమ్య", "ఫోన్: 90000 11122", "తేదీ: 14 నవంబర్ 2026"], {"PHONE": "+919000011122", "DATE": "2026-11-14"}, anchor="H10")
+    add("notes", "te", [("చరిత్ర - విజయనగర సామ్రాజ్యం", "b"), "శ్రీకృష్ణదేవరాయలు పాలన", "హంపి శిల్పకళ", "వాణిజ్యం మరియు పన్నులు"], anchor="H11")
+
+(heldout_anchors if HELD else dev_anchors)()
 
 # ---------------------------------------------------------------- fillers ----------------------------------------------
 def pick(seq): return R.choice(seq)
@@ -221,7 +242,8 @@ def add_upi(payee, paise, y, m, d, hh, mm, layout, style, outcome="success", rec
 
 def upi_batch():
     # A7: the anchor payment
-    add_upi("Lakshmi Tiffins", 24000, 2026, 9, 14, 8, 20, 1, 0, anchor="A7")
+    if HELD: add_upi("Kamat Medical Store", 64000, 2026, 10, 6, 17, 40, 2, 1, anchor="H6")
+    else: add_upi("Lakshmi Tiffins", 24000, 2026, 9, 14, 8, 20, 1, 0, anchor="A7")
     for i in range(34):  # ordinary successful payments across Aug-Oct 2026
         add_upi(pick(PAYEES), R.randint(20, 3200) * 100 + R.choice([0, 0, 0, 50]), 2026, R.randint(8, 10), R.randint(1, 28), R.randint(7, 22), R.randint(0, 59), R.randint(0, 2), R.randint(0, 2))
     firsts = [d for d in docs if d["type"] == "upi_payment" and d["upi"]["outcome"] == "SUCCESS" and d["anchor"] is None][:3]
@@ -247,14 +269,20 @@ assert len(docs) == 300, len(docs)
 
 # ---------------------------------------------------------------- uniqueness guards ------------------------------------------
 def text(d): return "\n".join(l if isinstance(l, str) else l[0] for l in d["lines"])
-anchor_keys = {"A1": ["Sai Vidya"], "A2": ["Southern Power"], "A3": ["Visakhapatnam", "VTZ"], "A4": ["Water Bill", "Metro Water"], "A5": ["SN1", "Organic Chemistry"], "A6": ["Meera Rao"],
-               "A7": ["Lakshmi Tiffins"], "A8": ["Operating Systems"], "A9": ["सरस्वती"], "A10": ["मुगल"], "A11": ["శ్రీ చైతన్య"]}
+if HELD:
+    anchor_keys = {"H1": ["Gokul Residency"], "H2": ["Madurai"], "H3": ["Bright Life"], "H4": ["TCP"], "H5": ["Vikram Shetty"], "H6": ["Kamat Medical"], "H7": ["Gongura"],
+                   "H8": ["पश्चिम विद्युत"], "H9": ["अम्ल"], "H10": ["డెంటల్"], "H11": ["విజయనగర"]}
+else:
+    anchor_keys = {"A1": ["Sai Vidya"], "A2": ["Southern Power"], "A3": ["Visakhapatnam", "VTZ"], "A4": ["Water Bill", "Metro Water"], "A5": ["SN1", "Organic Chemistry"], "A6": ["Meera Rao"],
+                   "A7": ["Lakshmi Tiffins"], "A8": ["Operating Systems"], "A9": ["सरस्वती"], "A10": ["मुगल"], "A11": ["శ్రీ చైతన్య"]}
 for a, keys in anchor_keys.items():
     owners = [d["id"] for d in docs if any(k in text(d) for k in keys)]
     assert len(owners) == 1 and docs[int(owners[0][1:]) - 1]["anchor"] == a, (a, owners)
-assert not [d for d in docs if d["type"] == "utility_bill" and d["lang"] == "en" and "Electricity" in text(d) and "15 Oct 2026" in text(d) and d["anchor"] != "A2"]
+if not HELD:
+    assert not [d for d in docs if d["type"] == "utility_bill" and d["lang"] == "en" and "Electricity" in text(d) and "15 Oct 2026" in text(d) and d["anchor"] != "A2"]
 assert len({text(d) for d in docs}) == 300, "two documents have identical text (they would be deduplicated by the indexer)"
-assert not [d for d in docs if "car" in text(d).lower().split() and "insurance" in text(d).lower()], "negative query 'car insurance' must have no car-insurance document"
+NEG_WORD = "bike" if HELD else "car"
+assert not [d for d in docs if NEG_WORD in text(d).lower().split() and "insurance" in text(d).lower()], f"negative query '{NEG_WORD} insurance' must have no such document"
 
 # ---------------------------------------------------------------- ledger truth --------------------------------------------------
 ledger = collections.defaultdict(int); upi_docs = [d for d in docs if d["type"] == "upi_payment"]
@@ -265,7 +293,7 @@ for d in upi_docs:
         seen.add(u["ref"]); ledger[u["date"][:7]] += u["paise"]
 
 by_anchor = {d["anchor"]: d["id"] for d in docs if d["anchor"]}
-json.dump({"seed": 2026, "docs": docs, "ledger_truth_paise": dict(sorted(ledger.items())), "n_docs": len(docs)}, open(OUT / "manifest.json", "w"), ensure_ascii=False, indent=1)
+json.dump({"seed": 7777 if HELD else 2026, "set": SET, "docs": docs, "ledger_truth_paise": dict(sorted(ledger.items())), "n_docs": len(docs)}, open(OUT / (PREFIX + "manifest.json"), "w"), ensure_ascii=False, indent=1)
 
 # ---------------------------------------------------------------- queries -----------------------------------------------------------
 # 11 intents x 5 styles. style: en, te (Telugu script), hi (Devanagari), rt (Roman-script Telugu), mix (code-mixed).
@@ -284,6 +312,21 @@ Q = [
  ("A11", "value", {"type": "AMOUNT", "value": "28000"}, {"en": "how much was the Sri Chaitanya junior college fee", "te": "శ్రీ చైతన్య జూనియర్ కాలేజీ ఫీజు ఎంత", "hi": "श्री चैतन्य जूनियर कॉलेज की फीस कितनी थी", "rt": "sri chaitanya junior college fee entha", "mix": "Sri Chaitanya junior college fee ఎంత"}),
  (None, "negative", None, {"en": "how much was the car insurance", "te": "కారు ఇన్సూరెన్స్ ఎంత", "hi": "कार बीमा कितना था", "rt": "car insurance entha", "mix": "car insurance ఎంత కట్టాను"}),
 ]
+HELD_Q = [
+ ("H1", "value", {"type": "AMOUNT", "value": "14000"}, {"en": "how much was the rent at Gokul Residency", "te": "గోకుల్ రెసిడెన్సీ అద్దె ఎంత", "hi": "गोकुल रेजीडेंसी का किराया कितना था", "rt": "gokul residency rent entha", "mix": "Gokul Residency rent ఎంత కట్టాను"}),
+ ("H2", "find", None, {"en": "train ticket to Madurai", "te": "మదురై రైలు టికెట్", "hi": "मदुरै की ट्रेन का टिकट", "rt": "madurai train ticket", "mix": "Madurai కి train ticket"}),
+ ("H3", "value", {"type": "DATE", "value": "2026-11-28"}, {"en": "when is the Bright Life insurance premium due", "te": "బ్రైట్ లైఫ్ ఇన్సూరెన్స్ ప్రీమియం ఎప్పుడు కట్టాలి", "hi": "ब्राइट लाइफ बीमा का प्रीमियम कब भरना है", "rt": "bright life insurance premium eppudu kattali", "mix": "Bright Life insurance premium ఎప్పుడు due"}),
+ ("H4", "find", None, {"en": "notes on TCP congestion control", "te": "TCP కంజెషన్ కంట్రోల్ నోట్స్", "hi": "टीसीपी कंजेशन कंट्रोल के नोट्स", "rt": "tcp congestion control notes", "mix": "computer networks లో TCP congestion control notes"}),
+ ("H5", "value", {"type": "PHONE", "value": "+919003055512"}, {"en": "Dr Vikram Shetty dentist phone number", "te": "డాక్టర్ విక్రమ్ శెట్టి దంత వైద్యుని ఫోన్ నంబర్", "hi": "डॉ. विक्रम शेट्टी दंत चिकित्सक का फोन नंबर", "rt": "Dr Vikram Shetty dentist phone number enti", "mix": "Dr Vikram Shetty dentist ఫోన్ number"}),
+ ("H6", "find", None, {"en": "payment to Kamat Medical Store", "te": "కామత్ మెడికల్ స్టోర్ కి చెల్లింపు", "hi": "कामत मेडिकल स्टोर को भुगतान", "rt": "Kamat Medical Store ki payment chesanu", "mix": "Kamat Medical Store కి payment screenshot"}),
+ ("H7", "find", None, {"en": "gongura pickle recipe", "te": "గోంగూర పచ్చడి రెసిపీ", "hi": "गोंगुरा की चटनी की रेसिपी", "rt": "gongura pachadi recipe ela cheyali", "mix": "gongura pachadi గురించి recipe"}),
+ ("H8", "value", {"type": "AMOUNT", "value": "2340"}, {"en": "how much was the Paschim Vidyut Nigam electricity bill", "te": "పశ్చిమ్ విద్యుత్ నిగమ్ కరెంటు బిల్లు ఎంత", "hi": "पश्चिम विद्युत निगम का बिजली बिल कितना आया", "rt": "paschim vidyut nigam current bill entha", "mix": "Paschim Vidyut Nigam bill कितना आया"}),
+ ("H9", "find", None, {"en": "chemistry notes on acids and bases", "te": "ఆమ్లాలు క్షారాలు రసాయన శాస్త్రం నోట్స్", "hi": "अम्ल और क्षार पर रसायन विज्ञान के नोट्स", "rt": "acids and bases chemistry notes", "mix": "acids and bases గురించి chemistry notes"}),
+ ("H10", "value", {"type": "DATE", "value": "2026-11-14"}, {"en": "when is the Sri Lakshmi dental clinic appointment", "te": "శ్రీ లక్ష్మి డెంటల్ క్లినిక్ అపాయింట్‌మెంట్ ఎప్పుడు", "hi": "श्री लक्ष्मी डेंटल क्लिनिक की अपॉइंटमेंट कब है", "rt": "sri lakshmi dental clinic appointment eppudu", "mix": "Sri Lakshmi dental clinic appointment ఎప్పుడు"}),
+ ("H11", "find", None, {"en": "history notes on the Vijayanagara empire", "te": "విజయనగర సామ్రాజ్యం చరిత్ర నోట్స్", "hi": "विजयनगर साम्राज्य के इतिहास के नोट्स", "rt": "vijayanagara samrajyam history notes", "mix": "Vijayanagara empire గురించి history notes"}),
+ (None, "negative", None, {"en": "how much was the bike insurance", "te": "బైక్ ఇన్సూరెన్స్ ఎంత", "hi": "बाइक बीमा कितना था", "rt": "bike insurance entha", "mix": "bike insurance ఎంత కట్టాను"}),
+]
+if HELD: Q = HELD_Q
 anchor_ids = {a: d["id"] for d in docs if (a := d["anchor"])}
 queries = []
 for intent, kind, answer, texts in Q:
@@ -292,7 +335,7 @@ for intent, kind, answer, texts in Q:
                         "relevant": [anchor_ids[intent]] if intent else [], "answer": answer,
                         "target_lang": next(d["lang"] for d in docs if d["id"] == anchor_ids[intent]) if intent else None})
 assert len(queries) == 60
-json.dump({"queries": queries, "styles": ["en", "te", "hi", "rt", "mix"]}, open(OUT / "queries.json", "w"), ensure_ascii=False, indent=1)
+json.dump({"queries": queries, "styles": ["en", "te", "hi", "rt", "mix"]}, open(OUT / (PREFIX + "queries.json"), "w"), ensure_ascii=False, indent=1)
 c = collections.Counter((d["type"], d["lang"]) for d in docs)
 print(f"{len(docs)} documents, {len(queries)} queries")
 for k, v in sorted(c.items()): print(f"  {k[0]:14s} {k[1]}  {v}")

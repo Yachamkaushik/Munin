@@ -27,4 +27,7 @@ object Bm25 {
         }
         return score
     }
+
+    /** How many of the query's phrases (words) occur in this row. */
+    fun matchedPhrases(info: IntArray): Int = (0 until info[0]).count { info[5 + 3 * it] > 0 }
 }

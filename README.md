@@ -7,10 +7,12 @@ Status: **steps 1-7 built, plus an evaluation harness** (tokenizer parity, index
 ledger, voice query, and a 300-document / 60-query evaluation).
 
 > **Read [docs/EVALUATION.md](docs/EVALUATION.md) before quoting any quality claim.** Measured on a labelled set, Munin is weaker than
-> the hand-picked checks in the per-step sections below suggest: with perfect text, recall@5 is 85% for meaning-only search but 67% for
-> the merged ranking (the keyword leg adds noise across languages; merged only wins when query and document share a language),
-> Telugu-script and Hindi queries over English documents are weak, only 10 of 25 value questions were answered correctly, and 2 of 5
-> "no such document" questions got a made-up answer. The per-step tables report what each step was checked against, not accuracy.
+> the hand-picked checks in the per-step sections below suggest. The original behaviour had merged search (recall@5 67% with perfect text)
+> *worse* than meaning-only (85%), made-up answers to 2 of 5 "no such document" questions, and Telugu documents unreadable by OCR. Two
+> fixes were then tried and checked on a separate held-out set: a keyword **coverage gate** (merged recall@5 73% -> 87% held-out, now level with
+> meaning-only, not better) and an answer **grounding gate** (no wrong or made-up answers, but only 6 of 25 value questions answered
+> correctly instead of 10). Both are now the app's defaults. Telugu text in images is still not read.
+> The per-step sections below report what each step was checked against, not accuracy.
 
 ## Setup
 
@@ -331,7 +333,7 @@ A labelled test set and a repeatable measurement; full write-up, tables and char
   questions with no answer. The Telugu/Hindi/Roman/mixed wording was written by the author and **needs native-speaker review**.
 - **Two modes:** perfect text (isolates retrieval from OCR) and real ML Kit OCR on rendered images. Three configurations: keywords only, meaning
   only, merged.
-- `tools/eval/run_eval.sh` runs it on a connected device or emulator (about 2 minutes); `report.py` computes recall@1/@5, MRR, value-question
+- `tools/eval/run_eval.sh [modes] [dev|heldout]` runs it on a connected device or emulator (about 2 minutes); `report.py` computes recall@1/@5, MRR, value-question
   accuracy, field extraction, ledger agreement and latency from the raw results in `tools/eval/results/`.
 
 | Mode | Config | Recall@1 | Recall@5 | MRR |
@@ -339,5 +341,6 @@ A labelled test set and a repeatable measurement; full write-up, tables and char
 | Perfect text | Keywords / Meaning / **Merged** | 49% / 69% / 58% | 51% / 85% / 67% | 0.50 / 0.77 / 0.62 |
 | Real OCR | Keywords / Meaning / **Merged** | 47% / 67% / 56% | 49% / 76% / 71% | 0.48 / 0.71 / 0.63 |
 
-The numbers are an **untuned baseline**: no logic was changed after seeing them. Limits (synthetic, small, not native-reviewed, no held-out
-set, emulator timing) are listed in the write-up.
+The table is the **original, untuned baseline**. A second, held-out corpus (new documents, new queries) was then used to check two fixes that
+were selected on this one by a rule declared in advance; see "Fix experiments" in the write-up, which also lists the limits (synthetic, small,
+not native-reviewed, emulator timing).

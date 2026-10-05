@@ -1,0 +1,796 @@
+{
+ "queries": [
+  {
+   "id": "q01",
+   "intent": "H1",
+   "style": "en",
+   "kind": "value",
+   "text": "how much was the rent at Gokul Residency",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "14000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q02",
+   "intent": "H1",
+   "style": "te",
+   "kind": "value",
+   "text": "గోకుల్ రెసిడెన్సీ అద్దె ఎంత",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "14000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q03",
+   "intent": "H1",
+   "style": "hi",
+   "kind": "value",
+   "text": "गोकुल रेजीडेंसी का किराया कितना था",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "14000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q04",
+   "intent": "H1",
+   "style": "rt",
+   "kind": "value",
+   "text": "gokul residency rent entha",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "14000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q05",
+   "intent": "H1",
+   "style": "mix",
+   "kind": "value",
+   "text": "Gokul Residency rent ఎంత కట్టాను",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "14000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q06",
+   "intent": "H2",
+   "style": "en",
+   "kind": "find",
+   "text": "train ticket to Madurai",
+   "relevant": [
+    "d002"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q07",
+   "intent": "H2",
+   "style": "te",
+   "kind": "find",
+   "text": "మదురై రైలు టికెట్",
+   "relevant": [
+    "d002"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q08",
+   "intent": "H2",
+   "style": "hi",
+   "kind": "find",
+   "text": "मदुरै की ट्रेन का टिकट",
+   "relevant": [
+    "d002"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q09",
+   "intent": "H2",
+   "style": "rt",
+   "kind": "find",
+   "text": "madurai train ticket",
+   "relevant": [
+    "d002"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q10",
+   "intent": "H2",
+   "style": "mix",
+   "kind": "find",
+   "text": "Madurai కి train ticket",
+   "relevant": [
+    "d002"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q11",
+   "intent": "H3",
+   "style": "en",
+   "kind": "value",
+   "text": "when is the Bright Life insurance premium due",
+   "relevant": [
+    "d003"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-28"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q12",
+   "intent": "H3",
+   "style": "te",
+   "kind": "value",
+   "text": "బ్రైట్ లైఫ్ ఇన్సూరెన్స్ ప్రీమియం ఎప్పుడు కట్టాలి",
+   "relevant": [
+    "d003"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-28"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q13",
+   "intent": "H3",
+   "style": "hi",
+   "kind": "value",
+   "text": "ब्राइट लाइफ बीमा का प्रीमियम कब भरना है",
+   "relevant": [
+    "d003"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-28"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q14",
+   "intent": "H3",
+   "style": "rt",
+   "kind": "value",
+   "text": "bright life insurance premium eppudu kattali",
+   "relevant": [
+    "d003"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-28"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q15",
+   "intent": "H3",
+   "style": "mix",
+   "kind": "value",
+   "text": "Bright Life insurance premium ఎప్పుడు due",
+   "relevant": [
+    "d003"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-28"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q16",
+   "intent": "H4",
+   "style": "en",
+   "kind": "find",
+   "text": "notes on TCP congestion control",
+   "relevant": [
+    "d004"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q17",
+   "intent": "H4",
+   "style": "te",
+   "kind": "find",
+   "text": "TCP కంజెషన్ కంట్రోల్ నోట్స్",
+   "relevant": [
+    "d004"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q18",
+   "intent": "H4",
+   "style": "hi",
+   "kind": "find",
+   "text": "टीसीपी कंजेशन कंट्रोल के नोट्स",
+   "relevant": [
+    "d004"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q19",
+   "intent": "H4",
+   "style": "rt",
+   "kind": "find",
+   "text": "tcp congestion control notes",
+   "relevant": [
+    "d004"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q20",
+   "intent": "H4",
+   "style": "mix",
+   "kind": "find",
+   "text": "computer networks లో TCP congestion control notes",
+   "relevant": [
+    "d004"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q21",
+   "intent": "H5",
+   "style": "en",
+   "kind": "value",
+   "text": "Dr Vikram Shetty dentist phone number",
+   "relevant": [
+    "d005"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919003055512"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q22",
+   "intent": "H5",
+   "style": "te",
+   "kind": "value",
+   "text": "డాక్టర్ విక్రమ్ శెట్టి దంత వైద్యుని ఫోన్ నంబర్",
+   "relevant": [
+    "d005"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919003055512"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q23",
+   "intent": "H5",
+   "style": "hi",
+   "kind": "value",
+   "text": "डॉ. विक्रम शेट्टी दंत चिकित्सक का फोन नंबर",
+   "relevant": [
+    "d005"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919003055512"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q24",
+   "intent": "H5",
+   "style": "rt",
+   "kind": "value",
+   "text": "Dr Vikram Shetty dentist phone number enti",
+   "relevant": [
+    "d005"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919003055512"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q25",
+   "intent": "H5",
+   "style": "mix",
+   "kind": "value",
+   "text": "Dr Vikram Shetty dentist ఫోన్ number",
+   "relevant": [
+    "d005"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919003055512"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q26",
+   "intent": "H6",
+   "style": "en",
+   "kind": "find",
+   "text": "payment to Kamat Medical Store",
+   "relevant": [
+    "d011"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q27",
+   "intent": "H6",
+   "style": "te",
+   "kind": "find",
+   "text": "కామత్ మెడికల్ స్టోర్ కి చెల్లింపు",
+   "relevant": [
+    "d011"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q28",
+   "intent": "H6",
+   "style": "hi",
+   "kind": "find",
+   "text": "कामत मेडिकल स्टोर को भुगतान",
+   "relevant": [
+    "d011"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q29",
+   "intent": "H6",
+   "style": "rt",
+   "kind": "find",
+   "text": "Kamat Medical Store ki payment chesanu",
+   "relevant": [
+    "d011"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q30",
+   "intent": "H6",
+   "style": "mix",
+   "kind": "find",
+   "text": "Kamat Medical Store కి payment screenshot",
+   "relevant": [
+    "d011"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q31",
+   "intent": "H7",
+   "style": "en",
+   "kind": "find",
+   "text": "gongura pickle recipe",
+   "relevant": [
+    "d006"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q32",
+   "intent": "H7",
+   "style": "te",
+   "kind": "find",
+   "text": "గోంగూర పచ్చడి రెసిపీ",
+   "relevant": [
+    "d006"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q33",
+   "intent": "H7",
+   "style": "hi",
+   "kind": "find",
+   "text": "गोंगुरा की चटनी की रेसिपी",
+   "relevant": [
+    "d006"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q34",
+   "intent": "H7",
+   "style": "rt",
+   "kind": "find",
+   "text": "gongura pachadi recipe ela cheyali",
+   "relevant": [
+    "d006"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q35",
+   "intent": "H7",
+   "style": "mix",
+   "kind": "find",
+   "text": "gongura pachadi గురించి recipe",
+   "relevant": [
+    "d006"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q36",
+   "intent": "H8",
+   "style": "en",
+   "kind": "value",
+   "text": "how much was the Paschim Vidyut Nigam electricity bill",
+   "relevant": [
+    "d007"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "2340"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q37",
+   "intent": "H8",
+   "style": "te",
+   "kind": "value",
+   "text": "పశ్చిమ్ విద్యుత్ నిగమ్ కరెంటు బిల్లు ఎంత",
+   "relevant": [
+    "d007"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "2340"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q38",
+   "intent": "H8",
+   "style": "hi",
+   "kind": "value",
+   "text": "पश्चिम विद्युत निगम का बिजली बिल कितना आया",
+   "relevant": [
+    "d007"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "2340"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q39",
+   "intent": "H8",
+   "style": "rt",
+   "kind": "value",
+   "text": "paschim vidyut nigam current bill entha",
+   "relevant": [
+    "d007"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "2340"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q40",
+   "intent": "H8",
+   "style": "mix",
+   "kind": "value",
+   "text": "Paschim Vidyut Nigam bill कितना आया",
+   "relevant": [
+    "d007"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "2340"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q41",
+   "intent": "H9",
+   "style": "en",
+   "kind": "find",
+   "text": "chemistry notes on acids and bases",
+   "relevant": [
+    "d008"
+   ],
+   "answer": null,
+   "target_lang": "hi"
+  },
+  {
+   "id": "q42",
+   "intent": "H9",
+   "style": "te",
+   "kind": "find",
+   "text": "ఆమ్లాలు క్షారాలు రసాయన శాస్త్రం నోట్స్",
+   "relevant": [
+    "d008"
+   ],
+   "answer": null,
+   "target_lang": "hi"
+  },
+  {
+   "id": "q43",
+   "intent": "H9",
+   "style": "hi",
+   "kind": "find",
+   "text": "अम्ल और क्षार पर रसायन विज्ञान के नोट्स",
+   "relevant": [
+    "d008"
+   ],
+   "answer": null,
+   "target_lang": "hi"
+  },
+  {
+   "id": "q44",
+   "intent": "H9",
+   "style": "rt",
+   "kind": "find",
+   "text": "acids and bases chemistry notes",
+   "relevant": [
+    "d008"
+   ],
+   "answer": null,
+   "target_lang": "hi"
+  },
+  {
+   "id": "q45",
+   "intent": "H9",
+   "style": "mix",
+   "kind": "find",
+   "text": "acids and bases గురించి chemistry notes",
+   "relevant": [
+    "d008"
+   ],
+   "answer": null,
+   "target_lang": "hi"
+  },
+  {
+   "id": "q46",
+   "intent": "H10",
+   "style": "en",
+   "kind": "value",
+   "text": "when is the Sri Lakshmi dental clinic appointment",
+   "relevant": [
+    "d009"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-14"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q47",
+   "intent": "H10",
+   "style": "te",
+   "kind": "value",
+   "text": "శ్రీ లక్ష్మి డెంటల్ క్లినిక్ అపాయింట్‌మెంట్ ఎప్పుడు",
+   "relevant": [
+    "d009"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-14"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q48",
+   "intent": "H10",
+   "style": "hi",
+   "kind": "value",
+   "text": "श्री लक्ष्मी डेंटल क्लिनिक की अपॉइंटमेंट कब है",
+   "relevant": [
+    "d009"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-14"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q49",
+   "intent": "H10",
+   "style": "rt",
+   "kind": "value",
+   "text": "sri lakshmi dental clinic appointment eppudu",
+   "relevant": [
+    "d009"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-14"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q50",
+   "intent": "H10",
+   "style": "mix",
+   "kind": "value",
+   "text": "Sri Lakshmi dental clinic appointment ఎప్పుడు",
+   "relevant": [
+    "d009"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-14"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q51",
+   "intent": "H11",
+   "style": "en",
+   "kind": "find",
+   "text": "history notes on the Vijayanagara empire",
+   "relevant": [
+    "d010"
+   ],
+   "answer": null,
+   "target_lang": "te"
+  },
+  {
+   "id": "q52",
+   "intent": "H11",
+   "style": "te",
+   "kind": "find",
+   "text": "విజయనగర సామ్రాజ్యం చరిత్ర నోట్స్",
+   "relevant": [
+    "d010"
+   ],
+   "answer": null,
+   "target_lang": "te"
+  },
+  {
+   "id": "q53",
+   "intent": "H11",
+   "style": "hi",
+   "kind": "find",
+   "text": "विजयनगर साम्राज्य के इतिहास के नोट्स",
+   "relevant": [
+    "d010"
+   ],
+   "answer": null,
+   "target_lang": "te"
+  },
+  {
+   "id": "q54",
+   "intent": "H11",
+   "style": "rt",
+   "kind": "find",
+   "text": "vijayanagara samrajyam history notes",
+   "relevant": [
+    "d010"
+   ],
+   "answer": null,
+   "target_lang": "te"
+  },
+  {
+   "id": "q55",
+   "intent": "H11",
+   "style": "mix",
+   "kind": "find",
+   "text": "Vijayanagara empire గురించి history notes",
+   "relevant": [
+    "d010"
+   ],
+   "answer": null,
+   "target_lang": "te"
+  },
+  {
+   "id": "q56",
+   "intent": "NEG",
+   "style": "en",
+   "kind": "negative",
+   "text": "how much was the bike insurance",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q57",
+   "intent": "NEG",
+   "style": "te",
+   "kind": "negative",
+   "text": "బైక్ ఇన్సూరెన్స్ ఎంత",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q58",
+   "intent": "NEG",
+   "style": "hi",
+   "kind": "negative",
+   "text": "बाइक बीमा कितना था",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q59",
+   "intent": "NEG",
+   "style": "rt",
+   "kind": "negative",
+   "text": "bike insurance entha",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q60",
+   "intent": "NEG",
+   "style": "mix",
+   "kind": "negative",
+   "text": "bike insurance ఎంత కట్టాను",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  }
+ ],
+ "styles": [
+  "en",
+  "te",
+  "hi",
+  "rt",
+  "mix"
+ ]
+}

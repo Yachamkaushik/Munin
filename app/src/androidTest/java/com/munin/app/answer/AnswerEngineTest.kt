@@ -21,8 +21,8 @@ import org.junit.Test
 
 /** Question -> search -> extracted fact -> answer, with the real model and a small multilingual corpus. */
 class AnswerEngineTest {
-    private fun ask(q: String): AnswerOutcome = runBlocking {
-        val outcome = answers.answer(q, search.search(q))
+    private fun ask(q: String, engine: AnswerEngine = answers): AnswerOutcome = runBlocking {
+        val outcome = engine.answer(q, search.search(q))
         Log.i("MuninAnswer", "\"$q\" -> ${describe(outcome)}")
         outcome
     }
@@ -33,7 +33,7 @@ class AnswerEngineTest {
         AnswerOutcome.NotAQuestion -> "not a question"
     }
 
-    private fun found(q: String) = (ask(q) as? AnswerOutcome.Found)?.answer ?: error("expected an answer for \"$q\": ${describe(ask(q))}")
+    private fun found(q: String, engine: AnswerEngine = answers) = (ask(q, engine) as? AnswerOutcome.Found)?.answer ?: error("expected an answer for \"$q\": ${describe(ask(q, engine))}")
 
     @Test fun hostelFeeInEnglish() {
         val a = found("how much was the hostel fee")
@@ -44,22 +44,33 @@ class AnswerEngineTest {
         assertTrue(a.confidence >= 0.8f)
     }
 
-    @Test fun sameQuestionInHindiAndTelugu() {
-        val hi = found("छात्रावास शुल्क कितना था")
-        assertEquals("45000", hi.value); assertEquals("hi_fee", hi.source.displayName)
+    @Test fun sameQuestionInTeluguStillAnswers() {
         val te = found("హాస్టల్ ఫీజు ఎంత")
         assertEquals("45000", te.value); assertEquals("te_fee", te.source.displayName)
     }
 
-    @Test fun mixedAndRomanScriptQuestions() {
-        assertEquals("45000", found("hostel fee ఎంత కట్టాను").value)
-        assertEquals("1250", found("current bill entha").value) // Roman Telugu: electricity bill
+    /**
+     * The grounding gate (the shipped default) declines when the question contains a word that is rare in the collection and absent from the
+     * document, and it cannot yet tell a generic word from a topic word: "pay" (the receipt says "paid"), Hindi "था", the Telugu verb "కట్టాను".
+     * So it sometimes declines a question the original gate answered correctly, but must never answer wrongly. Measured in docs/EVALUATION.md.
+     */
+    @Test fun theGroundingGateMayDeclineButNeverAnswersDifferentlyFromTheOriginalGate() {
+        val cases = listOf("छात्रावास शुल्क कितना था" to "45000", "hostel fee ఎంత కట్టాను" to "45000", "when did I pay the hostel fee" to "2026-09-12")
+        for ((q, expected) in cases) {
+            assertEquals(q, expected, found(q, baselineAnswers).value) // the original gate answers all of them
+            when (val o = ask(q)) {
+                is AnswerOutcome.Found -> assertEquals(q, expected, o.answer.value) // if it answers, it is right
+                is AnswerOutcome.Declined -> Log.i("MuninAnswer", "declined by the grounding gate (documented trade-off): $q")
+                AnswerOutcome.NotAQuestion -> error("$q should be recognised as a question")
+            }
+        }
     }
 
     @Test fun datesComeBackNormalizedAndLabelled() {
         val due = found("when is the electricity bill due")
         assertEquals("2026-10-15", due.value); assertEquals("15 Oct 2026", due.display); assertEquals("Due date", due.label)
-        assertEquals("2026-09-12", found("when did I pay the hostel fee").value)
+        // "pay" is not in the document ("Paid on"), so the grounding gate declines this; the original gate answers. See the gate test below.
+        assertEquals("2026-09-12", found("when did I pay the hostel fee", baselineAnswers).value)
     }
 
     @Test fun phoneAndAddressFromTheClinicCard() {
@@ -118,6 +129,7 @@ class AnswerEngineTest {
         lateinit var embedder: E5Embedder
         lateinit var search: SearchEngine
         lateinit var answers: AnswerEngine
+        lateinit var baselineAnswers: AnswerEngine
 
         private val docs = linkedMapOf(
             "en_fee" to "Hostel Fee Receipt\nStudent: Ravi Kumar\nAmount paid: Rs 45,000\nPaid on:12 Sep 2026\nTransaction ID: 4821937560",
@@ -143,7 +155,8 @@ class AnswerEngineTest {
             }
             while (indexer.processNext()) Unit
             search = SearchEngine(db, embedder)
-            answers = AnswerEngine(db)
+            answers = AnswerEngine(db) // the shipped default: AnswerOptions.RECOMMENDED
+            baselineAnswers = AnswerEngine(db, com.munin.app.answer.AnswerOptions.BASELINE)
         }
 
         @AfterClass @JvmStatic fun close() { db.close(); embedder.close() }

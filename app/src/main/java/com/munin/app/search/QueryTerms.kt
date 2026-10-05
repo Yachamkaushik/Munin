@@ -8,8 +8,28 @@ object QueryTerms {
         "how", "what", "when", "where", "which", "who", "show", "find", "get", "did", "do", "does", "much", "many",
     )
 
+    /**
+     * Function words and question words of Hindi, Telugu and their Roman-script spellings, dropped only when asked for
+     * ([extended]). They carry no topic: "का/की/కి/ki" and "कितना/ఎంత/entha" (how much) match half the corpus.
+     */
+    private val EXTENDED_STOPWORDS = setOf(
+        // Hindi
+        "का", "की", "के", "को", "से", "में", "पर", "है", "हैं", "था", "थी", "थे", "और", "कि", "क्या", "कब", "कहाँ", "कहां", "कितना", "कितनी", "कितने",
+        "मेरा", "मेरी", "मेरे", "मुझे", "दिखाओ", "बताओ", "बताइए", "दिखाइए", "कौन", "यह", "वह", "इस", "उस", "एक", "भी", "तो", "ही", "हो", "लिए", "द्वारा",
+        "वाला", "वाली", "आया", "गया", "गई", "हुआ", "करना", "करें", "चाहिए", "किया", "पिछले",
+        // Telugu
+        "ఎంత", "ఎప్పుడు", "ఏమిటి", "ఏంటి", "ఎక్కడ", "ఏ", "ఈ", "ఆ", "కి", "కు", "లో", "ని", "ను", "యొక్క", "తో", "నా", "నాకు", "నేను", "ఉంది", "ఉన్నాయి", "ఉన్న",
+        "చూపించు", "చెప్పు", "గురించి", "లేదా", "మరియు", "అని", "ఇది", "అది", "ఏది", "ఎవరు", "ఎలా", "ఎన్ని", "కూడా", "చేశాను", "కట్టాను",
+        // Roman-script Telugu
+        "entha", "enta", "enti", "ekkada", "eppudu", "ela", "emiti", "undi", "unnayi", "ki", "ku", "lo", "ni", "nu", "naa", "naaku", "nenu", "chesanu", "cheyali",
+        "kattanu", "kattali", "kosam", "gurinchi", "chupinchu", "cheppu", "ante",
+        // Roman-script Hindi
+        "kitna", "kitni", "kitne", "kab", "kahan", "kya", "ka", "ke", "ko", "mein", "me", "se", "hai", "hain", "tha", "thi", "the", "aur", "mera", "meri", "mujhe",
+        "dikhao", "batao", "aaya", "kiya",
+    )
+
     /** Letters, digits, Indic combining marks and joiners make up a word; everything else separates words. */
-    fun tokens(query: String, keepAll: Boolean = false): List<String> {
+    fun tokens(query: String, keepAll: Boolean = false, extended: Boolean = false): List<String> {
         val out = LinkedHashSet<String>()
         val cur = StringBuilder()
         fun flush() {
@@ -18,6 +38,7 @@ object QueryTerms {
             cur.setLength(0)
             val asciiOnly = t.all { it.code < 128 }
             if (!keepAll && asciiOnly && (t.length < 2 || t in STOPWORDS)) return
+            if (extended && t in EXTENDED_STOPWORDS) return
             out += t
         }
         var i = 0

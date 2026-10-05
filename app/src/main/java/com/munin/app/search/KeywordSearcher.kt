@@ -9,7 +9,7 @@ import java.nio.ByteOrder
 class KeywordSearcher(private val db: MuninDatabase) {
 
     /** Top [k] chunks for the query [tokens], best first. Empty when there is nothing to match. */
-    fun search(tokens: List<String>, k: Int): List<ScoredChunk> {
+    fun search(tokens: List<String>, k: Int, minCoverage: Float = 0f): List<ScoredChunk> {
         val sql = db.openHelper.readableDatabase
         return when (db.keywordEngine) {
             KeywordIndex.Engine.FTS4 -> {
@@ -19,7 +19,12 @@ class KeywordSearcher(private val db: MuninDatabase) {
                     "SELECT rowid, matchinfo(${KeywordIndex.TABLE}, 'pcnalx') FROM ${KeywordIndex.TABLE} WHERE ${KeywordIndex.TABLE} MATCH ?",
                     arrayOf(match),
                 ).use { c ->
-                    while (c.moveToNext()) scored += ScoredChunk(c.getLong(0), Bm25.score(ints(c.getBlob(1))).toFloat())
+                    while (c.moveToNext()) {
+                        val info = ints(c.getBlob(1))
+                        // Coverage gate: a row that matches only a sliver of the query (a lone shared word) is a coincidence, not a match.
+                        if (minCoverage > 0f && Bm25.matchedPhrases(info) < required(info[0], minCoverage)) continue
+                        scored += ScoredChunk(c.getLong(0), Bm25.score(info).toFloat())
+                    }
                 }
                 scored.sortedByDescending { it.score }.take(k)
             }
@@ -40,5 +45,10 @@ class KeywordSearcher(private val db: MuninDatabase) {
     private fun ints(blob: ByteArray): IntArray {
         val buf = ByteBuffer.wrap(blob).order(ByteOrder.nativeOrder()).asIntBuffer()
         return IntArray(buf.remaining()).also { buf.get(it) }
+    }
+
+    companion object {
+        /** At least [fraction] of [phrases] words, rounded up, and never fewer than one. */
+        internal fun required(phrases: Int, fraction: Float): Int = kotlin.math.ceil(phrases * fraction.toDouble() - 1e-9).toInt().coerceIn(1, maxOf(1, phrases))
     }
 }

@@ -40,17 +40,35 @@ sealed interface AnswerOutcome {
 }
 
 /**
+ * Switches for the answer gate; the default reproduces the original behaviour so the evaluation can compare.
+ *
+ * [grounding]: every *rare* word of the question (one found in few documents, or none) must appear in the document the answer
+ * comes from. The evaluation showed the original gate answering "how much was the car insurance" from a health-insurance premium,
+ * because the common-ish word "insurance" matched and the unknown word "car" was simply ignored.
+ */
+data class AnswerOptions(val grounding: Boolean = false, val rareDocFrequency: Double = 0.05) {
+    companion object {
+        val BASELINE = AnswerOptions()
+        /**
+         * Selected on the dev set by a rule declared in advance (docs/EVALUATION.md). On the held-out set it removed every wrong and every
+         * made-up answer, at the cost of answering fewer questions (correct answers 10 -> 6 of 25 with perfect text, 8 -> 5 with real OCR).
+         */
+        val RECOMMENDED = AnswerOptions(grounding = true)
+    }
+}
+
+/**
  * Answers value questions from already-extracted facts: take the top search hit, and if it clearly is the right
  * item and has the requested field, return that value with its source. Otherwise decline rather than guess.
  */
-class AnswerEngine(private val db: MuninDatabase) {
+class AnswerEngine(private val db: MuninDatabase, private val options: AnswerOptions = AnswerOptions.RECOMMENDED) {
 
     suspend fun answer(query: String, response: SearchResponse): AnswerOutcome {
         val q = QuestionParser.parse(query) ?: return AnswerOutcome.NotAQuestion
         val top = response.results.firstOrNull() ?: return AnswerOutcome.Declined(q.kind, "nothing matched")
 
         val itemText = db.facts().chunkTexts(top.itemId).joinToString("\n")
-        val evidence = AnswerSelector.itemEvidence(response.results, q, itemText)
+        val evidence = AnswerSelector.itemEvidence(response.results, q, itemText, ungrounded = options.grounding && hasUngroundedRareWord(q, itemText))
         if (evidence == ItemEvidence.NONE) return AnswerOutcome.Declined(q.kind, "nothing in the text clearly matches what you asked about")
 
         val facts = db.facts().forItems(listOf(top.itemId), q.kind.name).map {
@@ -70,6 +88,16 @@ class AnswerEngine(private val db: MuninDatabase) {
         return AnswerOutcome.Found(
             Answer(q.kind, AnswerFormat.display(q.kind, f.value), f.value, f.label, f.raw, top, confidence, f.confidence, others, FactExtractor.lines(itemText).firstOrNull().orEmpty(), caveat(q.kind, f, others.isNotEmpty())),
         )
+    }
+
+    /** True when the question names something rare in the collection that this document does not contain. */
+    private suspend fun hasUngroundedRareWord(q: Question, itemText: String): Boolean {
+        val total = db.chunks().count().coerceAtLeast(1)
+        val limit = maxOf(3.0, options.rareDocFrequency * total)
+        return q.topic.any { word ->
+            val docFrequency = runCatching { db.matchCount("\"$word\"") }.getOrDefault(0) // 0 for a word the collection has never seen
+            docFrequency <= limit && !AnswerSelector.hasWord(word, itemText)
+        }
     }
 
     private fun caveat(kind: FactType, f: ExtractedFact, hasOthers: Boolean): String? = when {

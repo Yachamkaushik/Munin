@@ -4,9 +4,9 @@ How well does Munin find the right screenshot, answer value questions, and add u
 instead of a few hand-picked queries. **The first honest result is that it is weaker than the demo queries suggested**, and
 the headline claim "merging keyword and meaning search beats either alone" does **not** hold on this set.
 
-> The hand-written commentary below describes the committed results. Re-running `tools/eval/run_eval.sh` regenerates the
-> tables and chart further down but not this text. **No change was made to the search, answer or ledger logic after seeing
-> these results**, so they are an untuned baseline.
+> The sections from "What was measured" to "How far to trust this" describe the **original, untuned behaviour** (the baseline).
+> Two fixes were developed afterwards and checked on a separate held-out set: see **Fix experiments** below, which also says what
+> now ships. Re-running `tools/eval/run_eval.sh` regenerates the tables and charts but not the hand-written commentary.
 
 ## What was measured
 
@@ -26,12 +26,12 @@ the headline claim "merging keyword and meaning search beats either alone" does 
 
 | Mode | Configuration | Recall@1 | Recall@5 | MRR | Median search time |
 |---|---:|---:|---:|---:|---:|
-| Perfect text | Keywords only | 49% | 51% | 0.50 | 2 ms |
-| Perfect text | Meaning only (embeddings) | 69% | 85% | 0.77 | 13 ms |
-| Perfect text | Merged (RRF) | 58% | 67% | 0.62 | 13 ms |
+| Perfect text | Keywords only | 49% | 51% | 0.50 | 5 ms |
+| Perfect text | Meaning only (embeddings) | 69% | 85% | 0.77 | 19 ms |
+| Perfect text | Merged (RRF) | 58% | 67% | 0.62 | 20 ms |
 | Real OCR | Keywords only | 47% | 49% | 0.48 | 5 ms |
-| Real OCR | Meaning only (embeddings) | 67% | 76% | 0.71 | 18 ms |
-| Real OCR | Merged (RRF) | 56% | 71% | 0.63 | 19 ms |
+| Real OCR | Meaning only (embeddings) | 67% | 76% | 0.71 | 20 ms |
+| Real OCR | Merged (RRF) | 56% | 71% | 0.63 | 20 ms |
 
 | Mode | Value questions | Wrongly answered when no document exists | Document fields extracted (truth present) | Ledger |
 |---|---:|---:|---:|---:|
@@ -50,8 +50,8 @@ the headline claim "merging keyword and meaning search beats either alone" does 
    *lexical coincidences*: Hindi function words (a Hindi question about an English receipt returned unrelated Hindi notes), the shared
    word "Vidya" (an English query for the Hindi *Saraswati Vidya Mandir* receipt returned the English *Sai Vidya Hostel* receipt), and
    the Telugu word for "bill" (a Telugu water-bill query returned Telugu electricity bills). Rank-based fusion trusts a rank-1
-   keyword hit as much as a rank-1 meaning hit, and there are no Hindi or Telugu stopword lists. A gated or weighted fusion is the
-   obvious next experiment; it has not been tried.
+   keyword hit as much as a rank-1 meaning hit, and there are no Hindi or Telugu stopword lists. A coverage gate on the keyword leg
+   fixed most of this; see Fix experiments.
 2. **Language matters a lot.** English, Roman-script Telugu and mixed queries over English documents land the right document first
    almost every time (see the per-intent table). Telugu-script and Hindi queries over English documents mostly do not. The embedding
    model finds the *topic* across languages but not *names and dates* across scripts, which is exactly what tells ten similar bills
@@ -87,17 +87,19 @@ the headline claim "merging keyword and meaning search beats either alone" does 
 
 ## What to try next (not done)
 
-1. Gate the keyword leg: Hindi and Telugu stopwords, drop single-token or very common hits, and fuse with weights or scores instead of
-   bare ranks. Re-measure on new queries.
-2. Tighten the answer gate to the distinguishing words of the question, and decline when the top two documents are close.
+1. Stop the answer gate treating generic words as topic words: apply the Hindi/Telugu stopword lists and a small list of generic verbs
+   ("pay", "spend", "cost") when extracting a question's topic. This should win back correct answers without bringing back wrong ones, but
+   it changes behaviour that was just measured, so it needs a *new* held-out set.
+2. Score-aware fusion: merged currently only ties meaning-only, so the keyword leg is not yet earning its place beyond same-language names.
 3. Add a Tesseract Telugu pass behind the `OcrEngine` interface and measure it with this harness (Telugu documents are currently 0%).
-4. Get the non-English queries reviewed by native speakers, and add a held-out query set before tuning anything.
+4. Get the non-English queries reviewed by native speakers and build a third, independently written query set.
 
 ## Reproduce
 
 ```sh
-tools/eval/run_eval.sh            # perfect-text and real-OCR modes on a connected device or emulator (about 2 minutes)
-tools/eval/run_eval.sh oracle     # perfect-text mode only (about 30 seconds, no images needed)
+tools/eval/run_eval.sh                       # dev set, perfect-text and real-OCR modes, on a connected device or emulator (about 2 minutes)
+tools/eval/run_eval.sh oracle,image heldout  # the held-out set (build it with: python tools/eval/make_corpus.py heldout)
+tools/eval/run_eval.sh oracle                # perfect-text mode only (about 30 seconds, no images needed)
 ```
 
 `make_corpus.py` builds `tools/eval/data/` (committed), `render_images.swift` renders the PNGs (not committed, macOS only),
@@ -105,15 +107,112 @@ tools/eval/run_eval.sh oracle     # perfect-text mode only (about 30 seconds, no
 computes every metric from those raw results.
 
 
+## Fix experiments: dev set, selection, then a held-out check
+
+The baseline above exposed two problems, so two fixes were tried. To keep this honest the procedure was fixed **before** any number
+from the second set existed:
+
+1. A second, **held-out** corpus was generated first: 300 new documents (new seed) and 60 new queries built around 11 *new* intents
+   (rent at Gokul Residency, train to Madurai, an insurance premium date, TCP notes, a dentist's phone, a payment to Kamat Medical
+   Store, a gongura recipe, a Hindi electricity bill, Hindi chemistry notes, a Telugu dental appointment, Vijayanagara notes) plus 5
+   "no such document" questions ("bike insurance"). The original 300 documents / 60 queries became the **dev** set (their content is
+   unchanged).
+2. **Five retrieval variants and two answer gates were declared up front**, each switchable through `SearchOptions` / `AnswerOptions`
+   (B0 = shipped behaviour; S1 = stopwords; C1 = coverage gate; S2 = both; S3 = both plus a keyword weight of 0.5; A1 = grounding).
+3. A **selection rule was written into `report.py` before the held-out run**: the retrieval variant with the highest mean merged MRR on the
+   dev set (over perfect text and real OCR) that does not lose more than one same-language rank-1 versus B0; the answer gate with the fewest
+   wrong plus made-up answers, ties to more correct answers.
+4. The held-out set was then measured once, for all variants, and the app now ships the dev-selected ones.
+
+**Selected on the dev set by the pre-declared rule: retrieval variant C1 (+ keyword coverage gate (>= half the query words)), answer gate A1 (+ grounding (every rare question word must be in the document)).**
+
+![Recall@5 by query style: meaning only, merged as shipped, merged fixed](eval_fixes.png)
+
+### What the experiment showed
+
+1. **The coverage gate is the fix that works, and it replicated on new data.** It requires a keyword hit to match at least half of the
+   query's content words, so a lone shared word ("Vidya", "bill") or a Hindi particle no longer counts as a match. Held-out merged recall@5
+   went from 73% to 87% with perfect text and from 64% to 80% with real OCR; across-language recall@5 from 50% to 77% and from 40% to 70%;
+   same-language queries stayed at 100% / 92%. Stopwords alone helped less (+3 and +7 recall@5 points) and added nothing once the coverage
+   gate was on; down-weighting the keyword list was no better than the gate.
+2. **Merged still does not clearly beat meaning-only.** After the fix it is level with it. Perfect text: on the dev set merged is ahead at
+   recall@1 (73% vs 69%) and MRR (0.79 vs 0.77) and tied at recall@5 (85%); on the held-out set meaning-only is ahead (recall@5 89% vs 87%,
+   MRR 0.87 vs 0.84). Real OCR: a tie on the held-out set (65% / 80% / 0.70 for both) and merged marginally ahead on dev (MRR 0.72 vs 0.71).
+   The honest summary is "merged is now about as good as meaning-only", not "better than either alone".
+3. **The grounding gate removes every wrong and made-up answer, at a real cost in answers.** Held-out: wrong answers 1 -> 0, made-up answers
+   to "bike insurance" 2 of 5 -> 0 of 5 (dev: 3 -> 0 and 2 -> 0). But correct answers fell from 10 to 6 of 25 (perfect text) and 8 to 5
+   (real OCR), and on dev from 10 to 7 and 9 to 6. The cost has a known cause: the gate treats any question word that is rare in the
+   collection and absent from the document as a missing topic, and it cannot tell a generic word from a topic word, e.g. "pay" when the
+   receipt says "paid", Hindi "था", or the Telugu verb "కట్టాను". It is shipped exactly as measured so the numbers describe the app.
+
+### Caveats specific to this experiment
+
+- Dev and held-out were built by the same author with the same templates and the same query phrasing patterns, so the held-out set is
+  *fresh* but not fully *independent*; and the held-out negative ("bike insurance") is deliberately the same trap as the dev one
+  ("car insurance"), so it checks the fix more than it discovers new failures.
+- Both sets are synthetic, small (one query is about 9 points within a style) and the non-English wording is unreviewed by native speakers.
+- All five variants were also measured on the held-out set (shown above) for transparency, but only the dev-selected one was acted on; had
+  a different variant been picked after looking, the held-out result would no longer be independent.
+
+#### Dev set: every pre-declared variant
+
+**Perfect text**
+
+| Variant | Merged R@1 / R@5 / MRR | Same-language (27) R@1 / R@5 | Cross-language (28) R@1 / R@5 | Keywords-only R@1 / R@5 | Answers, gate A0: correct / wrong / false-on-no-answer | Answers, gate A1 (grounding): correct / wrong / false-on-no-answer |
+|---|---:|---:|---:|---:|---:|---:|
+| B0: baseline (as shipped) | 58% / 67% / 0.62 | 100% / 100% | 18% / 36% | 49% / 51% | 10 / 3 / 2 | 7 / 0 / 0 |
+| S1: + Hindi/Telugu/Roman stopwords | 58% / 67% / 0.62 | 100% / 100% | 18% / 36% | 51% / 51% | 10 / 3 / 2 | 7 / 0 / 0 |
+| C1: + keyword coverage gate (>= half the query words) **(selected on dev)** | 73% / 85% / 0.79 | 100% / 100% | 46% / 71% | 47% / 47% | 10 / 3 / 1 | 7 / 0 / 0 |
+| S2: stopwords + coverage gate | 73% / 84% / 0.78 | 100% / 100% | 46% / 68% | 47% / 47% | 10 / 3 / 2 | 7 / 0 / 0 |
+| S3: stopwords + coverage gate + keyword weight 0.5 | 71% / 84% / 0.77 | 96% / 100% | 46% / 68% | 47% / 47% | 10 / 3 / 2 | 7 / 0 / 0 |
+| Meaning only (reference, unchanged) | 69% / 85% / 0.77 |  |  |  |  |  |
+
+**Real OCR**
+
+| Variant | Merged R@1 / R@5 / MRR | Same-language (27) R@1 / R@5 | Cross-language (28) R@1 / R@5 | Keywords-only R@1 / R@5 | Answers, gate A0: correct / wrong / false-on-no-answer | Answers, gate A1 (grounding): correct / wrong / false-on-no-answer |
+|---|---:|---:|---:|---:|---:|---:|
+| B0: baseline (as shipped) | 56% / 71% / 0.63 | 93% / 96% | 21% / 46% | 47% / 49% | 9 / 0 / 2 | 6 / 0 / 0 |
+| S1: + Hindi/Telugu/Roman stopwords | 58% / 73% / 0.64 | 93% / 96% | 25% / 50% | 49% / 49% | 9 / 0 / 2 | 6 / 0 / 0 |
+| C1: + keyword coverage gate (>= half the query words) **(selected on dev)** | 67% / 78% / 0.72 | 93% / 96% | 43% / 61% | 45% / 45% | 9 / 0 / 2 | 6 / 0 / 0 |
+| S2: stopwords + coverage gate | 67% / 78% / 0.72 | 93% / 96% | 43% / 61% | 45% / 45% | 9 / 0 / 2 | 6 / 0 / 0 |
+| S3: stopwords + coverage gate + keyword weight 0.5 | 67% / 78% / 0.72 | 93% / 96% | 43% / 61% | 45% / 45% | 9 / 0 / 2 | 6 / 0 / 0 |
+| Meaning only (reference, unchanged) | 67% / 76% / 0.71 |  |  |  |  |  |
+
+#### Held-out set: measured once, after the selection above (selected variant flagged)
+
+**Perfect text**
+
+| Variant | Merged R@1 / R@5 / MRR | Same-language (25) R@1 / R@5 | Cross-language (30) R@1 / R@5 | Keywords-only R@1 / R@5 | Answers, gate A0: correct / wrong / false-on-no-answer | Answers, gate A1 (grounding): correct / wrong / false-on-no-answer |
+|---|---:|---:|---:|---:|---:|---:|
+| B0: baseline (as shipped) | 62% / 73% / 0.67 | 100% / 100% | 30% / 50% | 47% / 47% | 10 / 1 / 2 | 6 / 0 / 0 |
+| S1: + Hindi/Telugu/Roman stopwords | 69% / 76% / 0.72 | 100% / 100% | 43% / 57% | 47% / 47% | 10 / 1 / 2 | 6 / 0 / 0 |
+| C1: + keyword coverage gate (>= half the query words) **(selected on dev)** | 82% / 87% / 0.84 | 100% / 100% | 67% / 77% | 45% / 45% | 10 / 1 / 2 | 6 / 0 / 0 |
+| S2: stopwords + coverage gate | 80% / 87% / 0.83 | 100% / 100% | 63% / 77% | 45% / 45% | 10 / 1 / 2 | 6 / 0 / 0 |
+| S3: stopwords + coverage gate + keyword weight 0.5 | 80% / 87% / 0.83 | 100% / 100% | 63% / 77% | 45% / 45% | 10 / 1 / 2 | 6 / 0 / 0 |
+| Meaning only (reference, unchanged) | 85% / 89% / 0.87 |  |  |  |  |  |
+
+**Real OCR**
+
+| Variant | Merged R@1 / R@5 / MRR | Same-language (25) R@1 / R@5 | Cross-language (30) R@1 / R@5 | Keywords-only R@1 / R@5 | Answers, gate A0: correct / wrong / false-on-no-answer | Answers, gate A1 (grounding): correct / wrong / false-on-no-answer |
+|---|---:|---:|---:|---:|---:|---:|
+| B0: baseline (as shipped) | 56% / 64% / 0.61 | 92% / 92% | 27% / 40% | 44% / 44% | 8 / 1 / 2 | 5 / 0 / 0 |
+| S1: + Hindi/Telugu/Roman stopwords | 62% / 71% / 0.66 | 92% / 92% | 37% / 53% | 44% / 44% | 8 / 1 / 2 | 5 / 0 / 0 |
+| C1: + keyword coverage gate (>= half the query words) **(selected on dev)** | 65% / 80% / 0.70 | 92% / 92% | 43% / 70% | 42% / 42% | 8 / 1 / 2 | 5 / 0 / 0 |
+| S2: stopwords + coverage gate | 65% / 78% / 0.70 | 92% / 92% | 43% / 67% | 42% / 42% | 8 / 1 / 2 | 5 / 0 / 0 |
+| S3: stopwords + coverage gate + keyword weight 0.5 | 65% / 78% / 0.70 | 92% / 92% | 43% / 67% | 42% / 42% | 8 / 1 / 2 | 5 / 0 / 0 |
+| Meaning only (reference, unchanged) | 65% / 80% / 0.70 |  |  |  |  |  |
+
+
+
 ---
 
-## Detailed results (generated by tools/eval/report.py)
+## Detailed baseline results (generated by tools/eval/report.py)
 
 ![Recall by query style](eval_retrieval.png)
 
 ### Mode 1: perfect text (isolates retrieval and extraction from OCR)
 
-Indexed 300 of 300 documents (0 with no text found, 0 duplicates, 0 failed) in 13 s; this mode uses the true text, so there is no OCR step.
+Indexed 300 of 300 documents (0 with no text found, 0 duplicates, 0 failed) in 14 s; this mode uses the true text, so there is no OCR step.
 
 **Retrieval** (55 find/value queries; the 5 negative queries are scored separately). Recall@1 / recall@5 / MRR:
 
@@ -176,7 +275,7 @@ Wrong answers shown: q02 "సాయి విద్య హాస్టల్ ఫ
 | 2026-09 | ₹14,959.50 | ₹14,959.50 | ₹14,959.50 | exact | 100.0% |
 | 2026-10 | ₹25,021.00 | ₹25,021.00 | ₹25,021.00 | exact | 100.0% |
 
-**Search latency** (end to end, emulator): Keywords only: median 2 ms, p95 17 ms; Meaning only (embeddings): median 13 ms, p95 28 ms; Merged (RRF): median 13 ms, p95 32 ms.
+**Search latency** (end to end, emulator): Keywords only: median 5 ms, p95 14 ms; Meaning only (embeddings): median 19 ms, p95 34 ms; Merged (RRF): median 20 ms, p95 34 ms.
 
 **Rank of the correct document per query intent**, written `merged (meaning-only, keywords-only)`; `-` means not in the top 20; 1 is best:
 
@@ -224,7 +323,7 @@ Wrong answers shown: q02 "సాయి విద్య హాస్టల్ ఫ
 
 ### Mode 2: real OCR on the rendered images (end to end)
 
-Indexed 300 of 300 documents (0 with no text found, 0 duplicates, 0 failed) in 47 s; median OCR 92 ms and embedding 32 ms per document.
+Indexed 300 of 300 documents (0 with no text found, 0 duplicates, 0 failed) in 46 s; median OCR 91 ms and embedding 32 ms per document.
 
 **Retrieval** (55 find/value queries; the 5 negative queries are scored separately). Recall@1 / recall@5 / MRR:
 
@@ -285,7 +384,7 @@ By the language of the *document* being looked for:
 | 2026-09 | ₹14,959.50 | ₹5,469.50 | ₹5,469.50 | exact | 36.6% |
 | 2026-10 | ₹25,021.00 | ₹11,097.00 | ₹11,097.00 | exact | 44.4% |
 
-**Search latency** (end to end, emulator): Keywords only: median 5 ms, p95 11 ms; Meaning only (embeddings): median 18 ms, p95 31 ms; Merged (RRF): median 19 ms, p95 29 ms.
+**Search latency** (end to end, emulator): Keywords only: median 5 ms, p95 10 ms; Meaning only (embeddings): median 20 ms, p95 31 ms; Merged (RRF): median 20 ms, p95 28 ms.
 
 **Rank of the correct document per query intent**, written `merged (meaning-only, keywords-only)`; `-` means not in the top 20; 1 is best:
 

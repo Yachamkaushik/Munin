@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
 import com.munin.app.answer.AnswerEngine
+import com.munin.app.answer.AnswerOptions
 import com.munin.app.answer.AnswerOutcome
 import com.munin.app.data.ItemEntity
 import com.munin.app.data.ItemKind
@@ -19,6 +20,7 @@ import com.munin.app.ledger.toRow
 import com.munin.app.ml.E5Embedder
 import com.munin.app.search.SearchEngine
 import com.munin.app.search.SearchMode
+import com.munin.app.search.SearchOptions
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
@@ -32,9 +34,10 @@ import org.junit.Test
  * Evaluation harness. Indexes the synthetic corpus through the real pipeline and records raw results to
  * `<app internal files>/eval/report-<mode>.json`; tools/eval/report.py turns those into metrics.
  *
+ * Sets (argument `eval_set`): `dev` (default; the set the variants are chosen on) or `heldout` (new documents and queries, measured once).
  * Modes (instrumentation argument `eval_modes`, comma separated, default "oracle"):
  *  - oracle: each document's true text is indexed, so retrieval and extraction are measured without OCR errors.
- *  - image:  the rendered PNGs (pushed to <external files>/eval/images by tools/eval/run_eval.sh) go through real ML Kit OCR.
+ *  - image:  the rendered PNGs (copied into <app internal files>/eval/images by tools/eval/run_eval.sh) go through real ML Kit OCR.
  */
 class EvalHarnessTest {
     private val target = InstrumentationRegistry.getInstrumentation().targetContext
@@ -42,10 +45,23 @@ class EvalHarnessTest {
 
     private fun json(name: String) = assets.open(name).bufferedReader().readText()
 
+    private val set = InstrumentationRegistry.getArguments().getString("eval_set") ?: "dev"
+    private val prefix = if (set == "heldout") "heldout_" else ""
+
+    /** Candidate fixes, declared before the held-out set was measured. B0 is today's behaviour. */
+    private val retrievalVariants = linkedMapOf(
+        "B0" to SearchOptions(),
+        "S1" to SearchOptions(stopwords = true),
+        "C1" to SearchOptions(minKeywordCoverage = 0.5f),
+        "S2" to SearchOptions(stopwords = true, minKeywordCoverage = 0.5f),
+        "S3" to SearchOptions(stopwords = true, minKeywordCoverage = 0.5f, keywordWeight = 0.5),
+    )
+    private val answerGates = linkedMapOf("A0" to AnswerOptions(), "A1" to AnswerOptions(grounding = true))
+
     @Test fun runEvaluation() {
         val modes = (InstrumentationRegistry.getArguments().getString("eval_modes") ?: "oracle").split(",").map { it.trim() }.filter { it.isNotEmpty() }
-        val manifest = JSONObject(json("manifest.json"))
-        val queries = JSONObject(json("queries.json")).getJSONArray("queries")
+        val manifest = JSONObject(json(prefix + "manifest.json"))
+        val queries = JSONObject(json(prefix + "queries.json")).getJSONArray("queries")
         val embedder = E5Embedder.load(target)
         try {
             for (mode in modes) runMode(mode, manifest, queries, embedder)
@@ -55,7 +71,7 @@ class EvalHarnessTest {
     private fun runMode(mode: String, manifest: JSONObject, queries: JSONArray, embedder: E5Embedder) = runBlocking {
         val docs = manifest.getJSONArray("docs")
         val db = MuninDatabase.create(ApplicationProvider.getApplicationContext(), name = null)
-        val imageDir = File(target.getExternalFilesDir("eval"), "images")
+        val imageDir = File(target.filesDir, "eval/images") // copied in with run-as by tools/eval/run_eval.sh (external storage is not reliably readable)
         val texts = HashMap<String, String>()
         for (i in 0 until docs.length()) {
             val d = docs.getJSONObject(i)
@@ -87,12 +103,13 @@ class EvalHarnessTest {
         val idOfItem = db.items().allExisting().associate { it.id to it.uri }.mapValues { (_, uri) -> uriOf.entries.first { it.value == uri }.key }
         val itemOfDoc = idOfItem.entries.associate { it.value to it.key }
 
-        val report = JSONObject().put("mode", mode).put("n_docs", docs.length()).put("index_seconds", indexSeconds)
+        val report = JSONObject().put("set", set).put("mode", mode).put("n_docs", docs.length()).put("index_seconds", indexSeconds)
         report.put("indexing", indexingStats(db, idOfItem))
 
         // ---- queries ----
-        val search = SearchEngine(db, embedder)
-        val answers = AnswerEngine(db)
+        // the detailed baseline section is always the original behaviour, whatever the app now ships
+        val search = SearchEngine(db, embedder, SearchOptions.BASELINE)
+        val answers = AnswerEngine(db, AnswerOptions.BASELINE)
         search.search("warm up")
         val out = JSONArray()
         for (qi in 0 until queries.length()) {
@@ -121,6 +138,39 @@ class EvalHarnessTest {
             out.put(rec)
         }
         report.put("queries", out)
+
+        // ---- variants: the same queries against the same index with each candidate fix ----
+        val variantReports = JSONObject()
+        for ((vname, opts) in retrievalVariants) {
+            val engine = SearchEngine(db, embedder, opts)
+            val rows = JSONArray()
+            for (qi in 0 until queries.length()) {
+                val q = queries.getJSONObject(qi); val text = q.getString("text"); val rel = q.getJSONArray("relevant")
+                fun rankOf(r: com.munin.app.search.SearchResponse): Any {
+                    r.results.forEachIndexed { i, x -> val id = idOfItem[x.itemId]; for (k in 0 until rel.length()) if (rel.getString(k) == id) return i + 1 }
+                    return JSONObject.NULL
+                }
+                val kw = engine.search(text, SearchMode.KEYWORDS, limit = 20)
+                val merged = engine.search(text, SearchMode.MERGED, limit = 20)
+                val rec = JSONObject().put("id", q.getString("id")).put("rank", JSONObject().put("KEYWORDS", rankOf(kw)).put("MERGED", rankOf(merged))).put("merged_top3", JSONArray(merged.results.take(3).map { idOfItem[it.itemId] ?: "?" }))
+                    .put("merged_ms", merged.timings.totalMs)
+                if (q.getString("kind") != "find") {
+                    val ans = JSONObject()
+                    for ((gname, gate) in answerGates) {
+                        val o = AnswerEngine(db, gate).answer(text, merged)
+                        ans.put(gname, when (o) {
+                            is AnswerOutcome.Found -> JSONObject().put("outcome", "found").put("value", o.answer.value).put("type", o.answer.kind.name).put("source", idOfItem[o.answer.source.itemId])
+                            is AnswerOutcome.Declined -> JSONObject().put("outcome", "declined")
+                            AnswerOutcome.NotAQuestion -> JSONObject().put("outcome", "not_a_question")
+                        })
+                    }
+                    rec.put("ans", ans)
+                }
+                rows.put(rec)
+            }
+            variantReports.put(vname, rows)
+        }
+        report.put("variants", variantReports)
 
         // ---- field extraction against the manifest's ground truth ----
         val extraction = JSONArray()
@@ -153,8 +203,8 @@ class EvalHarnessTest {
         )
 
         val dir = File(target.filesDir, "eval").also { it.mkdirs() } // internal storage: pulled with run-as by tools/eval/run_eval.sh
-        File(dir, "report-$mode.json").writeText(report.toString(1))
-        Log.i("MuninEval", "mode=$mode wrote ${File(dir, "report-$mode.json")} (indexed in %.0f s)".format(indexSeconds))
+        File(dir, "report-$set-$mode.json").writeText(report.toString(1))
+        Log.i("MuninEval", "mode=$mode wrote ${File(dir, "report-$set-$mode.json")} (indexed in %.0f s)".format(indexSeconds))
         assertTrue("more than 5% of documents failed to index: ${report.getJSONObject("indexing")}", report.getJSONObject("indexing").getInt("failed") <= docs.length() / 20)
         db.close()
     }

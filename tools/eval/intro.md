@@ -4,9 +4,9 @@ How well does Munin find the right screenshot, answer value questions, and add u
 instead of a few hand-picked queries. **The first honest result is that it is weaker than the demo queries suggested**, and
 the headline claim "merging keyword and meaning search beats either alone" does **not** hold on this set.
 
-> The hand-written commentary below describes the committed results. Re-running `tools/eval/run_eval.sh` regenerates the
-> tables and chart further down but not this text. **No change was made to the search, answer or ledger logic after seeing
-> these results**, so they are an untuned baseline.
+> The sections from "What was measured" to "How far to trust this" describe the **original, untuned behaviour** (the baseline).
+> Two fixes were developed afterwards and checked on a separate held-out set: see **Fix experiments** below, which also says what
+> now ships. Re-running `tools/eval/run_eval.sh` regenerates the tables and charts but not the hand-written commentary.
 
 ## What was measured
 
@@ -38,8 +38,8 @@ the headline claim "merging keyword and meaning search beats either alone" does 
    *lexical coincidences*: Hindi function words (a Hindi question about an English receipt returned unrelated Hindi notes), the shared
    word "Vidya" (an English query for the Hindi *Saraswati Vidya Mandir* receipt returned the English *Sai Vidya Hostel* receipt), and
    the Telugu word for "bill" (a Telugu water-bill query returned Telugu electricity bills). Rank-based fusion trusts a rank-1
-   keyword hit as much as a rank-1 meaning hit, and there are no Hindi or Telugu stopword lists. A gated or weighted fusion is the
-   obvious next experiment; it has not been tried.
+   keyword hit as much as a rank-1 meaning hit, and there are no Hindi or Telugu stopword lists. A coverage gate on the keyword leg
+   fixed most of this; see Fix experiments.
 2. **Language matters a lot.** English, Roman-script Telugu and mixed queries over English documents land the right document first
    almost every time (see the per-intent table). Telugu-script and Hindi queries over English documents mostly do not. The embedding
    model finds the *topic* across languages but not *names and dates* across scripts, which is exactly what tells ten similar bills
@@ -75,17 +75,19 @@ the headline claim "merging keyword and meaning search beats either alone" does 
 
 ## What to try next (not done)
 
-1. Gate the keyword leg: Hindi and Telugu stopwords, drop single-token or very common hits, and fuse with weights or scores instead of
-   bare ranks. Re-measure on new queries.
-2. Tighten the answer gate to the distinguishing words of the question, and decline when the top two documents are close.
+1. Stop the answer gate treating generic words as topic words: apply the Hindi/Telugu stopword lists and a small list of generic verbs
+   ("pay", "spend", "cost") when extracting a question's topic. This should win back correct answers without bringing back wrong ones, but
+   it changes behaviour that was just measured, so it needs a *new* held-out set.
+2. Score-aware fusion: merged currently only ties meaning-only, so the keyword leg is not yet earning its place beyond same-language names.
 3. Add a Tesseract Telugu pass behind the `OcrEngine` interface and measure it with this harness (Telugu documents are currently 0%).
-4. Get the non-English queries reviewed by native speakers, and add a held-out query set before tuning anything.
+4. Get the non-English queries reviewed by native speakers and build a third, independently written query set.
 
 ## Reproduce
 
 ```sh
-tools/eval/run_eval.sh            # perfect-text and real-OCR modes on a connected device or emulator (about 2 minutes)
-tools/eval/run_eval.sh oracle     # perfect-text mode only (about 30 seconds, no images needed)
+tools/eval/run_eval.sh                       # dev set, perfect-text and real-OCR modes, on a connected device or emulator (about 2 minutes)
+tools/eval/run_eval.sh oracle,image heldout  # the held-out set (build it with: python tools/eval/make_corpus.py heldout)
+tools/eval/run_eval.sh oracle                # perfect-text mode only (about 30 seconds, no images needed)
 ```
 
 `make_corpus.py` builds `tools/eval/data/` (committed), `render_images.swift` renders the PNGs (not committed, macOS only),

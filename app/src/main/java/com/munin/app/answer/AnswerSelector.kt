@@ -35,8 +35,9 @@ object AnswerSelector {
      * safe guess. Word overlap uses *whole words* of the item text, not the search leg's prefix matches, because
      * "car" matching "card" or a single shared word like "fee" must not make an unrelated item look right.
      */
-    fun itemEvidence(results: List<SearchResult>, q: Question, itemText: String): ItemEvidence {
+    fun itemEvidence(results: List<SearchResult>, q: Question, itemText: String, ungrounded: Boolean = false): ItemEvidence {
         val top = results.firstOrNull() ?: return ItemEvidence.NONE
+        if (ungrounded) return ItemEvidence.NONE
         if (topicCoverage(q.topic, itemText) >= MIN_COVERAGE) return if (top.meaningRank == 1) ItemEvidence.STRONG else ItemEvidence.TEXT_MATCH
         val next = results.getOrNull(1)
         val lead = when {
@@ -47,13 +48,17 @@ object AnswerSelector {
         return if (lead >= MIN_CLEAR_LEAD) ItemEvidence.CLEAR_LEAD else ItemEvidence.NONE
     }
 
+    /** Whether [word] occurs as a whole word (or, for words of 5+ letters, the same stem) in [itemText]. */
+    fun hasWord(word: String, itemText: String): Boolean = word in itemWords(itemText) || stemMatch(word, itemWords(itemText))
+
+    private fun itemWords(text: String) = QueryTerms.tokens(text, keepAll = true).toSet()
+    private fun stemMatch(t: String, words: Set<String>) = t.length >= STEM_MIN && words.any { w -> w.length >= STEM_MIN && (w.startsWith(t) || t.startsWith(w)) }
+
     /** Fraction of [topic] words found as whole words (or the same stem, for words of 5+ letters) in [itemText]. */
     fun topicCoverage(topic: List<String>, itemText: String): Float {
         if (topic.isEmpty()) return 0f
-        val words = QueryTerms.tokens(itemText, keepAll = true).toSet()
-        return topic.count { t ->
-            t in words || (t.length >= STEM_MIN && words.any { w -> w.length >= STEM_MIN && (w.startsWith(t) || t.startsWith(w)) })
-        }.toFloat() / topic.size
+        val words = itemWords(itemText)
+        return topic.count { t -> t in words || stemMatch(t, words) }.toFloat() / topic.size
     }
 
     /** The facts of the question's kind, best first. */

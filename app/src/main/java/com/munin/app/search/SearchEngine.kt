@@ -43,6 +43,7 @@ data class SearchResponse(val query: String, val mode: SearchMode, val results: 
 class SearchEngine(
     private val db: MuninDatabase,
     private val embedder: QueryEmbedder,
+    private val options: SearchOptions = SearchOptions.RECOMMENDED,
     private val nanoClock: () -> Long = System::nanoTime,
 ) {
     private val vectors = VectorIndex(embedder.modelVersion)
@@ -52,7 +53,7 @@ class SearchEngine(
         val t0 = nanoClock()
         fun ms(from: Long) = (nanoClock() - from) / 1e6
         val trimmed = query.trim()
-        val tokens = QueryTerms.tokens(trimmed)
+        val tokens = QueryTerms.tokens(trimmed, extended = options.stopwords)
 
         var embedMs = 0.0
         var meaningMs = 0.0
@@ -72,7 +73,7 @@ class SearchEngine(
             }
             if (mode != SearchMode.MEANING) {
                 val tk = nanoClock()
-                keyword = keywords.search(tokens, LEG_DEPTH)
+                keyword = keywords.search(tokens, LEG_DEPTH, options.minKeywordCoverage)
                 keywordMs = ms(tk)
             }
         }
@@ -81,7 +82,7 @@ class SearchEngine(
         val meaningRank = meaning.mapIndexed { i, c -> c.chunkId to (i + 1) }.toMap()
         val keywordRank = keyword.mapIndexed { i, c -> c.chunkId to (i + 1) }.toMap()
         val ordered: List<Pair<Long, Double>> = when (mode) {
-            SearchMode.MERGED -> Rrf.fuse(listOf(meaning.map { it.chunkId }, keyword.map { it.chunkId })).entries
+            SearchMode.MERGED -> Rrf.fuse(listOf(meaning.map { it.chunkId }, keyword.map { it.chunkId }), weights = listOf(1.0, options.keywordWeight)).entries
                 .sortedByDescending { it.value }.map { it.key to it.value }
             SearchMode.MEANING -> meaning.map { it.chunkId to it.score.toDouble() }
             SearchMode.KEYWORDS -> keyword.map { it.chunkId to it.score.toDouble() }

@@ -4,9 +4,10 @@ package com.munin.app.search
 object Rrf {
     const val K = 60
 
-    fun fuse(rankings: List<List<Long>>, k: Int = K): Map<Long, Double> {
+    /** [weights] scales each list's contribution (default 1 each); a lower weight makes a list less able to override the others. */
+    fun fuse(rankings: List<List<Long>>, k: Int = K, weights: List<Double> = rankings.map { 1.0 }): Map<Long, Double> {
         val scores = HashMap<Long, Double>()
-        for (ranking in rankings) ranking.forEachIndexed { i, id -> scores[id] = (scores[id] ?: 0.0) + 1.0 / (k + i + 1) }
+        rankings.forEachIndexed { li, ranking -> ranking.forEachIndexed { i, id -> scores[id] = (scores[id] ?: 0.0) + weights[li] / (k + i + 1) } }
         return scores
     }
 }

@@ -206,16 +206,131 @@ def headline(analyses):
     t2 = table(["Mode", "Value questions", "Wrongly answered when no document exists", "Document fields extracted (truth present)", "Ledger"], ex)
     return t + "\n\n" + t2
 
+# ------------------------------------------------------------------------------------------- fix experiments
+VARIANTS = {"B0": "baseline (as shipped)", "S1": "+ Hindi/Telugu/Roman stopwords", "C1": "+ keyword coverage gate (>= half the query words)",
+            "S2": "stopwords + coverage gate", "S3": "stopwords + coverage gate + keyword weight 0.5"}
+GATES = {"A0": "answer gate as shipped", "A1": "+ grounding (every rare question word must be in the document)"}
+
+def same_language(q):
+    t = q["target_lang"]
+    return (q["style"] in ("en", "rt", "mix") and t == "en") or (q["style"] == "hi" and t == "hi") or (q["style"] == "te" and t == "te")
+
+def variant_stats(rep, vname):
+    byid = {q["id"]: q for q in rep["queries"]}; rows = rep["variants"][vname]
+    fv = [r for r in rows if byid[r["id"]]["kind"] != "negative"]
+    def m(rank_of_row, sel):
+        ranks = [rank_of_row(r) for r in sel]; n = len(sel)
+        return {"n": n, "r1": sum(x == 1 for x in ranks) / n, "r5": sum(x is not None and x <= 5 for x in ranks) / n, "mrr": sum(1 / x for x in ranks if x) / n}
+    merged = lambda r: r["rank"]["MERGED"]; kw = lambda r: r["rank"]["KEYWORDS"]
+    out = {"merged": m(merged, fv), "keywords": m(kw, fv), "merged_style": {st: m(merged, [r for r in fv if byid[r["id"]]["style"] == st]) for st in STYLES}}
+    same = [r for r in fv if same_language(byid[r["id"]])]; cross = [r for r in fv if not same_language(byid[r["id"]])]
+    out["same_r1"] = (sum(merged(r) == 1 for r in same), len(same)); out["cross"] = m(merged, cross); out["same"] = m(merged, same)
+    out["gates"] = {}
+    for g in GATES:
+        cnt = collections.Counter(); neg = 0
+        for r in rows:
+            q = byid[r["id"]]
+            if q["kind"] == "find": continue
+            a = r["ans"][g]
+            if q["kind"] == "negative": neg += a["outcome"] == "found"; continue
+            if a["outcome"] == "found": cnt["correct" if (a["value"] == q["expected"]["value"] and a["type"] == q["expected"]["type"] and a["source"] in q["relevant"]) else "wrong"] += 1
+            else: cnt[a["outcome"]] += 1
+        out["gates"][g] = {"correct": cnt["correct"], "wrong": cnt["wrong"], "declined": cnt["declined"], "negatives_answered": neg, "n_value": sum(q["kind"] == "value" for q in byid.values()), "n_neg": sum(q["kind"] == "negative" for q in byid.values())}
+    out["latency_ms"] = statistics.median(r["merged_ms"] for r in rows)
+    return out
+
+def select(dev_reps):
+    """Pre-declared rule: highest mean merged MRR over the dev modes, but not losing more than one same-language rank-1 vs B0;
+    answer gate: fewest (wrong answers + false answers to no-answer questions), ties to more correct answers."""
+    stats = {v: [variant_stats(r, v) for r in dev_reps] for v in VARIANTS}
+    base_same = sum(x["same_r1"][0] for x in stats["B0"])
+    eligible = {v: sum(x["merged"]["mrr"] for x in st) / len(st) for v, st in stats.items() if sum(x["same_r1"][0] for x in st) >= base_same - len(st)}
+    best = max(eligible, key=lambda v: (round(eligible[v], 6), -list(VARIANTS).index(v)))
+    gate_score = {g: (sum(x["gates"][g]["wrong"] + x["gates"][g]["negatives_answered"] for x in stats[best]), -sum(x["gates"][g]["correct"] for x in stats[best])) for g in GATES}
+    gate = min(gate_score, key=lambda g: (gate_score[g], list(GATES).index(g)))
+    return best, gate, stats
+
+def variant_section(reps, title, best=None, gate=None):
+    L = [f"#### {title}\n"]
+    for rep in reps:
+        mode = "Perfect text" if rep["mode"] == "oracle" else "Real OCR"
+        meaning = {"r1": 0, "r5": 0, "mrr": 0}; qs = [q for q in rep["queries"] if q["kind"] != "negative"]
+        for q in qs:
+            r = next((i for i, d in enumerate(q["results"]["MEANING"]["ranking"], 1) if d in q["relevant"]), None)
+            meaning["r1"] += r == 1; meaning["r5"] += bool(r and r <= 5); meaning["mrr"] += 1 / r if r else 0
+        n = len(qs); rows = []
+        for v, desc in VARIANTS.items():
+            st = variant_stats(rep, v); g0, g1 = st["gates"]["A0"], st["gates"]["A1"]
+            flag = " **(selected on dev)**" if v == best else ""
+            rows.append([f"{v}: {desc}{flag}", f"{pct(st['merged']['r1'])} / {pct(st['merged']['r5'])} / {st['merged']['mrr']:.2f}", f"{pct(st['same']['r1'])} / {pct(st['same']['r5'])}", f"{pct(st['cross']['r1'])} / {pct(st['cross']['r5'])}",
+                         f"{pct(st['keywords']['r1'])} / {pct(st['keywords']['r5'])}", f"{g0['correct']} / {g0['wrong']} / {g0['negatives_answered']}", f"{g1['correct']} / {g1['wrong']} / {g1['negatives_answered']}"])
+        rows.append(["Meaning only (reference, unchanged)", f"{pct(meaning['r1'] / n)} / {pct(meaning['r5'] / n)} / {meaning['mrr'] / n:.2f}", "", "", "", "", ""])
+        L.append(f"**{mode}**\n")
+        L.append(table(["Variant", "Merged R@1 / R@5 / MRR", f"Same-language ({st['same']['n']}) R@1 / R@5", f"Cross-language ({st['cross']['n']}) R@1 / R@5", "Keywords-only R@1 / R@5",
+                        "Answers, gate A0: correct / wrong / false-on-no-answer", "Answers, gate A1 (grounding): correct / wrong / false-on-no-answer"], rows) + "\n")
+    return "\n".join(L)
+
+def fix_chart(by_set, best):
+    import matplotlib; matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    sets = [s for s in ("dev", "heldout") if s in by_set]; modes = ["oracle", "image"]
+    fig, axes = plt.subplots(len(modes), len(sets), figsize=(6.6 * len(sets), 4.0 * len(modes)), squeeze=False)
+    series = [("Meaning only", "#eb6834"), ("Merged, as shipped (B0)", "#1baf7a"), (f"Merged, fixed ({best})", "#eda100")]
+    for ri, mode in enumerate(modes):
+        for ci, st in enumerate(sets):
+            ax = axes[ri][ci]; rep = by_set[st].get(mode)
+            if rep is None: ax.axis("off"); continue
+            vals = []
+            for si, (lbl, col) in enumerate(series):
+                if si == 0:
+                    v = []
+                    for sty in STYLES:
+                        qs = [q for q in rep["queries"] if q["kind"] != "negative" and q["style"] == sty]
+                        v.append(sum(any(d in q["relevant"] for d in q["results"]["MEANING"]["ranking"][:5]) for q in qs) / len(qs))
+                else:
+                    name = "B0" if si == 1 else best; v = [variant_stats(rep, name)["merged_style"][sty]["r5"] for sty in STYLES]
+                vals.append(v)
+            w = 0.26
+            for si, (lbl, col) in enumerate(series):
+                xs = [j + (si - 1) * w for j in range(len(STYLES))]; bars = ax.bar(xs, vals[si], w * 0.9, color=col, label=lbl)
+                for b, vv in zip(bars, vals[si]): ax.text(b.get_x() + b.get_width() / 2, vv + 0.015, f"{100 * vv:.0f}", ha="center", va="bottom", fontsize=8, color="#0b0b0b")
+            ax.set_xticks(range(len(STYLES))); ax.set_xticklabels([STYLE_LABEL[x] for x in STYLES], fontsize=8, color="#52514e"); ax.set_ylim(0, 1.12); ax.set_yticks([0, .5, 1]); ax.set_yticklabels(["0%", "50%", "100%"], color="#52514e")
+            ax.set_title(f"{'Dev set' if st == 'dev' else 'Held-out set'}, {'perfect text' if mode == 'oracle' else 'real OCR'}: recall@5", fontsize=10, loc="left", color="#0b0b0b")
+            for sp in ("top", "right"): ax.spines[sp].set_visible(False)
+            ax.spines["left"].set_color("#c8c7c0"); ax.spines["bottom"].set_color("#c8c7c0"); ax.grid(axis="y", color="#e6e5df", linewidth=0.8); ax.set_axisbelow(True)
+    h, l = axes[0][0].get_legend_handles_labels(); fig.legend(h, l, loc="lower center", ncol=3, frameon=False, fontsize=10)
+    fig.tight_layout(rect=(0, 0.05, 1, 1)); fig.savefig(DOCS / "eval_fixes.png", dpi=140); plt.close(fig)
+
+
+def load_reports():
+    by_set = collections.defaultdict(dict)
+    for p in sorted(RES.glob("report-*-*.json")):
+        _, st, mode = p.stem.split("-", 2); by_set[st][mode] = json.load(open(p))
+    return by_set
+
 def main():
-    reps = [json.load(open(p)) for p in sorted(RES.glob("report-*.json"), key=lambda p: (p.stem != "report-oracle", p.stem))]
-    if not reps: sys.exit("no results in tools/eval/results; run tools/eval/run_eval.sh")
-    analyses = [analyse(r) for r in reps]
+    by_set = load_reports()
+    if "dev" not in by_set: sys.exit("no dev results in tools/eval/results; run tools/eval/run_eval.sh")
+    dev = [by_set["dev"][m] for m in ("oracle", "image") if m in by_set["dev"]]
     names = {"oracle": "Mode 1: perfect text (isolates retrieval and extraction from OCR)", "image": "Mode 2: real OCR on the rendered images (end to end)"}
-    body = "\n\n".join(render(a, names[a["mode"]]) for a in analyses)
+    analyses = [analyse(r) for r in dev]
     DOCS.mkdir(exist_ok=True)
-    intro = (ROOT / "tools/eval/intro.md").read_text().replace("{{CORPUS}}", corpus_summary()).replace("{{HEADLINE}}", headline(analyses))
-    (DOCS / "EVALUATION.md").write_text(intro + "\n\n---\n\n## Detailed results (generated by tools/eval/report.py)\n\n![Recall by query style](eval_retrieval.png)\n\n" + body + "\n")
+    body = "\n\n".join(render(a, names[a["mode"]]) for a in analyses)
     chart(analyses)
-    print(body)
+    fixes = ""
+    if all("variants" in r for r in dev):
+        best, gate, stats = select(dev)
+        fixes += variant_section(dev, "Dev set: every pre-declared variant", best)
+        if "heldout" in by_set and all("variants" in r for r in by_set["heldout"].values()):
+            ho = [by_set["heldout"][m] for m in ("oracle", "image") if m in by_set["heldout"]]
+            fixes += "\n" + variant_section(ho, "Held-out set: measured once, after the selection above (selected variant flagged)", best)
+            fix_chart(by_set, best)
+        sel = f"**Selected on the dev set by the pre-declared rule: retrieval variant {best} ({VARIANTS[best]}), answer gate {gate} ({GATES[gate]}).**"
+    else:
+        sel = ""
+    intro = (ROOT / "tools/eval/intro.md").read_text().replace("{{CORPUS}}", corpus_summary()).replace("{{HEADLINE}}", headline(analyses))
+    fixes_md = (ROOT / "tools/eval/fixes.md").read_text().replace("{{SELECTION}}", sel).replace("{{TABLES}}", fixes) if (ROOT / "tools/eval/fixes.md").exists() and fixes else ""
+    (DOCS / "EVALUATION.md").write_text(intro + "\n\n" + fixes_md + "\n\n---\n\n## Detailed baseline results (generated by tools/eval/report.py)\n\n![Recall by query style](eval_retrieval.png)\n\n" + body + "\n")
+    print(body if not fixes else fixes)
 
 main()
