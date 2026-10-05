@@ -61,10 +61,18 @@ import com.munin.app.search.Snippet
 import com.munin.app.search.WhyThis
 
 @Composable
-fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?) -> Unit, vm: SearchViewModel = viewModel(), indexVersion: Int = 0) {
+fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?) -> Unit, vm: SearchViewModel = viewModel(), indexVersion: Int = 0, incoming: com.munin.app.incoming.Incoming? = null, onIncomingTaken: () -> Unit = {}) {
     val ui by vm.state.collectAsState()
     val context = LocalContext.current
     LaunchedEffect(indexVersion) { vm.refresh() }
+    LaunchedEffect(incoming) {
+        when (incoming) {
+            is com.munin.app.incoming.Incoming.Text -> vm.searchFor(incoming.text)
+            is com.munin.app.incoming.Incoming.Image -> vm.readSharedImage(incoming.uri)
+            null -> return@LaunchedEffect
+        }
+        onIncomingTaken()
+    }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { vm.refreshApps() } // apps may have been installed or removed while away
 
     Column(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -89,6 +97,7 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
         val r = ui.response
         if (ui.showDebug && r != null) Text(debugLine(r.mode, r.timings), style = MaterialTheme.typography.labelSmall)
 
+        ui.shared?.let { sh -> SharedImageCard(sh, onSearch = { vm.searchFor(it) }, onDismiss = vm::dismissShared) }
         if (ui.query.isBlank()) {
             Text("Search by what the text says, not by file name.", style = MaterialTheme.typography.bodyMedium)
         } else {
@@ -205,6 +214,27 @@ private fun CommandRow(c: com.munin.app.commands.QuickCommand) {
     val p = when (c) { is com.munin.app.commands.QuickCommand.Alarm -> planner.alarm(c); is com.munin.app.commands.QuickCommand.Timer -> planner.timer(c) }
     ShortcutRow(p.dialogTitle.removeSuffix("?"), "Tap to review, then it opens in your clock app") { plan = p }
     plan?.let { ActionConfirmDialog(it) { plan = null } }
+}
+
+/** An image shared to Munin. Its text is read on the phone; nothing is saved, and searching with it is the user's choice. */
+@Composable
+private fun SharedImageCard(sh: SharedImage, onSearch: (String) -> Unit, onDismiss: () -> Unit) {
+    Card(Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text("Image shared with Munin", style = MaterialTheme.typography.titleSmall)
+            when {
+                sh.failed -> Text("Munin could not open or read this image.", style = MaterialTheme.typography.bodyMedium)
+                sh.text == null -> Text("Reading the text in this image…", style = MaterialTheme.typography.bodyMedium)
+                sh.text.isEmpty() -> Text("No text found in this image.", style = MaterialTheme.typography.bodyMedium)
+                else -> {
+                    Text(sh.text, style = MaterialTheme.typography.bodyMedium, maxLines = 6)
+                    Text("Read on this phone by OCR, so it can contain mistakes. It is not saved to Munin's index.", style = MaterialTheme.typography.labelSmall)
+                    Button(onClick = { onSearch(sh.text) }) { Text("Search my files for this text") }
+                }
+            }
+            androidx.compose.material3.TextButton(onClick = onDismiss) { Text("Dismiss") }
+        }
+    }
 }
 
 @Composable

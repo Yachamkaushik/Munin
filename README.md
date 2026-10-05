@@ -381,4 +381,9 @@ and wakes Munin a few seconds after a new image appears (a burst of screenshots 
 there is no standing battery cost. WorkManager keeps the watch across the app being killed and the phone restarting, and indexing resumes from the database. On each start Munin also checks whether the
 library has anything newer than what is indexed and, if so, queues a run, because the system start-up can swallow the very trigger that woke it (found by testing with a hard kill). Checked on the emulator:
 with the process killed and the app never opened, a new screenshot was indexed within about 45 seconds. Limits: a phone's own battery management (Funtouch OS especially) may delay or block the wake-up; a
+
+**Ask Munin and the share sheet** (`incoming/`, two manifest aliases of the main screen): select text in any app and choose **Ask Munin** from the selection menu, or share text to **Search in Munin**; the
+text (whitespace tidied, cut at 300 characters) becomes the search and Munin only reads it, never changes it. Sharing an **image** to Munin reads its text on the phone and shows it with a
+**Search my files for this text** button; the image is **not** added to the index (a shared image's access ends with the share, so it could not be read again later). Limits: one image at a time, no PDFs yet, and
+the OCR text can contain mistakes (the card says so). Tested with adb intents; the image case needs the sender's read grant, which a real share sheet provides.
 force-stop from Settings cancels all scheduled work until Munin is next opened; it indexes every new image, not only screenshots; the Android 12+ rules mean the progress notification may not show for a wake-up run.

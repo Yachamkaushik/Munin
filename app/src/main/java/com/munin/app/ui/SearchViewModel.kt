@@ -47,6 +47,9 @@ data class SpendingAnswer(
     val display get() = Money.format(totalPaise)
 }
 
+/** The result of reading a shared image. [text] is null while reading; [failed] means the image could not be opened or read. */
+data class SharedImage(val uri: String, val text: String?, val failed: Boolean = false)
+
 data class SearchUiState(
     val query: String = "",
     val mode: SearchMode = SearchMode.MERGED,
@@ -70,6 +73,8 @@ data class SearchUiState(
     val settings: List<com.munin.app.shortcuts.SettingsShortcut> = emptyList(),
     /** Alarm or timer commands read from the input; each needs the user's confirmation before the clock app is opened. */
     val commands: List<com.munin.app.commands.QuickCommand> = emptyList(),
+    /** An image shared into Munin: its text is read on the phone and shown for the user to search with. */
+    val shared: SharedImage? = null,
     val contactsGranted: Boolean = false,
     /** The user said no to the contacts permission this session; Munin will not ask again until the app restarts. */
     val contactsDenied: Boolean = false,
@@ -114,6 +119,24 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
 
     /** Reads the installed apps off the main thread, then re-reads the current input against them. */
     fun refreshApps() { viewModelScope.launch(Dispatchers.IO) { muninApp.appIndex.refresh(); muninApp.contactIndex.refresh(); _state.update { it.routed() } } }
+
+    /** Text selected in another app, or shared to Munin: becomes the search. */
+    fun searchFor(text: String) { _state.update { it.copy(shared = null) }; onQuery(text) }
+
+    /** An image shared to Munin: read its text on the phone. Nothing is stored; it is not added to the index. */
+    fun readSharedImage(uri: String) {
+        _state.update { it.copy(shared = SharedImage(uri, null)) }
+        viewModelScope.launch(Dispatchers.IO) {
+            val r = runCatching { muninApp.ocrEngine.recognize(uri, 0) }
+            r.exceptionOrNull()?.let { android.util.Log.w("Munin", "Could not read shared image: $it") }
+            _state.update { s ->
+                if (s.shared?.uri != uri) s
+                else s.copy(shared = r.fold({ SharedImage(uri, com.munin.app.incoming.IncomingParser.cleanText(it.text).orEmpty()) }, { SharedImage(uri, null, failed = true) }))
+            }
+        }
+    }
+
+    fun dismissShared() = _state.update { it.copy(shared = null) }
 
     /** Called with the system's answer to the contacts permission prompt. */
     fun contactsAnswered(granted: Boolean) {

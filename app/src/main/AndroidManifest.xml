@@ -54,11 +54,39 @@
 
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleTop"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- "Ask Munin" in the text-selection menu of other apps. It only reads the selected text; it never changes it. -->
+        <activity-alias
+            android:name=".AskMunin"
+            android:targetActivity=".MainActivity"
+            android:label="Ask Munin"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity-alias>
+
+        <!-- Share sheet target: text becomes a search; an image has its text read on the phone. -->
+        <activity-alias
+            android:name=".ShareToMunin"
+            android:targetActivity=".MainActivity"
+            android:label="Search in Munin"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity-alias>
     </application>
 </manifest>

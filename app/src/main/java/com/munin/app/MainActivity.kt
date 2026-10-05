@@ -19,14 +19,35 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.LaunchedEffect
+import com.munin.app.incoming.Incoming
+import com.munin.app.incoming.IncomingParser
 import com.munin.app.ui.IndexScreen
 import com.munin.app.ui.ItemDetailScreen
 import com.munin.app.ui.LedgerScreen
 import com.munin.app.ui.SearchScreen
 
 class MainActivity : ComponentActivity() {
+    /** What another app handed us (selected text, shared text or image); null once the search screen has taken it. */
+    private var incoming by mutableStateOf<Incoming?>(null)
+
+    override fun onNewIntent(intent: android.content.Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        incoming = readIncoming(intent)
+    }
+
+    @Suppress("DEPRECATION")
+    private fun readIncoming(i: android.content.Intent): Incoming? = IncomingParser.parse(
+        i.action, i.type,
+        i.getCharSequenceExtra(android.content.Intent.EXTRA_PROCESS_TEXT)?.toString(),
+        i.getCharSequenceExtra(android.content.Intent.EXTRA_TEXT)?.toString(),
+        (i.getParcelableExtra<android.net.Uri>(android.content.Intent.EXTRA_STREAM))?.toString(),
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) incoming = readIncoming(intent)
         setContent {
             MaterialTheme {
                 Surface(Modifier.fillMaxSize()) {
@@ -34,6 +55,8 @@ class MainActivity : ComponentActivity() {
                     var indexVersion by rememberSaveable { mutableIntStateOf(0) }
                     var ledgerMonth by remember { mutableStateOf<java.time.YearMonth?>(null) }
                     var detailId by rememberSaveable { mutableStateOf<Long?>(null) }
+                    // Something arrived from another app: show the search tab, where the search screen picks it up.
+                    LaunchedEffect(incoming) { if (incoming != null) { tab = 0; detailId = null } }
                     BackHandler(enabled = detailId != null) { detailId = null }
                     Scaffold(bottomBar = {
                         NavigationBar {
@@ -46,7 +69,7 @@ class MainActivity : ComponentActivity() {
                             val open = detailId
                             when {
                                 open != null -> ItemDetailScreen(open, onBack = { detailId = null })
-                                tab == 0 -> SearchScreen(onOpenItem = { detailId = it }, onOpenLedger = { ledgerMonth = it; tab = 2 }, indexVersion = indexVersion)
+                                tab == 0 -> SearchScreen(onOpenItem = { detailId = it }, onOpenLedger = { ledgerMonth = it; tab = 2 }, indexVersion = indexVersion, incoming = incoming, onIncomingTaken = { incoming = null })
                                 tab == 2 -> LedgerScreen(initialMonth = ledgerMonth, onOpenItem = { detailId = it })
                                 else -> IndexScreen()
                             }
