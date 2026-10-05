@@ -1,0 +1,796 @@
+{
+ "queries": [
+  {
+   "id": "q01",
+   "intent": "A1",
+   "style": "en",
+   "kind": "value",
+   "text": "how much was the Sai Vidya hostel fee",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "45000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q02",
+   "intent": "A1",
+   "style": "te",
+   "kind": "value",
+   "text": "సాయి విద్య హాస్టల్ ఫీజు ఎంత",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "45000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q03",
+   "intent": "A1",
+   "style": "hi",
+   "kind": "value",
+   "text": "साई विद्या हॉस्टल की फीस कितनी थी",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "45000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q04",
+   "intent": "A1",
+   "style": "rt",
+   "kind": "value",
+   "text": "sai vidya hostel fee entha",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "45000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q05",
+   "intent": "A1",
+   "style": "mix",
+   "kind": "value",
+   "text": "Sai Vidya hostel fee ఎంత కట్టాను",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "45000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q06",
+   "intent": "A2",
+   "style": "en",
+   "kind": "find",
+   "text": "electricity bill due 15 October",
+   "relevant": [
+    "d002"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q07",
+   "intent": "A2",
+   "style": "te",
+   "kind": "find",
+   "text": "అక్టోబర్ 15 కరెంటు బిల్లు చివరి తేదీ",
+   "relevant": [
+    "d002"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q08",
+   "intent": "A2",
+   "style": "hi",
+   "kind": "find",
+   "text": "15 अक्टूबर को बिजली का बिल जमा करने की तारीख",
+   "relevant": [
+    "d002"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q09",
+   "intent": "A2",
+   "style": "rt",
+   "kind": "find",
+   "text": "october 15 current bill last date",
+   "relevant": [
+    "d002"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q10",
+   "intent": "A2",
+   "style": "mix",
+   "kind": "find",
+   "text": "electricity bill అక్టోబర్ 15 due",
+   "relevant": [
+    "d002"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q11",
+   "intent": "A3",
+   "style": "en",
+   "kind": "find",
+   "text": "flight to Visakhapatnam",
+   "relevant": [
+    "d003"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q12",
+   "intent": "A3",
+   "style": "te",
+   "kind": "find",
+   "text": "విశాఖపట్నం విమానం టికెట్",
+   "relevant": [
+    "d003"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q13",
+   "intent": "A3",
+   "style": "hi",
+   "kind": "find",
+   "text": "विशाखापत्तनम की फ्लाइट का टिकट",
+   "relevant": [
+    "d003"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q14",
+   "intent": "A3",
+   "style": "rt",
+   "kind": "find",
+   "text": "vizag flight ticket",
+   "relevant": [
+    "d003"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q15",
+   "intent": "A3",
+   "style": "mix",
+   "kind": "find",
+   "text": "Visakhapatnam కి flight ticket",
+   "relevant": [
+    "d003"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q16",
+   "intent": "A4",
+   "style": "en",
+   "kind": "value",
+   "text": "when is the water bill due",
+   "relevant": [
+    "d004"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-03"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q17",
+   "intent": "A4",
+   "style": "te",
+   "kind": "value",
+   "text": "నీటి బిల్లు ఎప్పుడు కట్టాలి",
+   "relevant": [
+    "d004"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-03"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q18",
+   "intent": "A4",
+   "style": "hi",
+   "kind": "value",
+   "text": "पानी का बिल कब भरना है",
+   "relevant": [
+    "d004"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-03"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q19",
+   "intent": "A4",
+   "style": "rt",
+   "kind": "value",
+   "text": "water bill eppudu kattali",
+   "relevant": [
+    "d004"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-03"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q20",
+   "intent": "A4",
+   "style": "mix",
+   "kind": "value",
+   "text": "water bill ఎప్పుడు due",
+   "relevant": [
+    "d004"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-11-03"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q21",
+   "intent": "A5",
+   "style": "en",
+   "kind": "find",
+   "text": "organic chemistry notes on SN1 and SN2 reactions",
+   "relevant": [
+    "d005"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q22",
+   "intent": "A5",
+   "style": "te",
+   "kind": "find",
+   "text": "సేంద్రీయ రసాయన శాస్త్రం SN1 SN2 నోట్స్",
+   "relevant": [
+    "d005"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q23",
+   "intent": "A5",
+   "style": "hi",
+   "kind": "find",
+   "text": "कार्बनिक रसायन SN1 और SN2 अभिक्रिया के नोट्स",
+   "relevant": [
+    "d005"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q24",
+   "intent": "A5",
+   "style": "rt",
+   "kind": "find",
+   "text": "organic chemistry SN1 SN2 notes",
+   "relevant": [
+    "d005"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q25",
+   "intent": "A5",
+   "style": "mix",
+   "kind": "find",
+   "text": "organic chemistry notes లో SN1 SN2",
+   "relevant": [
+    "d005"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q26",
+   "intent": "A6",
+   "style": "en",
+   "kind": "value",
+   "text": "Dr Meera Rao clinic phone number",
+   "relevant": [
+    "d006"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919848012345"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q27",
+   "intent": "A6",
+   "style": "te",
+   "kind": "value",
+   "text": "డాక్టర్ మీరా రావు క్లినిక్ ఫోన్ నంబర్",
+   "relevant": [
+    "d006"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919848012345"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q28",
+   "intent": "A6",
+   "style": "hi",
+   "kind": "value",
+   "text": "डॉ. मीरा राव के क्लिनिक का फोन नंबर",
+   "relevant": [
+    "d006"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919848012345"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q29",
+   "intent": "A6",
+   "style": "rt",
+   "kind": "value",
+   "text": "Dr Meera Rao clinic phone number enti",
+   "relevant": [
+    "d006"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919848012345"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q30",
+   "intent": "A6",
+   "style": "mix",
+   "kind": "value",
+   "text": "Dr Meera Rao clinic ఫోన్ number",
+   "relevant": [
+    "d006"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919848012345"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q31",
+   "intent": "A7",
+   "style": "en",
+   "kind": "find",
+   "text": "payment to Lakshmi Tiffins",
+   "relevant": [
+    "d011"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q32",
+   "intent": "A7",
+   "style": "te",
+   "kind": "find",
+   "text": "లక్ష్మి టిఫిన్స్ కి చెల్లింపు",
+   "relevant": [
+    "d011"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q33",
+   "intent": "A7",
+   "style": "hi",
+   "kind": "find",
+   "text": "लक्ष्मी टिफिन्स को भुगतान",
+   "relevant": [
+    "d011"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q34",
+   "intent": "A7",
+   "style": "rt",
+   "kind": "find",
+   "text": "Lakshmi Tiffins ki payment chesanu",
+   "relevant": [
+    "d011"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q35",
+   "intent": "A7",
+   "style": "mix",
+   "kind": "find",
+   "text": "Lakshmi Tiffins కి payment screenshot",
+   "relevant": [
+    "d011"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q36",
+   "intent": "A8",
+   "style": "en",
+   "kind": "find",
+   "text": "exam timetable December operating systems",
+   "relevant": [
+    "d007"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q37",
+   "intent": "A8",
+   "style": "te",
+   "kind": "find",
+   "text": "డిసెంబర్ పరీక్షల టైమ్ టేబుల్ ఆపరేటింగ్ సిస్టమ్స్",
+   "relevant": [
+    "d007"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q38",
+   "intent": "A8",
+   "style": "hi",
+   "kind": "find",
+   "text": "दिसंबर परीक्षा समय सारणी ऑपरेटिंग सिस्टम",
+   "relevant": [
+    "d007"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q39",
+   "intent": "A8",
+   "style": "rt",
+   "kind": "find",
+   "text": "december exam timetable operating systems",
+   "relevant": [
+    "d007"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q40",
+   "intent": "A8",
+   "style": "mix",
+   "kind": "find",
+   "text": "exam timetable డిసెంబర్ operating systems",
+   "relevant": [
+    "d007"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q41",
+   "intent": "A9",
+   "style": "en",
+   "kind": "value",
+   "text": "how much was the Saraswati Vidya Mandir school fee",
+   "relevant": [
+    "d008"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "12500"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q42",
+   "intent": "A9",
+   "style": "te",
+   "kind": "value",
+   "text": "సరస్వతి విద్యా మందిర్ స్కూల్ ఫీజు ఎంత",
+   "relevant": [
+    "d008"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "12500"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q43",
+   "intent": "A9",
+   "style": "hi",
+   "kind": "value",
+   "text": "सरस्वती विद्या मंदिर की स्कूल फीस कितनी जमा की",
+   "relevant": [
+    "d008"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "12500"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q44",
+   "intent": "A9",
+   "style": "rt",
+   "kind": "value",
+   "text": "saraswati vidya mandir school fee entha",
+   "relevant": [
+    "d008"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "12500"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q45",
+   "intent": "A9",
+   "style": "mix",
+   "kind": "value",
+   "text": "Saraswati Vidya Mandir school fee कितनी थी",
+   "relevant": [
+    "d008"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "12500"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q46",
+   "intent": "A10",
+   "style": "en",
+   "kind": "find",
+   "text": "history notes on the Mughal empire and Akbar",
+   "relevant": [
+    "d009"
+   ],
+   "answer": null,
+   "target_lang": "hi"
+  },
+  {
+   "id": "q47",
+   "intent": "A10",
+   "style": "te",
+   "kind": "find",
+   "text": "మొఘల్ సామ్రాజ్యం అక్బర్ చరిత్ర నోట్స్",
+   "relevant": [
+    "d009"
+   ],
+   "answer": null,
+   "target_lang": "hi"
+  },
+  {
+   "id": "q48",
+   "intent": "A10",
+   "style": "hi",
+   "kind": "find",
+   "text": "मुगल साम्राज्य और अकबर की नीतियों पर इतिहास के नोट्स",
+   "relevant": [
+    "d009"
+   ],
+   "answer": null,
+   "target_lang": "hi"
+  },
+  {
+   "id": "q49",
+   "intent": "A10",
+   "style": "rt",
+   "kind": "find",
+   "text": "mughal samrajyam akbar history notes",
+   "relevant": [
+    "d009"
+   ],
+   "answer": null,
+   "target_lang": "hi"
+  },
+  {
+   "id": "q50",
+   "intent": "A10",
+   "style": "mix",
+   "kind": "find",
+   "text": "Mughal empire Akbar గురించి history notes",
+   "relevant": [
+    "d009"
+   ],
+   "answer": null,
+   "target_lang": "hi"
+  },
+  {
+   "id": "q51",
+   "intent": "A11",
+   "style": "en",
+   "kind": "value",
+   "text": "how much was the Sri Chaitanya junior college fee",
+   "relevant": [
+    "d010"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "28000"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q52",
+   "intent": "A11",
+   "style": "te",
+   "kind": "value",
+   "text": "శ్రీ చైతన్య జూనియర్ కాలేజీ ఫీజు ఎంత",
+   "relevant": [
+    "d010"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "28000"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q53",
+   "intent": "A11",
+   "style": "hi",
+   "kind": "value",
+   "text": "श्री चैतन्य जूनियर कॉलेज की फीस कितनी थी",
+   "relevant": [
+    "d010"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "28000"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q54",
+   "intent": "A11",
+   "style": "rt",
+   "kind": "value",
+   "text": "sri chaitanya junior college fee entha",
+   "relevant": [
+    "d010"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "28000"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q55",
+   "intent": "A11",
+   "style": "mix",
+   "kind": "value",
+   "text": "Sri Chaitanya junior college fee ఎంత",
+   "relevant": [
+    "d010"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "28000"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q56",
+   "intent": "NEG",
+   "style": "en",
+   "kind": "negative",
+   "text": "how much was the car insurance",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q57",
+   "intent": "NEG",
+   "style": "te",
+   "kind": "negative",
+   "text": "కారు ఇన్సూరెన్స్ ఎంత",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q58",
+   "intent": "NEG",
+   "style": "hi",
+   "kind": "negative",
+   "text": "कार बीमा कितना था",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q59",
+   "intent": "NEG",
+   "style": "rt",
+   "kind": "negative",
+   "text": "car insurance entha",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q60",
+   "intent": "NEG",
+   "style": "mix",
+   "kind": "negative",
+   "text": "car insurance ఎంత కట్టాను",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  }
+ ],
+ "styles": [
+  "en",
+  "te",
+  "hi",
+  "rt",
+  "mix"
+ ]
+}

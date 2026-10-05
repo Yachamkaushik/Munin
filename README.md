@@ -3,9 +3,14 @@
 Offline, on-device semantic search for screenshots, document photos and PDFs on Android, in Telugu, Hindi,
 English, Roman-script Telugu, or a mix. No INTERNET permission; models are bundled in the APK.
 
-Status: **steps 1-7 built** (tokenizer parity, indexing, hybrid search, answers, actions, payment ledger, voice query).
-**Not built yet: the evaluation harness** (about 300 synthetic files, 50-60 queries, recall/MRR/extraction/latency, keyword vs
-embeddings vs merged). Until it exists, none of the quality claims below are measured on a proper test set.
+Status: **steps 1-7 built, plus an evaluation harness** (tokenizer parity, indexing, hybrid search, answers, actions, payment
+ledger, voice query, and a 300-document / 60-query evaluation).
+
+> **Read [docs/EVALUATION.md](docs/EVALUATION.md) before quoting any quality claim.** Measured on a labelled set, Munin is weaker than
+> the hand-picked checks in the per-step sections below suggest: with perfect text, recall@5 is 85% for meaning-only search but 67% for
+> the merged ranking (the keyword leg adds noise across languages; merged only wins when query and document share a language),
+> Telugu-script and Hindi queries over English documents are weak, only 10 of 25 value questions were answered correctly, and 2 of 5
+> "no such document" questions got a made-up answer. The per-step tables report what each step was checked against, not accuracy.
 
 ## Setup
 
@@ -316,3 +321,23 @@ pack is not installed", plus the pack hint above.
 - **"Offline" for voice is only true with the pack installed.** Without it the phone's speech service may use the internet.
   Android 12 and below cannot report pack status at all (shown as unknown).
 - Munin does not download language packs (it has no network access); installing them is done in the phone's speech settings.
+
+## Evaluation harness
+
+A labelled test set and a repeatable measurement; full write-up, tables and chart in [docs/EVALUATION.md](docs/EVALUATION.md).
+
+- **Corpus:** 300 synthetic documents (243 English, 32 Hindi, 25 Telugu): 11 hand-built anchors plus 289 template fillers of the same types, so
+  every query has confusable near-misses. **Queries:** 60 = 11 intents x 5 styles (English, Telugu script, Hindi, Roman Telugu, mixed) + 5
+  questions with no answer. The Telugu/Hindi/Roman/mixed wording was written by the author and **needs native-speaker review**.
+- **Two modes:** perfect text (isolates retrieval from OCR) and real ML Kit OCR on rendered images. Three configurations: keywords only, meaning
+  only, merged.
+- `tools/eval/run_eval.sh` runs it on a connected device or emulator (about 2 minutes); `report.py` computes recall@1/@5, MRR, value-question
+  accuracy, field extraction, ledger agreement and latency from the raw results in `tools/eval/results/`.
+
+| Mode | Config | Recall@1 | Recall@5 | MRR |
+|---|---|---:|---:|---:|
+| Perfect text | Keywords / Meaning / **Merged** | 49% / 69% / 58% | 51% / 85% / 67% | 0.50 / 0.77 / 0.62 |
+| Real OCR | Keywords / Meaning / **Merged** | 47% / 67% / 56% | 49% / 76% / 71% | 0.48 / 0.71 / 0.63 |
+
+The numbers are an **untuned baseline**: no logic was changed after seeing them. Limits (synthetic, small, not native-reviewed, no held-out
+set, emulator timing) are listed in the write-up.

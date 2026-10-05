@@ -27,6 +27,8 @@ android {
         // Python-generated reference data lives in tools/reference and is shared by both test types.
         getByName("test").resources.srcDir("../tools/reference")
         getByName("androidTest").assets.srcDir("../tools/reference")
+        // Evaluation corpus manifest and queries (the rendered images are pushed to the device separately).
+        getByName("androidTest").assets.srcDir("../tools/eval/data")
         getByName("test").kotlin.directories.add("src/sharedTest/java")
         getByName("androidTest").kotlin.directories.add("src/sharedTest/java")
     }

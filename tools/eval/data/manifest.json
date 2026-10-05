@@ -1,0 +1,6948 @@
+{
+ "seed": 2026,
+ "docs": [
+  {
+   "id": "d001",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Sai Vidya Hostel",
+     "b"
+    ],
+    "Fee Receipt",
+    "Student: Karthik Reddy",
+    "Room: B-214",
+    "Amount paid: Rs 45,000",
+    "Paid on: 12 Sep 2026",
+    "Receipt No: SV-20931"
+   ],
+   "facts": {
+    "AMOUNT": "45000",
+    "DATE": "2026-09-12"
+   },
+   "anchor": "A1",
+   "upi": null
+  },
+  {
+   "id": "d002",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "Southern Power Distribution",
+     "b"
+    ],
+    "Electricity Bill",
+    "Consumer No: 2210045",
+    "Billing month: September 2026",
+    "Amount due: Rs 1,842",
+    "Due date: 15 Oct 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1842",
+    "DATE": "2026-10-15"
+   },
+   "anchor": "A2",
+   "upi": null
+  },
+  {
+   "id": "d003",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "IndiGo 6E 5214",
+     "b"
+    ],
+    "E-ticket",
+    "Hyderabad (HYD) to Visakhapatnam (VTZ)",
+    "Date: 21 Oct 2026",
+    "Departure 07:35",
+    "PNR: QX7M2K"
+   ],
+   "facts": {
+    "DATE": "2026-10-21"
+   },
+   "anchor": "A3",
+   "upi": null
+  },
+  {
+   "id": "d004",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "Metro Water Board",
+     "b"
+    ],
+    "Water Bill",
+    "Consumer: 88123",
+    "Amount due: Rs 460",
+    "Due date: 3 Nov 2026"
+   ],
+   "facts": {
+    "AMOUNT": "460",
+    "DATE": "2026-11-03"
+   },
+   "anchor": "A4",
+   "upi": null
+  },
+  {
+   "id": "d005",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Organic Chemistry - Lecture 7",
+     "b"
+    ],
+    "SN1 and SN2 reaction mechanisms",
+    "Carbocation stability order",
+    "Nucleophile strength and solvent effects",
+    "Revision: Markovnikov's rule"
+   ],
+   "facts": {},
+   "anchor": "A5",
+   "upi": null
+  },
+  {
+   "id": "d006",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "Apollo Clinic",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. Meera Rao, Cardiology",
+    "Address: Road No 36, Jubilee Hills",
+    "Hyderabad 500033",
+    "Phone: 98480 12345",
+    "Appointment: 24 Sep 2026, 10:30 AM"
+   ],
+   "facts": {
+    "PHONE": "+919848012345",
+    "DATE": "2026-09-24",
+    "ADDRESS": "Road No 36, Jubilee Hills, Hyderabad 500033"
+   },
+   "anchor": "A6",
+   "upi": null
+  },
+  {
+   "id": "d007",
+   "type": "timetable",
+   "lang": "en",
+   "lines": [
+    [
+     "Semester Exam Timetable",
+     "b"
+    ],
+    "B.Tech III Year",
+    "2 Dec 2026  Operating Systems",
+    "4 Dec 2026  Computer Networks",
+    "7 Dec 2026  Database Systems",
+    "9 Dec 2026  Software Engineering"
+   ],
+   "facts": {
+    "DATE": "2026-12-02"
+   },
+   "anchor": "A8",
+   "upi": null
+  },
+  {
+   "id": "d008",
+   "type": "fee_receipt",
+   "lang": "hi",
+   "lines": [
+    [
+     "सरस्वती विद्या मंदिर",
+     "b"
+    ],
+    "शुल्क रसीद",
+    "छात्र: आरव शर्मा",
+    "जमा राशि: ₹12,500",
+    "दिनांक: 18 अगस्त 2026"
+   ],
+   "facts": {
+    "AMOUNT": "12500",
+    "DATE": "2026-08-18"
+   },
+   "anchor": "A9",
+   "upi": null
+  },
+  {
+   "id": "d009",
+   "type": "notes",
+   "lang": "hi",
+   "lines": [
+    [
+     "इतिहास नोट्स - मुगल साम्राज्य",
+     "b"
+    ],
+    "अकबर की नीतियाँ",
+    "सुलह-ए-कुल और धार्मिक सहिष्णुता",
+    "मनसबदारी व्यवस्था",
+    "राजस्व प्रणाली"
+   ],
+   "facts": {},
+   "anchor": "A10",
+   "upi": null
+  },
+  {
+   "id": "d010",
+   "type": "fee_receipt",
+   "lang": "te",
+   "lines": [
+    [
+     "శ్రీ చైతన్య జూనియర్ కాలేజీ",
+     "b"
+    ],
+    "ఫీజు రసీదు",
+    "విద్యార్థి: అనిల్ కుమార్",
+    "చెల్లించిన మొత్తం: రూ. 28,000",
+    "తేదీ: 5 ఆగస్టు 2026"
+   ],
+   "facts": {
+    "AMOUNT": "28000",
+    "DATE": "2026-08-05"
+   },
+   "anchor": "A11",
+   "upi": null
+  },
+  {
+   "id": "d011",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "₹240",
+     "big"
+    ],
+    "Paid to Lakshmi Tiffins",
+    "Sep 14, 2026 at 08:20 AM",
+    "UTR: 643461288985",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "240"
+   },
+   "anchor": "A7",
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 24000,
+    "payee": "Lakshmi Tiffins",
+    "date": "2026-09-14",
+    "time": "08:20",
+    "ref": "643461288985",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d012",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Hotel Annapurna",
+     "b"
+    ],
+    [
+     "₹ 934.50",
+     "big"
+    ],
+    "18 Oct 2026, 10:48 PM",
+    "UPI Ref No: 601030509027"
+   ],
+   "facts": {
+    "AMOUNT": "934.5"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 93450,
+    "payee": "Hotel Annapurna",
+    "date": "2026-10-18",
+    "time": "22:48",
+    "ref": "601030509027",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d013",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Sunrise Pharmacy",
+     "b"
+    ],
+    [
+     "₹ 473",
+     "big"
+    ],
+    "15 Aug 2026, 7:52 AM",
+    "UPI Ref No: 645867626257"
+   ],
+   "facts": {
+    "AMOUNT": "473"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 47300,
+    "payee": "Sunrise Pharmacy",
+    "date": "2026-08-15",
+    "time": "07:52",
+    "ref": "645867626257",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d014",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Priya Sharma",
+     "b"
+    ],
+    [
+     "Rs. 1,647",
+     "big"
+    ],
+    "12 Sep 2026, 7:47 PM",
+    "UPI Ref No: 699112039282"
+   ],
+   "facts": {
+    "AMOUNT": "1647"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 164700,
+    "payee": "Priya Sharma",
+    "date": "2026-09-12",
+    "time": "19:47",
+    "ref": "699112039282",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d015",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Auto Rajesh",
+     "b"
+    ],
+    [
+     "Rs. 387",
+     "big"
+    ],
+    "15 Sep 2026, 11:56 AM",
+    "UPI Ref No: 680386391824"
+   ],
+   "facts": {
+    "AMOUNT": "387"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 38700,
+    "payee": "Auto Rajesh",
+    "date": "2026-09-15",
+    "time": "11:56",
+    "ref": "680386391824",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d016",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "Rs. 121",
+     "big"
+    ],
+    "Paid to Campus Canteen",
+    "Sep 15, 2026 at 08:05 PM",
+    "UTR: 666805849893",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "121"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 12100,
+    "payee": "Campus Canteen",
+    "date": "2026-09-15",
+    "time": "20:05",
+    "ref": "666805849893",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d017",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "Rs. 1,762.50",
+     "big"
+    ],
+    "Paid to Hotel Annapurna",
+    "Sep 17, 2026 at 03:54 PM",
+    "UTR: 670777581983",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "1762.5"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 176250,
+    "payee": "Hotel Annapurna",
+    "date": "2026-09-17",
+    "time": "15:54",
+    "ref": "670777581983",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d018",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Chai Point",
+     "b"
+    ],
+    [
+     "Rs. 2,377",
+     "big"
+    ],
+    "27 Aug 2026, 8:45 AM",
+    "UPI Ref No: 694929842718"
+   ],
+   "facts": {
+    "AMOUNT": "2377"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 237700,
+    "payee": "Chai Point",
+    "date": "2026-08-27",
+    "time": "08:45",
+    "ref": "694929842718",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d019",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Print And Copy",
+     "b"
+    ],
+    [
+     "₹ 1,945",
+     "big"
+    ],
+    "8 Sep 2026, 10:40 AM",
+    "UPI Ref No: 667320619487"
+   ],
+   "facts": {
+    "AMOUNT": "1945"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 194500,
+    "payee": "Print And Copy",
+    "date": "2026-09-08",
+    "time": "10:40",
+    "ref": "667320619487",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d020",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "₹ 2,312.50",
+     "big"
+    ],
+    "Paid to City Bookshop",
+    "Oct 10, 2026 at 10:51 PM",
+    "UTR: 639524571144",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "2312.5"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 231250,
+    "payee": "City Bookshop",
+    "date": "2026-10-10",
+    "time": "22:51",
+    "ref": "639524571144",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d021",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "City Bookshop",
+     "b"
+    ],
+    [
+     "₹ 57",
+     "big"
+    ],
+    "21 Aug 2026, 9:51 PM",
+    "UPI Ref No: 635218034198"
+   ],
+   "facts": {
+    "AMOUNT": "57"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 5700,
+    "payee": "City Bookshop",
+    "date": "2026-08-21",
+    "time": "21:51",
+    "ref": "635218034198",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d022",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "₹ 1,931.50",
+     "big"
+    ],
+    "Paid to Kamala Sweets",
+    "Sep 18, 2026 at 08:53 AM",
+    "UTR: 616371991396",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "1931.5"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 193150,
+    "payee": "Kamala Sweets",
+    "date": "2026-09-18",
+    "time": "08:53",
+    "ref": "616371991396",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d023",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Mani Tiffin Centre",
+     "b"
+    ],
+    [
+     "₹ 2,843",
+     "big"
+    ],
+    "6 Sep 2026, 8:53 PM",
+    "UPI Ref No: 612627795646"
+   ],
+   "facts": {
+    "AMOUNT": "2843"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 284300,
+    "payee": "Mani Tiffin Centre",
+    "date": "2026-09-06",
+    "time": "20:53",
+    "ref": "612627795646",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d024",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "₹2,061",
+     "big"
+    ],
+    "Paid to City Bookshop",
+    "Aug 7, 2026 at 08:09 PM",
+    "UTR: 600395861254",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "2061"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 206100,
+    "payee": "City Bookshop",
+    "date": "2026-08-07",
+    "time": "20:09",
+    "ref": "600395861254",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d025",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Google Pay",
+     "b"
+    ],
+    [
+     "Rs. 2,398",
+     "big"
+    ],
+    "Completed",
+    "To Mani Tiffin Centre",
+    "26 Oct 2026, 1:15 PM",
+    "UPI transaction ID",
+    "691347668430"
+   ],
+   "facts": {
+    "AMOUNT": "2398"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 239800,
+    "payee": "Mani Tiffin Centre",
+    "date": "2026-10-26",
+    "time": "13:15",
+    "ref": "691347668430",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d026",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Green Grocers",
+     "b"
+    ],
+    [
+     "₹653",
+     "big"
+    ],
+    "22 Sep 2026, 10:44 PM",
+    "UPI Ref No: 632408979730"
+   ],
+   "facts": {
+    "AMOUNT": "653"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 65300,
+    "payee": "Green Grocers",
+    "date": "2026-09-22",
+    "time": "22:44",
+    "ref": "632408979730",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d027",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "Rs. 2,428",
+     "big"
+    ],
+    "Paid to Kamala Sweets",
+    "Oct 23, 2026 at 04:05 PM",
+    "UTR: 641171681872",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "2428"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 242800,
+    "payee": "Kamala Sweets",
+    "date": "2026-10-23",
+    "time": "16:05",
+    "ref": "641171681872",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d028",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Google Pay",
+     "b"
+    ],
+    [
+     "₹1,619",
+     "big"
+    ],
+    "Completed",
+    "To Print And Copy",
+    "26 Oct 2026, 1:24 PM",
+    "UPI transaction ID",
+    "604610361059"
+   ],
+   "facts": {
+    "AMOUNT": "1619"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 161900,
+    "payee": "Print And Copy",
+    "date": "2026-10-26",
+    "time": "13:24",
+    "ref": "604610361059",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d029",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Green Grocers",
+     "b"
+    ],
+    [
+     "₹ 2,667",
+     "big"
+    ],
+    "1 Aug 2026, 10:20 PM",
+    "UPI Ref No: 644883011190"
+   ],
+   "facts": {
+    "AMOUNT": "2667"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 266700,
+    "payee": "Green Grocers",
+    "date": "2026-08-01",
+    "time": "22:20",
+    "ref": "644883011190",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d030",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Hotel Annapurna",
+     "b"
+    ],
+    [
+     "Rs. 2,058.50",
+     "big"
+    ],
+    "20 Oct 2026, 12:09 PM",
+    "UPI Ref No: 656723571446"
+   ],
+   "facts": {
+    "AMOUNT": "2058.5"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 205850,
+    "payee": "Hotel Annapurna",
+    "date": "2026-10-20",
+    "time": "12:09",
+    "ref": "656723571446",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d031",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "₹1,899",
+     "big"
+    ],
+    "Paid to Auto Rajesh",
+    "Oct 23, 2026 at 09:35 AM",
+    "UTR: 686738985976",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "1899"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 189900,
+    "payee": "Auto Rajesh",
+    "date": "2026-10-23",
+    "time": "09:35",
+    "ref": "686738985976",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d032",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Anil Kumar",
+     "b"
+    ],
+    [
+     "Rs. 205",
+     "big"
+    ],
+    "28 Sep 2026, 1:30 PM",
+    "UPI Ref No: 603770194891"
+   ],
+   "facts": {
+    "AMOUNT": "205"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 20500,
+    "payee": "Anil Kumar",
+    "date": "2026-09-28",
+    "time": "13:30",
+    "ref": "603770194891",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d033",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Google Pay",
+     "b"
+    ],
+    [
+     "₹ 2,664",
+     "big"
+    ],
+    "Completed",
+    "To Swathi Stationery",
+    "5 Oct 2026, 12:42 PM",
+    "UPI transaction ID",
+    "657006271554"
+   ],
+   "facts": {
+    "AMOUNT": "2664"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 266400,
+    "payee": "Swathi Stationery",
+    "date": "2026-10-05",
+    "time": "12:42",
+    "ref": "657006271554",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d034",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "₹ 342.50",
+     "big"
+    ],
+    "Paid to Print And Copy",
+    "Sep 6, 2026 at 06:11 PM",
+    "UTR: 640440284162",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "342.5"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 34250,
+    "payee": "Print And Copy",
+    "date": "2026-09-06",
+    "time": "18:11",
+    "ref": "640440284162",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d035",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Mani Tiffin Centre",
+     "b"
+    ],
+    [
+     "Rs. 744",
+     "big"
+    ],
+    "16 Oct 2026, 9:07 PM",
+    "UPI Ref No: 637781590348"
+   ],
+   "facts": {
+    "AMOUNT": "744"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 74400,
+    "payee": "Mani Tiffin Centre",
+    "date": "2026-10-16",
+    "time": "21:07",
+    "ref": "637781590348",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d036",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "₹ 897",
+     "big"
+    ],
+    "Paid to Hotel Annapurna",
+    "Aug 3, 2026 at 09:41 PM",
+    "UTR: 693829633019",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "897"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 89700,
+    "payee": "Hotel Annapurna",
+    "date": "2026-08-03",
+    "time": "21:41",
+    "ref": "693829633019",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d037",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Anil Kumar",
+     "b"
+    ],
+    [
+     "Rs. 131",
+     "big"
+    ],
+    "12 Aug 2026, 1:07 PM",
+    "UPI Ref No: 674219063287"
+   ],
+   "facts": {
+    "AMOUNT": "131"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 13100,
+    "payee": "Anil Kumar",
+    "date": "2026-08-12",
+    "time": "13:07",
+    "ref": "674219063287",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d038",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "₹2,354",
+     "big"
+    ],
+    "Paid to Priya Sharma",
+    "Oct 9, 2026 at 11:06 AM",
+    "UTR: 659935734633",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "2354"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 235400,
+    "payee": "Priya Sharma",
+    "date": "2026-10-09",
+    "time": "11:06",
+    "ref": "659935734633",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d039",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Paid Successfully",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Anil Kumar",
+     "b"
+    ],
+    [
+     "₹454",
+     "big"
+    ],
+    "24 Sep 2026, 12:41 PM",
+    "UPI Ref No: 645125618078"
+   ],
+   "facts": {
+    "AMOUNT": "454"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 45400,
+    "payee": "Anil Kumar",
+    "date": "2026-09-24",
+    "time": "12:41",
+    "ref": "645125618078",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d040",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "₹2,428",
+     "big"
+    ],
+    "Paid to City Bookshop",
+    "Sep 11, 2026 at 12:16 PM",
+    "UTR: 655894148347",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "2428"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 242800,
+    "payee": "City Bookshop",
+    "date": "2026-09-11",
+    "time": "12:16",
+    "ref": "655894148347",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d041",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "₹1,717",
+     "big"
+    ],
+    "Paid to City Bookshop",
+    "Aug 4, 2026 at 02:01 PM",
+    "UTR: 690597482415",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "1717"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 171700,
+    "payee": "City Bookshop",
+    "date": "2026-08-04",
+    "time": "14:01",
+    "ref": "690597482415",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d042",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "₹ 1,310.50",
+     "big"
+    ],
+    "Paid to Green Grocers",
+    "Oct 21, 2026 at 08:59 AM",
+    "UTR: 628380223274",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "1310.5"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 131050,
+    "payee": "Green Grocers",
+    "date": "2026-10-21",
+    "time": "08:59",
+    "ref": "628380223274",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d043",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "₹ 1,765",
+     "big"
+    ],
+    "Paid to Mani Tiffin Centre",
+    "Oct 12, 2026 at 03:24 PM",
+    "UTR: 699031769826",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "1765"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 176500,
+    "payee": "Mani Tiffin Centre",
+    "date": "2026-10-12",
+    "time": "15:24",
+    "ref": "699031769826",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d044",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Google Pay",
+     "b"
+    ],
+    [
+     "₹ 116",
+     "big"
+    ],
+    "Completed",
+    "To Print And Copy",
+    "11 Oct 2026, 4:46 PM",
+    "UPI transaction ID",
+    "659132651964"
+   ],
+   "facts": {
+    "AMOUNT": "116"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 11600,
+    "payee": "Print And Copy",
+    "date": "2026-10-11",
+    "time": "16:46",
+    "ref": "659132651964",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d045",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Google Pay",
+     "b"
+    ],
+    [
+     "Rs. 2,418",
+     "big"
+    ],
+    "Completed",
+    "To Auto Rajesh",
+    "11 Oct 2026, 1:35 PM",
+    "UPI transaction ID",
+    "617167570812"
+   ],
+   "facts": {
+    "AMOUNT": "2418"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 241800,
+    "payee": "Auto Rajesh",
+    "date": "2026-10-11",
+    "time": "13:35",
+    "ref": "617167570812",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d046",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "Rs. 934.50",
+     "big"
+    ],
+    "Paid to Hotel Annapurna",
+    "Oct 18, 2026 at 10:48 PM",
+    "UTR: 601030509027",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "934.5"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 93450,
+    "payee": "Hotel Annapurna",
+    "date": "2026-10-18",
+    "time": "22:48",
+    "ref": "601030509027",
+    "dup_of": "d012"
+   }
+  },
+  {
+   "id": "d047",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "₹473",
+     "big"
+    ],
+    "Paid to Sunrise Pharmacy",
+    "Aug 15, 2026 at 07:52 AM",
+    "UTR: 645867626257",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "473"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 47300,
+    "payee": "Sunrise Pharmacy",
+    "date": "2026-08-15",
+    "time": "07:52",
+    "ref": "645867626257",
+    "dup_of": "d013"
+   }
+  },
+  {
+   "id": "d048",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment Successful",
+     "b"
+    ],
+    [
+     "₹1,647",
+     "big"
+    ],
+    "Paid to Priya Sharma",
+    "Sep 12, 2026 at 07:47 PM",
+    "UTR: 699112039282",
+    "Debited from XXXX1234"
+   ],
+   "facts": {
+    "AMOUNT": "1647"
+   },
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "PAID",
+    "paise": 164700,
+    "payee": "Priya Sharma",
+    "date": "2026-09-12",
+    "time": "19:47",
+    "ref": "699112039282",
+    "dup_of": "d014"
+   }
+  },
+  {
+   "id": "d049",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Payment failed",
+     "b"
+    ],
+    [
+     "Rs. 2,495",
+     "big"
+    ],
+    "Paid to Green Grocers",
+    "Oct 21, 2026 at 12:01 PM",
+    "UTR: 647787085241",
+    "Debited from XXXX1234"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": {
+    "outcome": "FAILED",
+    "direction": "PAID",
+    "paise": 249500,
+    "payee": "Green Grocers",
+    "date": "2026-10-21",
+    "time": "12:01",
+    "ref": "647787085241",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d050",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Payment failed",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Print And Copy",
+     "b"
+    ],
+    [
+     "₹1,623",
+     "big"
+    ],
+    "8 Sep 2026, 8:26 PM",
+    "UPI Ref No: 620508072699"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": {
+    "outcome": "FAILED",
+    "direction": "PAID",
+    "paise": 162300,
+    "payee": "Print And Copy",
+    "date": "2026-09-08",
+    "time": "20:26",
+    "ref": "620508072699",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d051",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Payment failed",
+     "b"
+    ],
+    "Paid to",
+    [
+     "Anil Kumar",
+     "b"
+    ],
+    [
+     "Rs. 2,273",
+     "big"
+    ],
+    "22 Aug 2026, 7:59 PM",
+    "UPI Ref No: 653922876941"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": {
+    "outcome": "FAILED",
+    "direction": "PAID",
+    "paise": 227300,
+    "payee": "Anil Kumar",
+    "date": "2026-08-22",
+    "time": "19:59",
+    "ref": "653922876941",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d052",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Paytm UPI",
+     "b"
+    ],
+    [
+     "Payment pending",
+     "b"
+    ],
+    "Paid to",
+    [
+     "City Bookshop",
+     "b"
+    ],
+    [
+     "₹ 654",
+     "big"
+    ],
+    "1 Aug 2026, 8:17 AM",
+    "UPI Ref No: 636154518321"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": {
+    "outcome": "PENDING",
+    "direction": "PAID",
+    "paise": 65400,
+    "payee": "City Bookshop",
+    "date": "2026-08-01",
+    "time": "08:17",
+    "ref": "636154518321",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d053",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Google Pay",
+     "b"
+    ],
+    [
+     "Rs. 617",
+     "big"
+    ],
+    "Payment pending",
+    "To Auto Rajesh",
+    "19 Oct 2026, 9:53 AM",
+    "UPI transaction ID",
+    "686062592540"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": {
+    "outcome": "PENDING",
+    "direction": "PAID",
+    "paise": 61700,
+    "payee": "Auto Rajesh",
+    "date": "2026-10-19",
+    "time": "09:53",
+    "ref": "686062592540",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d054",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "PhonePe",
+     "b"
+    ],
+    [
+     "Money received",
+     "b"
+    ],
+    [
+     "₹1,445",
+     "big"
+    ],
+    "Received from City Bookshop",
+    "Oct 17, 2026 at 08:47 PM",
+    "UTR: 685948348632",
+    "Debited from XXXX1234"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "RECEIVED",
+    "paise": 144500,
+    "payee": "City Bookshop",
+    "date": "2026-10-17",
+    "time": "20:47",
+    "ref": "685948348632",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d055",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Google Pay",
+     "b"
+    ],
+    [
+     "Rs. 1,977",
+     "big"
+    ],
+    "Money received",
+    "From Metro Mart",
+    "8 Aug 2026, 6:32 PM",
+    "UPI transaction ID",
+    "696203291684"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "RECEIVED",
+    "paise": 197700,
+    "payee": "Metro Mart",
+    "date": "2026-08-08",
+    "time": "18:32",
+    "ref": "696203291684",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d056",
+   "type": "upi_payment",
+   "lang": "en",
+   "lines": [
+    [
+     "Google Pay",
+     "b"
+    ],
+    [
+     "₹ 1,002",
+     "big"
+    ],
+    "Money received",
+    "From Green Grocers",
+    "27 Oct 2026, 12:21 PM",
+    "UPI transaction ID",
+    "661671903095"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": {
+    "outcome": "SUCCESS",
+    "direction": "RECEIVED",
+    "paise": 100200,
+    "payee": "Green Grocers",
+    "date": "2026-10-27",
+    "time": "12:21",
+    "ref": "661671903095",
+    "dup_of": null
+   }
+  },
+  {
+   "id": "d057",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Lakeview Business School",
+     "b"
+    ],
+    "Exam fee receipt",
+    "Student: Arjun Rao",
+    "Amount paid: Rs 18,000",
+    "Paid on: 15 Nov 2026",
+    "Receipt No: G30156"
+   ],
+   "facts": {
+    "AMOUNT": "18000",
+    "DATE": "2026-11-15"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d058",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Greenfield Engineering College",
+     "b"
+    ],
+    "Exam fee receipt",
+    "Student: Priya Nair",
+    "Amount paid: Rs 39,000",
+    "Paid on: 1 Sep 2026",
+    "Receipt No: E58862"
+   ],
+   "facts": {
+    "AMOUNT": "39000",
+    "DATE": "2026-09-01"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d059",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Narayana Degree College",
+     "b"
+    ],
+    "Tuition fee receipt",
+    "Student: Imran Khan",
+    "Amount paid: Rs 32,000",
+    "Paid on: 24 Oct 2026",
+    "Receipt No: D86334"
+   ],
+   "facts": {
+    "AMOUNT": "32000",
+    "DATE": "2026-10-24"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d060",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Maple Hostel",
+     "b"
+    ],
+    "Hostel fee receipt",
+    "Student: Arjun Rao",
+    "Amount paid: Rs 8,000",
+    "Paid on: 19 Aug 2026",
+    "Receipt No: B21211"
+   ],
+   "facts": {
+    "AMOUNT": "8000",
+    "DATE": "2026-08-19"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d061",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Lakeview Business School",
+     "b"
+    ],
+    "Tuition fee receipt",
+    "Student: Swathi Reddy",
+    "Amount paid: Rs 45,500",
+    "Paid on: 24 Jul 2026",
+    "Receipt No: D31261"
+   ],
+   "facts": {
+    "AMOUNT": "45500",
+    "DATE": "2026-07-24"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d062",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Blue Ridge Hostel",
+     "b"
+    ],
+    "Hostel fee receipt",
+    "Student: Neha Gupta",
+    "Amount paid: Rs 18,000",
+    "Paid on: 10 Aug 2026",
+    "Receipt No: A89423"
+   ],
+   "facts": {
+    "AMOUNT": "18000",
+    "DATE": "2026-08-10"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d063",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Vignan Institute",
+     "b"
+    ],
+    "Lab fee receipt",
+    "Student: Ananya Sharma",
+    "Amount paid: Rs 45,500",
+    "Paid on: 16 Nov 2026",
+    "Receipt No: C51244"
+   ],
+   "facts": {
+    "AMOUNT": "45500",
+    "DATE": "2026-11-16"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d064",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Greenfield Engineering College",
+     "b"
+    ],
+    "Bus fee receipt",
+    "Student: Priya Nair",
+    "Amount paid: Rs 15,000",
+    "Paid on: 5 Oct 2026",
+    "Receipt No: F49668"
+   ],
+   "facts": {
+    "AMOUNT": "15000",
+    "DATE": "2026-10-05"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d065",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Vignan Institute",
+     "b"
+    ],
+    "Tuition fee receipt",
+    "Student: Lakshmi Prasad",
+    "Amount paid: Rs 15,500",
+    "Paid on: 18 Jul 2026",
+    "Receipt No: H24076"
+   ],
+   "facts": {
+    "AMOUNT": "15500",
+    "DATE": "2026-07-18"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d066",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Narayana Degree College",
+     "b"
+    ],
+    "Bus fee receipt",
+    "Student: Sandeep Yadav",
+    "Amount paid: Rs 45,500",
+    "Paid on: 3 Nov 2026",
+    "Receipt No: H25851"
+   ],
+   "facts": {
+    "AMOUNT": "45500",
+    "DATE": "2026-11-03"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d067",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Gandhi Medical College",
+     "b"
+    ],
+    "Lab fee receipt",
+    "Student: Rohit Jain",
+    "Amount paid: Rs 22,000",
+    "Paid on: 17 Oct 2026",
+    "Receipt No: B19048"
+   ],
+   "facts": {
+    "AMOUNT": "22000",
+    "DATE": "2026-10-17"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d068",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Hillcrest Hostel",
+     "b"
+    ],
+    "Hostel fee receipt",
+    "Student: Vikram Singh",
+    "Amount paid: Rs 52,000",
+    "Paid on: 26 Jun 2026",
+    "Receipt No: C52598"
+   ],
+   "facts": {
+    "AMOUNT": "52000",
+    "DATE": "2026-06-26"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d069",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Orchid Hostel",
+     "b"
+    ],
+    "Hostel fee receipt",
+    "Student: Sandeep Yadav",
+    "Amount paid: Rs 18,000",
+    "Paid on: 17 Sep 2026",
+    "Receipt No: G51114"
+   ],
+   "facts": {
+    "AMOUNT": "18000",
+    "DATE": "2026-09-17"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d070",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "City Arts College",
+     "b"
+    ],
+    "Bus fee receipt",
+    "Student: Harish Chandra",
+    "Amount paid: Rs 52,000",
+    "Paid on: 7 Jul 2026",
+    "Receipt No: G37902"
+   ],
+   "facts": {
+    "AMOUNT": "52000",
+    "DATE": "2026-07-07"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d071",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Bharathi Institute",
+     "b"
+    ],
+    "Bus fee receipt",
+    "Student: Lakshmi Prasad",
+    "Amount paid: Rs 10,000",
+    "Paid on: 15 Jul 2026",
+    "Receipt No: B51947"
+   ],
+   "facts": {
+    "AMOUNT": "10000",
+    "DATE": "2026-07-15"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d072",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Hillcrest Hostel",
+     "b"
+    ],
+    "Hostel fee receipt",
+    "Student: Sneha Patil",
+    "Amount paid: Rs 52,000",
+    "Paid on: 27 Aug 2026",
+    "Receipt No: D53485"
+   ],
+   "facts": {
+    "AMOUNT": "52000",
+    "DATE": "2026-08-27"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d073",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Royal Student Home",
+     "b"
+    ],
+    "Hostel fee receipt",
+    "Student: Meghana Iyer",
+    "Amount paid: Rs 12,500",
+    "Paid on: 18 Jul 2026",
+    "Receipt No: G12846"
+   ],
+   "facts": {
+    "AMOUNT": "12500",
+    "DATE": "2026-07-18"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d074",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Sunrise Boys Hostel",
+     "b"
+    ],
+    "Hostel fee receipt",
+    "Student: Sandeep Yadav",
+    "Amount paid: Rs 39,000",
+    "Paid on: 23 Oct 2026",
+    "Receipt No: D65631"
+   ],
+   "facts": {
+    "AMOUNT": "39000",
+    "DATE": "2026-10-23"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d075",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Vignan Institute",
+     "b"
+    ],
+    "Tuition fee receipt",
+    "Student: Sneha Patil",
+    "Amount paid: Rs 38,500",
+    "Paid on: 21 Aug 2026",
+    "Receipt No: E27117"
+   ],
+   "facts": {
+    "AMOUNT": "38500",
+    "DATE": "2026-08-21"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d076",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Gandhi Medical College",
+     "b"
+    ],
+    "Library fee receipt",
+    "Student: Lakshmi Prasad",
+    "Amount paid: Rs 9,500",
+    "Paid on: 19 Aug 2026",
+    "Receipt No: A14914"
+   ],
+   "facts": {
+    "AMOUNT": "9500",
+    "DATE": "2026-08-19"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d077",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Lakeview Business School",
+     "b"
+    ],
+    "Bus fee receipt",
+    "Student: Ananya Sharma",
+    "Amount paid: Rs 13,000",
+    "Paid on: 21 Jul 2026",
+    "Receipt No: D69917"
+   ],
+   "facts": {
+    "AMOUNT": "13000",
+    "DATE": "2026-07-21"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d078",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Maple Hostel",
+     "b"
+    ],
+    "Hostel fee receipt",
+    "Student: Neha Gupta",
+    "Amount paid: Rs 10,000",
+    "Paid on: 9 Oct 2026",
+    "Receipt No: A22529"
+   ],
+   "facts": {
+    "AMOUNT": "10000",
+    "DATE": "2026-10-09"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d079",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Hillcrest Hostel",
+     "b"
+    ],
+    "Hostel fee receipt",
+    "Student: Arjun Rao",
+    "Amount paid: Rs 22,000",
+    "Paid on: 11 Jul 2026",
+    "Receipt No: E21047"
+   ],
+   "facts": {
+    "AMOUNT": "22000",
+    "DATE": "2026-07-11"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d080",
+   "type": "fee_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Vignan Institute",
+     "b"
+    ],
+    "Tuition fee receipt",
+    "Student: Ananya Sharma",
+    "Amount paid: Rs 18,500",
+    "Paid on: 14 Oct 2026",
+    "Receipt No: E64989"
+   ],
+   "facts": {
+    "AMOUNT": "18500",
+    "DATE": "2026-10-14"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d081",
+   "type": "fee_receipt",
+   "lang": "hi",
+   "lines": [
+    [
+     "राजकीय उच्च विद्यालय",
+     "b"
+    ],
+    "शुल्क रसीद",
+    "छात्र: सृष्टि सिंह",
+    "जमा राशि: ₹16,000",
+    "दिनांक: 6 जून 2026"
+   ],
+   "facts": {
+    "AMOUNT": "16000",
+    "DATE": "2026-06-06"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d082",
+   "type": "fee_receipt",
+   "lang": "hi",
+   "lines": [
+    [
+     "महात्मा गांधी विद्यालय",
+     "b"
+    ],
+    "शुल्क रसीद",
+    "छात्र: पूजा मिश्रा",
+    "जमा राशि: ₹21,000",
+    "दिनांक: 22 सितंबर 2026"
+   ],
+   "facts": {
+    "AMOUNT": "21000",
+    "DATE": "2026-09-22"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d083",
+   "type": "fee_receipt",
+   "lang": "hi",
+   "lines": [
+    [
+     "दीनदयाल पब्लिक स्कूल",
+     "b"
+    ],
+    "शुल्क रसीद",
+    "छात्र: विवेक यादव",
+    "जमा राशि: ₹16,000",
+    "दिनांक: 11 अगस्त 2026"
+   ],
+   "facts": {
+    "AMOUNT": "16000",
+    "DATE": "2026-08-11"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d084",
+   "type": "fee_receipt",
+   "lang": "hi",
+   "lines": [
+    [
+     "आदर्श विद्या मंदिर",
+     "b"
+    ],
+    "शुल्क रसीद",
+    "छात्र: नेहा जोशी",
+    "जमा राशि: ₹12,000",
+    "दिनांक: 11 सितंबर 2026"
+   ],
+   "facts": {
+    "AMOUNT": "12000",
+    "DATE": "2026-09-11"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d085",
+   "type": "fee_receipt",
+   "lang": "hi",
+   "lines": [
+    [
+     "महात्मा गांधी विद्यालय",
+     "b"
+    ],
+    "शुल्क रसीद",
+    "छात्र: विवेक यादव",
+    "जमा राशि: ₹14,500",
+    "दिनांक: 1 जुलाई 2026"
+   ],
+   "facts": {
+    "AMOUNT": "14500",
+    "DATE": "2026-07-01"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d086",
+   "type": "fee_receipt",
+   "lang": "hi",
+   "lines": [
+    [
+     "महात्मा गांधी विद्यालय",
+     "b"
+    ],
+    "शुल्क रसीद",
+    "छात्र: अमित तिवारी",
+    "जमा राशि: ₹12,000",
+    "दिनांक: 7 सितंबर 2026"
+   ],
+   "facts": {
+    "AMOUNT": "12000",
+    "DATE": "2026-09-07"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d087",
+   "type": "fee_receipt",
+   "lang": "hi",
+   "lines": [
+    [
+     "आदर्श विद्या मंदिर",
+     "b"
+    ],
+    "शुल्क रसीद",
+    "छात्र: अमित तिवारी",
+    "जमा राशि: ₹16,000",
+    "दिनांक: 7 अगस्त 2026"
+   ],
+   "facts": {
+    "AMOUNT": "16000",
+    "DATE": "2026-08-07"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d088",
+   "type": "fee_receipt",
+   "lang": "hi",
+   "lines": [
+    [
+     "राजकीय उच्च विद्यालय",
+     "b"
+    ],
+    "शुल्क रसीद",
+    "छात्र: विवेक यादव",
+    "जमा राशि: ₹21,000",
+    "दिनांक: 24 जून 2026"
+   ],
+   "facts": {
+    "AMOUNT": "21000",
+    "DATE": "2026-06-24"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d089",
+   "type": "fee_receipt",
+   "lang": "hi",
+   "lines": [
+    [
+     "राजकीय उच्च विद्यालय",
+     "b"
+    ],
+    "शुल्क रसीद",
+    "छात्र: पूजा मिश्रा",
+    "जमा राशि: ₹6,000",
+    "दिनांक: 20 सितंबर 2026"
+   ],
+   "facts": {
+    "AMOUNT": "6000",
+    "DATE": "2026-09-20"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d090",
+   "type": "fee_receipt",
+   "lang": "hi",
+   "lines": [
+    [
+     "महात्मा गांधी विद्यालय",
+     "b"
+    ],
+    "शुल्क रसीद",
+    "छात्र: पूजा मिश्रा",
+    "जमा राशि: ₹21,000",
+    "दिनांक: 11 सितंबर 2026"
+   ],
+   "facts": {
+    "AMOUNT": "21000",
+    "DATE": "2026-09-11"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d091",
+   "type": "fee_receipt",
+   "lang": "hi",
+   "lines": [
+    [
+     "ज्ञान भारती स्कूल",
+     "b"
+    ],
+    "शुल्क रसीद",
+    "छात्र: विवेक यादव",
+    "जमा राशि: ₹16,000",
+    "दिनांक: 3 जुलाई 2026"
+   ],
+   "facts": {
+    "AMOUNT": "16000",
+    "DATE": "2026-07-03"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d092",
+   "type": "fee_receipt",
+   "lang": "te",
+   "lines": [
+    [
+     "వివేకానంద జూనియర్ కాలేజీ",
+     "b"
+    ],
+    "ఫీజు రసీదు",
+    "విద్యార్థి: లావణ్య రావు",
+    "చెల్లించిన మొత్తం: రూ. 19,000",
+    "తేదీ: 17 అక్టోబర్ 2026"
+   ],
+   "facts": {
+    "AMOUNT": "19000",
+    "DATE": "2026-10-17"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d093",
+   "type": "fee_receipt",
+   "lang": "te",
+   "lines": [
+    [
+     "నారాయణ డిగ్రీ కాలేజీ",
+     "b"
+    ],
+    "ఫీజు రసీదు",
+    "విద్యార్థి: మహేష్ చౌదరి",
+    "చెల్లించిన మొత్తం: రూ. 9,000",
+    "తేదీ: 15 జూన్ 2026"
+   ],
+   "facts": {
+    "AMOUNT": "9000",
+    "DATE": "2026-06-15"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d094",
+   "type": "fee_receipt",
+   "lang": "te",
+   "lines": [
+    [
+     "నారాయణ డిగ్రీ కాలేజీ",
+     "b"
+    ],
+    "ఫీజు రసీదు",
+    "విద్యార్థి: లావణ్య రావు",
+    "చెల్లించిన మొత్తం: రూ. 24,000",
+    "తేదీ: 28 అక్టోబర్ 2026"
+   ],
+   "facts": {
+    "AMOUNT": "24000",
+    "DATE": "2026-10-28"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d095",
+   "type": "fee_receipt",
+   "lang": "te",
+   "lines": [
+    [
+     "రాజీవ్ గాంధీ కాలేజీ",
+     "b"
+    ],
+    "ఫీజు రసీదు",
+    "విద్యార్థి: రాజేష్ బాబు",
+    "చెల్లించిన మొత్తం: రూ. 31,000",
+    "తేదీ: 25 ఆగస్టు 2026"
+   ],
+   "facts": {
+    "AMOUNT": "31000",
+    "DATE": "2026-08-25"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d096",
+   "type": "fee_receipt",
+   "lang": "te",
+   "lines": [
+    [
+     "విజ్ఞాన్ స్కూల్",
+     "b"
+    ],
+    "ఫీజు రసీదు",
+    "విద్యార్థి: మహేష్ చౌదరి",
+    "చెల్లించిన మొత్తం: రూ. 15,500",
+    "తేదీ: 22 అక్టోబర్ 2026"
+   ],
+   "facts": {
+    "AMOUNT": "15500",
+    "DATE": "2026-10-22"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d097",
+   "type": "fee_receipt",
+   "lang": "te",
+   "lines": [
+    [
+     "కాకతీయ డిగ్రీ కాలేజీ",
+     "b"
+    ],
+    "ఫీజు రసీదు",
+    "విద్యార్థి: లావణ్య రావు",
+    "చెల్లించిన మొత్తం: రూ. 31,000",
+    "తేదీ: 20 అక్టోబర్ 2026"
+   ],
+   "facts": {
+    "AMOUNT": "31000",
+    "DATE": "2026-10-20"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d098",
+   "type": "fee_receipt",
+   "lang": "te",
+   "lines": [
+    [
+     "నారాయణ డిగ్రీ కాలేజీ",
+     "b"
+    ],
+    "ఫీజు రసీదు",
+    "విద్యార్థి: రాజేష్ బాబు",
+    "చెల్లించిన మొత్తం: రూ. 24,000",
+    "తేదీ: 20 జూలై 2026"
+   ],
+   "facts": {
+    "AMOUNT": "24000",
+    "DATE": "2026-07-20"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d099",
+   "type": "fee_receipt",
+   "lang": "te",
+   "lines": [
+    [
+     "కాకతీయ డిగ్రీ కాలేజీ",
+     "b"
+    ],
+    "ఫీజు రసీదు",
+    "విద్యార్థి: అనిల్ కుమార్",
+    "చెల్లించిన మొత్తం: రూ. 31,000",
+    "తేదీ: 26 జూలై 2026"
+   ],
+   "facts": {
+    "AMOUNT": "31000",
+    "DATE": "2026-07-26"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d100",
+   "type": "fee_receipt",
+   "lang": "te",
+   "lines": [
+    [
+     "విజ్ఞాన్ స్కూల్",
+     "b"
+    ],
+    "ఫీజు రసీదు",
+    "విద్యార్థి: వెంకటేష్ గౌడ్",
+    "చెల్లించిన మొత్తం: రూ. 6,500",
+    "తేదీ: 28 నవంబర్ 2026"
+   ],
+   "facts": {
+    "AMOUNT": "6500",
+    "DATE": "2026-11-28"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d101",
+   "type": "fee_receipt",
+   "lang": "te",
+   "lines": [
+    [
+     "కాకతీయ డిగ్రీ కాలేజీ",
+     "b"
+    ],
+    "ఫీజు రసీదు",
+    "విద్యార్థి: శ్రావ్య నాయుడు",
+    "చెల్లించిన మొత్తం: రూ. 15,500",
+    "తేదీ: 5 జూలై 2026"
+   ],
+   "facts": {
+    "AMOUNT": "15500",
+    "DATE": "2026-07-05"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d102",
+   "type": "fee_receipt",
+   "lang": "te",
+   "lines": [
+    [
+     "నారాయణ డిగ్రీ కాలేజీ",
+     "b"
+    ],
+    "ఫీజు రసీదు",
+    "విద్యార్థి: అనిల్ కుమార్",
+    "చెల్లించిన మొత్తం: రూ. 9,000",
+    "తేదీ: 15 జూలై 2026"
+   ],
+   "facts": {
+    "AMOUNT": "9000",
+    "DATE": "2026-07-15"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d103",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "Bright Power Ltd",
+     "b"
+    ],
+    "Electricity Bill",
+    "Consumer No: 9216512",
+    "Amount due: Rs 2,806",
+    "Due date: 14 Sep 2026"
+   ],
+   "facts": {
+    "AMOUNT": "2806",
+    "DATE": "2026-09-14"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d104",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "Quick Mobile Postpaid",
+     "b"
+    ],
+    "Mobile Bill",
+    "Consumer No: 2543320",
+    "Amount due: Rs 1,084",
+    "Due date: 10 Aug 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1084",
+    "DATE": "2026-08-10"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d105",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "FiberNet Broadband",
+     "b"
+    ],
+    "Broadband Bill",
+    "Consumer No: 9526818",
+    "Amount due: Rs 1,509",
+    "Due date: 5 Nov 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1509",
+    "DATE": "2026-11-05"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d106",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "Eastern Power Corp",
+     "b"
+    ],
+    "Electricity Bill",
+    "Consumer No: 6922794",
+    "Amount due: Rs 418",
+    "Due date: 1 Nov 2026"
+   ],
+   "facts": {
+    "AMOUNT": "418",
+    "DATE": "2026-11-01"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d107",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "ConnectOne Mobile",
+     "b"
+    ],
+    "Mobile Bill",
+    "Consumer No: 9443358",
+    "Amount due: Rs 295",
+    "Due date: 11 Oct 2026"
+   ],
+   "facts": {
+    "AMOUNT": "295",
+    "DATE": "2026-10-11"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d108",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "City Electricity Board",
+     "b"
+    ],
+    "Electricity Bill",
+    "Consumer No: 4345975",
+    "Amount due: Rs 2,897",
+    "Due date: 14 Aug 2026"
+   ],
+   "facts": {
+    "AMOUNT": "2897",
+    "DATE": "2026-08-14"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d109",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "City Electricity Board",
+     "b"
+    ],
+    "Electricity Bill",
+    "Consumer No: 4568743",
+    "Amount due: Rs 2,890",
+    "Due date: 8 Sep 2026"
+   ],
+   "facts": {
+    "AMOUNT": "2890",
+    "DATE": "2026-09-08"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d110",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "City Gas Ltd",
+     "b"
+    ],
+    "Gas Cylinder Bill",
+    "Consumer No: 8707230",
+    "Amount due: Rs 1,908",
+    "Due date: 18 Sep 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1908",
+    "DATE": "2026-09-18"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d111",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "City Gas Ltd",
+     "b"
+    ],
+    "Gas Cylinder Bill",
+    "Consumer No: 9083375",
+    "Amount due: Rs 2,757",
+    "Due date: 10 Sep 2026"
+   ],
+   "facts": {
+    "AMOUNT": "2757",
+    "DATE": "2026-09-10"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d112",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "Eastern Power Corp",
+     "b"
+    ],
+    "Electricity Bill",
+    "Consumer No: 2322359",
+    "Amount due: Rs 980",
+    "Due date: 24 Sep 2026"
+   ],
+   "facts": {
+    "AMOUNT": "980",
+    "DATE": "2026-09-24"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d113",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "Indane Gas Booking",
+     "b"
+    ],
+    "Gas Cylinder Bill",
+    "Consumer No: 3887725",
+    "Amount due: Rs 827",
+    "Due date: 23 Dec 2026"
+   ],
+   "facts": {
+    "AMOUNT": "827",
+    "DATE": "2026-12-23"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d114",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "Eastern Power Corp",
+     "b"
+    ],
+    "Electricity Bill",
+    "Consumer No: 3430713",
+    "Amount due: Rs 1,932",
+    "Due date: 7 Nov 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1932",
+    "DATE": "2026-11-07"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d115",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "City Gas Ltd",
+     "b"
+    ],
+    "Gas Cylinder Bill",
+    "Consumer No: 1159745",
+    "Amount due: Rs 1,675",
+    "Due date: 24 Oct 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1675",
+    "DATE": "2026-10-24"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d116",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "ConnectOne Broadband",
+     "b"
+    ],
+    "Broadband Bill",
+    "Consumer No: 9190157",
+    "Amount due: Rs 1,298",
+    "Due date: 15 Dec 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1298",
+    "DATE": "2026-12-15"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d117",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "Bright Power Ltd",
+     "b"
+    ],
+    "Electricity Bill",
+    "Consumer No: 4734464",
+    "Amount due: Rs 769",
+    "Due date: 26 Aug 2026"
+   ],
+   "facts": {
+    "AMOUNT": "769",
+    "DATE": "2026-08-26"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d118",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "Indane Gas Booking",
+     "b"
+    ],
+    "Gas Cylinder Bill",
+    "Consumer No: 6473593",
+    "Amount due: Rs 2,672",
+    "Due date: 13 Nov 2026"
+   ],
+   "facts": {
+    "AMOUNT": "2672",
+    "DATE": "2026-11-13"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d119",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "City Gas Ltd",
+     "b"
+    ],
+    "Gas Cylinder Bill",
+    "Consumer No: 9814702",
+    "Amount due: Rs 2,099",
+    "Due date: 15 Aug 2026"
+   ],
+   "facts": {
+    "AMOUNT": "2099",
+    "DATE": "2026-08-15"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d120",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "Quick Mobile Postpaid",
+     "b"
+    ],
+    "Mobile Bill",
+    "Consumer No: 1624620",
+    "Amount due: Rs 1,310",
+    "Due date: 27 Aug 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1310",
+    "DATE": "2026-08-27"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d121",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "Bright Power Ltd",
+     "b"
+    ],
+    "Electricity Bill",
+    "Consumer No: 8590653",
+    "Amount due: Rs 467",
+    "Due date: 2 Dec 2026"
+   ],
+   "facts": {
+    "AMOUNT": "467",
+    "DATE": "2026-12-02"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d122",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "Quick Mobile Postpaid",
+     "b"
+    ],
+    "Mobile Bill",
+    "Consumer No: 9030089",
+    "Amount due: Rs 2,823",
+    "Due date: 13 Aug 2026"
+   ],
+   "facts": {
+    "AMOUNT": "2823",
+    "DATE": "2026-08-13"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d123",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "ConnectOne Mobile",
+     "b"
+    ],
+    "Mobile Bill",
+    "Consumer No: 1445994",
+    "Amount due: Rs 1,484",
+    "Due date: 5 Aug 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1484",
+    "DATE": "2026-08-05"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d124",
+   "type": "utility_bill",
+   "lang": "en",
+   "lines": [
+    [
+     "Bright Power Ltd",
+     "b"
+    ],
+    "Electricity Bill",
+    "Consumer No: 5277321",
+    "Amount due: Rs 868",
+    "Due date: 3 Nov 2026"
+   ],
+   "facts": {
+    "AMOUNT": "868",
+    "DATE": "2026-11-03"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d125",
+   "type": "utility_bill",
+   "lang": "hi",
+   "lines": [
+    [
+     "उत्तर विद्युत वितरण निगम",
+     "b"
+    ],
+    "बिजली का बिल",
+    "उपभोक्ता संख्या: 9737793",
+    "देय राशि: ₹591",
+    "अंतिम तिथि: 2 अगस्त 2026"
+   ],
+   "facts": {
+    "AMOUNT": "591",
+    "DATE": "2026-08-02"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d126",
+   "type": "utility_bill",
+   "lang": "hi",
+   "lines": [
+    [
+     "उत्तर विद्युत वितरण निगम",
+     "b"
+    ],
+    "बिजली का बिल",
+    "उपभोक्ता संख्या: 3570821",
+    "देय राशि: ₹1,671",
+    "अंतिम तिथि: 24 अगस्त 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1671",
+    "DATE": "2026-08-24"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d127",
+   "type": "utility_bill",
+   "lang": "hi",
+   "lines": [
+    [
+     "उत्तर विद्युत वितरण निगम",
+     "b"
+    ],
+    "बिजली का बिल",
+    "उपभोक्ता संख्या: 6406523",
+    "देय राशि: ₹1,291",
+    "अंतिम तिथि: 16 अक्टूबर 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1291",
+    "DATE": "2026-10-16"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d128",
+   "type": "utility_bill",
+   "lang": "hi",
+   "lines": [
+    [
+     "उत्तर विद्युत वितरण निगम",
+     "b"
+    ],
+    "बिजली का बिल",
+    "उपभोक्ता संख्या: 7711533",
+    "देय राशि: ₹1,293",
+    "अंतिम तिथि: 23 नवंबर 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1293",
+    "DATE": "2026-11-23"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d129",
+   "type": "utility_bill",
+   "lang": "hi",
+   "lines": [
+    [
+     "उत्तर विद्युत वितरण निगम",
+     "b"
+    ],
+    "बिजली का बिल",
+    "उपभोक्ता संख्या: 8027424",
+    "देय राशि: ₹1,580",
+    "अंतिम तिथि: 17 सितंबर 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1580",
+    "DATE": "2026-09-17"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d130",
+   "type": "utility_bill",
+   "lang": "hi",
+   "lines": [
+    [
+     "उत्तर विद्युत वितरण निगम",
+     "b"
+    ],
+    "बिजली का बिल",
+    "उपभोक्ता संख्या: 4091809",
+    "देय राशि: ₹1,320",
+    "अंतिम तिथि: 16 अगस्त 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1320",
+    "DATE": "2026-08-16"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d131",
+   "type": "utility_bill",
+   "lang": "hi",
+   "lines": [
+    [
+     "उत्तर विद्युत वितरण निगम",
+     "b"
+    ],
+    "बिजली का बिल",
+    "उपभोक्ता संख्या: 8991168",
+    "देय राशि: ₹765",
+    "अंतिम तिथि: 7 नवंबर 2026"
+   ],
+   "facts": {
+    "AMOUNT": "765",
+    "DATE": "2026-11-07"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d132",
+   "type": "utility_bill",
+   "lang": "hi",
+   "lines": [
+    [
+     "उत्तर विद्युत वितरण निगम",
+     "b"
+    ],
+    "बिजली का बिल",
+    "उपभोक्ता संख्या: 9890482",
+    "देय राशि: ₹2,277",
+    "अंतिम तिथि: 13 दिसंबर 2026"
+   ],
+   "facts": {
+    "AMOUNT": "2277",
+    "DATE": "2026-12-13"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d133",
+   "type": "utility_bill",
+   "lang": "hi",
+   "lines": [
+    [
+     "उत्तर विद्युत वितरण निगम",
+     "b"
+    ],
+    "बिजली का बिल",
+    "उपभोक्ता संख्या: 7454546",
+    "देय राशि: ₹1,195",
+    "अंतिम तिथि: 16 अगस्त 2026"
+   ],
+   "facts": {
+    "AMOUNT": "1195",
+    "DATE": "2026-08-16"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d134",
+   "type": "utility_bill",
+   "lang": "te",
+   "lines": [
+    [
+     "తెలంగాణ విద్యుత్ సంస్థ",
+     "b"
+    ],
+    "కరెంటు బిల్లు",
+    "వినియోగదారు సంఖ్య: 3353643",
+    "చెల్లించవలసిన మొత్తం: రూ. 2,206",
+    "చివరి తేదీ: 17 ఆగస్టు 2026"
+   ],
+   "facts": {
+    "AMOUNT": "2206",
+    "DATE": "2026-08-17"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d135",
+   "type": "utility_bill",
+   "lang": "te",
+   "lines": [
+    [
+     "తెలంగాణ విద్యుత్ సంస్థ",
+     "b"
+    ],
+    "కరెంటు బిల్లు",
+    "వినియోగదారు సంఖ్య: 6265969",
+    "చెల్లించవలసిన మొత్తం: రూ. 2,435",
+    "చివరి తేదీ: 8 అక్టోబర్ 2026"
+   ],
+   "facts": {
+    "AMOUNT": "2435",
+    "DATE": "2026-10-08"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d136",
+   "type": "utility_bill",
+   "lang": "te",
+   "lines": [
+    [
+     "తెలంగాణ విద్యుత్ సంస్థ",
+     "b"
+    ],
+    "కరెంటు బిల్లు",
+    "వినియోగదారు సంఖ్య: 1441202",
+    "చెల్లించవలసిన మొత్తం: రూ. 2,068",
+    "చివరి తేదీ: 25 అక్టోబర్ 2026"
+   ],
+   "facts": {
+    "AMOUNT": "2068",
+    "DATE": "2026-10-25"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d137",
+   "type": "utility_bill",
+   "lang": "te",
+   "lines": [
+    [
+     "తెలంగాణ విద్యుత్ సంస్థ",
+     "b"
+    ],
+    "కరెంటు బిల్లు",
+    "వినియోగదారు సంఖ్య: 3791061",
+    "చెల్లించవలసిన మొత్తం: రూ. 2,429",
+    "చివరి తేదీ: 20 అక్టోబర్ 2026"
+   ],
+   "facts": {
+    "AMOUNT": "2429",
+    "DATE": "2026-10-20"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d138",
+   "type": "utility_bill",
+   "lang": "te",
+   "lines": [
+    [
+     "తెలంగాణ విద్యుత్ సంస్థ",
+     "b"
+    ],
+    "కరెంటు బిల్లు",
+    "వినియోగదారు సంఖ్య: 7182184",
+    "చెల్లించవలసిన మొత్తం: రూ. 2,605",
+    "చివరి తేదీ: 4 డిసెంబర్ 2026"
+   ],
+   "facts": {
+    "AMOUNT": "2605",
+    "DATE": "2026-12-04"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d139",
+   "type": "utility_bill",
+   "lang": "te",
+   "lines": [
+    [
+     "తెలంగాణ విద్యుత్ సంస్థ",
+     "b"
+    ],
+    "కరెంటు బిల్లు",
+    "వినియోగదారు సంఖ్య: 3853179",
+    "చెల్లించవలసిన మొత్తం: రూ. 611",
+    "చివరి తేదీ: 19 సెప్టెంబర్ 2026"
+   ],
+   "facts": {
+    "AMOUNT": "611",
+    "DATE": "2026-09-19"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d140",
+   "type": "utility_bill",
+   "lang": "te",
+   "lines": [
+    [
+     "తెలంగాణ విద్యుత్ సంస్థ",
+     "b"
+    ],
+    "కరెంటు బిల్లు",
+    "వినియోగదారు సంఖ్య: 2772651",
+    "చెల్లించవలసిన మొత్తం: రూ. 754",
+    "చివరి తేదీ: 13 నవంబర్ 2026"
+   ],
+   "facts": {
+    "AMOUNT": "754",
+    "DATE": "2026-11-13"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d141",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Express 10837",
+     "b"
+    ],
+    "Train e-ticket",
+    "Mumbai to Ahmedabad",
+    "Journey date: 1 Dec 2026",
+    "Coach S5  Berth 22",
+    "PNR: 7548628641"
+   ],
+   "facts": {
+    "DATE": "2026-12-01"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d142",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Air India AI 9313",
+     "b"
+    ],
+    "E-ticket",
+    "Chennai (MAA) to Hyderabad (HYD)",
+    "Date: 9 Sep 2026",
+    "Departure 08:45",
+    "PNR: CY7CN8"
+   ],
+   "facts": {
+    "DATE": "2026-09-09"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d143",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Vistara UK 3452",
+     "b"
+    ],
+    "E-ticket",
+    "Chennai (MAA) to Bengaluru (BLR)",
+    "Date: 3 Nov 2026",
+    "Departure 05:30",
+    "PNR: C8SELR"
+   ],
+   "facts": {
+    "DATE": "2026-11-03"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d144",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Express 18794",
+     "b"
+    ],
+    "Train e-ticket",
+    "Kolkata to Mumbai",
+    "Journey date: 18 Sep 2026",
+    "Coach S7  Berth 60",
+    "PNR: 1375641932"
+   ],
+   "facts": {
+    "DATE": "2026-09-18"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d145",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "IndiGo 6E 7327",
+     "b"
+    ],
+    "E-ticket",
+    "Pune (PNQ) to Goa (GOI)",
+    "Date: 14 Sep 2026",
+    "Departure 10:15",
+    "PNR: RLNX3T"
+   ],
+   "facts": {
+    "DATE": "2026-09-14"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d146",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "IndiGo 6E 2234",
+     "b"
+    ],
+    "E-ticket",
+    "Hyderabad (HYD) to Kolkata (CCU)",
+    "Date: 3 Dec 2026",
+    "Departure 21:15",
+    "PNR: 8KWM9H"
+   ],
+   "facts": {
+    "DATE": "2026-12-03"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d147",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "SpiceJet SG 6958",
+     "b"
+    ],
+    "E-ticket",
+    "Pune (PNQ) to Bengaluru (BLR)",
+    "Date: 27 Sep 2026",
+    "Departure 15:30",
+    "PNR: FBSRH2"
+   ],
+   "facts": {
+    "DATE": "2026-09-27"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d148",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Vistara UK 8804",
+     "b"
+    ],
+    "E-ticket",
+    "Ahmedabad (AMD) to Chennai (MAA)",
+    "Date: 20 Nov 2026",
+    "Departure 05:00",
+    "PNR: XM7GR8"
+   ],
+   "facts": {
+    "DATE": "2026-11-20"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d149",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "IndiGo 6E 8741",
+     "b"
+    ],
+    "E-ticket",
+    "Bengaluru (BLR) to Chennai (MAA)",
+    "Date: 4 Dec 2026",
+    "Departure 14:15",
+    "PNR: 4SB6UK"
+   ],
+   "facts": {
+    "DATE": "2026-12-04"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d150",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Express 11576",
+     "b"
+    ],
+    "Train e-ticket",
+    "Ahmedabad to Bengaluru",
+    "Journey date: 15 Sep 2026",
+    "Coach S4  Berth 42",
+    "PNR: 6470550616"
+   ],
+   "facts": {
+    "DATE": "2026-09-15"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d151",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Express 17692",
+     "b"
+    ],
+    "Train e-ticket",
+    "Kochi to Pune",
+    "Journey date: 9 Nov 2026",
+    "Coach S5  Berth 41",
+    "PNR: 4513594897"
+   ],
+   "facts": {
+    "DATE": "2026-11-09"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d152",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "SpiceJet SG 3783",
+     "b"
+    ],
+    "E-ticket",
+    "Mumbai (BOM) to Delhi (DEL)",
+    "Date: 7 Sep 2026",
+    "Departure 15:15",
+    "PNR: GQ2JX3"
+   ],
+   "facts": {
+    "DATE": "2026-09-07"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d153",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Vistara UK 5795",
+     "b"
+    ],
+    "E-ticket",
+    "Goa (GOI) to Pune (PNQ)",
+    "Date: 18 Nov 2026",
+    "Departure 19:15",
+    "PNR: MVCNVL"
+   ],
+   "facts": {
+    "DATE": "2026-11-18"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d154",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Express 21156",
+     "b"
+    ],
+    "Train e-ticket",
+    "Pune to Kochi",
+    "Journey date: 15 Oct 2026",
+    "Coach S1  Berth 40",
+    "PNR: 4169252234"
+   ],
+   "facts": {
+    "DATE": "2026-10-15"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d155",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Orange Travels",
+     "b"
+    ],
+    "Bus ticket",
+    "Delhi to Pune",
+    "Date: 18 Nov 2026",
+    "Seat 35B",
+    "Booking id: 939973"
+   ],
+   "facts": {
+    "DATE": "2026-11-18"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d156",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Green Line Bus",
+     "b"
+    ],
+    "Bus ticket",
+    "Kolkata to Pune",
+    "Date: 27 Nov 2026",
+    "Seat 15A",
+    "Booking id: 541742"
+   ],
+   "facts": {
+    "DATE": "2026-11-27"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d157",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Orange Travels",
+     "b"
+    ],
+    "Bus ticket",
+    "Ahmedabad to Kolkata",
+    "Date: 13 Dec 2026",
+    "Seat 36B",
+    "Booking id: 473532"
+   ],
+   "facts": {
+    "DATE": "2026-12-13"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d158",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "SpiceJet SG 6548",
+     "b"
+    ],
+    "E-ticket",
+    "Mumbai (BOM) to Chennai (MAA)",
+    "Date: 8 Sep 2026",
+    "Departure 20:15",
+    "PNR: 5NZBFG"
+   ],
+   "facts": {
+    "DATE": "2026-09-08"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d159",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Vistara UK 8552",
+     "b"
+    ],
+    "E-ticket",
+    "Bengaluru (BLR) to Kochi (COK)",
+    "Date: 13 Oct 2026",
+    "Departure 08:45",
+    "PNR: RWVAGE"
+   ],
+   "facts": {
+    "DATE": "2026-10-13"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d160",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "IndiGo 6E 3224",
+     "b"
+    ],
+    "E-ticket",
+    "Pune (PNQ) to Bengaluru (BLR)",
+    "Date: 15 Oct 2026",
+    "Departure 22:45",
+    "PNR: XMHFYR"
+   ],
+   "facts": {
+    "DATE": "2026-10-15"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d161",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "SpiceJet SG 2245",
+     "b"
+    ],
+    "E-ticket",
+    "Bengaluru (BLR) to Goa (GOI)",
+    "Date: 15 Dec 2026",
+    "Departure 07:00",
+    "PNR: 75E69D"
+   ],
+   "facts": {
+    "DATE": "2026-12-15"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d162",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Express 16678",
+     "b"
+    ],
+    "Train e-ticket",
+    "Bengaluru to Hyderabad",
+    "Journey date: 12 Dec 2026",
+    "Coach S3  Berth 55",
+    "PNR: 3750045090"
+   ],
+   "facts": {
+    "DATE": "2026-12-12"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d163",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Air India AI 279",
+     "b"
+    ],
+    "E-ticket",
+    "Bengaluru (BLR) to Kolkata (CCU)",
+    "Date: 14 Oct 2026",
+    "Departure 09:30",
+    "PNR: S5GQZE"
+   ],
+   "facts": {
+    "DATE": "2026-10-14"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d164",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Express 15229",
+     "b"
+    ],
+    "Train e-ticket",
+    "Ahmedabad to Delhi",
+    "Journey date: 19 Sep 2026",
+    "Coach S7  Berth 40",
+    "PNR: 3249496755"
+   ],
+   "facts": {
+    "DATE": "2026-09-19"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d165",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Green Line Bus",
+     "b"
+    ],
+    "Bus ticket",
+    "Hyderabad to Goa",
+    "Date: 9 Dec 2026",
+    "Seat 17B",
+    "Booking id: 404230"
+   ],
+   "facts": {
+    "DATE": "2026-12-09"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d166",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Express 12670",
+     "b"
+    ],
+    "Train e-ticket",
+    "Ahmedabad to Kochi",
+    "Journey date: 7 Nov 2026",
+    "Coach S6  Berth 67",
+    "PNR: 6435189629"
+   ],
+   "facts": {
+    "DATE": "2026-11-07"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d167",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Vistara UK 2111",
+     "b"
+    ],
+    "E-ticket",
+    "Mumbai (BOM) to Kolkata (CCU)",
+    "Date: 1 Oct 2026",
+    "Departure 15:45",
+    "PNR: 572GZ5"
+   ],
+   "facts": {
+    "DATE": "2026-10-01"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d168",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Express 10236",
+     "b"
+    ],
+    "Train e-ticket",
+    "Pune to Kolkata",
+    "Journey date: 19 Nov 2026",
+    "Coach S6  Berth 50",
+    "PNR: 8453863026"
+   ],
+   "facts": {
+    "DATE": "2026-11-19"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d169",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "SpiceJet SG 821",
+     "b"
+    ],
+    "E-ticket",
+    "Kolkata (CCU) to Pune (PNQ)",
+    "Date: 1 Dec 2026",
+    "Departure 05:30",
+    "PNR: DHX5S2"
+   ],
+   "facts": {
+    "DATE": "2026-12-01"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d170",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "IndiGo 6E 1376",
+     "b"
+    ],
+    "E-ticket",
+    "Mumbai (BOM) to Ahmedabad (AMD)",
+    "Date: 1 Nov 2026",
+    "Departure 12:15",
+    "PNR: DZ7GDU"
+   ],
+   "facts": {
+    "DATE": "2026-11-01"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d171",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "IndiGo 6E 1194",
+     "b"
+    ],
+    "E-ticket",
+    "Pune (PNQ) to Mumbai (BOM)",
+    "Date: 28 Sep 2026",
+    "Departure 08:00",
+    "PNR: 2CJ6BU"
+   ],
+   "facts": {
+    "DATE": "2026-09-28"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d172",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Express 10836",
+     "b"
+    ],
+    "Train e-ticket",
+    "Kochi to Mumbai",
+    "Journey date: 18 Nov 2026",
+    "Coach S7  Berth 40",
+    "PNR: 5937358771"
+   ],
+   "facts": {
+    "DATE": "2026-11-18"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d173",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Orange Travels",
+     "b"
+    ],
+    "Bus ticket",
+    "Pune to Hyderabad",
+    "Date: 20 Oct 2026",
+    "Seat 30B",
+    "Booking id: 961226"
+   ],
+   "facts": {
+    "DATE": "2026-10-20"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d174",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Express 14709",
+     "b"
+    ],
+    "Train e-ticket",
+    "Chennai to Hyderabad",
+    "Journey date: 21 Dec 2026",
+    "Coach S2  Berth 17",
+    "PNR: 2845769831"
+   ],
+   "facts": {
+    "DATE": "2026-12-21"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d175",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Air India AI 5365",
+     "b"
+    ],
+    "E-ticket",
+    "Ahmedabad (AMD) to Chennai (MAA)",
+    "Date: 17 Dec 2026",
+    "Departure 10:30",
+    "PNR: BGN72E"
+   ],
+   "facts": {
+    "DATE": "2026-12-17"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d176",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "IndiGo 6E 4629",
+     "b"
+    ],
+    "E-ticket",
+    "Hyderabad (HYD) to Kolkata (CCU)",
+    "Date: 3 Dec 2026",
+    "Departure 22:15",
+    "PNR: NXSFVH"
+   ],
+   "facts": {
+    "DATE": "2026-12-03"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d177",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Green Line Bus",
+     "b"
+    ],
+    "Bus ticket",
+    "Mumbai to Kochi",
+    "Date: 23 Sep 2026",
+    "Seat 23A",
+    "Booking id: 279101"
+   ],
+   "facts": {
+    "DATE": "2026-09-23"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d178",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "SpiceJet SG 4218",
+     "b"
+    ],
+    "E-ticket",
+    "Delhi (DEL) to Bengaluru (BLR)",
+    "Date: 18 Oct 2026",
+    "Departure 20:30",
+    "PNR: NNMZ8E"
+   ],
+   "facts": {
+    "DATE": "2026-10-18"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d179",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Orange Travels",
+     "b"
+    ],
+    "Bus ticket",
+    "Delhi to Goa",
+    "Date: 20 Oct 2026",
+    "Seat 36B",
+    "Booking id: 988671"
+   ],
+   "facts": {
+    "DATE": "2026-10-20"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d180",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Air India AI 4494",
+     "b"
+    ],
+    "E-ticket",
+    "Hyderabad (HYD) to Delhi (DEL)",
+    "Date: 16 Nov 2026",
+    "Departure 19:45",
+    "PNR: GPVHS4"
+   ],
+   "facts": {
+    "DATE": "2026-11-16"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d181",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Air India AI 875",
+     "b"
+    ],
+    "E-ticket",
+    "Delhi (DEL) to Ahmedabad (AMD)",
+    "Date: 11 Dec 2026",
+    "Departure 07:30",
+    "PNR: 5FNNAB"
+   ],
+   "facts": {
+    "DATE": "2026-12-11"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d182",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Vistara UK 8274",
+     "b"
+    ],
+    "E-ticket",
+    "Kolkata (CCU) to Bengaluru (BLR)",
+    "Date: 1 Oct 2026",
+    "Departure 21:45",
+    "PNR: XQCY99"
+   ],
+   "facts": {
+    "DATE": "2026-10-01"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d183",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Express 13307",
+     "b"
+    ],
+    "Train e-ticket",
+    "Kolkata to Ahmedabad",
+    "Journey date: 21 Sep 2026",
+    "Coach S9  Berth 33",
+    "PNR: 7548922493"
+   ],
+   "facts": {
+    "DATE": "2026-09-21"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d184",
+   "type": "ticket",
+   "lang": "en",
+   "lines": [
+    [
+     "Express 17630",
+     "b"
+    ],
+    "Train e-ticket",
+    "Hyderabad to Pune",
+    "Journey date: 21 Sep 2026",
+    "Coach S1  Berth 6",
+    "PNR: 3028994626"
+   ],
+   "facts": {
+    "DATE": "2026-09-21"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d185",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "Heart & Health Centre",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. V. Nair, Cardiology",
+    "Address: Plot 59, T Nagar",
+    "Chennai 600017",
+    "Phone: 81413 63343",
+    "Appointment: 23 Sep 2026, 9:00"
+   ],
+   "facts": {
+    "PHONE": "+918141363343",
+    "DATE": "2026-09-23",
+    "ADDRESS": "Plot x, T Nagar, Chennai 600017"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d186",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "City Care Clinic",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. R. Sharma, General Medicine",
+    "Address: Plot 55, Kothrud",
+    "Pune 411038",
+    "Phone: 76239 42464",
+    "Appointment: 12 Oct 2026, 15:30"
+   ],
+   "facts": {
+    "PHONE": "+917623942464",
+    "DATE": "2026-10-12",
+    "ADDRESS": "Plot x, Kothrud, Pune 411038"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d187",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "Dental Plus",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. A. Khan, Dentistry",
+    "Address: Plot 43, Banjara Hills",
+    "Hyderabad 500034",
+    "Phone: 83989 97453",
+    "Appointment: 13 Oct 2026, 17:00"
+   ],
+   "facts": {
+    "PHONE": "+918398997453",
+    "DATE": "2026-10-13",
+    "ADDRESS": "Plot x, Banjara Hills, Hyderabad 500034"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d188",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "Dental Plus",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. A. Khan, Dentistry",
+    "Address: Plot 36, Indiranagar",
+    "Bengaluru 560038",
+    "Phone: 92334 96770",
+    "Appointment: 3 Sep 2026, 13:00"
+   ],
+   "facts": {
+    "PHONE": "+919233496770",
+    "DATE": "2026-09-03",
+    "ADDRESS": "Plot x, Indiranagar, Bengaluru 560038"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d189",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "City Care Clinic",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. R. Sharma, General Medicine",
+    "Address: Plot 16, Indiranagar",
+    "Bengaluru 560038",
+    "Phone: 66886 56114",
+    "Appointment: 11 Oct 2026, 9:00"
+   ],
+   "facts": {
+    "PHONE": "+916688656114",
+    "DATE": "2026-10-11",
+    "ADDRESS": "Plot x, Indiranagar, Bengaluru 560038"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d190",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "Dental Plus",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. A. Khan, Dentistry",
+    "Address: Plot 36, Indiranagar",
+    "Bengaluru 560038",
+    "Phone: 74940 42947",
+    "Appointment: 11 Nov 2026, 16:00"
+   ],
+   "facts": {
+    "PHONE": "+917494042947",
+    "DATE": "2026-11-11",
+    "ADDRESS": "Plot x, Indiranagar, Bengaluru 560038"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d191",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "Sunshine Pediatrics",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. K. Menon, Pediatrics",
+    "Address: Plot 1, Indiranagar",
+    "Bengaluru 560038",
+    "Phone: 62619 56808",
+    "Appointment: 13 Oct 2026, 10:00"
+   ],
+   "facts": {
+    "PHONE": "+916261956808",
+    "DATE": "2026-10-13",
+    "ADDRESS": "Plot x, Indiranagar, Bengaluru 560038"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d192",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "City Care Clinic",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. R. Sharma, General Medicine",
+    "Address: Plot 26, Banjara Hills",
+    "Hyderabad 500034",
+    "Phone: 70070 09170",
+    "Appointment: 11 Nov 2026, 11:30"
+   ],
+   "facts": {
+    "PHONE": "+917007009170",
+    "DATE": "2026-11-11",
+    "ADDRESS": "Plot x, Banjara Hills, Hyderabad 500034"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d193",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "Dental Plus",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. A. Khan, Dentistry",
+    "Address: Plot 89, Madhapur",
+    "Hyderabad 500081",
+    "Phone: 90304 88778",
+    "Appointment: 12 Sep 2026, 10:30"
+   ],
+   "facts": {
+    "PHONE": "+919030488778",
+    "DATE": "2026-09-12",
+    "ADDRESS": "Plot x, Madhapur, Hyderabad 500081"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d194",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "Care Women's Clinic",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. L. Rao, Gynaecology",
+    "Address: Plot 31, Banjara Hills",
+    "Hyderabad 500034",
+    "Phone: 93511 02038",
+    "Appointment: 10 Sep 2026, 9:00"
+   ],
+   "facts": {
+    "PHONE": "+919351102038",
+    "DATE": "2026-09-10",
+    "ADDRESS": "Plot x, Banjara Hills, Hyderabad 500034"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d195",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "Vision Eye Care",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. P. Reddy, Ophthalmology",
+    "Address: Plot 13, Banjara Hills",
+    "Hyderabad 500034",
+    "Phone: 60426 37167",
+    "Appointment: 7 Nov 2026, 14:30"
+   ],
+   "facts": {
+    "PHONE": "+916042637167",
+    "DATE": "2026-11-07",
+    "ADDRESS": "Plot x, Banjara Hills, Hyderabad 500034"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d196",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "Sunshine Pediatrics",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. K. Menon, Pediatrics",
+    "Address: Plot 61, Kothrud",
+    "Pune 411038",
+    "Phone: 62670 81297",
+    "Appointment: 2 Sep 2026, 9:30"
+   ],
+   "facts": {
+    "PHONE": "+916267081297",
+    "DATE": "2026-09-02",
+    "ADDRESS": "Plot x, Kothrud, Pune 411038"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d197",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "Heart & Health Centre",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. V. Nair, Cardiology",
+    "Address: Plot 63, Kothrud",
+    "Pune 411038",
+    "Phone: 73981 33702",
+    "Appointment: 6 Nov 2026, 10:30"
+   ],
+   "facts": {
+    "PHONE": "+917398133702",
+    "DATE": "2026-11-06",
+    "ADDRESS": "Plot x, Kothrud, Pune 411038"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d198",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "LifeLine Hospital",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. S. Iyer, Orthopaedics",
+    "Address: Plot 61, Indiranagar",
+    "Bengaluru 560038",
+    "Phone: 62999 14706",
+    "Appointment: 28 Nov 2026, 14:30"
+   ],
+   "facts": {
+    "PHONE": "+916299914706",
+    "DATE": "2026-11-28",
+    "ADDRESS": "Plot x, Indiranagar, Bengaluru 560038"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d199",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "Vision Eye Care",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. P. Reddy, Ophthalmology",
+    "Address: Plot 41, Kothrud",
+    "Pune 411038",
+    "Phone: 96351 67682",
+    "Appointment: 2 Oct 2026, 16:00"
+   ],
+   "facts": {
+    "PHONE": "+919635167682",
+    "DATE": "2026-10-02",
+    "ADDRESS": "Plot x, Kothrud, Pune 411038"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d200",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "Vision Eye Care",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. P. Reddy, Ophthalmology",
+    "Address: Plot 20, Kothrud",
+    "Pune 411038",
+    "Phone: 74172 64366",
+    "Appointment: 3 Nov 2026, 17:00"
+   ],
+   "facts": {
+    "PHONE": "+917417264366",
+    "DATE": "2026-11-03",
+    "ADDRESS": "Plot x, Kothrud, Pune 411038"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d201",
+   "type": "appointment",
+   "lang": "en",
+   "lines": [
+    [
+     "City Care Clinic",
+     "b"
+    ],
+    "Appointment card",
+    "Dr. R. Sharma, General Medicine",
+    "Address: Plot 29, Kothrud",
+    "Pune 411038",
+    "Phone: 74220 42628",
+    "Appointment: 1 Sep 2026, 16:00"
+   ],
+   "facts": {
+    "PHONE": "+917422042628",
+    "DATE": "2026-09-01",
+    "ADDRESS": "Plot x, Kothrud, Pune 411038"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d202",
+   "type": "appointment",
+   "lang": "hi",
+   "lines": [
+    [
+     "जीवन ज्योति क्लिनिक",
+     "b"
+    ],
+    "अपॉइंटमेंट कार्ड",
+    "डॉ. अनिल कपूर",
+    "पता: प्लॉट 39, गांधी नगर",
+    "फोन: 80601 88987",
+    "तारीख: 26 नवंबर 2026"
+   ],
+   "facts": {
+    "PHONE": "+918060188987",
+    "DATE": "2026-11-26"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d203",
+   "type": "appointment",
+   "lang": "hi",
+   "lines": [
+    [
+     "जीवन ज्योति क्लिनिक",
+     "b"
+    ],
+    "अपॉइंटमेंट कार्ड",
+    "डॉ. सुनीता वर्मा",
+    "पता: प्लॉट 76, गांधी नगर",
+    "फोन: 67801 33252",
+    "तारीख: 11 सितंबर 2026"
+   ],
+   "facts": {
+    "PHONE": "+916780133252",
+    "DATE": "2026-09-11"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d204",
+   "type": "appointment",
+   "lang": "hi",
+   "lines": [
+    [
+     "जीवन ज्योति क्लिनिक",
+     "b"
+    ],
+    "अपॉइंटमेंट कार्ड",
+    "डॉ. अनिल कपूर",
+    "पता: प्लॉट 89, गांधी नगर",
+    "फोन: 93782 76082",
+    "तारीख: 24 अक्टूबर 2026"
+   ],
+   "facts": {
+    "PHONE": "+919378276082",
+    "DATE": "2026-10-24"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d205",
+   "type": "appointment",
+   "lang": "hi",
+   "lines": [
+    [
+     "जीवन ज्योति क्लिनिक",
+     "b"
+    ],
+    "अपॉइंटमेंट कार्ड",
+    "डॉ. अनिल कपूर",
+    "पता: प्लॉट 22, गांधी नगर",
+    "फोन: 62138 56070",
+    "तारीख: 13 नवंबर 2026"
+   ],
+   "facts": {
+    "PHONE": "+916213856070",
+    "DATE": "2026-11-13"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d206",
+   "type": "appointment",
+   "lang": "te",
+   "lines": [
+    [
+     "శ్రీ సాయి క్లినిక్",
+     "b"
+    ],
+    "అపాయింట్‌మెంట్ కార్డ్",
+    "డాక్టర్ సునీత",
+    "ఫోన్: 99695 34327",
+    "తేదీ: 7 సెప్టెంబర్ 2026"
+   ],
+   "facts": {
+    "PHONE": "+919969534327",
+    "DATE": "2026-09-07"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d207",
+   "type": "appointment",
+   "lang": "te",
+   "lines": [
+    [
+     "శ్రీ సాయి క్లినిక్",
+     "b"
+    ],
+    "అపాయింట్‌మెంట్ కార్డ్",
+    "డాక్టర్ రమేష్",
+    "ఫోన్: 85013 51006",
+    "తేదీ: 28 అక్టోబర్ 2026"
+   ],
+   "facts": {
+    "PHONE": "+918501351006",
+    "DATE": "2026-10-28"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d208",
+   "type": "appointment",
+   "lang": "te",
+   "lines": [
+    [
+     "శ్రీ సాయి క్లినిక్",
+     "b"
+    ],
+    "అపాయింట్‌మెంట్ కార్డ్",
+    "డాక్టర్ సునీత",
+    "ఫోన్: 67112 43351",
+    "తేదీ: 16 నవంబర్ 2026"
+   ],
+   "facts": {
+    "PHONE": "+916711243351",
+    "DATE": "2026-11-16"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d209",
+   "type": "appointment",
+   "lang": "te",
+   "lines": [
+    [
+     "శ్రీ సాయి క్లినిక్",
+     "b"
+    ],
+    "అపాయింట్‌మెంట్ కార్డ్",
+    "డాక్టర్ రమేష్",
+    "ఫోన్: 80986 80154",
+    "తేదీ: 18 అక్టోబర్ 2026"
+   ],
+   "facts": {
+    "PHONE": "+918098680154",
+    "DATE": "2026-10-18"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d210",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Physics - Thermodynamics",
+     "b"
+    ],
+    "Numericals on ideal gases",
+    "First and second law of thermodynamics",
+    "Carnot cycle efficiency"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d211",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Microeconomics - Demand and Supply",
+     "b"
+    ],
+    "Law of demand and elasticity",
+    "Price ceilings and floors",
+    "Consumer surplus"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d212",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Machine Learning - Notes",
+     "b"
+    ],
+    "Gradient descent and learning rate",
+    "Cross validation",
+    "Bias variance tradeoff"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d213",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Machine Learning - Notes",
+     "b"
+    ],
+    "Overfitting and regularisation",
+    "Gradient descent and learning rate",
+    "Cross validation"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d214",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Physics - Thermodynamics",
+     "b"
+    ],
+    "First and second law of thermodynamics",
+    "Entropy and heat engines",
+    "Numericals on ideal gases"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d215",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Calculus - Integration",
+     "b"
+    ],
+    "Definite integrals and area",
+    "Integration by parts",
+    "Improper integrals"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d216",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Linear Algebra - Week 3",
+     "b"
+    ],
+    "Eigenvalues and eigenvectors",
+    "Orthogonal projections",
+    "Singular value decomposition"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d217",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "World History - Revolutions",
+     "b"
+    ],
+    "Reign of terror",
+    "Causes of the French revolution",
+    "Industrial revolution in Britain"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d218",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Geography - Monsoon",
+     "b"
+    ],
+    "Southwest monsoon onset",
+    "Cyclones in the Bay of Bengal",
+    "El Nino and rainfall"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d219",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Data Structures - Trees",
+     "b"
+    ],
+    "Binary search tree insertion and deletion",
+    "Graph traversal BFS and DFS",
+    "Heap and priority queues"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d220",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Data Structures - Trees",
+     "b"
+    ],
+    "AVL rotations",
+    "Binary search tree insertion and deletion",
+    "Heap and priority queues"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d221",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Microeconomics - Demand and Supply",
+     "b"
+    ],
+    "Price ceilings and floors",
+    "Consumer surplus",
+    "Market equilibrium"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d222",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Constitutional Law",
+     "b"
+    ],
+    "Landmark cases to remember",
+    "Fundamental rights overview",
+    "Directive principles"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d223",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Inorganic Chemistry - Lecture 4",
+     "b"
+    ],
+    "Crystal field theory basics",
+    "Ionisation energy and electron affinity",
+    "Periodic trends in atomic radius"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d224",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Linear Algebra - Week 3",
+     "b"
+    ],
+    "Singular value decomposition",
+    "Orthogonal projections",
+    "Diagonalisation"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d225",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Linear Algebra - Week 3",
+     "b"
+    ],
+    "Diagonalisation",
+    "Singular value decomposition",
+    "Eigenvalues and eigenvectors"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d226",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Constitutional Law",
+     "b"
+    ],
+    "Landmark cases to remember",
+    "Directive principles",
+    "Fundamental rights overview"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d227",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Geography - Monsoon",
+     "b"
+    ],
+    "El Nino and rainfall",
+    "Western ghats rainfall",
+    "Cyclones in the Bay of Bengal"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d228",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Linear Algebra - Week 3",
+     "b"
+    ],
+    "Orthogonal projections",
+    "Singular value decomposition",
+    "Diagonalisation"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d229",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Cell Biology - Chapter 5",
+     "b"
+    ],
+    "Revision questions",
+    "Mitosis and meiosis stages",
+    "Cell cycle checkpoints"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d230",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Constitutional Law",
+     "b"
+    ],
+    "Fundamental rights overview",
+    "Landmark cases to remember",
+    "Amendment procedure"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d231",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Cell Biology - Chapter 5",
+     "b"
+    ],
+    "Mitosis and meiosis stages",
+    "Chromosome structure",
+    "Cell cycle checkpoints"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d232",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Machine Learning - Notes",
+     "b"
+    ],
+    "Gradient descent and learning rate",
+    "Overfitting and regularisation",
+    "Bias variance tradeoff"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d233",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Machine Learning - Notes",
+     "b"
+    ],
+    "Cross validation",
+    "Gradient descent and learning rate",
+    "Overfitting and regularisation"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d234",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Inorganic Chemistry - Lecture 4",
+     "b"
+    ],
+    "Crystal field theory basics",
+    "Ionisation energy and electron affinity",
+    "Revision: coordination compounds"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d235",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Microeconomics - Demand and Supply",
+     "b"
+    ],
+    "Market equilibrium",
+    "Law of demand and elasticity",
+    "Price ceilings and floors"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d236",
+   "type": "notes",
+   "lang": "en",
+   "lines": [
+    [
+     "Geography - Monsoon",
+     "b"
+    ],
+    "El Nino and rainfall",
+    "Cyclones in the Bay of Bengal",
+    "Western ghats rainfall"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d237",
+   "type": "notes",
+   "lang": "hi",
+   "lines": [
+    [
+     "गणित - त्रिकोणमिति",
+     "b"
+    ],
+    "साइन कोसाइन के सूत्र",
+    "ऊँचाई और दूरी के प्रश्न",
+    "त्रिकोणमितीय सर्वसमिकाएँ"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d238",
+   "type": "notes",
+   "lang": "hi",
+   "lines": [
+    [
+     "भौतिकी - न्यूटन के नियम",
+     "b"
+    ],
+    "गति का पहला नियम",
+    "बल और त्वरण",
+    "क्रिया और प्रतिक्रिया"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d239",
+   "type": "notes",
+   "lang": "hi",
+   "lines": [
+    [
+     "भूगोल - भारत की नदियाँ",
+     "b"
+    ],
+    "गंगा नदी तंत्र",
+    "प्रायद्वीपीय नदियाँ",
+    "बाढ़ और सिंचाई"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d240",
+   "type": "notes",
+   "lang": "te",
+   "lines": [
+    [
+     "గణితం - బీజగణితం",
+     "b"
+    ],
+    "వర్గ సమీకరణాలు",
+    "అంకశ్రేణులు",
+    "సమీకరణాల సాధన"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d241",
+   "type": "notes",
+   "lang": "te",
+   "lines": [
+    [
+     "జీవశాస్త్రం - కణ విభజన",
+     "b"
+    ],
+    "మైటోసిస్ దశలు",
+    "మియోసిస్ ప్రాముఖ్యత",
+    "క్రోమోజోములు"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d242",
+   "type": "timetable",
+   "lang": "en",
+   "lines": [
+    [
+     "Semester Exam Timetable",
+     "b"
+    ],
+    "B.Tech II Year",
+    "1 Nov 2026  Data Structures",
+    "11 Nov 2026  Digital Logic",
+    "14 Nov 2026  Discrete Mathematics",
+    "18 Nov 2026  Probability and Statistics"
+   ],
+   "facts": {
+    "DATE": "2026-11-01"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d243",
+   "type": "timetable",
+   "lang": "en",
+   "lines": [
+    [
+     "Semester Exam Timetable",
+     "b"
+    ],
+    "B.Tech II Year",
+    "1 Oct 2026  Data Structures",
+    "13 Oct 2026  Digital Logic",
+    "14 Oct 2026  Discrete Mathematics",
+    "22 Oct 2026  Probability and Statistics"
+   ],
+   "facts": {
+    "DATE": "2026-10-01"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d244",
+   "type": "timetable",
+   "lang": "en",
+   "lines": [
+    [
+     "Semester Exam Timetable",
+     "b"
+    ],
+    "MBA I Semester",
+    "12 Nov 2026  Marketing Management",
+    "13 Nov 2026  Financial Accounting",
+    "17 Nov 2026  Organisational Behaviour",
+    "19 Nov 2026  Business Statistics"
+   ],
+   "facts": {
+    "DATE": "2026-11-12"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d245",
+   "type": "timetable",
+   "lang": "en",
+   "lines": [
+    [
+     "Semester Exam Timetable",
+     "b"
+    ],
+    "B.Tech II Year",
+    "2 Nov 2026  Data Structures",
+    "10 Nov 2026  Digital Logic",
+    "16 Nov 2026  Discrete Mathematics",
+    "18 Nov 2026  Probability and Statistics"
+   ],
+   "facts": {
+    "DATE": "2026-11-02"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d246",
+   "type": "timetable",
+   "lang": "en",
+   "lines": [
+    [
+     "Semester Exam Timetable",
+     "b"
+    ],
+    "B.Sc III Year",
+    "8 Oct 2026  Quantum Mechanics",
+    "14 Oct 2026  Organic Synthesis",
+    "19 Oct 2026  Real Analysis",
+    "22 Oct 2026  Genetics"
+   ],
+   "facts": {
+    "DATE": "2026-10-08"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d247",
+   "type": "timetable",
+   "lang": "en",
+   "lines": [
+    [
+     "Semester Exam Timetable",
+     "b"
+    ],
+    "B.Tech II Year",
+    "15 Oct 2026  Data Structures",
+    "18 Oct 2026  Digital Logic",
+    "19 Oct 2026  Discrete Mathematics",
+    "21 Oct 2026  Probability and Statistics"
+   ],
+   "facts": {
+    "DATE": "2026-10-15"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d248",
+   "type": "timetable",
+   "lang": "en",
+   "lines": [
+    [
+     "Semester Exam Timetable",
+     "b"
+    ],
+    "MBA I Semester",
+    "16 Nov 2026  Marketing Management",
+    "20 Nov 2026  Financial Accounting",
+    "23 Nov 2026  Organisational Behaviour",
+    "24 Nov 2026  Business Statistics"
+   ],
+   "facts": {
+    "DATE": "2026-11-16"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d249",
+   "type": "timetable",
+   "lang": "en",
+   "lines": [
+    [
+     "Semester Exam Timetable",
+     "b"
+    ],
+    "B.Tech II Year",
+    "1 Oct 2026  Data Structures",
+    "17 Oct 2026  Digital Logic",
+    "19 Oct 2026  Discrete Mathematics",
+    "25 Oct 2026  Probability and Statistics"
+   ],
+   "facts": {
+    "DATE": "2026-10-01"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d250",
+   "type": "timetable",
+   "lang": "en",
+   "lines": [
+    [
+     "Semester Exam Timetable",
+     "b"
+    ],
+    "B.Sc III Year",
+    "1 Nov 2026  Quantum Mechanics",
+    "6 Nov 2026  Organic Synthesis",
+    "22 Nov 2026  Real Analysis",
+    "25 Nov 2026  Genetics"
+   ],
+   "facts": {
+    "DATE": "2026-11-01"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d251",
+   "type": "timetable",
+   "lang": "en",
+   "lines": [
+    [
+     "Semester Exam Timetable",
+     "b"
+    ],
+    "B.Sc III Year",
+    "1 Oct 2026  Quantum Mechanics",
+    "3 Oct 2026  Organic Synthesis",
+    "16 Oct 2026  Real Analysis",
+    "21 Oct 2026  Genetics"
+   ],
+   "facts": {
+    "DATE": "2026-10-01"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d252",
+   "type": "timetable",
+   "lang": "hi",
+   "lines": [
+    [
+     "परीक्षा समय सारणी",
+     "b"
+    ],
+    "कक्षा 10",
+    "20 नवंबर 2026  गणित",
+    "22 नवंबर 2026  विज्ञान",
+    "24 नवंबर 2026  सामाजिक विज्ञान"
+   ],
+   "facts": {
+    "DATE": "2026-11-20"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d253",
+   "type": "timetable",
+   "lang": "hi",
+   "lines": [
+    [
+     "परीक्षा समय सारणी",
+     "b"
+    ],
+    "कक्षा 10",
+    "20 अक्टूबर 2026  गणित",
+    "22 अक्टूबर 2026  विज्ञान",
+    "24 अक्टूबर 2026  सामाजिक विज्ञान"
+   ],
+   "facts": {
+    "DATE": "2026-10-20"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d254",
+   "type": "timetable",
+   "lang": "hi",
+   "lines": [
+    [
+     "परीक्षा समय सारणी",
+     "b"
+    ],
+    "कक्षा 10",
+    "10 नवंबर 2026  गणित",
+    "12 नवंबर 2026  विज्ञान",
+    "14 नवंबर 2026  सामाजिक विज्ञान"
+   ],
+   "facts": {
+    "DATE": "2026-11-10"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d255",
+   "type": "rent_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Rent Receipt",
+     "b"
+    ],
+    "Tenant: Divya Menon",
+    "Landlord: Rahul Verma",
+    "Month: Jul 2026",
+    "Rent received: Rs 18,000",
+    "Date: 16 Jul 2026"
+   ],
+   "facts": {
+    "AMOUNT": "18000",
+    "DATE": "2026-07-16"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d256",
+   "type": "rent_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Rent Receipt",
+     "b"
+    ],
+    "Tenant: Sneha Patil",
+    "Landlord: Sneha Patil",
+    "Month: Nov 2026",
+    "Rent received: Rs 9,500",
+    "Date: 13 Nov 2026"
+   ],
+   "facts": {
+    "AMOUNT": "9500",
+    "DATE": "2026-11-13"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d257",
+   "type": "rent_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Rent Receipt",
+     "b"
+    ],
+    "Tenant: Pooja Desai",
+    "Landlord: Sneha Patil",
+    "Month: Jul 2026",
+    "Rent received: Rs 15,000",
+    "Date: 3 Jul 2026"
+   ],
+   "facts": {
+    "AMOUNT": "15000",
+    "DATE": "2026-07-03"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d258",
+   "type": "rent_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Rent Receipt",
+     "b"
+    ],
+    "Tenant: Sneha Patil",
+    "Landlord: Neha Gupta",
+    "Month: Sep 2026",
+    "Rent received: Rs 15,000",
+    "Date: 26 Sep 2026"
+   ],
+   "facts": {
+    "AMOUNT": "15000",
+    "DATE": "2026-09-26"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d259",
+   "type": "rent_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Rent Receipt",
+     "b"
+    ],
+    "Tenant: Suresh Babu",
+    "Landlord: Harish Chandra",
+    "Month: Jul 2026",
+    "Rent received: Rs 9,500",
+    "Date: 21 Jul 2026"
+   ],
+   "facts": {
+    "AMOUNT": "9500",
+    "DATE": "2026-07-21"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d260",
+   "type": "rent_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Rent Receipt",
+     "b"
+    ],
+    "Tenant: Pooja Desai",
+    "Landlord: Karthik Reddy",
+    "Month: Nov 2026",
+    "Rent received: Rs 15,000",
+    "Date: 16 Nov 2026"
+   ],
+   "facts": {
+    "AMOUNT": "15000",
+    "DATE": "2026-11-16"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d261",
+   "type": "rent_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Rent Receipt",
+     "b"
+    ],
+    "Tenant: Priya Nair",
+    "Landlord: Rohit Jain",
+    "Month: Jul 2026",
+    "Rent received: Rs 12,000",
+    "Date: 3 Jul 2026"
+   ],
+   "facts": {
+    "AMOUNT": "12000",
+    "DATE": "2026-07-03"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d262",
+   "type": "rent_receipt",
+   "lang": "en",
+   "lines": [
+    [
+     "Rent Receipt",
+     "b"
+    ],
+    "Tenant: Manoj Kumar",
+    "Landlord: Pooja Desai",
+    "Month: Jul 2026",
+    "Rent received: Rs 12,000",
+    "Date: 28 Jul 2026"
+   ],
+   "facts": {
+    "AMOUNT": "12000",
+    "DATE": "2026-07-28"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d263",
+   "type": "insurance",
+   "lang": "en",
+   "lines": [
+    [
+     "Secure Shield Health",
+     "b"
+    ],
+    "Premium reminder",
+    "Policy no: 57101006",
+    "Premium due: Rs 12,400",
+    "Due date: 15 Dec 2026"
+   ],
+   "facts": {
+    "AMOUNT": "12400",
+    "DATE": "2026-12-15"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d264",
+   "type": "insurance",
+   "lang": "en",
+   "lines": [
+    [
+     "Star Health Insurance",
+     "b"
+    ],
+    "Premium reminder",
+    "Policy no: 39052337",
+    "Premium due: Rs 8,600",
+    "Due date: 3 Oct 2026"
+   ],
+   "facts": {
+    "AMOUNT": "8600",
+    "DATE": "2026-10-03"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d265",
+   "type": "insurance",
+   "lang": "en",
+   "lines": [
+    [
+     "Secure Shield Health",
+     "b"
+    ],
+    "Premium reminder",
+    "Policy no: 67996004",
+    "Premium due: Rs 12,400",
+    "Due date: 3 Oct 2026"
+   ],
+   "facts": {
+    "AMOUNT": "12400",
+    "DATE": "2026-10-03"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d266",
+   "type": "insurance",
+   "lang": "en",
+   "lines": [
+    [
+     "Secure Shield Health",
+     "b"
+    ],
+    "Premium reminder",
+    "Policy no: 31090036",
+    "Premium due: Rs 21,000",
+    "Due date: 17 Dec 2026"
+   ],
+   "facts": {
+    "AMOUNT": "21000",
+    "DATE": "2026-12-17"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d267",
+   "type": "insurance",
+   "lang": "en",
+   "lines": [
+    [
+     "Star Health Insurance",
+     "b"
+    ],
+    "Premium reminder",
+    "Policy no: 80632910",
+    "Premium due: Rs 8,600",
+    "Due date: 15 Oct 2026"
+   ],
+   "facts": {
+    "AMOUNT": "8600",
+    "DATE": "2026-10-15"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d268",
+   "type": "insurance",
+   "lang": "en",
+   "lines": [
+    [
+     "Star Health Insurance",
+     "b"
+    ],
+    "Premium reminder",
+    "Policy no: 85885731",
+    "Premium due: Rs 8,600",
+    "Due date: 25 Oct 2026"
+   ],
+   "facts": {
+    "AMOUNT": "8600",
+    "DATE": "2026-10-25"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d269",
+   "type": "insurance",
+   "lang": "en",
+   "lines": [
+    [
+     "Star Health Insurance",
+     "b"
+    ],
+    "Premium reminder",
+    "Policy no: 59850739",
+    "Premium due: Rs 21,000",
+    "Due date: 24 Nov 2026"
+   ],
+   "facts": {
+    "AMOUNT": "21000",
+    "DATE": "2026-11-24"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d270",
+   "type": "insurance",
+   "lang": "en",
+   "lines": [
+    [
+     "Secure Shield Health",
+     "b"
+    ],
+    "Premium reminder",
+    "Policy no: 93200305",
+    "Premium due: Rs 12,400",
+    "Due date: 22 Sep 2026"
+   ],
+   "facts": {
+    "AMOUNT": "12400",
+    "DATE": "2026-09-22"
+   },
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d271",
+   "type": "certificate",
+   "lang": "en",
+   "lines": [
+    [
+     "Certificate of Completion",
+     "b"
+    ],
+    "This is to certify that Rohit Jain",
+    "has completed the course Digital Marketing",
+    "Issued on 6 Sep 2026"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d272",
+   "type": "certificate",
+   "lang": "en",
+   "lines": [
+    [
+     "Certificate of Completion",
+     "b"
+    ],
+    "This is to certify that Rahul Verma",
+    "has completed the course Public Speaking",
+    "Issued on 6 Jul 2026"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d273",
+   "type": "certificate",
+   "lang": "en",
+   "lines": [
+    [
+     "Certificate of Completion",
+     "b"
+    ],
+    "This is to certify that Lakshmi Prasad",
+    "has completed the course Public Speaking",
+    "Issued on 16 Jul 2026"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d274",
+   "type": "certificate",
+   "lang": "en",
+   "lines": [
+    [
+     "Certificate of Completion",
+     "b"
+    ],
+    "This is to certify that Swathi Reddy",
+    "has completed the course Digital Marketing",
+    "Issued on 4 Aug 2026"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d275",
+   "type": "certificate",
+   "lang": "en",
+   "lines": [
+    [
+     "Certificate of Completion",
+     "b"
+    ],
+    "This is to certify that Sandeep Yadav",
+    "has completed the course Public Speaking",
+    "Issued on 10 Jun 2026"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d276",
+   "type": "certificate",
+   "lang": "en",
+   "lines": [
+    [
+     "Certificate of Completion",
+     "b"
+    ],
+    "This is to certify that Lakshmi Prasad",
+    "has completed the course Digital Marketing",
+    "Issued on 28 Aug 2026"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d277",
+   "type": "shopping_list",
+   "lang": "en",
+   "lines": [
+    [
+     "Shopping list",
+     "b"
+    ],
+    "rice 5 kg",
+    "cooking oil 1 litre",
+    "tomatoes 1 kg",
+    "onions 2 kg",
+    "soap 4",
+    "detergent"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d278",
+   "type": "shopping_list",
+   "lang": "en",
+   "lines": [
+    [
+     "Shopping list",
+     "b"
+    ],
+    "toor dal 2 kg",
+    "soap 4",
+    "tomatoes 1 kg",
+    "onions 2 kg",
+    "sugar 1 kg",
+    "eggs 12"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d279",
+   "type": "shopping_list",
+   "lang": "en",
+   "lines": [
+    [
+     "Shopping list",
+     "b"
+    ],
+    "rice 5 kg",
+    "sugar 1 kg",
+    "cooking oil 1 litre",
+    "onions 2 kg",
+    "tomatoes 1 kg",
+    "milk 2 litres"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d280",
+   "type": "shopping_list",
+   "lang": "en",
+   "lines": [
+    [
+     "Shopping list",
+     "b"
+    ],
+    "soap 4",
+    "rice 5 kg",
+    "detergent",
+    "bread",
+    "tomatoes 1 kg",
+    "onions 2 kg"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d281",
+   "type": "shopping_list",
+   "lang": "en",
+   "lines": [
+    [
+     "Shopping list",
+     "b"
+    ],
+    "tea powder",
+    "onions 2 kg",
+    "toor dal 2 kg",
+    "tomatoes 1 kg",
+    "sugar 1 kg",
+    "rice 5 kg"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d282",
+   "type": "shopping_list",
+   "lang": "en",
+   "lines": [
+    [
+     "Shopping list",
+     "b"
+    ],
+    "toor dal 2 kg",
+    "eggs 12",
+    "detergent",
+    "soap 4",
+    "onions 2 kg",
+    "sugar 1 kg"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d283",
+   "type": "shopping_list",
+   "lang": "en",
+   "lines": [
+    [
+     "Shopping list",
+     "b"
+    ],
+    "rice 5 kg",
+    "tomatoes 1 kg",
+    "soap 4",
+    "tea powder",
+    "eggs 12",
+    "bread"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d284",
+   "type": "recipe",
+   "lang": "en",
+   "lines": [
+    [
+     "Recipe: Pesarattu",
+     "b"
+    ],
+    "green gram 1 cup",
+    "rice 2 spoons",
+    "ginger and green chilli",
+    "soak 4 hours and grind"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d285",
+   "type": "recipe",
+   "lang": "en",
+   "lines": [
+    [
+     "Recipe: Lemon rice",
+     "b"
+    ],
+    "cooked rice 2 cups",
+    "lemon juice",
+    "curry leaves and mustard",
+    "peanuts and turmeric"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d286",
+   "type": "recipe",
+   "lang": "en",
+   "lines": [
+    [
+     "Recipe: Masala chai",
+     "b"
+    ],
+    "milk and water",
+    "tea leaves",
+    "ginger and cardamom",
+    "boil 5 minutes"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d287",
+   "type": "recipe",
+   "lang": "en",
+   "lines": [
+    [
+     "Recipe: Vegetable biryani",
+     "b"
+    ],
+    "basmati rice 2 cups",
+    "mixed vegetables",
+    "biryani masala",
+    "cook on low flame 20 minutes"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d288",
+   "type": "chat",
+   "lang": "en",
+   "lines": [
+    [
+     "Messages",
+     "b"
+    ],
+    "Mom: Eat dinner on time",
+    "Mom: Call me when you are free",
+    "Mom: Did you reach the hostel?",
+    "Friend: Bring the lab record",
+    "You: Yes, reached an hour ago"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d289",
+   "type": "chat",
+   "lang": "en",
+   "lines": [
+    [
+     "Messages",
+     "b"
+    ],
+    "Friend: Bring the lab record",
+    "Mom: Eat dinner on time",
+    "You: Yes, 4 pm in the library",
+    "Mom: Did you reach the hostel?",
+    "You: Yes, reached an hour ago"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d290",
+   "type": "chat",
+   "lang": "en",
+   "lines": [
+    [
+     "Messages",
+     "b"
+    ],
+    "You: Yes, reached an hour ago",
+    "You: Yes, 4 pm in the library",
+    "Friend: Bring the lab record",
+    "Mom: Call me when you are free",
+    "Mom: Did you reach the hostel?"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d291",
+   "type": "chat",
+   "lang": "en",
+   "lines": [
+    [
+     "Messages",
+     "b"
+    ],
+    "You: Yes, 4 pm in the library",
+    "You: Will do, love you",
+    "Mom: Call me when you are free",
+    "Mom: Eat dinner on time",
+    "You: Yes, reached an hour ago"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d292",
+   "type": "chat",
+   "lang": "en",
+   "lines": [
+    [
+     "Messages",
+     "b"
+    ],
+    "You: Yes, reached an hour ago",
+    "Mom: Call me when you are free",
+    "Mom: Eat dinner on time",
+    "You: Will do, love you",
+    "You: Yes, 4 pm in the library"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d293",
+   "type": "chat",
+   "lang": "en",
+   "lines": [
+    [
+     "Messages",
+     "b"
+    ],
+    "You: Will do, love you",
+    "Friend: Bring the lab record",
+    "You: Yes, reached an hour ago",
+    "Mom: Call me when you are free",
+    "Friend: Are we meeting for the project tomorrow?"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d294",
+   "type": "chat",
+   "lang": "en",
+   "lines": [
+    [
+     "Messages",
+     "b"
+    ],
+    "You: Will do, love you",
+    "You: Yes, 4 pm in the library",
+    "Mom: Eat dinner on time",
+    "Mom: Did you reach the hostel?",
+    "Friend: Are we meeting for the project tomorrow?"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d295",
+   "type": "chat",
+   "lang": "en",
+   "lines": [
+    [
+     "Messages",
+     "b"
+    ],
+    "Friend: Bring the lab record",
+    "Mom: Eat dinner on time",
+    "You: Yes, reached an hour ago",
+    "Mom: Call me when you are free",
+    "Friend: Are we meeting for the project tomorrow?"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d296",
+   "type": "chat",
+   "lang": "en",
+   "lines": [
+    [
+     "Messages",
+     "b"
+    ],
+    "You: Yes, 4 pm in the library",
+    "Mom: Eat dinner on time",
+    "Friend: Bring the lab record",
+    "You: Will do, love you",
+    "Mom: Did you reach the hostel?"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d297",
+   "type": "chat",
+   "lang": "en",
+   "lines": [
+    [
+     "Messages",
+     "b"
+    ],
+    "Friend: Bring the lab record",
+    "You: Yes, 4 pm in the library",
+    "Mom: Eat dinner on time",
+    "Mom: Call me when you are free",
+    "Mom: Did you reach the hostel?"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d298",
+   "type": "chat",
+   "lang": "en",
+   "lines": [
+    [
+     "Messages",
+     "b"
+    ],
+    "Mom: Call me when you are free",
+    "Mom: Eat dinner on time",
+    "You: Will do, love you",
+    "You: Yes, 4 pm in the library",
+    "Friend: Bring the lab record"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d299",
+   "type": "chat",
+   "lang": "en",
+   "lines": [
+    [
+     "Messages",
+     "b"
+    ],
+    "Mom: Call me when you are free",
+    "Friend: Bring the lab record",
+    "You: Yes, reached an hour ago",
+    "Mom: Eat dinner on time",
+    "You: Will do, love you"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  },
+  {
+   "id": "d300",
+   "type": "chat",
+   "lang": "en",
+   "lines": [
+    [
+     "Messages",
+     "b"
+    ],
+    "You: Yes, 4 pm in the library",
+    "Mom: Eat dinner on time",
+    "Friend: Are we meeting for the project tomorrow?",
+    "Mom: Did you reach the hostel?",
+    "Friend: Bring the lab record"
+   ],
+   "facts": {},
+   "anchor": null,
+   "upi": null
+  }
+ ],
+ "ledger_truth_paise": {
+  "2026-08": 1038000,
+  "2026-09": 1495950,
+  "2026-10": 2502100
+ },
+ "n_docs": 300
+}
