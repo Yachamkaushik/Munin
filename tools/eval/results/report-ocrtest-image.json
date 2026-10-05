@@ -1,0 +1,4721 @@
+{
+ "set": "ocrtest",
+ "mode": "image",
+ "n_docs": 300,
+ "index_seconds": 52.175021275,
+ "indexing": {
+  "indexed": 300,
+  "no_text": 0,
+  "failed": 0,
+  "duplicate": 0,
+  "pending": 0,
+  "ocr_ms_median": 100,
+  "embed_ms_median": 33
+ },
+ "ocr": {
+  "d001": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment Successful\n1,779\nPaid to Green Grocers\nAug 26,2026 at 10:32 AM\nUTR: 695803211836\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d002": {
+   "engine": "mlkit-devanagari",
+   "text": "Google Pay\n₹710\nCompleted\nTo Chai Point\n22 Sep 2026, 9:08 PM\nUPI transaction ।D\n643980343087\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d003": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment Successful\n₹141\nPaid to Green Grocers\nSep 21, 2026 at 07:10 PM\nUTR: 630119921643\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d004": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment Successful\n3,151\nPaid to Chai Point\nOct 20,2026 at 10:01 PM\nUTR: 668258649069\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d005": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPaid Successfully\nPaid to\nPriya Sharma\n73,029\n9০ct2026, 9:44 AM\nUPI Ref No: 619105785692\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d006": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment Successful\nPaid to Kamala Sweets\nSep 22, 2026 at 04:12 PM\nUTR: 692277784387\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d007": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPaid Successfully\nPaid to\nPriya Sharma\nRs. 1,658.50\n3 Sep 2026, 10:19 PM\nUPI Ref No: 651135844076\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d008": {
+   "engine": "mlkit-devanagari",
+   "text": "Google Pay\nT3,012\nCompleted\nTo Hotel Annapurna\n2 Sep 2026,3:07 PM\nUPI transaction ।D\n620104361101\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d009": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPaid Successfully\nPaid to\nMetro Mart\n71,504\n19 Oct 2026, 10:53 PM\nUPI Ref No: 650270903690\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d010": {
+   "engine": "mlkit-devanagari",
+   "text": "Google Pay\nRs. 1,882\nCompleted\nTo Anil Kumar\n24 Sep 2026,8:14 AM\nUPI transaction ।D\n633354777238\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d011": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPaid Successfully\nPaid to\nChai Point\nRs. 2,621\n26 Aug 2026, 9:35 AM\nUPI Ref No: 618602733322\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d012": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment Successful\n₹670\nPaid to Mani Tiffin Centre\nSep 11, 2026 at 10:45 PM\nUTR: 671503013778\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d013": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPaid Successfully\nPaid to\nPrint And Copy\n446.50\n23 Aug 2026, 12:00 PM\nUPI Ref No: 633950576938\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d014": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment Successful\nRs. 3,118.50\nPaid to Chai Point\nAug 7, 2026 at 01:33 PM\nUTR: 682627715815\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d015": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPaid Successfully\nPaid to\nChai Point\n2,811\n17 Aug 2026, 5:06 PM\nUPI Ref No: 619172619725\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d016": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment Successful\n1,950\nPaid to Fresh Juice Centre\nOct 25,2026 at 10:30 AM\nUTR: 688279408437\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d017": {
+   "engine": "mlkit-devanagari",
+   "text": "Google Pay\nRs. 785.50\nCompleted\nTo Print And Copy\n1Aug 2026, 9:48 AM\nUPI transaction ।D\n643441614903\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d018": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPaid Successfully\nPaid to\nKamala Sweets\n३597\n20 Aug 2026, 9:22 AM\nUPI Ref No: 644887589013\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d019": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment Successful\n328.50\nPaid to Priya Sharma\nOct 16, 2026 at O8:31 AM\nUTR: 666652185962\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d020": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment Successful\n₹686\nPaid to Campus Canteen\n০ct 11,2026 at o6:40 PM\nUTR: 646776679432\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d021": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPaid Successfully\nPaid to\nFresh Juice Centre\n1,481\n12 Aug 2026, 2:59 PM\nUPI Ref No: 638339724733\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d022": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPaid Successfully\nPaid to\nGreen Grocers\nRs. 2,415\n26 Aug 2026, 3:17 PM\nUPI Ref No: 607886667768\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d023": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment Successful\n३447\nPaid to Swathi Stationery\nSep 4,2026 at 12:37 PM\nUTR: 670432757511\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d024": {
+   "engine": "mlkit-devanagari",
+   "text": "Google Pay\nRs. 2,445\nCompleted\nTo Print And Copy\n9০ct 2026, 4:10 PM\nUPI transaction ।D\n641641755505\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d025": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment Successful\nRs. 713\nPaid to Print And Copy\nAug 3, 2026 at 10:33 PM\nUTR: 680020743987\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d026": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPaid Successfully\nPaid to\nPrint And Copy\n2,842\n৪০ct 2026, 5:21 PM\nUPI Ref No: 686950284395\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d027": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPaid Successfully\nPaid to\nCity Bookshop\nI2,492\n4Oct 2026, 10:28 PM\nUPI Ref No: 626246494315\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d028": {
+   "engine": "mlkit-devanagari",
+   "text": "Google Pay\n₹640\nCompleted\nTo City Bookshop\n20 Aug 2026, 10:29 PM\nUPI transaction ।D\n6333544624713\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d029": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment Successful\n398.50\nPaid to Auto Rajesh\nAug 25, 2026 at 08:28 PM\nUTR: 605210429047\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d030": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPaid Successfully\nPaid to\nGreen Grocers\nRs. 338\n10 Oct 2026, 10:24 AM\nUPI Ref No: 638832196769\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d031": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPaid Successfully\nPaid to\nRavi Tea Stall\n₹78\n2 Aug 2026,3:51 PM\nUPI Ref No: 670527330258\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d032": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPaid Successfully\nPaid to\nSwathi Stationery\nRs. 1,732\n7 Sep 2026, 6:06 PM\nUPI Ref No: 613106990723\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d033": {
+   "engine": "mlkit-devanagari",
+   "text": "Google Pay\nRs. 1,365.50\nCompleted\nTo Anil Kumar\n7 Aug 2026, 11:32 AM\nUPI transaction ।D\n606712367177\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d034": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment Successful\nRs. 57\nPaid to Campus Canteen\nSep 22, 2026 at 07:10 PM\nUTR: 686789664012\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d035": {
+   "engine": "mlkit-devanagari",
+   "text": "Google Pay\nRs. 1,779\nCompleted\nTo Green Grocers\n26 Aug 2026, 10:32 AM\nUPI transaction ID\n695803211836\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d036": {
+   "engine": "mlkit-devanagari",
+   "text": "Google Pay\nRs. 710\nCompleted\nTo Chai Point\n22Sep2026, 9:0৪ PM\nUPI transaction ।D\n643980343087\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d037": {
+   "engine": "mlkit-devanagari",
+   "text": "Google Pay\n₹141\nCompleted\nTo Green Grocers\n21 Sep 2026, 7:10 PM\nUPI transaction ।D\n630119921643\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d038": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment failed\nRs. 2,063\nPaid to Anil Kumar\nAug 23, 2026 at 09:56 PM\nUTR: 656199530949\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d039": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nPayment failed\nPaid to\nMani Tiffin Centre\n1,184\n17 Sep 2026, 9:57 PM\nUPI Ref No: 620749968114\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d040": {
+   "engine": "mlkit-devanagari",
+   "text": "Google Pay\nI2,285\nPayment failed\nTo Mani Tiffin Centre\n৪০ct2026, 9:13 PM\nUPI transaction ।D\n660787644134\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d041": {
+   "engine": "mlkit-devanagari",
+   "text": "Google Pay\n71,235\nPayment pending\nTo Metro Mart\n1Aug 2026, 11:10 AM\nUPI transaction ।D\n640013383982\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d042": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nPayment pending\nRs. 485\nPaid to Anil Kumar\nOct 18,2026 at 07:19 PM\nUTR: 623745802259\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d043": {
+   "engine": "mlkit-devanagari",
+   "text": "Paytm UPI\nMoney received\nReceived from\nPrint And Copy\n₹465\n23 Aug 2026, 12:40 PM\nUPI Ref No: 691566332974\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d044": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nMoney received\n2,345\nReceived from Print And Copy\nSep 17, 2026 at 07:28 PM\nUTR: 611702157788\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d045": {
+   "engine": "mlkit-devanagari",
+   "text": "PhonePe\nMoney received\nRs. 1,706\nReceived from Campus Canteen\nOct 22,2026 at 01:57 PM\nUTR: 618964198866\nDebited from XXXX1234\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d046": {
+   "engine": "mlkit-devanagari",
+   "text": "Gandhi Medical College\nLibrary fee receipt\nStudent: Sneha Patil\nAmount paid: Rs 38,500\nPaid on: 13 Nov 2026\nReceipt No: D64652\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d047": {
+   "engine": "mlkit-devanagari",
+   "text": "City Arts College\nLab fee receipt\nStudent: Vikram Singh\nAmount paid: Rs 18,500\nPaid on:17 Jul 2026\nReceipt No: A70185\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d048": {
+   "engine": "mlkit-devanagari",
+   "text": "Greenfield Engineering College\nLibrary fee receipt\nStudent: Rohit Jain\nAmount paid: Rs 9,500\nPaid on: 24 Sep 2026\nReceipt No: H20920\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d049": {
+   "engine": "mlkit-devanagari",
+   "text": "Lakeview Business School\nTuition fee receipt\nStudent: Priya Nair\nAmount paid: Rs 45,500\nPaid on: 10 Jul 2026\nReceipt No: D85235\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d050": {
+   "engine": "mlkit-devanagari",
+   "text": "Gandhi Medical College\nTuition fee receipt\nStudent: Ananya Sharma\nAmount paid: Rs 39,000\nPaid on: 14 Jul 2026\nReceipt No: B85274\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d051": {
+   "engine": "mlkit-devanagari",
+   "text": "Orchid Hostel\nHostel fee receipt\nStudent: Ananya Sharma\nAmount paid: Rs 22,500\nPaid on:3 Jun 2026\nReceipt No: A40922\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d052": {
+   "engine": "mlkit-devanagari",
+   "text": "Gandhi Medical College\nLab fee receipt\nStudent: Karthik Reddy\nAmount paid: Rs 38,500\nPaid on:6 Nov 2026\nReceipt No: H13485\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d053": {
+   "engine": "mlkit-devanagari",
+   "text": "Blue Ridge Hostel\nHostel fee receipt\nStudent: Karthik Reddy\nAmount paid: Rs 22,000\nPaid on:12 Sep 2026\nReceipt No: C84828\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d054": {
+   "engine": "mlkit-devanagari",
+   "text": "Lakeview Business School\nLibrary fee receipt\nStudent: Suresh Babu\nAmount paid: Rs 22,500\nPaid on: 14 Jul 2026\nReceipt No: E53133\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d055": {
+   "engine": "mlkit-devanagari",
+   "text": "Greenfield Engineering College\nBus fee receipt\nStudent: Sandeep Yadav\nAmount paid: Rs 22,000\nPaid on:25 Nov 2026\nReceipt No: G77389\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d056": {
+   "engine": "mlkit-devanagari",
+   "text": "Heritage PG\nHostel fee receipt\nStudent: Pooja Desai\nAmount paid: Rs 8,500\nPaid on: 13 Aug 2026\nReceipt No: C28349\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d057": {
+   "engine": "mlkit-devanagari",
+   "text": "City Arts College\nBus fee receipt\nStudent: Ananya Sharma\nAmount paid: Rs ৪,000\nPaid on: 10 Sep 2026\nReceipt No: F29394\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d058": {
+   "engine": "mlkit-devanagari",
+   "text": "Heritage PG\nHostel fee receipt\nStudent: Kavya Shetty\nAmount paid: Rs 39,000\nPaid on: 7 Jun 2026\nReceipt No: B37931\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d059": {
+   "engine": "mlkit-devanagari",
+   "text": "Sri Venkateswara College\nLab fee receipt\nStudent: Divya Menon\nAmount paid: Rs 18,000\nPaid on:26 Nov 2026\nReceipt No: G20859\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d060": {
+   "engine": "mlkit-devanagari",
+   "text": "Narayana Degree College\nTuition fee receipt\nStudent: Meghana lyer\nAmount paid: Rs 32,000\nPaid on: 24 Jun 2026\nReceipt No: A62777\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d061": {
+   "engine": "mlkit-devanagari",
+   "text": "Maple Hostel\nHostel fee receipt\nStudent: Sneha Patil\nAmount paid: Rs 18,500\nPaid on: 22 Sep 2026\nReceipt No: F18610\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d062": {
+   "engine": "mlkit-devanagari",
+   "text": "Sapphire Residency\nHostel fee receipt\nStudent: Priya Nair\nAmount paid: Rs 32,000\nPaid on: 18 Jul 2026\nReceipt No: G74721\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d063": {
+   "engine": "mlkit-devanagari",
+   "text": "Sapphire Residency\nHostel fee receipt\nStudent: Divya Menon\nAmount paid: Rs 45,500\nPaid on: 15 Aug 2026\nReceipt No: B19466\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d064": {
+   "engine": "mlkit-devanagari",
+   "text": "Narayana Degree College\nTuition fee receipt\nStudent: Harish Chandra\nAmount paid: Rs ৪,000\nPaid on: 26 Jul 2026\nReceipt No: G95164\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d065": {
+   "engine": "mlkit-devanagari",
+   "text": "Hillcrest Hostel\nHostel fee receipt\nStudent: Vikram Singh\nAmount paid: Rs 15,000\nPaid on: 26 Oct 2026\nReceipt No: D33577\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d066": {
+   "engine": "mlkit-devanagari",
+   "text": "Sri Venkateswara College\nBus fee receipt\nStudent: Harish Chandra\nAmount paid: Rs 18,000\nPaid on:13 Sep 2026\nReceipt No: D71092\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d067": {
+   "engine": "mlkit-devanagari",
+   "text": "Heritage PG\nHostel fee receipt\nStudent: Manoj Kumar\nAmount paid: Rs 52,000\nPaid on:6 Jul 2026\nReceipt No: F21795\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d068": {
+   "engine": "mlkit-devanagari",
+   "text": "Bharathi Institute\nTuition fee receipt\nStudent: Swathi Reddy\nAmount paid: Rs 22,500\nPaid on:1Oct 2026\nReceipt No: H67219\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d069": {
+   "engine": "mlkit-devanagari",
+   "text": "Bharathi Institute\nLab fee receipt\nStudent: Divya Menon\nAmount paid: Rs 9,500\nPaid on: 25 Jul 2026\nReceipt No: F27868\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d070": {
+   "engine": "mlkit-devanagari",
+   "text": "ज्ञान भारती स्कूल\nशुल्क रसीद\nछात्र: सृष्टि सिंह\nजमा राशि: ₹6,000\nदिनांकः 17 अगस्त 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d071": {
+   "engine": "mlkit-devanagari",
+   "text": "राजकीय उच्च विद्यालय\nशुल्क रसीद\nछात्र: पूजा मिश्रा\nजमा राशिः₹21,000\nदिनांक: 2नवंबर 2026\nSYNTHETIC SAMPLE- not a real document"
+  },
+  "d072": {
+   "engine": "mlkit-devanagari",
+   "text": "आदर्श विद्या मंदिर\nशुल्क रसीद\nछात्र: अनन्या वर्मा\nजमाराशि: ₹14,500\nदिनांक: 1 अगस्त 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d073": {
+   "engine": "mlkit-devanagari",
+   "text": "ज्ञान भारती स्कूल\nशुल्क रसीद\nछात्र: विवेक यादव\nजमा राशि: ₹16,000\nदिनांकः 21 अगस्त 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d074": {
+   "engine": "mlkit-devanagari",
+   "text": "ज्ञान भारती स्कूल\nशुल्क रसीद\nछात्रः नेहा जोशी\nजमा राशि: ₹14,500\nदिनांक: 15 नवंबर 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d075": {
+   "engine": "mlkit-devanagari",
+   "text": "ज्ञान भारतीस्कूल\nशुल्क रसीद\nछात्र: अनन्या वर्मा\nजमा राशि: ₹21,000\nदिनांकः 6 अक्टूबर 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d076": {
+   "engine": "mlkit-devanagari",
+   "text": "राजकीय उच्च विद्यालय\nशुल्क रसीद\nछात्र: आरव शर्मा\nजमा राशि: ₹14,500\nदिनांकः 13 सितंबर 2026\nSYNTHETIC SAMPLE- not a real document"
+  },
+  "d077": {
+   "engine": "mlkit-devanagari",
+   "text": "महात्मा गांधी विद्यालय\nशुल्क रसीद\nछात्र: विवेक यादव\nजमा राशि: २9,800\nदिनांक: 24 सितंबर 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d078": {
+   "engine": "mlkit-devanagari",
+   "text": "आदर्श विद्या मंदिर\nशुल्क रसीद\nछात्र: आरख शर्मा\nजमा राशि: ₹6,000\nदिनांक: 2 जून 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d079": {
+   "engine": "mlkit-devanagari",
+   "text": "ज्ञान भारती स्कूल\nशुल्क रसीद\nछात्र: अनन्या वर्मा\nजमा राशि: ₹6,000\nदिनांक: 25 जुलाई 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d080": {
+   "engine": "mlkit-devanagari",
+   "text": "राजकीय उच्च विद्यालय\nशुल्क रसीद\nछात्र: विवेक यादव\nजमा राशि: २9,800\nदिनांक: 21अगस्त 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d081": {
+   "engine": "mlkit-latin",
+   "text": "šô: 27 e9no 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d082": {
+   "engine": "mlkit-latin",
+   "text": "SYNTHETIC SAMPLE - not a real document"
+  },
+  "d083": {
+   "engine": "mlkit-latin",
+   "text": "Šô: 28 esa 2026\nSYNTHETIC SAMPLE- not a real document"
+  },
+  "d084": {
+   "engine": "mlkit-latin",
+   "text": "SYNTHETIC SAMPLE - not a real document"
+  },
+  "d085": {
+   "engine": "mlkit-latin",
+   "text": "Bos vgo: Kre. 24,000\nšô: 24 5boað 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d086": {
+   "engine": "mlkit-latin",
+   "text": "dô: 10 oa5 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d087": {
+   "engine": "mlkit-latin",
+   "text": "Bo3 Jwgo: ár. 19,000\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d088": {
+   "engine": "mlkit-latin",
+   "text": "3ô: 13 esað 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d089": {
+   "engine": "mlkit-latin",
+   "text": "Bos vgo: Kre. 24,000\nGô: 23 oaõ 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d090": {
+   "engine": "mlkit-latin",
+   "text": "šô: 15 2ð 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d091": {
+   "engine": "mlkit-latin",
+   "text": "O: 20 og 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d092": {
+   "engine": "mlkit-devanagari",
+   "text": "Bright Power Ltd\nElectricity Bill\nConsumer No: 6570993\nAmount due: Rs 1,569\nDue date: 17 Nov 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d093": {
+   "engine": "mlkit-devanagari",
+   "text": "ConnectOne Broadband\nBroadband Bill\nConsumer No: 7900360\nAmount due: Rs 222\nDue date: 13 Oct 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d094": {
+   "engine": "mlkit-devanagari",
+   "text": "Indane Gas Booking\nGas Cylinder Bill\nConsumer No: 1119252\nAmount due: Rs 2,530\nDue date: 10 Dec 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d095": {
+   "engine": "mlkit-devanagari",
+   "text": "City Electricity Board\nElectricity Bill\nConsumer No: 3৪68683\nAmount due: Rs 534\nDue date: ৪Dec 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d096": {
+   "engine": "mlkit-devanagari",
+   "text": "Eastern Power Corp\nElectricity Bill\nConsumer No: 2173372\nAmount due: Rs 1,855\nDue date: 28 Sep 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d097": {
+   "engine": "mlkit-devanagari",
+   "text": "City Gas Ltd\nGas Cylinder Bill\nConsumer No: 2439230\nAmount due: Rs 1,350\nDue date: 7 Nov 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d098": {
+   "engine": "mlkit-devanagari",
+   "text": "Quick Mobile Postpaid\nMobile Bill\nConsumer No: 7584299\nAmount due: Rs 1,170\nDue date: ৪0ct 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d099": {
+   "engine": "mlkit-devanagari",
+   "text": "City Electricity Board\nElectricity Bill\nConsumer No: 5685516\nAmount due: Rs 1,660\nDue date: 7 Aug 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d100": {
+   "engine": "mlkit-devanagari",
+   "text": "Quick Mobile Postpaid\nMobile Bill\nConsumer No: 9718390\nAmount due: Rs 1,354\nDue date: 18 Dec 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d101": {
+   "engine": "mlkit-devanagari",
+   "text": "ConnectOne Mobile\nMobile Bill\nConsumer No: 4082164\nAmount due: Rs 1,069\nDue date: 6 Nov 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d102": {
+   "engine": "mlkit-devanagari",
+   "text": "Eastern Power Corp\nElectricity Bill\nConsumer No: 3371801\nAmount due: Rs 2,918\nDue date: 24 Dec 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d103": {
+   "engine": "mlkit-devanagari",
+   "text": "City Electricity Board\nElectricity Bill\nConsumer No: 2712966\nAmount due: Rs 3,148\nDue date: 19 Oct 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d104": {
+   "engine": "mlkit-devanagari",
+   "text": "FiberNet Broadband\nBroadband Bill\nConsumer No: 4100020\nAmount due: Rs 2,380\nDue date: ৪Noy 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d105": {
+   "engine": "mlkit-devanagari",
+   "text": "Indane Gas Booking\nGas Cylinder Bill\nConsumer No: 3526387\nAmount due: Rs 851\nDue date: 18 Oct 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d106": {
+   "engine": "mlkit-devanagari",
+   "text": "ConnectOne Broadband\nBroadband Bill\nConsumer No: 7355218\nAmount due: Rs 1,594\nDue date: 18 Oct 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d107": {
+   "engine": "mlkit-devanagari",
+   "text": "Bright Power Ltd\nElectricity Bill\nConsumer No: 2894062\nAmount due: Rs 2,917\nDue date: 13 Dec 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d108": {
+   "engine": "mlkit-devanagari",
+   "text": "Eastern Power Corp\nElectricity Bill\nConsumer No: 5004337\nAmount due: Rs 2,556\nDue date: 27 Dec 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d109": {
+   "engine": "mlkit-devanagari",
+   "text": "Quick Mobile Postpaid\nMobile Bill\nConsumer No: 5056578\nAmount due: Rs 1,278\nDue date: 16 Nov 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d110": {
+   "engine": "mlkit-devanagari",
+   "text": "Bright Power Ltd\nElectricity Bill\nConsumer No: 8677014\nAmount due: Rs 2,654\nDue date: 19 Oct 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d111": {
+   "engine": "mlkit-devanagari",
+   "text": "City Gas Ltd\nGas Cylinder Bill\nConsumer No: 4525890\nAmount due: Rs 2,752\nDue date: 6 Dec 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d112": {
+   "engine": "mlkit-devanagari",
+   "text": "Bright Power Ltd\nElectricity Bill\nConsumer No: 7057764\nAmount due: Rs 1,965\nDue date: 9 Sep 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d113": {
+   "engine": "mlkit-devanagari",
+   "text": "ConnectOne Mobile\nMobile Bill\nConsumer No: 6341654\nAmount due: Rs 2,591\nDue date: 16 Nov 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d114": {
+   "engine": "mlkit-devanagari",
+   "text": "उत्तर विद्युतवितरण निंगम\nबिजली का बिल\nउपभोक्ता संख्या: 8262065\nदेय राशि: २1,429\nअंतिम तिथि: 28 अक्टूबर 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d115": {
+   "engine": "mlkit-devanagari",
+   "text": "उत्तर विद्युतवितरण निंगम\nबिजली का बिल\nउपभोक्ता संख्याः 7040039\nदेयराशि: र2,461\nअंतिम तिथि: 19 अगस्त 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d116": {
+   "engine": "mlkit-devanagari",
+   "text": "उत्तर विद्युतवितरण निंगम\nबिजली का बिल\nउपभोक्ता संख्याः 4992177\nदेयशाशि: 973\nअंतिम तिथि: 12 नवंबर 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d117": {
+   "engine": "mlkit-devanagari",
+   "text": "उत्तर विद्युतवितरण निंगम\nबिजली का बिल\nउपभोक्ता संख्याः 2496156\nदेय राशि: ₹2,148\nअंतिम तिथि: 11 नवंबर 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d118": {
+   "engine": "mlkit-devanagari",
+   "text": "उत्तर विद्युत वितरणनिगम\nबिजली का बिल\nउपभोक्ता संख्या: 6622122\nदेय राशि: ३1,411\nअंतिम तिथि: 27 अगस्त 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d119": {
+   "engine": "mlkit-devanagari",
+   "text": "उत्तर विद्युत वितरण निगम\nबिजली का बिल\nउपभोक्ता संख्या: 9474073\nदेय राशि: २1,853\nअंतिम तिथि: 24 अक्टूबर 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d120": {
+   "engine": "mlkit-devanagari",
+   "text": "उत्तर विद्ुत वितरण निगम\nबिजली का बिल\nउपभोक्ता संख्या: 9865545\nदेय राशि: ₹1,815\nअंतिम तिथि:7 सितंबर 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d121": {
+   "engine": "mlkit-devanagari",
+   "text": "उत्तर वि्ुतवितरणनिगम\nबिजली का बिल\nउपभोक्ता संख्याः 4997282\nदेयराशि: ₹2,352\nअंतिम तिथि:; 25 नवंबर 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d122": {
+   "engine": "mlkit-devanagari",
+   "text": "उत्तर विद्युतवितरण निगम\nबिजली का बिल\nउपभोक्ता संख्याः 3500328\nदेय राशि: ३1,273\nअंतिम तिथ: 10 अगस्त 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d123": {
+   "engine": "mlkit-latin",
+   "text": "SYNTHETIC SAMPLE - not a real document"
+  },
+  "d124": {
+   "engine": "mlkit-latin",
+   "text": "SYNTHETIC SAMPLE - not a real document"
+  },
+  "d125": {
+   "engine": "mlkit-latin",
+   "text": "SYNTHETIC SAMPLE - not a real document"
+  },
+  "d126": {
+   "engine": "mlkit-latin",
+   "text": "JSO ŠỖ: 20 ess 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d127": {
+   "engine": "mlkit-latin",
+   "text": "SYNTHETIC SAMPLE - not a real document"
+  },
+  "d128": {
+   "engine": "mlkit-latin",
+   "text": "SYNTHETIC SAMPLE - not a real document"
+  },
+  "d129": {
+   "engine": "mlkit-latin",
+   "text": "SYNTHETIC SAMPLE - not a real document"
+  },
+  "d130": {
+   "engine": "mlkit-devanagari",
+   "text": "IndiGo 6E 1354\nE-ticket\nKolkata (CCU) to Goa (GOI)\nDate: 28 Nov 2026\nDeparture 18:15\nPNR: HXGGG5\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d131": {
+   "engine": "mlkit-devanagari",
+   "text": "IndiGo 6E 6414\nE-ticket\nAhmedabad (AMD) to Delhi (DEL)\nDate: 8 Oct 2026\nDeparture 07:00\nPNR: N67BS2\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d132": {
+   "engine": "mlkit-devanagari",
+   "text": "SpiceJet SG 8956\nE-ticket\nDelhi (DEL) to Bengaluru (BLR)\nDate: 28 Nov 2026\nDeparture 07:45\nPNR: ZJVGAF\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d133": {
+   "engine": "mlkit-devanagari",
+   "text": "IndiGo 6E 5633\nE-ticket\nPune (PNQ) to Kochi (COK)\nDate: 24 Nov 2026\nDeparture 16:15\nPNR: 784T9T\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d134": {
+   "engine": "mlkit-devanagari",
+   "text": "Air India Al 7148\nE-ticket\nDelhi (DEL) to Mumbai (BOM)\nDate: 4 Dec 2026\nDeparture 21:15\nPNR: QZGNEQ\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d135": {
+   "engine": "mlkit-devanagari",
+   "text": "Express 22591\nTrain e-ticket\nDelhi to Ahmedabad\nJourney date: 3 Dec 2026\nCoach S6 Berth 21\nPNR: 9324929726\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d136": {
+   "engine": "mlkit-devanagari",
+   "text": "SpiceJet SG 8486\nE-ticket\nChennai (MAA) to Ahmedabad (AMD)\nDate: 13 Oct 2026\nDeparture 19:30\nPNR: DBGNC7\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d137": {
+   "engine": "mlkit-devanagari",
+   "text": "SpiceJet SG 285\nE-ticket\nMumbai (BOM) to Hyderabad (HYD)\nDate: 19 Dec 2026\nDeparture 19:00\nPNR: ET4VG9\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d138": {
+   "engine": "mlkit-devanagari",
+   "text": "Vistara UK 6871\nE-ticket\nHyderabad (HYD) to Bengaluru (BLR)\nDate: 2 Sep 2026\nDeparture ০৪:3০\nPNR: EV3URQ\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d139": {
+   "engine": "mlkit-devanagari",
+   "text": "Air India Al 443\nE-ticket\nGoa (GOl) to Kochi (COK)\nDate: 15 Sep 2026\nDeparture 10:30\nPNR: CSUGDW\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d140": {
+   "engine": "mlkit-devanagari",
+   "text": "Air India Al 7251\nE-ticket\nKochi (COK) to Pune (PNQ)\nDate: 24 Dec 2026\nDeparture ০9:45\nPNR: 299V8M\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d141": {
+   "engine": "mlkit-devanagari",
+   "text": "Green Line Bus\nBus ticket\nPune to Mumbai\nDate: 17 Oct 2026\nSeat 28B\nBooking id: 254777\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d142": {
+   "engine": "mlkit-devanagari",
+   "text": "SpiceJet SG 130\nE-ticket\nPune (PNQ) to Hyderabad (HYD)\nDate: 24 Nov 2026\nDeparture ০৪:3০\nPNR: LJEDQR\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d143": {
+   "engine": "mlkit-devanagari",
+   "text": "Air India Al 2487\nE-ticket\nBengaluru (BLR) to Chennai (MAA)\nDate: 25 Sep 2026\nDeparture ০5:30\nPNR: ENMYK6\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d144": {
+   "engine": "mlkit-devanagari",
+   "text": "Express 17446\nTrain e-ticket\nAhmedabad to Pune\nJourney date: 28 Oct 2026\nCoach S8 Berth 72\nPNR: 9461118281\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d145": {
+   "engine": "mlkit-devanagari",
+   "text": "Vistara UK 2619\nE-ticket\nKolkata (CCU) to Mumbai (BOM)\nDate: 3 Oct 2026\nDeparture 13:45\nPNR: RQPENY\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d146": {
+   "engine": "mlkit-devanagari",
+   "text": "Vistara UK 4813\nE-ticket\nDelhi (DEL) to Mumbai (BOM)\nDate: 19 Dec 2026\nDeparture 20:15\nPNR: 7YRKP5\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d147": {
+   "engine": "mlkit-devanagari",
+   "text": "Green Line Bus\nBus ticket\nAhmedabad to Hyderabad\nDate: 12 Oct 2026\nSeat 28B\nBooking id: 312201\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d148": {
+   "engine": "mlkit-devanagari",
+   "text": "Kaveri Travels\nBus ticket\nDelhi to Pune\nDate: 5 Dec 2026\nSeat 7A\nBooking id: 642005\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d149": {
+   "engine": "mlkit-devanagari",
+   "text": "SpiceJet SG 9574\nE-ticket\nGoa (GOI) to Chennai (MAA)\nDate: 14 Dec 2026\nDeparture 13:30\nPNR: 7GEPAM\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d150": {
+   "engine": "mlkit-devanagari",
+   "text": "Express 17120\nTrain e-ticket\nPune to Kochi\nJourney date: 10 Sep 2026\nCoach S3 Berth 70\nPNR: 7703623745\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d151": {
+   "engine": "mlkit-devanagari",
+   "text": "Green Line Bus\nBus ticket\nDelhi to Goa\nDate: 5 Oct 2026\nSeat 20A\nBooking id: 441406\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d152": {
+   "engine": "mlkit-devanagari",
+   "text": "SpiceJet SG 8612\nE-ticket\nChennai (MAA) to Ahmedabad (AMD)\nDate: 26 Sep 2026\nDeparture 21:45\nPNR: UFJ9VJ\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d153": {
+   "engine": "mlkit-devanagari",
+   "text": "Green Line Bus\nBus ticket\nHyderabad to Kochi\nDate: 12 Sep 2026\nSeat 36A\nBooking id: 312571\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d154": {
+   "engine": "mlkit-devanagari",
+   "text": "Express 19016\nTrain e-ticket\nKolkata to Bengaluru\nJourney date: 18 Oct 2026\nCoach S7 Berth 24\nPNR: 6257876396\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d155": {
+   "engine": "mlkit-devanagari",
+   "text": "Air India Al 1953\nE-ticket\nDelhi (DEL) to Ahmedabad (AMD)\nDate: 17 Nov 2026\nDeparture 16:30\nPNR: SB663V\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d156": {
+   "engine": "mlkit-devanagari",
+   "text": "Express 21642\nTrain e-ticket\nDelhi to Hyderabad\nJourney date: 6 Oct 2026\nCoach S9 Berth 32\nPNR: 7197278001\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d157": {
+   "engine": "mlkit-devanagari",
+   "text": "Green Line Bus\nBus ticket\nKochi to Delhi\nDate: 10 Dec 2026\nSeat 30A\nBooking id: 178202\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d158": {
+   "engine": "mlkit-devanagari",
+   "text": "Orange Travels\nBus ticket\nKochi to Pune\nDate: 3 Dec 2026\nSeat 6B\nBooking id: 741424\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d159": {
+   "engine": "mlkit-devanagari",
+   "text": "IndiGo 6E 2640\nE-ticket\nPune (PNQ) to Kochi (COK)\nDate: 10 Nov 2026\nDeparture 20:00\nPNR: 2QQR46\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d160": {
+   "engine": "mlkit-devanagari",
+   "text": "Green Line Bus\nBus ticket\nKochito০ Goa\nDate: 27 Oct 2026\nSeat 29A\nBooking id: 230145\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d161": {
+   "engine": "mlkit-devanagari",
+   "text": "Air India Al 9231\nE-ticket\nAhmedabad (AMD) to Hyderabad (HYD)\nDate: 25 Dec 2026\nDeparture 11:15\nPNR: H9P2N5\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d162": {
+   "engine": "mlkit-devanagari",
+   "text": "Green Line Bus\nBus ticket\nDelhi to Bengaluru\nDate: 5 Dec 2026\nSeat 28A\nBooking id: 732460\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d163": {
+   "engine": "mlkit-devanagari",
+   "text": "Orange Travels\nBus ticket\nKolkata to Pune\nDate: 15 Oct 2026\nSeat 38B\nBooking id: 569266\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d164": {
+   "engine": "mlkit-devanagari",
+   "text": "Express 15875\nTrain e-ticket\nKolkata to Kochi\nJourney date: 7 Oct 2026\nCoach S7 Berth 27\nPNR: 9604101864\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d165": {
+   "engine": "mlkit-devanagari",
+   "text": "Air India Al 7727\nE-ticket\nPune (PNQ) to Mumbai (BOM)\nDate: 19 Sep 2026\nDeparture ০5:00\nPNR: 6R7337\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d166": {
+   "engine": "mlkit-devanagari",
+   "text": "IndiGo 6E 8991\nE-ticket\nPune (PNQ) to Ahmedabad (AMD)\nDate: 5 Nov 2026\nDeparture 07:45\nPNR: 48C9PK\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d167": {
+   "engine": "mlkit-devanagari",
+   "text": "Air India Al 1101\nE-ticket\nKolkata (CCU) to Delhi (DEL)\nDate: 13 Nov 2026\nDeparture 16:15\nPNR: 3YTDG5\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d168": {
+   "engine": "mlkit-devanagari",
+   "text": "Express 19675\nTrain e-ticket\nAhmedabad to Delhi\nJourney date: 20 Dec 2026\nCoach S1 Berth 33\nPNR: 1447638821\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d169": {
+   "engine": "mlkit-devanagari",
+   "text": "SpiceJet SG 9955\nE-ticket\nKolkata (CCU) to Kochi (COK)\nDate: 19 Sep 2026\nDeparture 16:45\nPNR: PYNXWN\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d170": {
+   "engine": "mlkit-devanagari",
+   "text": "IndiGo 6E 5795\nE-ticket\nKochi (COK) to Chennai (MAA)\nDate: 20 Dec 2026\nDeparture 07:30\nPNR: UJ2JKF\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d171": {
+   "engine": "mlkit-devanagari",
+   "text": "Green Line Bus\nBus ticket\nPune to Goa\nDate: 21 Sep 2026\nSeat 3B\nBooking id: 535502\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d172": {
+   "engine": "mlkit-devanagari",
+   "text": "Air India Al 9460\nE-ticket\nPune (PNQ) to Goa (GOI)\nDate: 25 Dec 2026\nDeparture 11:30\nPNR: 9JH3KG\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d173": {
+   "engine": "mlkit-devanagari",
+   "text": "IndiGo 6E 7939\nE-ticket\nChennai (MAA) to Hyderabad (HYD)\nDate: 16 Oct 2026\nDeparture 19:30\nPNR: SWU8G3\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d174": {
+   "engine": "mlkit-devanagari",
+   "text": "Sunshine Pediatrics\nAppointment card\nDr. K. Menon, Pediatrics\nAddress: Plot 68, Banjara Hills\nHyderabad 500034\nPhone: 62795 32494\nAppointment: 11 Sep 2026, 10:30\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d175": {
+   "engine": "mlkit-devanagari",
+   "text": "LifeLine Hospital\nAppointment card\nDr. S. lyer, Orthopaedics\nAddress: Plot 68, Madhapur\nHyderabad 500081\nPhone: 67433 58601\nAppointment: 27 Nov 2026, 16:30\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d176": {
+   "engine": "mlkit-devanagari",
+   "text": "Wellness Clinic\nAppointment card\nDr. N. Gupta, Dermatology\nAddress: Plot 13, Madhapur\nHyderabad 500081\nPhone: 88435 98752\nAppointment: 3 Sep 2026, 17:00\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d177": {
+   "engine": "mlkit-devanagari",
+   "text": "Dental Plus\nAppointment card\nDr. A. Khan, Dentistry\nAddress: Plot 79, T Nagar\nChennai 60001;\nPhone: 91598 77406\nAppointment: 4 Nov 2026, 15:00\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d178": {
+   "engine": "mlkit-devanagari",
+   "text": "Heart & Health Centre\nAppointment card\nDr. V. Nair, Cardiology\nAddress: Plot 79, Kothrud\nPune 411038\nPhone: 86797 85199\nAppointment: 15 Oct 2026, 15:30\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d179": {
+   "engine": "mlkit-devanagari",
+   "text": "Wellness Clinic\nAppointment card\nDr. N. Gupta, Dermatology\nAddress: Plot 31, Kothrud\nPune 411038\nPhone: 94376 25472\nAppointment: 6 Sep 2026, 12:00\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d180": {
+   "engine": "mlkit-devanagari",
+   "text": "LifeLine Hospital\nAppointment card\nDr. S. lyer, Orthopaedics\nAddress: Plot 55, Kothrud\nPune 411038\nPhone: 72839 30243\nAppointment: 11 Oct 2026, 15:00\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d181": {
+   "engine": "mlkit-devanagari",
+   "text": "Sunshine Pediatrics\nAppointment card\nDr. K. Menon, Pediatrics\nAddress: Plot 6, T Nagar\nChennai 600017\nPhone: 74257 61366\nAppointment: 23 Oct 2026, 11:30\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d182": {
+   "engine": "mlkit-devanagari",
+   "text": "Sunshine Pediatrics\nAppointment card\nDr. K. Menon, Pediatrics\nAddress: Plot 53, Indiranagar\nBengaluru 56003৪\nPhone: 74655 18583\nAppointment: 23 Oct 2026, 13:00\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d183": {
+   "engine": "mlkit-devanagari",
+   "text": "Heart & Health Centre\nAppointment card\nDr. V. Nair, Cardiology\nAddress: Plot 14, Indiranagar\nBengaluru 560038\nPhone: 94171 73581\nAppointment: 5 Sep 2026, 14:00\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d184": {
+   "engine": "mlkit-devanagari",
+   "text": "Dental Plus\nAppointment card\nDr. A. Khan, Dentistry\nAddress: Plot 33, Indiranagar\nBengaluru 56003৪\nPhone: 91599 93018\nAppointment: 15 Nov 2026, 10:00\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d185": {
+   "engine": "mlkit-devanagari",
+   "text": "Care Women's Clinic\nAppointment card\nDr. L. Rao, Gynaecology\nAddress: Plot 40, Indiranagar\nBengaluru 560038\nPhone: 98182 78756\nAppointment: 16 Sep 2026, 17:00\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d186": {
+   "engine": "mlkit-devanagari",
+   "text": "City Care Clinic\nAppointment card\nDr. R. Sharma, General Medicine\nAddress: Plot 41, T Nagar\nChennai 600017\nPhone: 69742 92838\nAppointment: 24 Nov 2026,15:30\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d187": {
+   "engine": "mlkit-devanagari",
+   "text": "LifeLine Hospital\nAppointment card\nDr. S. lyer, Orthopaedics\nAddress: Plot 69, Kothrud\nPune 411038\nPhone: 76046 92161\nAppointment: 8 Oct 2026,9:30\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d188": {
+   "engine": "mlkit-devanagari",
+   "text": "City Care Clinic\nAppointment card\nDr. R. Sharma, General Medicine\nAddress: Plot 48, Banjara Hills\nHyderabad 500034\nPhone: 69028 96151\nAppointment: 7 Sep 2026, 17:30\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d189": {
+   "engine": "mlkit-devanagari",
+   "text": "City Care Clinic\nAppointment card\nDr. R. Sharma, General Medicine\nAddress: Plot 16, Banjara Hills\nHyderabad 500034\nPhone: 74029 85528\nAppointment: 24 Oct 2026, 12:00\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d190": {
+   "engine": "mlkit-devanagari",
+   "text": "Heart & Health Centre\nAppointment card\nDr. V. Nair, Cardiology\nAddress: Plot 17, Kothrud\nPune 411038\nPhone: 72521 29997\nAppointment: 26 Oct 2026, 17:00\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d191": {
+   "engine": "mlkit-devanagari",
+   "text": "जीवन ज्योति क््िनिक\nअपॉइंटमेंट कार्ड\nडॉ. सुनीता वर्मा\nपताः प्लॉट 44, गांधी नगर\nफोनः 8021879181\nतारीख: 3 नवंबर 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d192": {
+   "engine": "mlkit-devanagari",
+   "text": "जीवन ज्योति क््िनिक\nअपॉइंटमेंट कार्ड\nडॉ. सुनीता वर्मा\nपताः प्लॉट 74, गांधी नगर\nफोनः 92453 68626\nतारीख: 10 अक्टूबर 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d193": {
+   "engine": "mlkit-devanagari",
+   "text": "जीवन ज्योति क््िनिक\nअपॉइटमेंट कार्ड\nडॉ. राजेश मिश्रा\nपताः प्लॉट 37, गांधी नगर\nफोनः 7960060137\nतारीख: 9सितंबर 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d194": {
+   "engine": "mlkit-devanagari",
+   "text": "जीवन ज्योति क््िनिक\nअपॉइंटमेंट कार्ड\nडॉ. सुनीता वर्मा\nपताः प्लॉट ৪, गांधी नगर\nफोन: 8618129555\nतारीख: 18 अक्टूबर 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d195": {
+   "engine": "mlkit-latin",
+   "text": "8s5:95352 10135\nŠô: 16 eoỗ 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d196": {
+   "engine": "mlkit-latin",
+   "text": "a5:95087 89894\nŠô: 6 oað 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d197": {
+   "engine": "mlkit-latin",
+   "text": "8s5: 87904 63490\nŠỗ: 15 3oað 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d198": {
+   "engine": "mlkit-latin",
+   "text": "a:68038 07025\nBô: 16 Doað 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d199": {
+   "engine": "mlkit-devanagari",
+   "text": "Linear Algebra - Week 3\nSingular value decomposition\nDiagonalisation\nEigenvalues and eigenvectors\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d200": {
+   "engine": "mlkit-devanagari",
+   "text": "Constitutional Law\nFundamental rights overview\nLandmark cases to remember\nAmendment procedure\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d201": {
+   "engine": "mlkit-devanagari",
+   "text": "Physics - Thermodynamics\nNumericals on ideal gases\nEntropy and heat engines\nFirst and second law of thermodynamics\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d202": {
+   "engine": "mlkit-devanagari",
+   "text": "Constitutional Law\nLandmark cases to remember\nAmendment procedure\nFundamental rights overview\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d203": {
+   "engine": "mlkit-devanagari",
+   "text": "Microeconomics - Demand\nConsumner surplus\nPrice ceilings and floors\nMarket equilibrium\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d204": {
+   "engine": "mlkit-devanagari",
+   "text": "Calculus - Integration\nImproper integrals\nIntegration by parts\nDefinite integrals and area\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d205": {
+   "engine": "mlkit-devanagari",
+   "text": "Cell Biology - Chapter 5\nRevision questions\nChromosome structure\nMitosis and meiosis stages\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d206": {
+   "engine": "mlkit-devanagari",
+   "text": "Linear Algebra - Week 3\nSingular value decomposition\nEigenvalues and eigenvectors\nOrthogonal projections\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d207": {
+   "engine": "mlkit-devanagari",
+   "text": "Constitutional Law\nDirective principles\nAmendment procedure\nLandmark cases to remember\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d208": {
+   "engine": "mlkit-latin",
+   "text": "Microeconomics - Demand\nMarket equilibrium\nLaw of demand and elasticity\nConsumer surplus\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d209": {
+   "engine": "mlkit-devanagari",
+   "text": "Microeconomics - Demand\nConsumer surplus\nMarket equilibrium\nLaw of demand and elasticity\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d210": {
+   "engine": "mlkit-devanagari",
+   "text": "World History - Revolutions\nIndustrial revolution in Britain\nReign of terror\nNapoleon and the empire\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d211": {
+   "engine": "mlkit-devanagari",
+   "text": "Machine Learning - Notes\nOverfitting and regularisation\nBias variance tradeoff\nCross validation\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d212": {
+   "engine": "mlkit-devanagari",
+   "text": "Calculus - Integration\nIntegration by parts\nImproper integrals\nSubstitution method\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d213": {
+   "engine": "mlkit-devanagari",
+   "text": "Constitutional Law\nDirective principles\nFundamental rights overview\nAmendment procedure\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d214": {
+   "engine": "mlkit-devanagari",
+   "text": "Calculus - Integration\nImproper integrals\nSubstitution method\nIntegration by parts\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d215": {
+   "engine": "mlkit-devanagari",
+   "text": "World History- Revolutions\nIndustrial revolution in Britain\nCauses of the French revolution\nNapoleon and the empire\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d216": {
+   "engine": "mlkit-devanagari",
+   "text": "Inorganic Chemistry - Lecture 4\nRevision: coordination compounds\nCrystal field theory basics\nPeriodic trends in atomic radius\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d217": {
+   "engine": "mlkit-devanagari",
+   "text": "Cell Biology - Chapter 5\nRevision questions\nMitosis and meiosis stages\nChromOSome structure\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d218": {
+   "engine": "mlkit-devanagari",
+   "text": "Data Structures - Trees\nAVL rotations\nBinary search tree insertion and deletion\nHeap and priority queues\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d219": {
+   "engine": "mlkit-devanagari",
+   "text": "Geography -Mons০on\nCyclones in the Bay of Bengal\nEl Nino and rainfall\nSouthwest monsoon onset\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d220": {
+   "engine": "mlkit-devanagari",
+   "text": "World History - Revolutions\nCauses of the French revolution\nNapoleon and the empire\nReign of terror\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d221": {
+   "engine": "mlkit-devanagari",
+   "text": "Machine Learning - Notes\nCross validation\nGradient descent and learning rate\nBias variance tradeoff\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d222": {
+   "engine": "mlkit-devanagari",
+   "text": "Constitutional Law\nFundamental rights overview\nDirective principles\nLandmark cases to remember\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d223": {
+   "engine": "mlkit-devanagari",
+   "text": "Linear Algebra - Week 3\nEigenvalues and eigenvectors\nDiagonalisation\nOrthogonal projections\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d224": {
+   "engine": "mlkit-devanagari",
+   "text": "Physics - Thermodynamics\nCarnot cycle efficiency\nFirst and second law of thermodynamics\nEntropy and heat engines\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d225": {
+   "engine": "mlkit-devanagari",
+   "text": "Inorganic Chemistry - Lecture 4\nRevision: coordination compounds\nlonisation energy and electron affinity\nPeriodic trends in atomic radius\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d226": {
+   "engine": "mlkit-devanagari",
+   "text": "गणित - त्रिकोणमिति\nसाइन कोसाइन के सूत्र\nऊँचाई और दूरी के प्रश्न\nत्रिकोणमितीय सर्वसमिकाएँ\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d227": {
+   "engine": "mlkit-devanagari",
+   "text": "भूगोल -भारत की नदियाँ\nगंगा नदी तंत्र\nप्रायद्वीपीय नदियोँ\nबाढ़ और सिंचाई\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d228": {
+   "engine": "mlkit-devanagari",
+   "text": "भौतिकी- न्यूटन के नियम\nगति का पहुला नियम\nबल और त्वरण\nक्रिया और प्रतिक्रिया\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d229": {
+   "engine": "mlkit-latin",
+   "text": "SYNTHETIC SAMPLE - not a real document"
+  },
+  "d230": {
+   "engine": "mlkit-latin",
+   "text": "SYNTHETIC SAMPLE - not a real document"
+  },
+  "d231": {
+   "engine": "mlkit-devanagari",
+   "text": "Semester Exam Timetable\nMBA I Semester\n3 Nov 2026 Marketing Management\n10 Nov 2026 Financial Accounting\n23 Nov 2026 Organisational Behaviour\n27 Nov 2026 Business Statistics\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d232": {
+   "engine": "mlkit-devanagari",
+   "text": "Semester Exam Timetable\nMBA I Semester\n6০ct 2026 Marketing Management\n9Oct 2026 Financial AccOunting\n14 Oct 2026 Organisational Behaviour\n26 Oct 2026 Business Statistics\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d233": {
+   "engine": "mlkit-devanagari",
+   "text": "Semester Exam Timetable\nB.Tech l| Year\n1 Nov 2026 Data Structures\n5 Nov 2026 Digital Logic\n17 Nov 2026 Discrete Mathematics\n26 Nov 2026 Probability and Statistics\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d234": {
+   "engine": "mlkit-devanagari",
+   "text": "Semester Exam Timetable\nB.Sc Ill Year\n19 Nov 2026 Quantum Mechanics\n21 Nov 2026 Organic Synthesis\n26 Nov 2026 Real Analysis\n27 Nov 2026 Genetics\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d235": {
+   "engine": "mlkit-devanagari",
+   "text": "Semester Exam Timetable\nB.Tech Il Year\n2 Nov 2026 Data Structures\n13 Nov 2026 Digital Logic\n24 Nov 2026 Discrete Mathematics\n27 Nov 2026 Probability and Statistics\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d236": {
+   "engine": "mlkit-devanagari",
+   "text": "Semester Exam Timetable\nB.Tech Il Year\n6 Nov 2026 Data Structures\n10 Nov 2026 Digital Logic\n20 Nov 2026 Discrete Mathematics\n23 Nov 2026 Probability and Statistics\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d237": {
+   "engine": "mlkit-devanagari",
+   "text": "Semester Exam Timetable\nB.Sc IlIl Year\n1 Nov 2026 Quantum Mechanics\n5 Nov 2026 Organic Synthesis\n16 Nov 2026 Real Analysis\n22 Nov 2026 Genetics\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d238": {
+   "engine": "mlkit-devanagari",
+   "text": "Semester Exam Timetable\nB.ech।Year\n4 Nov 2026 Data Structures\n5 Nov 2026 Digital Logic\n15 Nov 2026 Discrete Mathematics\n21 Nov 2026 Probability and Statistics\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d239": {
+   "engine": "mlkit-devanagari",
+   "text": "Semester Exam Timetable\nMBA I Semester\n7 Nov 2026 Marketing Management\n18 Nov 2026 Financial Accounting\n19 Nov 2026 Organisational Behaviour\n22 Nov 2026 Business Statistics\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d240": {
+   "engine": "mlkit-devanagari",
+   "text": "Semester Exam Timetable\nB.Sc IlIl Year\n1 Nov 2026 Quantum Mechanics\n5 Nov 2026 Organic Synthesis\n10 Nov 2026 Real Analysis\n19 Nov 2026 Genetics\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d241": {
+   "engine": "mlkit-devanagari",
+   "text": "परीक्षासमय सारणी\nकक्षा 10\n13 अक्टूबर 2026 गणित\n15 अक्टूबर 2026 विज्ञान\n17 अक्टूबर 2026 सामाजिक विज्ञान\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d242": {
+   "engine": "mlkit-devanagari",
+   "text": "परीक्षासमय सारणी\nकक्षा 10\n11 अक्टूबर 2026 गणित\n13 अक्टूबर 2026 विज्ञान\n15 अक्टूबर 2026 सामाजिक विज्ञान\nSYNTHETIC SAMPLE- not a real document"
+  },
+  "d243": {
+   "engine": "mlkit-devanagari",
+   "text": "परीक्षा समय सारणी\nकक्षा 10\n4 अक्टूबर 2026 गणित\n6 अक्टूबर 2026 विज्ञान\n৪ अक्टूबर 2026 सामाजिक विज्ञान\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d244": {
+   "engine": "mlkit-devanagari",
+   "text": "Rent Receipt\nTenant: Divya Menon\nLandlord: Swathi Reddy\nMonth: Sep 2026\nRent received: Rs 18,000\nDate: 27 Sep 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d245": {
+   "engine": "mlkit-devanagari",
+   "text": "Rent Receipt\nTenant: Pooja Desai\nLandlord: Harish Chandra\nMonth: Jul 2026\nRent received: Rs 12,000\nDate: 10 Jul 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d246": {
+   "engine": "mlkit-devanagari",
+   "text": "Rent Receipt\nTenant: Vikram Singh\nLandlord: Suresh Babu\nMonth: Jul 2026\nRent received: Rs ৪,0০০\nDate: 25 Jul 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d247": {
+   "engine": "mlkit-devanagari",
+   "text": "Rent Receipt\nTenant:Arjun Rao\nLandlord: Kavya Shetty\nMonth: Oct 2026\nRent received: Rs 12,000\nDate: 25 Oct 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d248": {
+   "engine": "mlkit-devanagari",
+   "text": "Rent Receipt\nTenant: Neha Gupta\nLandlord: Rohit Jain\nMonth: Nov 2026\nRent received: Rs 12,000\nDate: 21 Nov 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d249": {
+   "engine": "mlkit-devanagari",
+   "text": "Rent Receipt\nTenant: Harish Chandra\nLandlord: Karthik Reddy\nMonth: Jun 2026\nRent received: Rs 18,000\nDate: 23 Jun 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d250": {
+   "engine": "mlkit-devanagari",
+   "text": "Rent Receipt\nTenant: Kavya Shetty\nLandlord: Sandeep Yadav\nMonth: Jun 2026\nRent received: Rs 15,000\nDate: 11 Jun 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d251": {
+   "engine": "mlkit-devanagari",
+   "text": "Rent Receipt\nTenant: Rahul Verma\nLandlord: Neha Gupta\nMonth: Oct 2026\nRent received: Rs 18,000\nDate: 5 Oct 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d252": {
+   "engine": "mlkit-devanagari",
+   "text": "LifeSecure Insurance\nPremium reminder\nPolicy no: 73280305\nPremium due: Rs 15,800\nDue date: 9 Sep 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d253": {
+   "engine": "mlkit-devanagari",
+   "text": "LifeSecure Insurance\nPremium reminder\nPolicy no: 16448781\nPremium due: Rs 15,800\nDue date: 10 Oct 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d254": {
+   "engine": "mlkit-devanagari",
+   "text": "LifeSecure Insurance\nPremium reminder\nPolicy n0: ৪4169483\nPremium due: Rs ৪,600\nDue date: 26 Dec 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d255": {
+   "engine": "mlkit-devanagari",
+   "text": "Secure Shield Health\nPremium reminder\nPolicy no: 28967550\nPremium due: Rs 8,600\nDue date: 10 Dec 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d256": {
+   "engine": "mlkit-devanagari",
+   "text": "Star Health Insurance\nPremium reminder\nPolicy no: 49333398\nPremium due: Rs 21,000\nDue date: 17 Dec 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d257": {
+   "engine": "mlkit-devanagari",
+   "text": "Secure Shield Health\nPremium reminder\nPolicy no: 21142619\nPremium due: Rs 15,800\nDue date: 6 Dec 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d258": {
+   "engine": "mlkit-devanagari",
+   "text": "Star Health Insurance\nPremium reminder\nPolicy no: 30286660\nPremium due: Rs 15,800\nDue date: 25 Dec 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d259": {
+   "engine": "mlkit-devanagari",
+   "text": "Star Health Insurance\nPremium reminder\nPolicy no: 50086594\nPremium due: Rs 15,800\nDue date: 24 Dec 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d260": {
+   "engine": "mlkit-devanagari",
+   "text": "Certificate of Completion\nThis is to certify that Imran Khan\nhas completed the course Public Speaking\nIssued on 5 Jun 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d261": {
+   "engine": "mlkit-devanagari",
+   "text": "Certificate of Completion\nThis is to certify that Lakshmi Prasad\nhas completed the course Digital Marketing\nIssued on 11 Sep 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d262": {
+   "engine": "mlkit-devanagari",
+   "text": "Certificate of Completion\nThis is to certify that Priya Nair\nhas completed the course Digital Marketing\nIssued on 20 May 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d263": {
+   "engine": "mlkit-devanagari",
+   "text": "Certificate of Completion\nThis is to certify that Sandeep Yadav\nhas completed the course Data Analysis\nIssued on 19 Jun 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d264": {
+   "engine": "mlkit-devanagari",
+   "text": "Certificate of Completion\nThis is to certify that Sandeep Yadav\nhas completed the course Python\nDroarommina\nlssued on 2 Aug 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d265": {
+   "engine": "mlkit-devanagari",
+   "text": "Certificate of Completion\nThis is to certify that Rahul Verma\nhas completed the course Python\nIssued on 3 May 2026\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d266": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\nmilk 2 litres\ndetergent\nonions 2 kg\nrice 5 kg\ntomatoes 1 kg\nsugar 1 kg\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d267": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\ntoor dal 2 kg\ntea powder\nonions 2 kg\ntomatoes 1 kg\nSugar 1 kg\ncooking oil 1 litre\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d268": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\ntoor dal 2 kg\nsugar 1 kg\nonions 2 kg\ntea powder\neggs 12\ntomatoes 1 kg\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d269": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\nbread\nsugar 1 kg\neggs 12\nonions 2 kg\ncooking oil 1 litre\ntea powder\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d270": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\nsugar 1 kg\ntomatoes 1 kg\nonions 2 kg\nrice 5 kg\ntea powder\nbread\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d271": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\ntea powder\ntoor dal2 kg\ndetergent\ntomatoes 1 kg\nSugar 1 kg\nonions 2 kg\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d272": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\ntoor dal 2 kg\ndetergent\ntomatoes 1 kg\ncooking oil 1 litre\nbread\nSoap 4\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d273": {
+   "engine": "mlkit-devanagari",
+   "text": "Recipe: Vegetable biryani\nbasmati rice 2 cups\nmixed vegetables\nbiryani masala\nc০ok on low flame 20 minutes\nSYNTHETIC SAMPLE- not a real document"
+  },
+  "d274": {
+   "engine": "mlkit-devanagari",
+   "text": "Recipe: Masala chai\nmilk and water\ntea leaves\nginger and cardamom\nboil 5 minutes\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d275": {
+   "engine": "mlkit-devanagari",
+   "text": "Recipe: Lemon rice\ncooked rice 2 cups\nlemon juice\ncurry leaves and mustard\npeanuts and turmeric\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d276": {
+   "engine": "mlkit-devanagari",
+   "text": "Recipe: Pesarattu\ngreen gram 1 cup\nrice 2 spoons\nginger and green chilli\nsoak 4 hours and grind\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d277": {
+   "engine": "mlkit-devanagari",
+   "text": "Messages\nYou: Will do, love you\nMom: Call me when you are free\nFriend: Bring the lab record\nFriend: Are we meeting for the\nMom: Did you reach the hostel?\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d278": {
+   "engine": "mlkit-devanagari",
+   "text": "Messages\nFriend: Are we meeting for the\nYou: Will do, love you\nMom: Eat dinner on time\nMom: Call me when you are free\nFriend: Bring the lab record\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d279": {
+   "engine": "mlkit-devanagari",
+   "text": "Messages\nMom:Didyou reach theh০stel?\nYou: Will do, love you\nMom: Call me when you are free\nYou: Yes, 4 pm in the library\nFriend: Are we meeting for the\nnrnioot tomarraLA\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d280": {
+   "engine": "mlkit-devanagari",
+   "text": "Messages\nFriend: Are we meeting for the\nMom: Eat dinner on time\nMom: Did you reach the hostel?\nMom: Call me when you are free\nYou: Will do, love you\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d281": {
+   "engine": "mlkit-devanagari",
+   "text": "Messages\nMom: Did you reach the hostel?\nYou: Yes, reached an hour ago\nYou: Yes, 4 pm in the library\nFriend: Are we meeting for the\nFriend: Bring the।ab record\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d282": {
+   "engine": "mlkit-devanagari",
+   "text": "Messages\nFriend: Are we meeting for the\nMom: Did you reach the hostel?\nYou: Will do, love you\nYou: Yes, 4 pm in the library\nFriend: Bring the lab record\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d283": {
+   "engine": "mlkit-devanagari",
+   "text": "Messages\nMom: Call me when you are free\nYou: Yes, reached an hour ago\nFriend: Bring the lab record\nYou: Will do, love you\nMom: Eat dinner on time\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d284": {
+   "engine": "mlkit-devanagari",
+   "text": "Messages\nMom: Did you reach the hostel?\nMom: Eat dinner on time\nFriend: Bring the lab record\nYou: Yes, reached an hour ago\nYou: Yes, 4 pm in the library\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d285": {
+   "engine": "mlkit-devanagari",
+   "text": "Messages\nMom: Call me when you are free\nMom: Did you reach the hostel?\nFriend: Are we meeting for the\nYou: Will do, love you\nYou: Yes, reached an hour ago\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d286": {
+   "engine": "mlkit-devanagari",
+   "text": "Messages\nMom: Eat dinner on time\nMom: Did you reach the hostel?\nFriend: Are we meeting for the\nMom: Call me when you are free\nYou: Will do, love you\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d287": {
+   "engine": "mlkit-devanagari",
+   "text": "Messages\nMom: Did you reach the hostel?\nMom: Eat dinner on time\nYou: Will do, love you\nFriend: Bring the lab record\nYou: Yes, 4 pm in the library\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d288": {
+   "engine": "mlkit-devanagari",
+   "text": "Messages\nYou: Yes, reached an hour ago\nMom: Call me when you are free\nYou: Yes, 4 pm in the library\nYou: Will do, love you\nFriend: Bring the lab record\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d289": {
+   "engine": "mlkit-devanagari",
+   "text": "Messages\nFriend: Are we meeting for the\nFriend: Bring the lab record\nMom: Call me when you are free\nYou: Will do, love you\nMom: Eat dinner on time\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d290": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\neggs 12\nmilk 2 litres\ndetergent\nSoap 4\nbread\nrice 5 kg\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d291": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\ntomatoes 1 kg\nmilk 2 litres\ndetergent\ncooking oil 1 litre\ntea powder\nSugar 1 kg\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d292": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\nSoap 4\ntoor dal2 kg\nmilk 2 litres\nonions 2 kg\ntomatoes 1 kg\ntea powder\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d293": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\ncooking oil 1 litre\ntea powder\ntomatoes 1 kg\nrice 5 kg\ndetergent\ntoor dal 2 kg\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d294": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\nbread\ncooking oil 1 litre\ndetergent\nSoap 4\nSugar 1 kg\ntea powder\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d295": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\ndetergent\nbread\ntomatoes 1 kg\ntoor dal2 kg\nonions 2 kg\nmilk 2 litres\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d296": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\neggs 12\nbread\ntomatoes 1 kg\ntoor dal2 kg\nonions 2 kg\ntea powder\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d297": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\ndetergent\nSoap 4\ntea powder\neggs 12\ntomatoes 1 kg\nSugar 1 kg\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d298": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\ntea powder\ntomatoes 1 kg\ntoor dal 2 kg\nSugar 1 kg\ndetergent\nonions 2 kg\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d299": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\nmilk 2 litres\nbread\nSoap 4\ntoor dal 2 kg\neggs 12\ndetergent\nSYNTHETIC SAMPLE - not a real document"
+  },
+  "d300": {
+   "engine": "mlkit-devanagari",
+   "text": "Shopping list\nbread\ntea powder\nSoap 4\nonions 2 kg\nrice 5 kg\ndetergent\nSYNTHETIC SAMPLE - not a real document"
+  }
+ },
+ "queries": [],
+ "variants": {
+  "B0": [],
+  "S1": [],
+  "C1": [],
+  "S2": [],
+  "S3": []
+ },
+ "extraction": [
+  {
+   "doc": "d001",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1779",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d002",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "710",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d003",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "141",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d004",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "3151",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d005",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "3029",
+   "present": false,
+   "n_found": 1
+  },
+  {
+   "doc": "d006",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "848",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d007",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1658.5",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d008",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "3012",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d009",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1504",
+   "present": false,
+   "n_found": 1
+  },
+  {
+   "doc": "d010",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1882",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d011",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "2621",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d012",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "670",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d013",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "446.5",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d014",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "3118.5",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d015",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "2811",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d016",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1950",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d017",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "785.5",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d018",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "597",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d019",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "328.5",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d020",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "686",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d021",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1481",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d022",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "2415",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d023",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "447",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d024",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "2445",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d025",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "713",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d026",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "2842",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d027",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "2492",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d028",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "640",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d029",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "398.5",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d030",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "338",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d031",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "78",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d032",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1732",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d033",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1365.5",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d034",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "57",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d035",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1779",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d036",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "710",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d037",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "141",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d046",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "38500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d046",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-13",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d047",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "18500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d047",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-07-17",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d048",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "9500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d048",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-24",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d049",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "45500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d049",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-07-10",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d050",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "39000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d050",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-07-14",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d051",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "22500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d051",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-06-03",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d052",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "38500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d052",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-06",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d053",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "22000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d053",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-12",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d054",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "22500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d054",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-07-14",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d055",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "22000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d055",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-25",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d056",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "8500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d056",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-08-13",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d057",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "8000",
+   "present": false,
+   "n_found": 1
+  },
+  {
+   "doc": "d057",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-10",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d058",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "39000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d058",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-06-07",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d059",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "18000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d059",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-26",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d060",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "32000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d060",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-06-24",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d061",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "18500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d061",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-22",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d062",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "32000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d062",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-07-18",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d063",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "45500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d063",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-08-15",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d064",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "8000",
+   "present": false,
+   "n_found": 1
+  },
+  {
+   "doc": "d064",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-07-26",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d065",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "15000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d065",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-26",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d066",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "18000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d066",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-13",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d067",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "52000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d067",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-07-06",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d068",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "22500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d068",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-01",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d069",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "9500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d069",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-07-25",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d070",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "6000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d070",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-08-17",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d071",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "21000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d071",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-11-02",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d072",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "14500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d072",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-08-01",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d073",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "16000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d073",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-08-21",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d074",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "14500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d074",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-11-15",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d075",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "21000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d075",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-10-06",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d076",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "14500",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d076",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-09-13",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d077",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "9800",
+   "present": false,
+   "n_found": 1
+  },
+  {
+   "doc": "d077",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-09-24",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d078",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "6000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d078",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-06-02",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d079",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "6000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d079",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-07-25",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d080",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "9800",
+   "present": false,
+   "n_found": 1
+  },
+  {
+   "doc": "d080",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-08-21",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d081",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "19000",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d081",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-08-27",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d082",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "6500",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d082",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-10-04",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d083",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "9000",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d083",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-10-28",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d084",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "24000",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d084",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-11-27",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d085",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "24000",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d085",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-11-24",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d086",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "15500",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d086",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-09-10",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d087",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "19000",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d087",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-11-19",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d088",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "31000",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d088",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-10-13",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d089",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "24000",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d089",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-09-23",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d090",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "31000",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d090",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-06-15",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d091",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "31000",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d091",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-07-20",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d092",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1569",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d092",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-17",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d093",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "222",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d093",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-13",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d094",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "2530",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d094",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-10",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d095",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "534",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d095",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-08",
+   "present": false,
+   "n_found": 1
+  },
+  {
+   "doc": "d096",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1855",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d096",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-28",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d097",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1350",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d097",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-07",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d098",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1170",
+   "present": true,
+   "n_found": 2
+  },
+  {
+   "doc": "d098",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-08",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d099",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1660",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d099",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-08-07",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d100",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1354",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d100",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-18",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d101",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1069",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d101",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-06",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d102",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "2918",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d102",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-24",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d103",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "3148",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d103",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-19",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d104",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "2380",
+   "present": true,
+   "n_found": 2
+  },
+  {
+   "doc": "d104",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-08",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d105",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "851",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d105",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-18",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d106",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1594",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d106",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-18",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d107",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "2917",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d107",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-13",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d108",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "2556",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d108",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-27",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d109",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1278",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d109",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-16",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d110",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "2654",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d110",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-19",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d111",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "2752",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d111",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-06",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d112",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "1965",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d112",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-09",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d113",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "2591",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d113",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-16",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d114",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "1429",
+   "present": false,
+   "n_found": 1
+  },
+  {
+   "doc": "d114",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-10-28",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d115",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "2461",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d115",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-08-19",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d116",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "973",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d116",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-11-12",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d117",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "2148",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d117",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-11-11",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d118",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "1411",
+   "present": false,
+   "n_found": 1
+  },
+  {
+   "doc": "d118",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-08-27",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d119",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "1853",
+   "present": false,
+   "n_found": 1
+  },
+  {
+   "doc": "d119",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-10-24",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d120",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "1815",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d120",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-09-07",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d121",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "2352",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d121",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-11-25",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d122",
+   "type": "AMOUNT",
+   "lang": "hi",
+   "truth": "1273",
+   "present": false,
+   "n_found": 1
+  },
+  {
+   "doc": "d122",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-08-10",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d123",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "685",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d123",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-12-23",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d124",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "1218",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d124",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-12-23",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d125",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "728",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d125",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-11-15",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d126",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "2800",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d126",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-10-20",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d127",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "709",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d127",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-12-20",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d128",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "1464",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d128",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-09-04",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d129",
+   "type": "AMOUNT",
+   "lang": "te",
+   "truth": "458",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d129",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-09-03",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d130",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-28",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d131",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-08",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d132",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-28",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d133",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-24",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d134",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-04",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d135",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-03",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d136",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-13",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d137",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-19",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d138",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-02",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d139",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-15",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d140",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-24",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d141",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-17",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d142",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-24",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d143",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-25",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d144",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-28",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d145",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-03",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d146",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-19",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d147",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-12",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d148",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-05",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d149",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-14",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d150",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-10",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d151",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-05",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d152",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-26",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d153",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-12",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d154",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-18",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d155",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-17",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d156",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-06",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d157",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-10",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d158",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-03",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d159",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-10",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d160",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-27",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d161",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-25",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d162",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-05",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d163",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-15",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d164",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-07",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d165",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-19",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d166",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-05",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d167",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-13",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d168",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-20",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d169",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-19",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d170",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-20",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d171",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-21",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d172",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-25",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d173",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-16",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d174",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+916279532494",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d174",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-11",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d174",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, Banjara Hills, Hyderabad 500034",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d175",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+916743358601",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d175",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-27",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d175",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, Madhapur, Hyderabad 500081",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d176",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+918843598752",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d176",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-03",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d176",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, Madhapur, Hyderabad 500081",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d177",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+919159877406",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d177",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-04",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d177",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, T Nagar, Chennai 600017",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d178",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+918679785199",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d178",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-15",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d178",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, Kothrud, Pune 411038",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d179",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+919437625472",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d179",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-06",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d179",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, Kothrud, Pune 411038",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d180",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+917283930243",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d180",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-11",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d180",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, Kothrud, Pune 411038",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d181",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+917425761366",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d181",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-23",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d181",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, T Nagar, Chennai 600017",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d182",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+917465518583",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d182",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-23",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d182",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, Indiranagar, Bengaluru 560038",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d183",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+919417173581",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d183",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-05",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d183",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, Indiranagar, Bengaluru 560038",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d184",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+919159993018",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d184",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-15",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d184",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, Indiranagar, Bengaluru 560038",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d185",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+919818278756",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d185",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-16",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d185",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, Indiranagar, Bengaluru 560038",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d186",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+916974292838",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d186",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-24",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d186",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, T Nagar, Chennai 600017",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d187",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+917604692161",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d187",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-08",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d187",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, Kothrud, Pune 411038",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d188",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+916902896151",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d188",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-07",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d188",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, Banjara Hills, Hyderabad 500034",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d189",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+917402985528",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d189",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-24",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d189",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, Banjara Hills, Hyderabad 500034",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d190",
+   "type": "PHONE",
+   "lang": "en",
+   "truth": "+917252129997",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d190",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-26",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d190",
+   "type": "ADDRESS",
+   "lang": "en",
+   "truth": "Plot x, Kothrud, Pune 411038",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d191",
+   "type": "PHONE",
+   "lang": "hi",
+   "truth": "+918021879181",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d191",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-11-03",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d192",
+   "type": "PHONE",
+   "lang": "hi",
+   "truth": "+919245368626",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d192",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-10-10",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d193",
+   "type": "PHONE",
+   "lang": "hi",
+   "truth": "+917960060137",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d193",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-09-09",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d194",
+   "type": "PHONE",
+   "lang": "hi",
+   "truth": "+918618129555",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d194",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-10-18",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d195",
+   "type": "PHONE",
+   "lang": "te",
+   "truth": "+919535210135",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d195",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-10-16",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d196",
+   "type": "PHONE",
+   "lang": "te",
+   "truth": "+919508789894",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d196",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-09-06",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d197",
+   "type": "PHONE",
+   "lang": "te",
+   "truth": "+918790463490",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d197",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-11-15",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d198",
+   "type": "PHONE",
+   "lang": "te",
+   "truth": "+916803807025",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d198",
+   "type": "DATE",
+   "lang": "te",
+   "truth": "2026-09-16",
+   "present": false,
+   "n_found": 0
+  },
+  {
+   "doc": "d231",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-03",
+   "present": true,
+   "n_found": 4
+  },
+  {
+   "doc": "d232",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-06",
+   "present": false,
+   "n_found": 3
+  },
+  {
+   "doc": "d233",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-01",
+   "present": true,
+   "n_found": 4
+  },
+  {
+   "doc": "d234",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-19",
+   "present": true,
+   "n_found": 4
+  },
+  {
+   "doc": "d235",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-02",
+   "present": true,
+   "n_found": 4
+  },
+  {
+   "doc": "d236",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-06",
+   "present": true,
+   "n_found": 4
+  },
+  {
+   "doc": "d237",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-01",
+   "present": true,
+   "n_found": 4
+  },
+  {
+   "doc": "d238",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-04",
+   "present": true,
+   "n_found": 4
+  },
+  {
+   "doc": "d239",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-07",
+   "present": true,
+   "n_found": 4
+  },
+  {
+   "doc": "d240",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-01",
+   "present": true,
+   "n_found": 4
+  },
+  {
+   "doc": "d241",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-10-13",
+   "present": true,
+   "n_found": 3
+  },
+  {
+   "doc": "d242",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-10-11",
+   "present": true,
+   "n_found": 3
+  },
+  {
+   "doc": "d243",
+   "type": "DATE",
+   "lang": "hi",
+   "truth": "2026-10-04",
+   "present": true,
+   "n_found": 3
+  },
+  {
+   "doc": "d244",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "18000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d244",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-27",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d245",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "12000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d245",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-07-10",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d246",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "8000",
+   "present": false,
+   "n_found": 1
+  },
+  {
+   "doc": "d246",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-07-25",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d247",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "12000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d247",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-25",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d248",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "12000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d248",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-11-21",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d249",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "18000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d249",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-06-23",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d250",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "15000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d250",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-06-11",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d251",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "18000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d251",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-05",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d252",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "15800",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d252",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-09-09",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d253",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "15800",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d253",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-10-10",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d254",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "8600",
+   "present": false,
+   "n_found": 1
+  },
+  {
+   "doc": "d254",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-26",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d255",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "8600",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d255",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-10",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d256",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "21000",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d256",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-17",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d257",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "15800",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d257",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-06",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d258",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "15800",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d258",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-25",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d259",
+   "type": "AMOUNT",
+   "lang": "en",
+   "truth": "15800",
+   "present": true,
+   "n_found": 1
+  },
+  {
+   "doc": "d259",
+   "type": "DATE",
+   "lang": "en",
+   "truth": "2026-12-24",
+   "present": true,
+   "n_found": 1
+  }
+ ],
+ "payments": [
+  {
+   "doc": "d001",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 177900,
+   "conf": 0.44999998807907104,
+   "payee": "Green Grocers",
+   "date": "2026-08-26",
+   "time": "10:32",
+   "ref": "695803211836",
+   "problem": null
+  },
+  {
+   "doc": "d002",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 71000,
+   "conf": 0.8999999761581421,
+   "payee": "Chai Point",
+   "date": "2026-09-22",
+   "time": "21:08",
+   "ref": "643980343087",
+   "problem": null
+  },
+  {
+   "doc": "d003",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 14100,
+   "conf": 0.8999999761581421,
+   "payee": "Green Grocers",
+   "date": "2026-09-21",
+   "time": "19:10",
+   "ref": "630119921643",
+   "problem": null
+  },
+  {
+   "doc": "d004",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 315100,
+   "conf": 0.44999998807907104,
+   "payee": "Chai Point",
+   "date": "2026-10-20",
+   "time": "22:01",
+   "ref": "668258649069",
+   "problem": null
+  },
+  {
+   "doc": "d005",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 7302900,
+   "conf": 0.44999998807907104,
+   "payee": "Priya Sharma",
+   "date": null,
+   "time": null,
+   "ref": "619105785692",
+   "problem": "date not read"
+  },
+  {
+   "doc": "d006",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": null,
+   "conf": 0,
+   "payee": "Kamala Sweets",
+   "date": "2026-09-22",
+   "time": "16:12",
+   "ref": "692277784387",
+   "problem": "amount not read"
+  },
+  {
+   "doc": "d007",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 165850,
+   "conf": 0.8999999761581421,
+   "payee": "Priya Sharma",
+   "date": "2026-09-03",
+   "time": "22:19",
+   "ref": "651135844076",
+   "problem": null
+  },
+  {
+   "doc": "d008",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 301200,
+   "conf": 0.44999998807907104,
+   "payee": "Hotel Annapurna",
+   "date": "2026-09-02",
+   "time": "15:07",
+   "ref": "620104361101",
+   "problem": null
+  },
+  {
+   "doc": "d009",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 7150400,
+   "conf": 0.44999998807907104,
+   "payee": "Metro Mart",
+   "date": "2026-10-19",
+   "time": "22:53",
+   "ref": "650270903690",
+   "problem": null
+  },
+  {
+   "doc": "d010",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 188200,
+   "conf": 0.8999999761581421,
+   "payee": "Anil Kumar",
+   "date": "2026-09-24",
+   "time": "08:14",
+   "ref": "633354777238",
+   "problem": null
+  },
+  {
+   "doc": "d011",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 262100,
+   "conf": 0.8999999761581421,
+   "payee": "Chai Point",
+   "date": "2026-08-26",
+   "time": "09:35",
+   "ref": "618602733322",
+   "problem": null
+  },
+  {
+   "doc": "d012",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 67000,
+   "conf": 0.8999999761581421,
+   "payee": "Mani Tiffin Centre",
+   "date": "2026-09-11",
+   "time": "22:45",
+   "ref": "671503013778",
+   "problem": null
+  },
+  {
+   "doc": "d013",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 44650,
+   "conf": 0.44999998807907104,
+   "payee": "Print And Copy",
+   "date": "2026-08-23",
+   "time": "12:00",
+   "ref": "633950576938",
+   "problem": null
+  },
+  {
+   "doc": "d014",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 311850,
+   "conf": 0.8999999761581421,
+   "payee": "Chai Point",
+   "date": "2026-08-07",
+   "time": "13:33",
+   "ref": "682627715815",
+   "problem": null
+  },
+  {
+   "doc": "d015",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 281100,
+   "conf": 0.44999998807907104,
+   "payee": "Chai Point",
+   "date": "2026-08-17",
+   "time": "17:06",
+   "ref": "619172619725",
+   "problem": null
+  },
+  {
+   "doc": "d016",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 195000,
+   "conf": 0.44999998807907104,
+   "payee": "Fresh Juice Centre",
+   "date": "2026-10-25",
+   "time": "10:30",
+   "ref": "688279408437",
+   "problem": null
+  },
+  {
+   "doc": "d017",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 78550,
+   "conf": 0.8999999761581421,
+   "payee": "Print And Copy",
+   "date": "2026-08-01",
+   "time": "09:48",
+   "ref": "643441614903",
+   "problem": null
+  },
+  {
+   "doc": "d018",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 59700,
+   "conf": 0.44999998807907104,
+   "payee": "Kamala Sweets",
+   "date": "2026-08-20",
+   "time": "09:22",
+   "ref": "644887589013",
+   "problem": null
+  },
+  {
+   "doc": "d019",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 32850,
+   "conf": 0.44999998807907104,
+   "payee": "Priya Sharma",
+   "date": "2026-10-16",
+   "time": null,
+   "ref": "666652185962",
+   "problem": null
+  },
+  {
+   "doc": "d020",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 68600,
+   "conf": 0.8999999761581421,
+   "payee": "Campus Canteen",
+   "date": null,
+   "time": null,
+   "ref": "646776679432",
+   "problem": "date not read"
+  },
+  {
+   "doc": "d021",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 148100,
+   "conf": 0.44999998807907104,
+   "payee": "Fresh Juice Centre",
+   "date": "2026-08-12",
+   "time": "14:59",
+   "ref": "638339724733",
+   "problem": null
+  },
+  {
+   "doc": "d022",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 241500,
+   "conf": 0.8999999761581421,
+   "payee": "Green Grocers",
+   "date": "2026-08-26",
+   "time": "15:17",
+   "ref": "607886667768",
+   "problem": null
+  },
+  {
+   "doc": "d023",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 44700,
+   "conf": 0.44999998807907104,
+   "payee": "Swathi Stationery",
+   "date": "2026-09-04",
+   "time": "12:37",
+   "ref": "670432757511",
+   "problem": null
+  },
+  {
+   "doc": "d024",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 244500,
+   "conf": 0.8999999761581421,
+   "payee": "Print And Copy",
+   "date": null,
+   "time": null,
+   "ref": "641641755505",
+   "problem": "date not read"
+  },
+  {
+   "doc": "d025",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 71300,
+   "conf": 0.8999999761581421,
+   "payee": "Print And Copy",
+   "date": "2026-08-03",
+   "time": "22:33",
+   "ref": "680020743987",
+   "problem": null
+  },
+  {
+   "doc": "d026",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 284200,
+   "conf": 0.44999998807907104,
+   "payee": "Print And Copy",
+   "date": null,
+   "time": null,
+   "ref": "686950284395",
+   "problem": "date not read"
+  },
+  {
+   "doc": "d027",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 249200,
+   "conf": 0.44999998807907104,
+   "payee": "City Bookshop",
+   "date": "2026-10-04",
+   "time": "22:28",
+   "ref": "626246494315",
+   "problem": null
+  },
+  {
+   "doc": "d028",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 64000,
+   "conf": 0.8999999761581421,
+   "payee": "City Bookshop",
+   "date": "2026-08-20",
+   "time": "22:29",
+   "ref": "6333544624713",
+   "problem": null
+  },
+  {
+   "doc": "d029",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 39850,
+   "conf": 0.44999998807907104,
+   "payee": "Auto Rajesh",
+   "date": "2026-08-25",
+   "time": "20:28",
+   "ref": "605210429047",
+   "problem": null
+  },
+  {
+   "doc": "d030",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 33800,
+   "conf": 0.8999999761581421,
+   "payee": "Green Grocers",
+   "date": "2026-10-10",
+   "time": "10:24",
+   "ref": "638832196769",
+   "problem": null
+  },
+  {
+   "doc": "d031",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 7800,
+   "conf": 0.8999999761581421,
+   "payee": "Ravi Tea Stall",
+   "date": "2026-08-02",
+   "time": "15:51",
+   "ref": "670527330258",
+   "problem": null
+  },
+  {
+   "doc": "d032",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 173200,
+   "conf": 0.8999999761581421,
+   "payee": "Swathi Stationery",
+   "date": "2026-09-07",
+   "time": "18:06",
+   "ref": "613106990723",
+   "problem": null
+  },
+  {
+   "doc": "d033",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 136550,
+   "conf": 0.8999999761581421,
+   "payee": "Anil Kumar",
+   "date": "2026-08-07",
+   "time": "11:32",
+   "ref": "606712367177",
+   "problem": null
+  },
+  {
+   "doc": "d034",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 5700,
+   "conf": 0.8999999761581421,
+   "payee": "Campus Canteen",
+   "date": "2026-09-22",
+   "time": "19:10",
+   "ref": "686789664012",
+   "problem": null
+  },
+  {
+   "doc": "d035",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 177900,
+   "conf": 0.8999999761581421,
+   "payee": "Green Grocers",
+   "date": "2026-08-26",
+   "time": "10:32",
+   "ref": "695803211836",
+   "problem": null
+  },
+  {
+   "doc": "d036",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 71000,
+   "conf": 0.8999999761581421,
+   "payee": "Chai Point",
+   "date": "2026-09-22",
+   "time": "21:04",
+   "ref": "643980343087",
+   "problem": null
+  },
+  {
+   "doc": "d037",
+   "outcome": "SUCCESS",
+   "direction": "PAID",
+   "paise": 14100,
+   "conf": 0.8999999761581421,
+   "payee": "Green Grocers",
+   "date": "2026-09-21",
+   "time": "19:10",
+   "ref": "630119921643",
+   "problem": null
+  },
+  {
+   "doc": "d038",
+   "outcome": "FAILED",
+   "direction": "PAID",
+   "paise": 206300,
+   "conf": 0.8999999761581421,
+   "payee": "Anil Kumar",
+   "date": "2026-08-23",
+   "time": "21:56",
+   "ref": "656199530949",
+   "problem": null
+  },
+  {
+   "doc": "d039",
+   "outcome": "FAILED",
+   "direction": "PAID",
+   "paise": 118400,
+   "conf": 0.44999998807907104,
+   "payee": "Mani Tiffin Centre",
+   "date": "2026-09-17",
+   "time": "21:57",
+   "ref": "620749968114",
+   "problem": null
+  },
+  {
+   "doc": "d040",
+   "outcome": "FAILED",
+   "direction": "PAID",
+   "paise": 228500,
+   "conf": 0.44999998807907104,
+   "payee": "Mani Tiffin Centre",
+   "date": null,
+   "time": null,
+   "ref": "660787644134",
+   "problem": "date not read"
+  },
+  {
+   "doc": "d041",
+   "outcome": "PENDING",
+   "direction": "PAID",
+   "paise": 7123500,
+   "conf": 0.44999998807907104,
+   "payee": "Metro Mart",
+   "date": "2026-08-01",
+   "time": "11:10",
+   "ref": "640013383982",
+   "problem": null
+  },
+  {
+   "doc": "d042",
+   "outcome": "PENDING",
+   "direction": "PAID",
+   "paise": 48500,
+   "conf": 0.8999999761581421,
+   "payee": "Anil Kumar",
+   "date": "2026-10-18",
+   "time": "19:19",
+   "ref": "623745802259",
+   "problem": null
+  },
+  {
+   "doc": "d043",
+   "outcome": "SUCCESS",
+   "direction": "RECEIVED",
+   "paise": 46500,
+   "conf": 0.8999999761581421,
+   "payee": "Print And Copy",
+   "date": "2026-08-23",
+   "time": "12:40",
+   "ref": "691566332974",
+   "problem": null
+  },
+  {
+   "doc": "d044",
+   "outcome": "SUCCESS",
+   "direction": "RECEIVED",
+   "paise": 234500,
+   "conf": 0.44999998807907104,
+   "payee": "Print And Copy",
+   "date": "2026-09-17",
+   "time": "19:28",
+   "ref": "611702157788",
+   "problem": null
+  },
+  {
+   "doc": "d045",
+   "outcome": "SUCCESS",
+   "direction": "RECEIVED",
+   "paise": 170600,
+   "conf": 0.8999999761581421,
+   "payee": "Campus Canteen",
+   "date": "2026-10-22",
+   "time": "13:57",
+   "ref": "618964198866",
+   "problem": null
+  }
+ ],
+ "ledger": {
+  "counted": [
+   "d002",
+   "d003",
+   "d007",
+   "d010",
+   "d011",
+   "d012",
+   "d014",
+   "d017",
+   "d022",
+   "d025",
+   "d028",
+   "d030",
+   "d031",
+   "d032",
+   "d033",
+   "d034",
+   "d035"
+  ],
+  "needs_check": [
+   "d004",
+   "d008",
+   "d009",
+   "d013",
+   "d015",
+   "d016",
+   "d018",
+   "d019",
+   "d021",
+   "d023",
+   "d027",
+   "d029"
+  ],
+  "duplicates": [
+   "d001",
+   "d036",
+   "d037"
+  ],
+  "not_spending": [
+   "d038",
+   "d039",
+   "d041",
+   "d042",
+   "d043",
+   "d044",
+   "d045"
+  ],
+  "unreadable": [
+   "d005",
+   "d006",
+   "d020",
+   "d024",
+   "d026",
+   "d040"
+  ],
+  "excluded": [],
+  "month_paise": {
+   "2026-08": 1351550,
+   "2026-09": 685050,
+   "2026-10": 33800
+  },
+  "total_paise": 2070400
+ }
+}

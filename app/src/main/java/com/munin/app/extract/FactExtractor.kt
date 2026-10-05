@@ -12,7 +12,7 @@ import java.time.LocalDate
  */
 object FactExtractor {
     /** Bump when the rules change; stored items with an older version are re-extracted from their saved text. */
-    const val VERSION = 4
+    const val VERSION = 5
 
     /** 1..12 for an English, Hindi or Telugu month name or abbreviation, else null. */
     fun monthNumber(word: String): Int? = MONTHS[word.lowercase()]
@@ -20,7 +20,7 @@ object FactExtractor {
     /** Splits text into the same trimmed, non-empty lines the chunker produces, so line numbers agree. */
     fun lines(text: String): List<String> = text.lines().map { it.trim().replace(WS, " ") }.filter { it.isNotEmpty() }
 
-    fun extract(text: String): List<ExtractedFact> {
+    fun extract(text: String, sanity: AmountSanity.Mode = AmountSanity.DEFAULT): List<ExtractedFact> {
         val lines = lines(text)
         val out = ArrayList<ExtractedFact>()
         lines.forEachIndexed { i, original ->
@@ -32,11 +32,36 @@ object FactExtractor {
 
             out += phones(line, original, label, i, masked, idLine)
             out += dates(line, original, label, i, masked)
-            out += amounts(line, original, label, i, masked, idLine, previous = lines.getOrNull(i - 1))
+            if (sanity == AmountSanity.Mode.OFF) {
+                out += amounts(line, original, label, i, masked, idLine, previous = lines.getOrNull(i - 1))
+            } else {
+                // Amounts are read from a copy in which look-alike digits are repaired (same length, so offsets and the raw text still agree).
+                val fixed = AmountSanity.repair(line)
+                val amountMasked = if (fixed.changed) CharArray(masked.size) { k -> if (masked[k] == line[k]) fixed.text[k] else masked[k] } else masked
+                out += amounts(fixed.text, original, label, i, amountMasked, idLine, previous = lines.getOrNull(i - 1)).flatMap { sane(it, original, sanity) }
+            }
         }
         out += addresses(lines)
         return out.distinctBy { Triple(it.type, it.value, it.line) }
     }
+
+    /** Applies the amount sanity rules of [mode] to one amount found on a line; [original] is the line as the reader produced it. */
+    private fun sane(f: ExtractedFact, original: String, mode: AmountSanity.Mode): List<ExtractedFact> {
+        var out = f
+        if (AmountSanity.hasLookalike(f.raw)) out = out.copy(confidence = minOf(out.confidence, AmountSanity.REPAIRED))
+        if (mode >= AmountSanity.Mode.GUARD) {
+            val start = original.indexOf(f.raw)
+            if (start >= 0 && AmountSanity.touchesForeignDigit(original, start + f.raw.length)) out = out.copy(confidence = minOf(out.confidence, AmountSanity.DAMAGED))
+        }
+        val result = mutableListOf(out)
+        if (mode >= AmountSanity.Mode.ALTERNATIVE && f.confidence == BARE_AMOUNT && f.raw.none { it in "₹Rs" }) {
+            AmountSanity.withoutFirstDigit(f.value)?.let { alt -> result += out.copy(value = alt, confidence = AmountSanity.ALTERNATE) }
+        }
+        return result
+    }
+
+    /** Confidence given to a bare number alone on a line (see [amounts]). */
+    private const val BARE_AMOUNT = 0.45f
 
     // ---- phones ----------------------------------------------------------------------------------------------------
 

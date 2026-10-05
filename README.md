@@ -365,6 +365,12 @@ works across scripts ("whatsap", "వాట్సాప్", "जीमेल" a
 system's launcher list; Munin declares a narrow `<queries>` entry for that rather than the broad all-apps permission, so no permission prompt appears and nothing leaves the phone.
 Limits: only apps with a launcher icon; inputs of more than three words are never treated as app names; romanised-Telugu/Hindi spellings are covered only where they sound like the app's label.
 
+**Amount sanity check** (`extract/AmountSanity.kt`, measured in `tools/eval/amount.md`): replaying recorded OCR text showed that the damage still hurting amounts is a digit of another script drawn where an 8 or a 0 was printed (`Rs ৪,000`),
+which gave no amount or a truncated one believed at full confidence (`Rs 2,69৪` became 269). Munin now repairs those two look-alikes, **keeps what was read** (`raw`), and lowers the confidence to 0.55 so the answer says "a digit was misread as a look-alike and corrected
+(read as "Rs ৪,000"). Check the image." Chosen by a rule written down before measuring and checked once on a set nobody had looked at (`ocrtest2`): wrong-and-confident amounts 2 to 0, correct amounts 112 to 114, no regressions, no false flags.
+Rules version 4 to 5, so stored items re-read their saved text on the next start (no schema change). **Limits:** small counts on synthetic documents; only the two look-alikes seen are covered; a dropped digit, a damaged label, a rupee sign read as a leading digit and Telugu are not fixed;
+a second OCR read was considered and not built. Also corrects an earlier claim: the Hindi rupee-sign-as-digit case (`२1,150`) was already handled before this step.
+
 **Contacts and settings shortcuts** (`contacts/`, `shortcuts/`): typing "wifi", "bluetooth", "battery", "వైఫై" or "बैटरी" shows the matching system settings screen; one tap opens it.
 Typing a family nickname ("amma", "అమ్మ", "माँ", "mom", "nanna", "dad", "akka", "anna" and a few more) or "call ravi" looks in your saved contacts; tapping a contact asks first and
 opens the dialer with the number filled in (you still press call). **READ_CONTACTS is asked only when you type a nickname or "call ..." and tap Allow**, with a line saying what it is for; if you say

@@ -1,6 +1,7 @@
 package com.munin.app.answer
 
 import com.munin.app.data.MuninDatabase
+import com.munin.app.extract.AmountSanity
 import com.munin.app.extract.ExtractedFact
 import com.munin.app.extract.FactExtractor
 import com.munin.app.extract.FactType
@@ -95,7 +96,7 @@ class AnswerEngine(private val db: MuninDatabase, private val options: AnswerOpt
         val others = ranked.drop(1).filter { it.fact.value != f.value }.distinctBy { it.fact.value }.take(3)
             .map { AlternativeValue(AnswerFormat.display(q.kind, it.fact.value), it.fact.label) }
         return AnswerOutcome.Found(
-            Answer(q.kind, AnswerFormat.display(q.kind, f.value), f.value, f.label, f.raw, top, confidence, f.confidence, others, FactExtractor.lines(itemText).firstOrNull().orEmpty(), caveat(q.kind, f, others.isNotEmpty())),
+            Answer(q.kind, AnswerFormat.display(q.kind, f.value), f.value, f.label, f.raw, top, confidence, f.confidence, others, FactExtractor.lines(itemText).firstOrNull().orEmpty(), AnswerCaveats.of(q.kind, f, others.isNotEmpty())),
         )
     }
 
@@ -108,8 +109,12 @@ class AnswerEngine(private val db: MuninDatabase, private val options: AnswerOpt
             docFrequency <= limit && !AnswerSelector.hasWord(word, itemText)
         }
     }
+}
 
-    private fun caveat(kind: FactType, f: ExtractedFact, hasOthers: Boolean): String? = when {
+/** The one-line warning shown with an answer, from how the value was read. Pure, so every wording is unit tested. */
+object AnswerCaveats {
+    fun of(kind: FactType, f: ExtractedFact, hasOthers: Boolean): String? = when {
+        kind == FactType.AMOUNT && AmountSanity.hasLookalike(f.raw) -> "A digit was misread as a look-alike from another script and has been corrected (read as \"${f.raw}\"). Check the image."
         kind == FactType.AMOUNT && f.confidence < 0.6f -> "The ₹ sign was not clearly read, so this number is a guess. Check the image."
         kind == FactType.DATE && f.value.startsWith("--") -> "The year was not in the text."
         f.confidence < 0.6f -> "Read with low confidence. Check the image."

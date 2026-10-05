@@ -1,0 +1,44 @@
+{
+ "LOOKALIKE": {
+  "false_flags": 0,
+  "real_truth_offered": 114,
+  "docs": 137,
+  "real_wrong_flagged": 3,
+  "real_wrong_confident": 0,
+  "regressions": 0,
+  "real_correct": 114,
+  "real_none": 20
+ },
+ "sets": "ocrtest2",
+ "GUARD": {
+  "false_flags": 0,
+  "real_truth_offered": 114,
+  "docs": 137,
+  "real_wrong_flagged": 3,
+  "real_wrong_confident": 0,
+  "regressions": 0,
+  "real_correct": 114,
+  "real_none": 20
+ },
+ "ALTERNATIVE": {
+  "false_flags": 0,
+  "real_truth_offered": 115,
+  "docs": 137,
+  "real_wrong_flagged": 3,
+  "real_wrong_confident": 0,
+  "regressions": 0,
+  "real_correct": 114,
+  "real_none": 20
+ },
+ "OFF": {
+  "false_flags": 0,
+  "real_truth_offered": 112,
+  "docs": 137,
+  "real_wrong_flagged": 2,
+  "real_wrong_confident": 2,
+  "regressions": 0,
+  "real_correct": 112,
+  "real_none": 21
+ },
+ "chosen": "LOOKALIKE"
+}

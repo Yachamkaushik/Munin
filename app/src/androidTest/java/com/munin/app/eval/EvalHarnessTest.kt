@@ -50,7 +50,7 @@ class EvalHarnessTest {
     private fun json(name: String) = assets.open(name).bufferedReader().readText()
 
     private val set = InstrumentationRegistry.getArguments().getString("eval_set") ?: "dev"
-    private val prefix = mapOf("dev" to "", "heldout" to "heldout_", "fresh" to "fresh_").getOrElse(set) { error("unknown eval_set '$set' (dev, heldout or fresh)") }
+    private val prefix = mapOf("dev" to "", "heldout" to "heldout_", "fresh" to "fresh_").getOrElse(set) { if (set.startsWith("ocrtest")) set + "_" else error("unknown eval_set '$set' (dev, heldout, fresh, ocrtest or ocrtest2)") }
 
     /** Candidate fixes, declared before the held-out set was measured. B0 is today's behaviour. */
     private val retrievalVariants = linkedMapOf(
