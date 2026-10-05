@@ -156,7 +156,7 @@ private fun AccessCard(access: MediaAccessState, onGrant: () -> Unit) {
             Footnote("You shared only some photos, so Munin can only index those. Search will not find anything else.")
             IosButton("Choose more photos", onGrant)
         }
-        MediaAccessState.NONE -> IosCard(tinted = true) {
+        MediaAccessState.NONE -> IosCard {
             Text("Allow photo access", style = MaterialTheme.typography.titleMedium, color = Munin.colors.label)
             Footnote("Munin reads the text in your screenshots and photos on this phone to make them searchable. Nothing leaves the device.")
             IosButton("Allow access to photos", onGrant, style = ButtonStyle.Filled)
@@ -200,7 +200,7 @@ private fun RecentRow(item: RecentItem) {
                     ItemStatus.DUPLICATE -> "Duplicate of an indexed item"
                     else -> "Failed: ${item.error ?: "unknown error"}"
                 },
-                style = MaterialTheme.typography.bodySmall, color = if (item.status == ItemStatus.INDEXED) Munin.colors.green else Munin.colors.secondaryLabel, fontWeight = FontWeight.Medium,
+                style = MaterialTheme.typography.bodySmall, color = if (item.status == ItemStatus.FAILED) Munin.colors.red else Munin.colors.secondaryLabel, fontWeight = FontWeight.Medium,
             )
             item.snippet?.let { Text(it.replace('\n', ' '), maxLines = 2, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.bodySmall, color = Munin.colors.secondaryLabel) }
         }

@@ -71,44 +71,13 @@ fun Modifier.pressable(onClick: (() -> Unit)?, shape: androidx.compose.ui.graphi
 fun Icon(icon: ImageVector, tint: Color, size: Dp = 22.dp, modifier: Modifier = Modifier) =
     Image(icon, null, modifier.size(size), colorFilter = ColorFilter.tint(tint))
 
-/** The page title: big, bold and left-aligned, with an optional quiet line under it and an optional app mark beside it. */
+/** The page title: big, bold and left-aligned, with an optional quiet line under it. */
 @Composable
-fun LargeTitle(title: String, subtitle: String? = null, modifier: Modifier = Modifier, mark: Boolean = false) {
-    Row(modifier.padding(top = 12.dp, bottom = 4.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
-        if (mark) AppMark()
-        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(title, style = MaterialTheme.typography.displaySmall, color = Munin.colors.label)
-            if (subtitle != null) Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = Munin.colors.secondaryLabel)
-        }
+fun LargeTitle(title: String, subtitle: String? = null, modifier: Modifier = Modifier) {
+    Column(modifier.padding(top = 16.dp, bottom = 6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text(title, style = MaterialTheme.typography.displaySmall, color = Munin.colors.label)
+        if (subtitle != null) Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = Munin.colors.secondaryLabel)
     }
-}
-
-/** Munin's mark: a blue-to-indigo rounded square with a magnifier and a small sparkle. */
-@Composable
-fun AppMark(size: Dp = 48.dp) {
-    Box(
-        Modifier.size(size).shadow(6.dp, RoundedCornerShape(size * 0.27f), ambientColor = Munin.colors.tint.copy(alpha = 0.35f), spotColor = Munin.colors.tint.copy(alpha = 0.45f))
-            .clip(RoundedCornerShape(size * 0.27f)).background(Brush.linearGradient(listOf(Munin.colors.teal, Munin.colors.tint, Munin.colors.indigo))),
-        contentAlignment = Alignment.Center,
-    ) {
-        Icon(IosIcons.Search, Color.White, size * 0.52f)
-        Icon(IosIcons.Sparkle, Color.White.copy(alpha = 0.9f), size * 0.3f, Modifier.align(Alignment.TopEnd).padding(top = size * 0.1f, end = size * 0.1f))
-    }
-}
-
-/** A soft wash of colour behind the top of a screen: two blurred glows (blue and violet) fading into the background. */
-@Composable
-fun HeroBackground(modifier: Modifier = Modifier) {
-    val c = Munin.colors
-    Box(
-        modifier.fillMaxWidth().height(420.dp).drawBehind {
-            drawRect(Brush.radialGradient(listOf(c.tint.copy(alpha = 0.20f), Color.Transparent), center = Offset(size.width * 0.15f, 0f), radius = size.width * 0.95f))
-            drawRect(Brush.radialGradient(listOf(c.purple.copy(alpha = 0.16f), Color.Transparent), center = Offset(size.width * 0.95f, size.height * 0.12f), radius = size.width * 0.85f))
-            drawRect(Brush.radialGradient(listOf(c.teal.copy(alpha = 0.10f), Color.Transparent), center = Offset(size.width * 0.55f, size.height * 0.55f), radius = size.width * 0.7f))
-            // fade the wash into the page colour so it has no hard bottom edge
-            drawRect(Brush.verticalGradient(0.35f to Color.Transparent, 1f to c.groupedBackground))
-        },
-    )
 }
 
 /** Fades and slides its content up the first time it appears, after [delayMs]; used to stagger tiles in. */
@@ -121,33 +90,22 @@ fun EnterOnce(delayMs: Int = 0, modifier: Modifier = Modifier, content: @Composa
     Box(modifier.graphicsLayer { alpha = a; translationY = dy * density }) { content() }
 }
 
-/** A colourful gradient tile with an icon, a title and a caption: a one-tap shortcut, like Spotlight's or Shortcuts' tiles. */
+/** A quiet white tile with one accent-coloured icon, a title and a caption: a one-tap shortcut, in the manner of Apple's Shortcuts and Home tiles. */
 @Composable
-fun ShortcutTile(title: String, caption: String, icon: ImageVector, from: Color, to: Color, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun ShortcutTile(title: String, caption: String, icon: ImageVector, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val source = remember { MutableInteractionSource() }
     val pressed by source.collectIsPressedAsState()
-    val scale by animateFloatAsState(if (pressed) 0.96f else 1f, spring(dampingRatio = 0.6f, stiffness = 700f), label = "tile")
-    val shape = RoundedCornerShape(22.dp)
+    val scale by animateFloatAsState(if (pressed) 0.97f else 1f, spring(dampingRatio = 0.7f, stiffness = 600f), label = "tile")
+    val shape = RoundedCornerShape(20.dp)
     Column(
-        modifier.scale(scale).shadow(10.dp, shape, ambientColor = to.copy(alpha = 0.30f), spotColor = to.copy(alpha = 0.40f)).clip(shape)
-            .background(Brush.linearGradient(listOf(from, to)))
-            .clickable(interactionSource = source, indication = null, onClick = onClick).padding(14.dp),
-        verticalArrangement = Arrangement.spacedBy(18.dp),
+        modifier.scale(scale).clip(shape).background(Munin.colors.card).clickable(interactionSource = source, indication = null, onClick = onClick).padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(22.dp),
     ) {
-        Box(Modifier.size(34.dp).clip(RoundedCornerShape(50)).background(Color.White.copy(alpha = 0.24f)), contentAlignment = Alignment.Center) { Icon(icon, Color.White, 20.dp) }
-        Column(verticalArrangement = Arrangement.spacedBy(1.dp)) {
-            Text(title, style = MaterialTheme.typography.titleMedium, color = Color.White, maxLines = 1)
-            Text(caption, style = MaterialTheme.typography.bodySmall, color = Color.White.copy(alpha = 0.82f), maxLines = 1, overflow = TextOverflow.Ellipsis)
+        Icon(icon, Munin.colors.tint, 26.dp)
+        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(title, style = MaterialTheme.typography.titleMedium, color = Munin.colors.label, maxLines = 1)
+            Text(caption, style = MaterialTheme.typography.bodySmall, color = Munin.colors.secondaryLabel, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
-    }
-}
-
-/** One big number with a label under it, for a summary strip. */
-@Composable
-fun Stat(value: String, label: String, color: Color, modifier: Modifier = Modifier) {
-    Column(modifier, horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(1.dp)) {
-        Text(value, style = MaterialTheme.typography.headlineSmall, color = color)
-        Text(label, style = MaterialTheme.typography.bodySmall, color = Munin.colors.secondaryLabel, maxLines = 1)
     }
 }
 
@@ -159,7 +117,7 @@ fun Stat(value: String, label: String, color: Color, modifier: Modifier = Modifi
 fun Section(header: String? = null, footer: String? = null, modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
         if (header != null) Text(header.uppercase(), Modifier.padding(start = 16.dp), style = MaterialTheme.typography.bodySmall, color = Munin.colors.secondaryLabel)
-        Column(Modifier.fillMaxWidth().shadow(3.dp, RoundedCornerShape(18.dp), ambientColor = Munin.colors.shadow, spotColor = Munin.colors.shadow).clip(RoundedCornerShape(18.dp)).background(Munin.colors.card), content = content)
+        Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(Munin.colors.card), content = content)
         if (footer != null) Text(footer, Modifier.padding(horizontal = 16.dp), style = MaterialTheme.typography.bodySmall, color = Munin.colors.secondaryLabel)
     }
 }
@@ -189,20 +147,18 @@ fun ListRow(
     }
 }
 
-/** A rounded square with an icon in it, like the coloured tiles beside iOS settings rows. */
+/** A small rounded square with an accent-coloured icon on a soft grey, for rows that need a leading symbol. */
 @Composable
-fun IconTile(icon: ImageVector, color: Color, size: Dp = 30.dp) {
-    Box(Modifier.size(size).clip(RoundedCornerShape(size * 0.24f)).background(color), contentAlignment = Alignment.Center) { Icon(icon, Color.White, size * 0.64f) }
+fun IconTile(icon: ImageVector, size: Dp = 32.dp) {
+    Box(Modifier.size(size).clip(RoundedCornerShape(size * 0.28f)).background(Munin.colors.fill), contentAlignment = Alignment.Center) { Icon(icon, Munin.colors.tint, size * 0.58f) }
 }
 
-/** A free-standing rounded card, optionally tinted with a soft blue-to-violet wash (used for the answer and the calculator) and optionally tappable. */
+/** A free-standing white rounded card, flat on the grey page, optionally tappable. */
 @Composable
-fun IosCard(modifier: Modifier = Modifier, tinted: Boolean = false, onClick: (() -> Unit)? = null, content: @Composable ColumnScope.() -> Unit) {
-    val shape = RoundedCornerShape(22.dp)
-    val c = Munin.colors
-    val fill = if (tinted) Brush.linearGradient(listOf(c.tint.copy(alpha = 0.16f), c.purple.copy(alpha = 0.12f))) else Brush.linearGradient(listOf(c.card, c.card))
+fun IosCard(modifier: Modifier = Modifier, onClick: (() -> Unit)? = null, content: @Composable ColumnScope.() -> Unit) {
+    val shape = RoundedCornerShape(20.dp)
     Column(
-        modifier.fillMaxWidth().shadow(4.dp, shape, ambientColor = c.shadow, spotColor = c.shadow).clip(shape).background(c.card).background(fill).pressable(onClick, shape).padding(16.dp),
+        modifier.fillMaxWidth().clip(shape).background(Munin.colors.card).pressable(onClick, shape).padding(18.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp), content = content,
     )
 }
@@ -249,7 +205,7 @@ fun Segmented(options: List<String>, selected: Int, onSelect: (Int) -> Unit, mod
     androidx.compose.foundation.layout.BoxWithConstraints(modifier.fillMaxWidth().clip(RoundedCornerShape(11.dp)).background(Munin.colors.fill).padding(2.dp)) {
         val segment = maxWidth / options.size
         val x by androidx.compose.animation.core.animateDpAsState(segment * selected.coerceAtLeast(0), spring(dampingRatio = 0.8f, stiffness = 500f), label = "seg-x")
-        Box(Modifier.offset(x = x).width(segment).height(32.dp).shadow(2.dp, RoundedCornerShape(9.dp), ambientColor = Munin.colors.shadow, spotColor = Munin.colors.shadow).background(Munin.colors.card, RoundedCornerShape(9.dp)))
+        Box(Modifier.offset(x = x).width(segment).height(32.dp).background(Munin.colors.card, RoundedCornerShape(9.dp)))
         Row(Modifier.fillMaxWidth()) {
             options.forEachIndexed { i, label ->
                 val on = i == selected
@@ -262,30 +218,25 @@ fun Segmented(options: List<String>, selected: Int, onSelect: (Int) -> Unit, mod
     }
 }
 
-/** The iOS search field: grey rounded fill that lifts to white with a blue ring while typing, a magnifier, a clear button, and room for a mic on the right. */
+/** The iOS search field: a grey rounded fill, a magnifier, the text, a clear button once there is something to clear, and room for a mic on the right. */
 @Composable
 fun SearchField(
     value: String, onValueChange: (String) -> Unit, placeholder: String, modifier: Modifier = Modifier, trailing: (@Composable () -> Unit)? = null,
 ) {
-    var focused by remember { mutableStateOf(false) }
-    val bg by animateColorAsState(if (focused) Munin.colors.card else Munin.colors.fill, label = "field-bg")
-    val ring by animateColorAsState(if (focused) Munin.colors.tint else Color.Transparent, label = "field-ring")
-    val shape = RoundedCornerShape(16.dp)
     Row(
-        modifier.fillMaxWidth().heightIn(min = 52.dp).shadow(if (focused) 6.dp else 0.dp, shape, ambientColor = Munin.colors.tint.copy(alpha = 0.25f), spotColor = Munin.colors.tint.copy(alpha = 0.3f))
-            .clip(shape).background(bg).border(1.5.dp, ring, shape).padding(horizontal = 14.dp),
-        horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically,
+        modifier.fillMaxWidth().heightIn(min = 48.dp).clip(RoundedCornerShape(14.dp)).background(Munin.colors.fill).padding(horizontal = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(IosIcons.Search, if (focused) Munin.colors.tint else Munin.colors.secondaryLabel, 20.dp)
+        Icon(IosIcons.Search, Munin.colors.secondaryLabel, 19.dp)
         Box(Modifier.weight(1f)) {
             if (value.isEmpty()) Text(placeholder, style = MaterialTheme.typography.bodyLarge, color = Munin.colors.tertiaryLabel, maxLines = 1, overflow = TextOverflow.Ellipsis)
             BasicTextField(
-                value = value, onValueChange = onValueChange, singleLine = true, modifier = Modifier.fillMaxWidth().onFocusChanged { focused = it.isFocused },
+                value = value, onValueChange = onValueChange, singleLine = true, modifier = Modifier.fillMaxWidth(),
                 textStyle = MaterialTheme.typography.bodyLarge.copy(color = Munin.colors.label), cursorBrush = SolidColor(Munin.colors.tint),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search), keyboardActions = KeyboardActions(),
             )
         }
-        if (value.isNotEmpty()) Icon(IosIcons.Clear, Munin.colors.tertiaryLabel, 20.dp, Modifier.clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) { onValueChange("") })
+        if (value.isNotEmpty()) Icon(IosIcons.Clear, Munin.colors.tertiaryLabel, 19.dp, Modifier.clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) { onValueChange("") })
         trailing?.invoke()
     }
 }

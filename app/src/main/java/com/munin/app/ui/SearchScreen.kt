@@ -7,7 +7,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import com.munin.app.ui.theme.Stat
 import com.munin.app.ui.theme.ShortcutTile
 import com.munin.app.ui.theme.EnterOnce
 import androidx.compose.foundation.border
@@ -104,7 +103,7 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
     LazyColumn(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
         item {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                LargeTitle("Munin", "Find anything you saved, in any language", mark = true)
+                LargeTitle("Munin", "Find anything you saved, in any language")
                 SearchField(
                     value = ui.query, onValueChange = vm::onQuery, placeholder = "Describe what you are looking for",
                     modifier = Modifier.focusRequester(searchFocus), trailing = { MicButton(ui, vm) },
@@ -134,7 +133,7 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
             Section("Settings") {
                 ui.settings.forEachIndexed { i, s ->
                     if (i > 0) GroupDivider(58.dp)
-                    ListRow(s.label, subtitle = "Open this settings screen", leading = { IconTile(IosIcons.Gear, Munin.colors.secondaryLabel) }, chevron = true,
+                    ListRow(s.label, subtitle = "Open this settings screen", leading = { IconTile(IosIcons.Gear) }, chevron = true,
                         onClick = { if (!vm.openSettings(s)) toast("This phone has no ${s.label} screen to open.") })
                 }
             }
@@ -189,33 +188,29 @@ private fun HomeSections(ui: SearchUiState, vm: SearchViewModel) {
     val c = Munin.colors
     Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
         EnterOnce(0) {
-            IosCard {
-                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                    Stat("${ui.indexedDocs}", "indexed", c.tint, Modifier.weight(1f))
-                    Box(Modifier.size(width = 0.5.dp, height = 32.dp).background(c.separator))
-                    Stat("${ui.reminders.size}", "coming up", c.orange, Modifier.weight(1f))
-                }
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally), verticalAlignment = Alignment.CenterVertically) {
-                    Icon(IosIcons.Lock, c.secondaryLabel, 13.dp)
-                    Text("Typed searches stay on this phone", style = MaterialTheme.typography.bodySmall, color = c.secondaryLabel)
-                }
+            Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
+                Icon(IosIcons.Lock, c.secondaryLabel, 13.dp)
+                Text(
+                    (if (ui.indexedDocs == 1) "1 document indexed" else "${ui.indexedDocs} documents indexed") + " · Typed searches stay on this phone",
+                    style = MaterialTheme.typography.bodySmall, color = c.secondaryLabel,
+                )
             }
         }
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text("TRY", Modifier.padding(start = 16.dp), style = MaterialTheme.typography.bodySmall, color = c.secondaryLabel)
             val tiles = listOf(
-                Triple("Receipts", "hostel fee receipt", IosIcons.Receipt) to (c.tint to c.indigo),
-                Triple("Bills due", "when is the electricity bill due", IosIcons.Calendar) to (c.orange to c.pink),
-                Triple("Spending", "how much did I spend", IosIcons.Ledger) to (c.green to c.teal),
-                Triple("Calculator", "20% of 4500", IosIcons.Calculator) to (c.purple to c.indigo),
-                Triple("Wi-Fi", "wifi", IosIcons.Globe) to (c.teal to c.tint),
-                Triple("Alarm", "alarm 6:30 am", IosIcons.Clock) to (c.pink to c.orange),
+                Triple("Receipts", "hostel fee receipt", IosIcons.Receipt),
+                Triple("Bills due", "when is the electricity bill due", IosIcons.Calendar),
+                Triple("Spending", "how much did I spend", IosIcons.Ledger),
+                Triple("Calculator", "20% of 4500", IosIcons.Calculator),
+                Triple("Wi-Fi", "wifi", IosIcons.Globe),
+                Triple("Alarm", "alarm 6:30 am", IosIcons.Clock),
             )
             tiles.chunked(2).forEachIndexed { row, pair ->
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    pair.forEachIndexed { col, (t, colors) ->
+                    pair.forEachIndexed { col, t ->
                         EnterOnce(80 + (row * 2 + col) * 70, Modifier.weight(1f)) {
-                            ShortcutTile(t.first, t.second, t.third, colors.first, colors.second, onClick = { vm.onQuery(t.second) }, modifier = Modifier.fillMaxWidth())
+                            ShortcutTile(t.first, t.second, t.third, onClick = { vm.onQuery(t.second) }, modifier = Modifier.fillMaxWidth())
                         }
                     }
                 }
@@ -229,7 +224,7 @@ private fun HomeSections(ui: SearchUiState, vm: SearchViewModel) {
         }
         Footnote("Typed searches never leave the phone. Pick the language you will speak; mixed-language speech may be heard imperfectly, and you can edit the text before searching again.", Modifier.padding(horizontal = 16.dp))
         Section {
-            ListRow("Technical details", subtitle = "Timings and ranks under results", leading = { IconTile(IosIcons.Gear, c.secondaryLabel) }, trailing = { IosSwitch(ui.showDebug, vm::onDebug) })
+            ListRow("Technical details", subtitle = "Timings and ranks under results", leading = { IconTile(IosIcons.Gear) }, trailing = { IosSwitch(ui.showDebug, vm::onDebug) })
         }
     }
 }
@@ -269,7 +264,7 @@ private fun VoiceStatus(ui: SearchUiState, vm: SearchViewModel) {
         is VoiceState.Failed -> listOfNotNull(v.error.message, PackStatuses.failureHint(v.error, ui.voiceSupport, ui.voiceLang)).joinToString(" ")
         VoiceState.Idle -> ""
     }
-    IosCard(tinted = !failed) {
+    IosCard {
         Text(status, style = MaterialTheme.typography.bodyMedium, color = if (failed) Munin.colors.red else Munin.colors.label)
         if (busy) IosButton("Cancel", vm::cancelVoice, style = ButtonStyle.Plain)
         if (failed) IosButton("Dismiss", vm::dismissVoiceError, style = ButtonStyle.Plain)
@@ -279,7 +274,7 @@ private fun VoiceStatus(ui: SearchUiState, vm: SearchViewModel) {
 @Composable
 private fun CalculatorCard(c: CalcOutcome, onSaveRate: () -> Unit) {
     val clipboard = androidx.compose.ui.platform.LocalClipboardManager.current
-    IosCard(tinted = true) {
+    IosCard {
         when (c) {
             is CalcOutcome.Value -> {
                 Text(c.primary, style = MaterialTheme.typography.headlineLarge, color = Munin.colors.label)
@@ -322,7 +317,7 @@ private fun CommandRow(c: com.munin.app.commands.QuickCommand) {
     var plan by remember { mutableStateOf<ActionPlan?>(null) }
     val planner = remember { ActionPlanner() }
     val p = when (c) { is com.munin.app.commands.QuickCommand.Alarm -> planner.alarm(c); is com.munin.app.commands.QuickCommand.Timer -> planner.timer(c) }
-    ListRow(p.dialogTitle.removeSuffix("?"), subtitle = "Tap to review, then it opens in your clock app", leading = { IconTile(IosIcons.Clock, Munin.colors.orange) }, chevron = true, onClick = { plan = p })
+    ListRow(p.dialogTitle.removeSuffix("?"), subtitle = "Tap to review, then it opens in your clock app", leading = { IconTile(IosIcons.Clock) }, chevron = true, onClick = { plan = p })
     plan?.let { ActionConfirmDialog(it) { plan = null } }
 }
 
@@ -355,7 +350,7 @@ private fun RemindersSection(cards: List<ReminderCard>, onHandled: (String) -> U
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Column(verticalArrangement = Arrangement.spacedBy(1.dp)) {
                     Text(c.title, style = MaterialTheme.typography.bodyLarge, color = Munin.colors.label, fontWeight = FontWeight.Medium)
-                    Text(c.whenText, style = MaterialTheme.typography.bodyMedium, color = Munin.colors.orange)
+                    Text(c.whenText, style = MaterialTheme.typography.bodyMedium, color = Munin.colors.secondaryLabel)
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     IosButton("Add to calendar", { open = c })
@@ -372,7 +367,7 @@ private fun RemindersSection(cards: List<ReminderCard>, onHandled: (String) -> U
 private fun NotificationRow(n: com.munin.app.data.NotificationEntity) {
     val whenText = remember(n.postedAt) { java.time.format.DateTimeFormatter.ofPattern("d MMM, HH:mm").format(java.time.Instant.ofEpochMilli(n.postedAt).atZone(java.time.ZoneId.systemDefault())) }
     Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        IconTile(IosIcons.Bell, Munin.colors.red)
+        IconTile(IosIcons.Bell)
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text("${n.appLabel} · $whenText", style = MaterialTheme.typography.bodySmall, color = Munin.colors.secondaryLabel)
             if (n.title.isNotBlank()) Text(n.title, style = MaterialTheme.typography.bodyLarge, color = Munin.colors.label, fontWeight = FontWeight.Medium)
@@ -385,7 +380,7 @@ private fun NotificationRow(n: com.munin.app.data.NotificationEntity) {
 @Composable
 private fun ContactRow(c: com.munin.app.contacts.ContactEntry) {
     var plan by remember { mutableStateOf<ActionPlan?>(null) }
-    ListRow(c.name, subtitle = "${c.number}  ·  tap to call", leading = { IconTile(IosIcons.Person, Munin.colors.green) }, chevron = true, onClick = { plan = ActionPlanner().callContact(c.name, c.number) })
+    ListRow(c.name, subtitle = "${c.number}  ·  tap to call", leading = { IconTile(IosIcons.Person) }, chevron = true, onClick = { plan = ActionPlanner().callContact(c.name, c.number) })
     plan?.let { ActionConfirmDialog(it) { plan = null } }
 }
 
@@ -422,7 +417,7 @@ private fun WebSearchSection(query: String) {
     Section("Web") {
         ListRow(
             "Search the web for “${query.trim()}”", subtitle = "Leaves your phone: opens your browser.", subtitleColor = Munin.colors.red,
-            leading = { IconTile(IosIcons.Globe, Munin.colors.tint) }, chevron = true, onClick = { plan = ActionPlanner().webSearch(query.trim()) },
+            leading = { IconTile(IosIcons.Globe) }, chevron = true, onClick = { plan = ActionPlanner().webSearch(query.trim()) },
         )
     }
     plan?.let { ActionConfirmDialog(it) { plan = null } }
@@ -430,7 +425,7 @@ private fun WebSearchSection(query: String) {
 
 @Composable
 private fun SpendingCard(sp: SpendingAnswer, onOpenLedger: (java.time.YearMonth?) -> Unit) {
-    IosCard(tinted = true) {
+    IosCard {
         if (sp.count == 0) {
             Text("No payment screenshots read ${sp.scope}.", style = MaterialTheme.typography.titleMedium, color = Munin.colors.label)
         } else {
@@ -446,7 +441,7 @@ private fun SpendingCard(sp: SpendingAnswer, onOpenLedger: (java.time.YearMonth?
 
 @Composable
 private fun AnswerCard(a: Answer, onOpenItem: (Long) -> Unit) {
-    IosCard(tinted = true, onClick = { onOpenItem(a.source.itemId) }) {
+    IosCard(onClick = { onOpenItem(a.source.itemId) }) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(a.display, style = MaterialTheme.typography.headlineLarge, color = Munin.colors.label)

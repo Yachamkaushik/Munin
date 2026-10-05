@@ -89,7 +89,7 @@ data class SearchUiState(
     /** The user said no to the contacts permission this session; Munin will not ask again until the app restarts. */
     val contactsDenied: Boolean = false,
     val error: String? = null,
-    val showDebug: Boolean = true,
+    val showDebug: Boolean = false,
     val voice: VoiceState = VoiceState.Idle,
     val voiceLang: VoiceLang = VoiceLang.ENGLISH,
     /** What the phone's speech service supports; null until the system has answered. */

@@ -38,25 +38,18 @@ class MuninColors(
     val orange: Color,
     val red: Color,
     val bar: Color,
-    val indigo: Color,
-    val purple: Color,
-    val teal: Color,
-    val pink: Color,
-    val shadow: Color,
 )
 
 private val Light = MuninColors(
     groupedBackground = Color(0xFFF2F2F7), card = Color(0xFFFFFFFF), label = Color(0xFF000000), secondaryLabel = Color(0xFF6C6C70), tertiaryLabel = Color(0xFFA1A1A6),
     separator = Color(0xFFD8D8DC), fill = Color(0x1F767680), tint = Color(0xFF007AFF), tintSoft = Color(0x1A007AFF), green = Color(0xFF34C759), orange = Color(0xFFFF9500),
     red = Color(0xFFFF3B30), bar = Color(0xF2F9F9F9),
-    indigo = Color(0xFF5856D6), purple = Color(0xFFAF52DE), teal = Color(0xFF30B0C7), pink = Color(0xFFFF2D55), shadow = Color(0x14000000),
 )
 
 private val Dark = MuninColors(
     groupedBackground = Color(0xFF000000), card = Color(0xFF1C1C1E), label = Color(0xFFFFFFFF), secondaryLabel = Color(0xFF98989F), tertiaryLabel = Color(0xFF636366),
     separator = Color(0xFF38383A), fill = Color(0x5C767680), tint = Color(0xFF0A84FF), tintSoft = Color(0x330A84FF), green = Color(0xFF30D158), orange = Color(0xFFFF9F0A),
     red = Color(0xFFFF453A), bar = Color(0xF21C1C1E),
-    indigo = Color(0xFF5E5CE6), purple = Color(0xFFBF5AF2), teal = Color(0xFF40C8E0), pink = Color(0xFFFF375F), shadow = Color(0x00000000),
 )
 
 val LocalMuninColors = staticCompositionLocalOf { Light }
