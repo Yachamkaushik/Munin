@@ -345,3 +345,17 @@ A labelled test set and a repeatable measurement; full write-up, tables and char
 The table is the **original, untuned baseline**. A second, held-out corpus (new documents, new queries) was then used to check two fixes that
 were selected on this one by a rule declared in advance; see "Fix experiments" in the write-up, which also lists the limits (synthetic, small,
 not native-reviewed, emulator timing).
+
+## Search-box features (added after step 7)
+
+The search box now routes what you type (see `router/QueryRouter`): a plain description searches files; a value question or a spending question
+is answered from files; a calculation is worked out on the phone. A line under the box says what Munin understood, results are grouped and
+labelled, each file result says why it matched, and a separate **Web** row hands your words to the browser (it says it leaves the phone and asks first).
+
+**Calculator** (`calc/`): arithmetic with `+ - * / ^`, brackets and percentages ("20% of 4500", "4500 + 18%"), Indian magnitudes ("2.5 lakh", "3 crore", "10k"),
+number words in English, Hindi and Telugu ("दो लाख पचास हज़ार", "నలభై ఐదు వేలు"), unit conversion (including acre, guntha, cent, gaj, sq ft, quintal, tola), and date
+maths ("days until 15 october", "days since 12 sep", "today + 90 days", "45 days from today"; Hindi and Telugu month names work). Exact decimal arithmetic; results
+use Indian digit grouping and add "= 25 lakh". **Currency only works with a rate you type yourself** ("1 usd = 83.5 inr", then tap Save): Munin has no internet access, so it
+cannot look rates up; every result shows how old your rate is. An ordinary search is never hijacked: the whole input must be a calculation, and digits joined only by hyphens
+or slashes ("040-23456789", "12-09") are left alone (write "100 - 20" with spaces to calculate). "Search my files instead" is one tap away.
+Limits: Hindi/Telugu number words cover common spellings only; unit names are Latin; "of" needs a percentage on its left; no equation solving.

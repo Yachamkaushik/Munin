@@ -50,7 +50,38 @@ class QueryRouterTest {
     }
 
     @Test fun neverClaimsAKindThatIsNotBuilt() { // later steps add kinds; today these are the only ones
-        assertEquals(setOf("FILE_SEARCH", "QUESTION", "SPENDING"), RouteKind.entries.map { it.name }.toSet())
+        assertEquals(setOf("CALCULATOR", "FILE_SEARCH", "QUESTION", "SPENDING"), RouteKind.entries.map { it.name }.toSet())
+    }
+}
+
+class RouterCalculatorTest {
+    private val calc = com.munin.app.calc.Calculator({ java.time.LocalDate.of(2026, 10, 5) })
+
+    @Test fun aCalculationIsAnsweredWithoutAFileSearch() {
+        val d = QueryRouter.route("20% of 4500", calculator = calc)
+        assertEquals(listOf(RouteKind.CALCULATOR), d.kinds)
+        assertEquals("A calculation, worked out on this phone.", d.understood)
+        assertTrue(d.calc is com.munin.app.calc.CalcOutcome.Value)
+    }
+
+    @Test fun theUserCanOptOutOfTheCalculatorForOneInput() {
+        assertEquals(listOf(RouteKind.FILE_SEARCH), QueryRouter.route("20% of 4500", calculator = calc, allowCalculator = false).kinds)
+    }
+
+    @Test fun ordinaryQuestionsAndSearchesStillGoWhereTheyDid() {
+        assertEquals(listOf(RouteKind.QUESTION, RouteKind.FILE_SEARCH), QueryRouter.route("how much was the hostel fee", calculator = calc).kinds)
+        assertEquals(listOf(RouteKind.FILE_SEARCH), QueryRouter.route("hostel fee 45,000", calculator = calc).kinds)
+        assertEquals(listOf(RouteKind.FILE_SEARCH), QueryRouter.route("2026-09-12", calculator = calc).kinds)
+    }
+
+    @Test fun aFailedCalculationIsStillACalculationWithAnHonestMessage() {
+        val d = QueryRouter.route("100 usd in inr", calculator = calc) // no rate saved
+        assertEquals(listOf(RouteKind.CALCULATOR), d.kinds); assertTrue(d.calc is com.munin.app.calc.CalcOutcome.Failed)
+    }
+
+    @Test fun aTypedRateIsNotSaved() {
+        val d = QueryRouter.route("1 usd = 83.5 inr", calculator = calc)
+        assertTrue(d.calc is com.munin.app.calc.CalcOutcome.RateProposal); assertTrue(d.understood!!.contains("Nothing is saved"))
     }
 }
 

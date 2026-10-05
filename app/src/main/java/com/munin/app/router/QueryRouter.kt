@@ -1,6 +1,8 @@
 package com.munin.app.router
 
 import com.munin.app.answer.QuestionParser
+import com.munin.app.calc.CalcOutcome
+import com.munin.app.calc.Calculator
 import com.munin.app.extract.FactType
 import com.munin.app.ledger.SpendingQuery
 import com.munin.app.search.SearchMode
@@ -10,6 +12,8 @@ import com.munin.app.search.SearchMode
  * contacts, settings, commands) adds its own kind when it is built, so the "what I understood" line never claims something Munin cannot do.
  */
 enum class RouteKind {
+    /** Arithmetic, a unit conversion, date maths or a currency conversion with the user's own rate: worked out on the phone, no file search. */
+    CALCULATOR,
     /** Look for files whose text matches or is close in meaning to the input. Always applies to non-blank input. */
     FILE_SEARCH,
     /** Asks for a value (amount, date, phone, address): answer from the best matching file, or decline. */
@@ -19,14 +23,27 @@ enum class RouteKind {
 }
 
 /** The router's reading of one input. [understood] is shown under the search box in plain words. */
-data class RouteDecision(val kinds: List<RouteKind>, val understood: String?) {
+data class RouteDecision(val kinds: List<RouteKind>, val understood: String?, val calc: CalcOutcome? = null) {
     fun has(kind: RouteKind) = kind in kinds
 }
 
 object QueryRouter {
-    fun route(input: String, mode: SearchMode = SearchMode.MERGED): RouteDecision {
+    /**
+     * [calculator] is asked first: a calculation is not searched for in files. [allowCalculator] is false when the user chose "search my files
+     * for this instead", so a query like "2026-45" can still be searched.
+     */
+    fun route(input: String, mode: SearchMode = SearchMode.MERGED, calculator: Calculator? = Calculator(), allowCalculator: Boolean = true): RouteDecision {
         val q = input.trim()
         if (q.isEmpty()) return RouteDecision(emptyList(), null)
+
+        if (allowCalculator) calculator?.evaluate(q)?.let { c ->
+            val understood = when (c) {
+                is CalcOutcome.Value -> "A calculation, worked out on this phone."
+                is CalcOutcome.Failed -> "This looks like a calculation, but it cannot be worked out."
+                is CalcOutcome.RateProposal -> "You typed an exchange rate. Nothing is saved unless you choose to save it."
+            }
+            return RouteDecision(listOf(RouteKind.CALCULATOR), understood, c)
+        }
 
         SpendingQuery.parse(q)?.let { s ->
             val scope = when {

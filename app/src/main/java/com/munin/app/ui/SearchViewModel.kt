@@ -12,6 +12,9 @@ import com.munin.app.ledger.SpendingQuery
 import com.munin.app.ledger.toRow
 import java.time.LocalDate
 import java.time.YearMonth
+import com.munin.app.calc.CalcOutcome
+import com.munin.app.calc.Calculator
+import com.munin.app.calc.PrefsRateBook
 import com.munin.app.router.QueryRouter
 import com.munin.app.search.SearchEngine
 import com.munin.app.voice.AndroidSpeechBackend
@@ -55,6 +58,11 @@ data class SearchUiState(
     val spending: SpendingAnswer? = null,
     /** The router's plain-words reading of the input, shown under the search box; null for an empty box. */
     val understood: String? = null,
+    /** A calculation the input turned out to be (worked out on the phone); when set, files are not searched. */
+    val calc: CalcOutcome? = null,
+    /** The user chose to search files for an input that also parses as a calculation. */
+    val calcIgnored: Boolean = false,
+    val calcNote: String? = null,
     val error: String? = null,
     val showDebug: Boolean = true,
     val voice: VoiceState = VoiceState.Idle,
@@ -103,9 +111,24 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
 
     override fun onCleared() { voice.destroy() }
 
-    private fun SearchUiState.routed() = copy(understood = QueryRouter.route(query, mode).understood)
+    private val calculator by lazy { Calculator(rates = PrefsRateBook(muninApp)) }
 
-    fun onQuery(q: String) { _state.update { it.copy(query = q).routed() }; run(debounce = true) }
+    private fun SearchUiState.routed(): SearchUiState {
+        val d = QueryRouter.route(query, mode, calculator, allowCalculator = !calcIgnored)
+        return copy(understood = d.understood, calc = d.calc)
+    }
+
+    fun onQuery(q: String) { _state.update { it.copy(query = q, calcIgnored = false, calcNote = null).routed() }; run(debounce = true) }
+
+    /** "Search my files for this instead": the input stays, but is no longer read as a calculation. */
+    fun searchFilesInstead() { _state.update { it.copy(calcIgnored = true).routed() }; run(debounce = false) }
+
+    /** Saves a typed exchange rate. Only called from the Save button, never automatically. */
+    fun saveRate() {
+        val p = _state.value.calc as? CalcOutcome.RateProposal ?: return
+        calculator.save(p)
+        _state.update { it.copy(calc = null, calcIgnored = true, calcNote = "Saved: 1 ${p.from} = ${com.munin.app.calc.Numbers.format(p.rate)} ${p.to}. Now you can type, for example, 100 ${p.from.lowercase()} in ${p.to.lowercase()}.") }
+    }
     fun onMode(m: SearchMode) { _state.update { it.copy(mode = m).routed() }; run(debounce = false) }
     fun onDebug(on: Boolean) { _state.update { it.copy(showDebug = on) } }
 
@@ -118,6 +141,8 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
             if (debounce) delay(DEBOUNCE_MS)
             val s = _state.value
             if (s.query.isBlank()) { _state.update { it.copy(response = null, answer = null, spending = null, error = null) }; return@launch }
+            // A calculation is answered on the spot and never searched for in files.
+            if (s.calc != null) { _state.update { it.copy(response = null, answer = null, spending = null, error = null) }; return@launch }
             if (!s.modelReady) return@launch
             try {
                 val (r, a) = withContext(Dispatchers.Default) {

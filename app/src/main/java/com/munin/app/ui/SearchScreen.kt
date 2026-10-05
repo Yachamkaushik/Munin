@@ -42,6 +42,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.munin.app.actions.ActionPlan
+import com.munin.app.calc.CalcOutcome
 import com.munin.app.actions.ActionPlanner
 import com.munin.app.actions.toSubject
 import com.munin.app.answer.Answer
@@ -86,7 +87,14 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
             Text("Search by what the text says, not by file name.", style = MaterialTheme.typography.bodyMedium)
         } else {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                val calc = ui.calc
                 when {
+                    calc != null -> {
+                        item { GroupHeader("Calculator") }
+                        item { CalculatorCard(calc, vm::saveRate) }
+                        item { TextButton(onClick = vm::searchFilesInstead) { Text("Search my files for “${ui.query.trim()}” instead") } }
+                    }
+                    ui.calcNote != null -> item { Text(ui.calcNote!!, style = MaterialTheme.typography.bodyMedium) }
                     ui.error != null -> item { Text(ui.error!!, color = MaterialTheme.colorScheme.error) }
                     !ui.modelReady -> item { Text("Loading the on-device language model…") }
                     ui.indexedChunks == 0 -> item { Text("Nothing is indexed yet. Open the Index tab and scan your photos first.") }
@@ -115,6 +123,29 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
                 // The only thing in the app that leaves the phone, so it sits apart and says so.
                 item { GroupHeader("Web") }
                 item { WebSearchRow(ui.query) }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CalculatorCard(c: CalcOutcome, onSaveRate: () -> Unit) {
+    val clipboard = androidx.compose.ui.platform.LocalClipboardManager.current
+    Card(Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            when (c) {
+                is CalcOutcome.Value -> {
+                    Text(c.primary, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+                    for (line in c.secondary) Text(line, style = MaterialTheme.typography.bodyMedium)
+                    Text(c.reading, style = MaterialTheme.typography.labelMedium)
+                    TextButton(onClick = { clipboard.setText(AnnotatedString(c.copyText)) }) { Text("Copy result") }
+                }
+                is CalcOutcome.Failed -> Text(c.message, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.error)
+                is CalcOutcome.RateProposal -> {
+                    Text("1 ${c.from} = ${com.munin.app.calc.Numbers.format(c.rate)} ${c.to}", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                    Text("Munin cannot check this rate. If you save it, it is used only for your own conversions, and each result shows how old it is.", style = MaterialTheme.typography.bodySmall)
+                    Button(onClick = onSaveRate) { Text("Save this rate") }
+                }
             }
         }
     }
