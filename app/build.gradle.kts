@@ -21,7 +21,7 @@ android {
     buildFeatures { compose = true }
 
     // Keep the model readable straight from the APK (no compression pass over 118 MB).
-    androidResources { noCompress += listOf("onnx", "model") }
+    androidResources { noCompress += listOf("onnx", "model", "traineddata") }
 
     sourceSets {
         // Python-generated reference data lives in tools/reference and is shared by both test types.
@@ -29,6 +29,8 @@ android {
         getByName("androidTest").assets.srcDir("../tools/reference")
         // Evaluation corpus manifest and queries (the rendered images are pushed to the device separately).
         getByName("androidTest").assets.srcDir("../tools/eval/data")
+        // A few synthetic sample screenshots (each stamped SYNTHETIC SAMPLE) for OCR tests.
+        getByName("androidTest").assets.srcDir("../tools/sample_images")
         getByName("test").kotlin.directories.add("src/sharedTest/java")
         getByName("androidTest").kotlin.directories.add("src/sharedTest/java")
     }
@@ -53,6 +55,7 @@ dependencies {
     implementation(libs.work.runtime.ktx)
     implementation(libs.mlkit.text)
     implementation(libs.mlkit.text.devanagari)
+    implementation(libs.tesseract)
 
     testImplementation(libs.junit)
     testImplementation(libs.json)

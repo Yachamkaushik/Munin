@@ -12,7 +12,10 @@ import com.munin.app.data.ItemKind
 import com.munin.app.data.MuninDatabase
 import com.munin.app.index.ContentSource
 import com.munin.app.index.Indexer
+import com.munin.app.index.LayeredOcrEngine
 import com.munin.app.index.MlKitOcrEngine
+import com.munin.app.index.TeluguPolicy
+import com.munin.app.index.TesseractOcrEngine
 import com.munin.app.index.OcrEngine
 import com.munin.app.index.OcrResult
 import com.munin.app.ledger.LedgerCalc
@@ -36,6 +39,7 @@ import org.junit.Test
  *
  * Sets (argument `eval_set`): `dev` (default; the set the variants are chosen on) or `heldout` (new documents and queries, measured once).
  * Modes (instrumentation argument `eval_modes`, comma separated, default "oracle"):
+ *  - image_t1 / image_t2: like image, with the Telugu second reader (Tesseract) used when ML Kit is doubtful / on every image.
  *  - oracle: each document's true text is indexed, so retrieval and extraction are measured without OCR errors.
  *  - image:  the rendered PNGs (copied into <app internal files>/eval/images by tools/eval/run_eval.sh) go through real ML Kit OCR.
  */
@@ -86,12 +90,20 @@ class EvalHarnessTest {
         }
 
         val ocr: OcrEngine; val content: ContentSource
+        var recorder: RecordingOcr? = null; var tesseract: TesseractOcrEngine? = null
         if (mode == "oracle") {
             ocr = object : OcrEngine { override suspend fun recognize(uri: String, rotationDegrees: Int) = OcrResult(texts.getValue(uri), "oracle") }
             content = ContentSource { ByteArrayInputStream(texts.getValue(it).toByteArray()) }
         } else {
             require(imageDir.isDirectory && (imageDir.list()?.size ?: 0) >= docs.length()) { "no images in $imageDir: run tools/eval/run_eval.sh" }
-            ocr = MlKitOcrEngine(target).also { it.warmUp() }
+            val policy = when (mode) {
+                "image" -> TeluguPolicy.OFF
+                "image_t1" -> TeluguPolicy.WHEN_DOUBTFUL
+                "image_t2" -> TeluguPolicy.ALWAYS
+                else -> error("unknown eval mode '$mode'")
+            }
+            tesseract = TesseractOcrEngine(target)
+            ocr = RecordingOcr(LayeredOcrEngine(MlKitOcrEngine(target), tesseract) { policy }).also { recorder = it; it.warmUp() }
             content = ContentSource { FileInputStream(File(Uri.parse(it).path!!)) }
         }
 
@@ -122,8 +134,12 @@ class EvalHarnessTest {
             require(checked > 0 && matched >= checked * 0.7) { "OCR text does not match the manifest ($matched of $checked English documents): wrong image folder for set '$set'?" }
         }
 
+        // what the OCR actually produced for each document, and which reader produced it (for character error rates)
+        val ocrOut = JSONObject()
+        if (mode != "oracle") for ((docId, itemId) in itemOfDoc) ocrOut.put(docId, JSONObject().put("engine", recorder?.engines?.get(uriOf.getValue(docId)) ?: "?").put("text", db.facts().chunkTexts(itemId).joinToString("\n")))
+
         val report = JSONObject().put("set", set).put("mode", mode).put("n_docs", docs.length()).put("index_seconds", indexSeconds)
-        report.put("indexing", indexingStats(db, idOfItem))
+        report.put("indexing", indexingStats(db, idOfItem)).put("ocr", ocrOut)
 
         // ---- queries ----
         // the detailed baseline section is always the original behaviour, whatever the app now ships
@@ -225,7 +241,15 @@ class EvalHarnessTest {
         File(dir, "report-$set-$mode.json").writeText(report.toString(1))
         Log.i("MuninEval", "mode=$mode wrote ${File(dir, "report-$set-$mode.json")} (indexed in %.0f s)".format(indexSeconds))
         assertTrue("more than 5% of documents failed to index: ${report.getJSONObject("indexing")}", report.getJSONObject("indexing").getInt("failed") <= docs.length() / 20)
+        tesseract?.close()
         db.close()
+    }
+
+    /** Remembers which reader produced each image's text. */
+    private class RecordingOcr(private val inner: OcrEngine) : OcrEngine {
+        val engines = HashMap<String, String>()
+        override suspend fun warmUp() = inner.warmUp()
+        override suspend fun recognize(uri: String, rotationDegrees: Int) = inner.recognize(uri, rotationDegrees).also { engines[uri] = it.engine }
     }
 
     private fun lines(d: JSONObject): List<String> = (0 until d.getJSONArray("lines").length()).map { i ->

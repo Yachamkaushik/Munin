@@ -30,8 +30,8 @@ the headline claim "merging keyword and meaning search beats either alone" does 
 | Perfect text | Meaning only (embeddings) | 69% | 85% | 0.77 | 5 ms |
 | Perfect text | Merged (RRF) | 58% | 67% | 0.62 | 5 ms |
 | Real OCR | Keywords only | 47% | 49% | 0.48 | 1 ms |
-| Real OCR | Meaning only (embeddings) | 67% | 76% | 0.71 | 4 ms |
-| Real OCR | Merged (RRF) | 56% | 71% | 0.63 | 4 ms |
+| Real OCR | Meaning only (embeddings) | 67% | 76% | 0.71 | 5 ms |
+| Real OCR | Merged (RRF) | 56% | 71% | 0.63 | 5 ms |
 
 | Mode | Value questions | Wrongly answered when no document exists | Document fields extracted (truth present) | Ledger |
 |---|---:|---:|---:|---:|
@@ -339,6 +339,54 @@ Both were in the evaluation tooling and both are fixed; neither affects the publ
 - That same mix-up put dev images in the fresh image folder; they were re-rendered from the fresh manifest.
 
 
+## Telugu text in images: a second reader (Tesseract)
+
+ML Kit has no Telugu model, so Telugu documents were unreadable (round-1 baseline: 9% of their fields found, character error rate about 66%). A bundled
+Tesseract 5 reader with Telugu and English data (`tessdata_fast`, Apache 2.0; about 7 MB of data and 13 MB of library) was added as an optional **second
+opinion** behind the `OcrEngine` interface. Its result replaces ML Kit's only if it actually looks Telugu (at least 5 Telugu letters making up at least 20% of
+its letters), so it cannot overwrite good English or Hindi text. Zero-width joiners that Tesseract inserts inside Telugu words are removed so keyword search
+matches. Three policies were declared before any measurement: **T0** ML Kit only; **T1** Tesseract when ML Kit looks unsure (mean confidence under 0.75, any
+dropped line, or no text); **T2** Tesseract on every image. The selection rule is in `report.py` (`select_telugu`): pooled over the seen sets, a policy is eligible
+if Telugu-document field extraction rises by at least 20 points, English+Hindi extraction falls by at most 1 point, and mean merged MRR falls by at most 0.01.
+
+**Selected on the seen sets by the pre-declared rule: T1: Tesseract Telugu when ML Kit is doubtful.** Pooled over dev, held-out and fresh: T0: Telugu fields 9%, English+Hindi fields 93%, mean merged MRR 0.70; T1: Telugu fields 97%, English+Hindi fields 93%, mean merged MRR 0.76; T2: Telugu fields 97%, English+Hindi fields 92%, mean merged MRR 0.79.
+
+#### Seen sets (dev, held-out, fresh)
+
+| Set | OCR policy | CER Telugu docs | CER Hindi | CER English | Fields found, Telugu docs | Hindi docs | English docs | Merged MRR | Telugu-target queries in top 5 | Median OCR time | Docs read by Tesseract |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| dev | T0: ML Kit only (original) | 66.4% | 1.6% | 0.8% | 4 / 46 (9%) | 47 / 53 (89%) | 266 / 278 (96%) | 0.72 | 0 / 5 | 50 ms | 0% |
+| dev | T1: Tesseract Telugu when ML Kit is doubtful | 3.5% | 1.6% | 0.8% | 45 / 46 (98%) | 47 / 53 (89%) | 266 / 278 (96%) | 0.78 | 5 / 5 | 26 ms | 8% |
+| dev | T2: Tesseract Telugu on every image | 0.9% | 6.5% | 0.8% | 45 / 46 (98%) | 45 / 53 (85%) | 266 / 278 (96%) | 0.78 | 5 / 5 | 139 ms | 9% |
+| heldout | T0: ML Kit only (original) | 66.1% | 1.3% | 1.1% | 5 / 46 (11%) | 43 / 53 (81%) | 258 / 275 (94%) | 0.70 | 3 / 10 | 33 ms | 0% |
+| heldout | T1: Tesseract Telugu when ML Kit is doubtful | 6.0% | 1.3% | 1.1% | 45 / 46 (98%) | 43 / 53 (81%) | 258 / 275 (94%) | 0.76 | 7 / 10 | 88 ms | 8% |
+| heldout | T2: Tesseract Telugu on every image | 0.9% | 9.3% | 1.1% | 45 / 46 (98%) | 40 / 53 (75%) | 258 / 275 (94%) | 0.81 | 9 / 10 | 436 ms | 10% |
+| fresh | T0: ML Kit only (original) | 67.4% | 1.6% | 1.0% | 4 / 45 (9%) | 43 / 53 (81%) | 260 / 275 (95%) | 0.66 | 0 / 10 | 25 ms | 0% |
+| fresh | T1: Tesseract Telugu when ML Kit is doubtful | 6.1% | 1.6% | 1.0% | 43 / 45 (96%) | 43 / 53 (81%) | 260 / 275 (95%) | 0.74 | 6 / 10 | 24 ms | 8% |
+| fresh | T2: Tesseract Telugu on every image | 1.2% | 6.7% | 1.0% | 43 / 45 (96%) | 41 / 53 (77%) | 260 / 275 (95%) | 0.79 | 7 / 10 | 115 ms | 10% |
+
+
+### What it showed
+
+1. **It works, on clean synthetic Telugu.** With T1, Telugu documents' fields found went from 9% to 97% (dev 98%, held-out 98%, fresh 96%), character error rate from about 66%
+   to 3.5-6%, and Telugu-target queries found in the top 5 went from 3 of 25 to 18 of 25 across the three sets; mean merged MRR rose from 0.70 to 0.76.
+2. **T1 does no harm to English or Hindi** (identical extraction and character error rate on every set), and it only ran Tesseract on 8% of documents, so the median OCR
+   time did not change. **T2 (always) is worse for Hindi**: character error rate rose from about 1.5% to 7-9% and Hindi fields found fell by 2-3 documents per set, because the
+   Telugu reader is not meant for Devanagari and replaces ML Kit's better text on some images; it is also the slowest. The pre-declared rule therefore selected T1.
+3. **T2 was also eligible under the rule** (it has the same 97% Telugu extraction, and its English+Hindi extraction of 92% is within the 1-point tolerance of 93%, with merged MRR 0.79 vs 0.76), so
+   the tie went to T1 as the faster policy. Its Hindi damage (point 2) is a reason to be glad of that tie-break rather than a failed criterion.
+
+### Limits
+
+- **This is clean, computer-rendered Telugu in a standard font.** Real phone photos of Telugu documents (handwriting, stylised fonts, skewed or dim photos, mixed
+  scripts, small text) will be much harder; Tesseract's `tessdata_fast` Telugu model is known to be weaker than its Latin model. Expect a large gap between these numbers and
+  real life.
+- **The final measurement on a new document set (`ocrtest`) has not been run**, so the choice of T1 was made on the three seen sets only and has not been confirmed on data it
+  never saw. The switch therefore ships **off by default**, labelled experimental in the app; turning it on uses T1.
+- The Telugu reader adds about 20 MB to the APK and loads on first use.
+- The amount sanity check (a second OCR read for the rupee-sign misread) has not been started.
+
+
 ---
 
 ## Detailed baseline results (generated by tools/eval/report.py)
@@ -458,7 +506,7 @@ Wrong answers shown: q02 "సాయి విద్య హాస్టల్ ఫ
 
 ### Mode 2: real OCR on the rendered images (end to end)
 
-Indexed 300 of 300 documents (0 with no text found, 0 duplicates, 0 failed) in 15 s; median OCR 31 ms and embedding 8 ms per document.
+Indexed 300 of 300 documents (0 with no text found, 0 duplicates, 0 failed) in 28 s; median OCR 50 ms and embedding 10 ms per document.
 
 **Retrieval** (55 find/value queries; the 5 negative queries are scored separately). Recall@1 / recall@5 / MRR:
 
@@ -519,7 +567,7 @@ By the language of the *document* being looked for:
 | 2026-09 | ₹14,959.50 | ₹5,469.50 | ₹5,469.50 | exact | 36.6% |
 | 2026-10 | ₹25,021.00 | ₹11,097.00 | ₹11,097.00 | exact | 44.4% |
 
-**Search latency** (end to end, emulator): Keywords only: median 1 ms, p95 2 ms; Meaning only (embeddings): median 4 ms, p95 6 ms; Merged (RRF): median 4 ms, p95 7 ms.
+**Search latency** (end to end, emulator): Keywords only: median 1 ms, p95 3 ms; Meaning only (embeddings): median 5 ms, p95 9 ms; Merged (RRF): median 5 ms, p95 8 ms.
 
 **Rank of the correct document per query intent**, written `merged (meaning-only, keywords-only)`; `-` means not in the top 20; 1 is best:
 

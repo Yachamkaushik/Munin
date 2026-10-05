@@ -327,6 +327,77 @@ def fix_chart(by_set, best):
     fig.tight_layout(rect=(0, 0.05, 1, 1)); fig.savefig(DOCS / "eval_fixes.png", dpi=140); plt.close(fig)
 
 
+# ------------------------------------------------------------------------------------------- Telugu OCR
+POLICIES = {"image": "T0: ML Kit only (original)", "image_t1": "T1: Tesseract Telugu when ML Kit is doubtful", "image_t2": "T2: Tesseract Telugu on every image"}
+FOOTER = "SYNTHETIC SAMPLE - not a real document"
+_manifests = {}
+
+def set_manifest(st):
+    if st not in _manifests:
+        pre = {"dev": "", "heldout": "heldout_", "fresh": "fresh_"}.get(st, st + "_")
+        _manifests[st] = json.load(open(ROOT / f"tools/eval/data/{pre}manifest.json"))
+    return _manifests[st]
+
+def _clean(t):
+    return " ".join(t.replace("\u200c", "").replace("\u200d", "").split())
+
+def ocr_stats(rep):
+    """Character error rate of the OCR text against the document's true text, by document language, plus field extraction by language."""
+    from rapidfuzz.distance import Levenshtein
+    man = set_manifest(rep["set"]); docs = {d["id"]: d for d in man["docs"]}
+    cer = collections.defaultdict(list); used = 0
+    for did, o in rep["ocr"].items():
+        d = docs[did]; truth = _clean("\n".join(l if isinstance(l, str) else l[0] for l in d["lines"]) + "\n" + FOOTER)
+        cer[d["lang"]].append(min(1.0, Levenshtein.distance(_clean(o["text"]), truth) / max(1, len(truth))))
+        used += o["engine"].startswith("tesseract")
+    ex = collections.defaultdict(lambda: [0, 0])
+    for e in rep["extraction"]: ex[e["lang"]][0] += e["present"]; ex[e["lang"]][1] += 1
+    out = {"cer": {l: statistics.mean(v) for l, v in cer.items()}, "cer_n": {l: len(v) for l, v in cer.items()}, "fields": dict(ex), "tess_share": used / len(rep["ocr"]),
+           "ocr_ms": rep["indexing"]["ocr_ms_median"]}
+    if "variants" in rep and rep["queries"]:
+        v = variant_stats(rep, "C1"); out["mrr"] = v["merged"]["mrr"]; out["r5"] = v["merged"]["r5"]
+        te = [q for q in rep["queries"] if q["kind"] != "negative" and q["target_lang"] == "te"]
+        rows = {r["id"]: r for r in rep["variants"]["C1"]}
+        out["te_r5"] = (sum(rows[q["id"]]["rank"]["MERGED"] is not None and rows[q["id"]]["rank"]["MERGED"] <= 5 for q in te), len(te))
+    return out
+
+def select_telugu(by_set, seen=("dev", "heldout", "fresh")):
+    """Rule written before any Tesseract result existed. Pooled over the seen sets, a policy is eligible if (a) Telugu-document field extraction rises by at least
+    20 points over T0, (b) English+Hindi field extraction falls by at most 1 point, (c) mean merged MRR falls by at most 0.01. Among eligible policies the highest
+    Telugu extraction wins, ties to the faster; if none is eligible the switch stays off by default."""
+    agg = {}
+    for mode in POLICIES:
+        te = [0, 0]; oth = [0, 0]; mrr = []
+        for st in seen:
+            rep = by_set.get(st, {}).get(mode)
+            if rep is None: return None, {}
+            o = ocr_stats(rep)
+            te[0] += o["fields"].get("te", [0, 0])[0]; te[1] += o["fields"].get("te", [0, 0])[1]
+            for l in ("en", "hi"): oth[0] += o["fields"].get(l, [0, 0])[0]; oth[1] += o["fields"].get(l, [0, 0])[1]
+            if "mrr" in o: mrr.append(o["mrr"])
+        agg[mode] = {"te": te[0] / te[1], "other": oth[0] / oth[1], "mrr": statistics.mean(mrr)}
+    base = agg["image"]; eligible = []
+    for mode in ("image_t1", "image_t2"):
+        a = agg[mode]
+        a["ok_a"] = a["te"] >= base["te"] + 0.20; a["ok_b"] = a["other"] >= base["other"] - 0.01; a["ok_c"] = a["mrr"] >= base["mrr"] - 0.01
+        if a["ok_a"] and a["ok_b"] and a["ok_c"]: eligible.append(mode)
+    choice = max(eligible, key=lambda m: (round(agg[m]["te"], 6), -list(POLICIES).index(m))) if eligible else None
+    return choice, agg
+
+def telugu_table(by_set, sets, title):
+    L = [f"#### {title}\n"]; rows = []
+    for st in sets:
+        for mode, desc in POLICIES.items():
+            rep = by_set.get(st, {}).get(mode)
+            if rep is None: continue
+            o = ocr_stats(rep); f = o["fields"]
+            fr = lambda l: (f"{f[l][0]} / {f[l][1]} ({pct(f[l][0] / f[l][1])})" if l in f else "-")
+            rows.append([st, desc, f"{pct1(o['cer'].get('te', 0))}", f"{pct1(o['cer'].get('hi', 0))}", f"{pct1(o['cer'].get('en', 0))}", fr("te"), fr("hi"), fr("en"),
+                         (f"{o['mrr']:.2f}" if "mrr" in o else "-"), (f"{o['te_r5'][0]} / {o['te_r5'][1]}" if "te_r5" in o else "-"), f"{o['ocr_ms']} ms", pct(o["tess_share"])])
+    L.append(table(["Set", "OCR policy", "CER Telugu docs", "CER Hindi", "CER English", "Fields found, Telugu docs", "Hindi docs", "English docs", "Merged MRR", "Telugu-target queries in top 5",
+                    "Median OCR time", "Docs read by Tesseract"], rows))
+    return "\n".join(L) + "\n"
+
 def load_reports():
     by_set = collections.defaultdict(dict)
     for p in sorted(RES.glob("report-*-*.json")):
@@ -366,9 +437,21 @@ def main():
             fresh_tabs = gate_section(fr, "Fresh set: answer gates, measured once", g2) + "\n" + variant_section(fr, "Fresh set: retrieval variants (a third check of round 1)", best if "best" in dir() else None)
         t2 = ROOT / "tools/eval/fixes2.md"
         if t2.exists(): gate2_md = t2.read_text().replace("{{GATE_SELECTION}}", sel2).replace("{{SEEN_TABLES}}", tabs).replace("{{FRESH_TABLES}}", fresh_tabs)
+    tel_md = ""
+    t_tpl = ROOT / "tools/eval/telugu.md"
+    if t_tpl.exists() and all("ocr" in by_set.get(st, {}).get(m, {}) for st in ("dev", "heldout", "fresh") for m in POLICIES):
+        choice, agg = select_telugu(by_set)
+        if not agg: sel_t = ""
+        else:
+            names = {"image": "T0", "image_t1": "T1", "image_t2": "T2"}
+            sel_t = ("**Selected on the seen sets by the pre-declared rule: " + (f"{POLICIES[choice]}.**" if choice else "no policy is eligible, so the switch stays off by default.**")
+                     + " Pooled over dev, held-out and fresh: " + "; ".join(f"{names[m]}: Telugu fields {pct(a['te'])}, English+Hindi fields {pct(a['other'])}, mean merged MRR {a['mrr']:.2f}" for m, a in agg.items()) + ".")
+        seen_t = telugu_table(by_set, ["dev", "heldout", "fresh"], "Seen sets (dev, held-out, fresh)")
+        final_t = telugu_table(by_set, sorted(x for x in by_set if x.startswith("ocrtest")), "Final set (new documents, measured once)") if any(x.startswith("ocrtest") for x in by_set) else ""
+        tel_md = t_tpl.read_text().replace("{{TELUGU_SELECTION}}", sel_t).replace("{{TELUGU_SEEN}}", seen_t).replace("{{TELUGU_FINAL}}", final_t)
     intro = (ROOT / "tools/eval/intro.md").read_text().replace("{{CORPUS}}", corpus_summary()).replace("{{HEADLINE}}", headline(analyses))
     fixes_md = (ROOT / "tools/eval/fixes.md").read_text().replace("{{SELECTION}}", sel).replace("{{TABLES}}", fixes) if (ROOT / "tools/eval/fixes.md").exists() and fixes else ""
-    (DOCS / "EVALUATION.md").write_text(intro + "\n\n" + fixes_md + "\n\n" + gate2_md + "\n\n---\n\n## Detailed baseline results (generated by tools/eval/report.py)\n\n![Recall by query style](eval_retrieval.png)\n\n" + body + "\n")
+    (DOCS / "EVALUATION.md").write_text(intro + "\n\n" + fixes_md + "\n\n" + gate2_md + "\n\n" + tel_md + "\n\n---\n\n## Detailed baseline results (generated by tools/eval/report.py)\n\n![Recall by query style](eval_retrieval.png)\n\n" + body + "\n")
     print(body if not fixes else fixes)
 
 main()

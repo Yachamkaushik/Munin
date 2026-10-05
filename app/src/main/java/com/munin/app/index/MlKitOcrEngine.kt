@@ -2,7 +2,6 @@ package com.munin.app.index
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.common.InputImage
@@ -37,7 +36,8 @@ class MlKitOcrEngine(private val context: Context) : OcrEngine {
     }
 
     override suspend fun recognize(uri: String, rotationDegrees: Int): OcrResult {
-        val bitmap = withContext(Dispatchers.IO) { decode(Uri.parse(uri)) }
+        // ML Kit takes the rotation as a parameter, so the bitmap itself is decoded unrotated.
+        val bitmap = withContext(Dispatchers.IO) { BitmapLoader.decode(context, Uri.parse(uri), 0, MAX_SIDE) }
         try {
             val image = InputImage.fromBitmap(bitmap, rotationDegrees)
             val primary = lines(devanagari, image)
@@ -46,7 +46,8 @@ class MlKitOcrEngine(private val context: Context) : OcrEngine {
                 val secondary = lines(latin, image)
                 if (OcrLines.meanConfidence(secondary) > OcrLines.meanConfidence(primary)) best = "mlkit-latin" to secondary
             }
-            return OcrResult(OcrLines.keep(best.second).joinToString("\n") { it.text }, best.first)
+            val kept = OcrLines.keep(best.second)
+            return OcrResult(kept.joinToString("\n") { it.text }, best.first, OcrLines.meanConfidence(best.second), best.second.size - kept.size)
         } finally {
             bitmap.recycle()
         }
@@ -54,17 +55,6 @@ class MlKitOcrEngine(private val context: Context) : OcrEngine {
 
     private suspend fun lines(recognizer: TextRecognizer, image: InputImage): List<OcrLine> =
         recognizer.process(image).await().textBlocks.flatMap { it.lines }.map { OcrLine(it.text, it.confidence) }
-
-    /** Decodes at no more than [MAX_SIDE] px on the longest edge. */
-    private fun decode(uri: Uri): Bitmap {
-        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        context.contentResolver.openInputStream(uri).use { BitmapFactory.decodeStream(it, null, bounds) }
-        var sample = 1
-        while (maxOf(bounds.outWidth, bounds.outHeight) / (sample * 2) >= MAX_SIDE) sample *= 2
-        val opts = BitmapFactory.Options().apply { inSampleSize = sample }
-        return context.contentResolver.openInputStream(uri).use { BitmapFactory.decodeStream(it, null, opts) }
-            ?: error("Could not decode image")
-    }
 
     private companion object {
         const val MAX_SIDE = 3200

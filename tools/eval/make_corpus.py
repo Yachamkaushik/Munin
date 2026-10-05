@@ -14,10 +14,11 @@ import json, random, pathlib, collections, sys
 SET = sys.argv[1] if len(sys.argv) > 1 else "dev"      # "dev", "heldout", or "fresh" (each: its own anchors, queries and seed)
 HELD = SET == "heldout"
 FRESH = SET == "fresh"
-PREFIX = {"dev": "", "heldout": "heldout_", "fresh": "fresh_"}[SET]
+NOQ = SET.startswith("ocrtest")   # OCR/extraction-only sets: 300 filler documents, no anchors and no queries
+PREFIX = {"dev": "", "heldout": "heldout_", "fresh": "fresh_"}.get(SET, SET + "_")
 
 OUT = pathlib.Path(__file__).parent / "data"
-SEED = {"dev": 2026, "heldout": 7777, "fresh": 4242}[SET]
+SEED = {"dev": 2026, "heldout": 7777, "fresh": 4242, "ocrtest": 5151, "ocrtest2": 6262}[SET]
 R = random.Random(SEED)
 
 MONTH_EN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
@@ -105,7 +106,7 @@ def fresh_anchors():
     # F9 is a UPI payment, added with the other payments
     add("notes", "te", [("భౌతిక శాస్త్రం - కాంతి వక్రీభవనం", "b"), "స్నెల్ నియమం", "వక్రీభవన గుణకం", "లెన్స్ సూత్రం"], anchor="F10")
 
-ANCHOR_FN = {"dev": dev_anchors, "heldout": heldout_anchors, "fresh": fresh_anchors}
+ANCHOR_FN = {"dev": dev_anchors, "heldout": heldout_anchors, "fresh": fresh_anchors, "ocrtest": lambda: None, "ocrtest2": lambda: None}
 (ANCHOR_FN[SET])()
 
 # ---------------------------------------------------------------- fillers ----------------------------------------------
@@ -261,6 +262,7 @@ def add_upi(payee, paise, y, m, d, hh, mm, layout, style, outcome="success", rec
 def upi_batch():
     # A7: the anchor payment
     if HELD: add_upi("Kamat Medical Store", 64000, 2026, 10, 6, 17, 40, 2, 1, anchor="H6")
+    elif NOQ: pass
     elif FRESH: add_upi("Raju Auto Garage", 385000, 2026, 10, 11, 12, 15, 0, 2, anchor="F9")
     else: add_upi("Lakshmi Tiffins", 24000, 2026, 9, 14, 8, 20, 1, 0, anchor="A7")
     for i in range(34):  # ordinary successful payments across Aug-Oct 2026
@@ -287,7 +289,7 @@ for fn, n in plan:
         fn()
         if _text(docs[-1]) in seen_text: docs.pop(); continue
         seen_text.add(_text(docs[-1])); made += 1
-while FRESH and len(docs) < 300:  # the fresh set has 10 anchors, not 11
+while (FRESH or NOQ) and len(docs) < 300:  # these sets have fewer than 11 anchors
     shopping()
     if _text(docs[-1]) in seen_text: docs.pop()
     else: seen_text.add(_text(docs[-1]))
@@ -295,7 +297,9 @@ assert len(docs) == 300, len(docs)
 
 # ---------------------------------------------------------------- uniqueness guards ------------------------------------------
 def text(d): return "\n".join(l if isinstance(l, str) else l[0] for l in d["lines"])
-if FRESH:
+if NOQ:
+    anchor_keys = {}
+elif FRESH:
     anchor_keys = {"F1": ["Gayatri"], "F2": ["Credit Card"], "F3": ["Veterinary"], "F4": ["भारत गैस"], "F5": ["ఆంధ్ర విశ్వవిద్యాలయం"], "F6": ["Registrar"], "F7": ["Monetary"], "F8": ["Tirupati"],
                    "F9": ["Raju Auto"], "F10": ["వక్రీభవనం"]}
 elif HELD:
@@ -311,7 +315,8 @@ if SET == "dev":
     assert not [d for d in docs if d["type"] == "utility_bill" and d["lang"] == "en" and "Electricity" in text(d) and "15 Oct 2026" in text(d) and d["anchor"] != "A2"]
 _c = collections.Counter(text(d) for d in docs); _dups = [(k[:50], v, [d["id"] for d in docs if text(d) == k]) for k, v in _c.items() if v > 1]
 assert not _dups, _dups
-if FRESH:
+if NOQ: pass
+elif FRESH:
     for w in ("gym", "passport"): assert not [d for d in docs if w in text(d).lower()], f"negative query about '{w}' must have no such document"
 else:
     NEG_WORD = "bike" if HELD else "car"
@@ -360,6 +365,7 @@ HELD_Q = [
  (None, "negative", None, {"en": "how much was the bike insurance", "te": "బైక్ ఇన్సూరెన్స్ ఎంత", "hi": "बाइक बीमा कितना था", "rt": "bike insurance entha", "mix": "bike insurance ఎంత కట్టాను"}),
 ]
 if HELD: Q = HELD_Q
+if NOQ: Q = []
 FRESH_Q = [
  ("F1", "value", {"type": "AMOUNT", "value": "36000"}, {"en": "how much did I pay for the Gayatri coaching centre fee", "te": "గాయత్రి కోచింగ్ సెంటర్ ఫీజు ఎంత కట్టాను", "hi": "गायत्री कोचिंग सेंटर की फीस कितनी भरी", "rt": "gayatri coaching centre fee entha kattanu", "mix": "Gayatri coaching centre fee ఎంత pay చేశాను"}),
  ("F2", "value", {"type": "DATE", "value": "2026-10-26"}, {"en": "when do I have to pay the credit card bill", "te": "క్రెడిట్ కార్డ్ బిల్లు ఎప్పుడు కట్టాలి", "hi": "क्रेडिट कार्ड का बिल कब भरना है", "rt": "credit card bill eppudu kattali", "mix": "credit card bill ఎప్పుడు due"}),
@@ -382,7 +388,7 @@ for intent, kind, answer, texts in Q:
         queries.append({"id": f"q{len(queries)+1:02d}", "intent": intent or "NEG", "style": style, "kind": kind, "text": t,
                         "relevant": [anchor_ids[intent]] if intent else [], "answer": answer,
                         "target_lang": next(d["lang"] for d in docs if d["id"] == anchor_ids[intent]) if intent else None})
-assert len(queries) == 60
+assert len(queries) == (0 if NOQ else 60)
 json.dump({"queries": queries, "styles": ["en", "te", "hi", "rt", "mix"]}, open(OUT / (PREFIX + "queries.json"), "w"), ensure_ascii=False, indent=1)
 c = collections.Counter((d["type"], d["lang"]) for d in docs)
 print(f"{len(docs)} documents, {len(queries)} queries")

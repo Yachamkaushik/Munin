@@ -60,15 +60,33 @@ fun IndexScreen(vm: IndexViewModel = viewModel()) {
         }
         item { AccessCard(ui.access, onGrant = ::requestAccess) }
         item { ProgressCard(ui, onStart = { if (ui.access == MediaAccessState.NONE) requestAccess() else vm.startIndexing() }, onClear = vm::clearIndex) }
+        item { TeluguCard(ui.teluguOn, vm::setTelugu) }
         item {
             Text(
-                "Reads English and Hindi text in images. Telugu text inside images is not recognized yet (searching in Telugu will " +
-                    "still work against English and Hindi text). PDFs are not indexed yet.",
+                "Reads English and Hindi text in images. Telugu text inside images is only read if you switch on the experimental option above " +
+                    "(searching in Telugu works against English and Hindi text either way). PDFs are not indexed yet.",
                 style = MaterialTheme.typography.bodySmall,
             )
         }
         if (ui.recent.isNotEmpty()) item { Text("Recently processed", style = MaterialTheme.typography.titleMedium) }
         items(ui.recent, key = { it.id }) { RecentRow(it) }
+    }
+}
+
+@Composable
+private fun TeluguCard(on: Boolean, onChange: (Boolean) -> Unit) {
+    Card(Modifier.fillMaxWidth()) {
+        Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text("Read Telugu text in images (experimental)", style = MaterialTheme.typography.titleSmall)
+                Text(
+                    "Uses a second, slower reader (Tesseract) when the first one is unsure. It is far less accurate than English or Hindi reading and can " +
+                        "get words wrong. It applies to photos indexed from now on: choose Clear index and scan again to re-read existing ones.",
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
+            androidx.compose.material3.Switch(checked = on, onCheckedChange = onChange)
+        }
     }
 }
 

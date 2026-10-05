@@ -13,3 +13,4 @@ app/src/main/assets/models/*.onnx
 app/src/main/assets/models/*.model
 tools/eval/images/
 tools/eval/results/tmp/
+app/src/main/assets/tessdata/*.traineddata

@@ -1,19 +1,21 @@
 #!/bin/sh
 # Runs the evaluation on the connected device/emulator and pulls the raw reports into tools/eval/results/.
-#   tools/eval/run_eval.sh [modes] [set]  # modes: oracle,image (default both); set: dev (default), heldout or fresh
+#   tools/eval/run_eval.sh [modes] [set]  # modes: oracle,image (default both); set: dev (default), heldout, fresh, ocrtest, ocrtest2; modes also image_t1, image_t2
 #   tools/eval/run_eval.sh oracle       # fast: no images needed
 # Needs: a booted emulator/phone, the Python venv (.venv), and Swift only if images have to be (re)rendered.
 set -e
 cd "$(dirname "$0")/../.."
 MODES=${1:-oracle,image}
 SET=${2:-dev}
-case "$SET" in dev) PFX="" ;; heldout) PFX=heldout_ ;; fresh) PFX=fresh_ ;; *) echo "unknown set $SET (dev, heldout, fresh)"; exit 1 ;; esac
+case "$SET" in dev) PFX="" ;; heldout) PFX=heldout_ ;; fresh) PFX=fresh_ ;; ocrtest|ocrtest2) PFX="${SET}_" ;; *) echo "unknown set $SET (dev, heldout, fresh, ocrtest, ocrtest2)"; exit 1 ;; esac
 ADB=${ADB:-$HOME/Library/Android/sdk/platform-tools/adb}
 PKG=com.munin.app
 
 .venv/bin/python tools/eval/make_corpus.py dev >/dev/null
 .venv/bin/python tools/eval/make_corpus.py heldout >/dev/null
 .venv/bin/python tools/eval/make_corpus.py fresh >/dev/null
+.venv/bin/python tools/eval/make_corpus.py ocrtest >/dev/null
+.venv/bin/python tools/eval/make_corpus.py ocrtest2 >/dev/null
 case "$MODES" in *image*)
   [ -d tools/eval/images/$SET ] && [ "$(ls tools/eval/images/$SET | wc -l)" -ge 300 ] || swift tools/eval/render_images.swift tools/eval/data/${PFX}manifest.json tools/eval/images/$SET
   ;;

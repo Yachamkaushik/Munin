@@ -1,7 +1,11 @@
 package com.munin.app.index
 
-/** Text read from one image. [engine] records which recognizer produced it. */
-data class OcrResult(val text: String, val engine: String)
+/**
+ * Text read from one image. [engine] records which recognizer produced it. [confidence] is the recognizer's mean line confidence (0..1)
+ * and [droppedLines] how many lines it threw away as unreliable; a layered engine uses both to decide whether a second opinion is worth
+ * its time.
+ */
+data class OcrResult(val text: String, val engine: String, val confidence: Float = 1f, val droppedLines: Int = 0)
 
 /** One recognized line with the recognizer's own confidence (0..1). */
 data class OcrLine(val text: String, val confidence: Float)

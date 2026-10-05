@@ -9,6 +9,8 @@ import com.munin.app.data.RecentItem
 import com.munin.app.index.IndexScheduler
 import com.munin.app.index.MediaAccess
 import com.munin.app.index.MediaAccessState
+import com.munin.app.index.OcrSettings
+import com.munin.app.index.TeluguPolicy
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -28,10 +30,13 @@ data class IndexUiState(
     val medianEmbedMs: Long? = null,
     val nextName: String? = null,
     val recent: List<RecentItem> = emptyList(),
+    val teluguOn: Boolean = false,
 ) {
     val total get() = indexed + noText + duplicates + failed + pending
     val done get() = total - pending
 }
+
+private class Extras(val ocr: List<Long>, val embed: List<Long>, val next: String?, val telugu: Boolean)
 
 private fun median(sorted: List<Long>): Long? = if (sorted.isEmpty()) null else sorted[sorted.size / 2]
 
@@ -39,20 +44,24 @@ class IndexViewModel(app: Application) : AndroidViewModel(app) {
     private val muninApp = app as MuninApp
     private val db get() = muninApp.database
     private val access = MutableStateFlow(MediaAccess.state(app))
+    private val teluguOn = MutableStateFlow(OcrSettings.policy(app) != TeluguPolicy.OFF)
 
     val state: StateFlow<IndexUiState> = combine(
         access,
         IndexScheduler.isRunning(app),
         db.items().statusCounts(),
-        combine(db.items().ocrTimes(), db.items().embedTimes(), db.items().nextPendingName()) { o, e, n -> Triple(o, e, n) },
+        combine(db.items().ocrTimes(), db.items().embedTimes(), db.items().nextPendingName(), teluguOn) { o, e, n, t -> Extras(o, e, n, t) },
         db.items().recent(30),
-    ) { access, running, counts, (ocr, embed, next), recent ->
+    ) { access, running, counts, extras, recent ->
         fun n(s: String) = counts.firstOrNull { it.status == s }?.count ?: 0
         IndexUiState(
             access, running, n(ItemStatus.INDEXED), n(ItemStatus.NO_TEXT), n(ItemStatus.DUPLICATE), n(ItemStatus.FAILED), n(ItemStatus.PENDING),
-            median(ocr), median(embed), next, recent,
+            median(extras.ocr), median(extras.embed), extras.next, recent, extras.telugu,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), IndexUiState())
+
+    /** Applies to items indexed from now on; use Clear index and scan again to re-read existing ones. */
+    fun setTelugu(enabled: Boolean) { OcrSettings.setTeluguEnabled(getApplication(), enabled); teluguOn.value = enabled }
 
     fun refreshAccess() { access.value = MediaAccess.state(getApplication()) }
 
