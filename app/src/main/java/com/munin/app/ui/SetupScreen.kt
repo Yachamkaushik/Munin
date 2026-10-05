@@ -17,6 +17,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -32,6 +33,37 @@ import com.munin.app.setup.SetupLauncher
  * Helps new screenshots get indexed on time. Munin starts nothing by itself in the background; the phone has to be allowed to wake it. These are
  * links to the phone's own settings: Munin cannot change them, and (except battery optimisation) cannot even see their state.
  */
+/** The optional edge handle. Needs "Display over other apps"; shows a notification while on; off until switched on. */
+@Composable
+private fun EdgeHandleCard(refresh: Int) {
+    val context = LocalContext.current
+    var on by remember(refresh) { mutableStateOf(com.munin.app.edge.EdgeHandle.wanted(context) && com.munin.app.edge.EdgeHandle.canDraw(context)) }
+    val canDraw = remember(refresh, on) { com.munin.app.edge.EdgeHandle.canDraw(context) }
+    Card(Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text("Edge handle (optional)", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+            Text(
+                "A thin bar on the screen edge, over other apps. Tap it to open Munin's search; drag it up or down to move it. While it is on, Munin shows a notification with a Turn off button. " +
+                    "It does nothing in the background otherwise. It needs the phone's \"Display over other apps\" permission.",
+                style = MaterialTheme.typography.bodySmall,
+            )
+            Text(if (canDraw) "Display over other apps: allowed." else "Display over other apps: not allowed yet.", style = MaterialTheme.typography.labelMedium)
+            androidx.compose.foundation.layout.Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                androidx.compose.material3.Switch(checked = on, onCheckedChange = { want ->
+                    com.munin.app.edge.EdgeHandle.setWanted(context, want)
+                    if (want && !com.munin.app.edge.EdgeHandle.canDraw(context)) {
+                        // Ask the phone's settings; the handle starts when the user comes back with the permission allowed.
+                        runCatching { context.startActivity(android.content.Intent(android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION, android.net.Uri.fromParts("package", context.packageName, null)).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)) }
+                    }
+                    on = want && com.munin.app.edge.EdgeHandle.canDraw(context)
+                    com.munin.app.edge.EdgeHandle.sync(context)
+                })
+                Text(if (on) "On" else "Off", style = MaterialTheme.typography.bodyMedium)
+            }
+        }
+    }
+}
+
 @Composable
 fun SetupScreen(onBack: () -> Unit) {
     val context = LocalContext.current
@@ -78,6 +110,7 @@ fun SetupScreen(onBack: () -> Unit) {
                 }
             }
         }
+        item { EdgeHandleCard(refresh) }
         tip?.let { item { Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp)) { Text("Keep Munin from being cleared", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold); Text(it, style = MaterialTheme.typography.bodySmall) } } } }
         item { OutlinedButton(onClick = onBack, modifier = Modifier.fillMaxWidth()) { Text("Back") } }
     }

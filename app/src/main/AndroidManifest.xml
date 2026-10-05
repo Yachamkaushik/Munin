@@ -16,6 +16,9 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <!-- Optional edge handle, off until the user switches it on: a small tappable bar over other apps, with a notification that can turn it off. -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <!-- Voice queries only. Munin never records unless Speak is pressed, and never stores audio. -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- Asked only when the user types a person's name or a family nickname and taps Allow; names stay in memory. -->
@@ -61,6 +64,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".edge.EdgeHandleService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="User-enabled search shortcut: a draggable on-screen edge handle that opens Munin's search when tapped." />
+        </service>
 
         <!-- Digital-assistant door: the assist gesture opens Munin's search once the user picks Munin as the assistant in system settings. -->
         <service

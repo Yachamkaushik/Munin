@@ -409,4 +409,11 @@ phone) opens Munin's search with the keyboard ready; the setup screen shows whet
 a search door: it does not listen, understand speech or answer by voice.** It does nothing until you pick it, and the system starts it only when you use the gesture. Android refuses an assistant that does not declare a recognition
 service, so a stub is declared; it has no intent filter (checked: it is not listed as a speech recognizer) and answers every request with "not supported". Checked on the emulator by selecting Munin as the assistant
 and firing the assist key. Limits: the gesture and the picker's wording differ per phone (not checked on an iQOO), and some phones tie the gesture to another app.
+
+**Edge handle (optional, last fallback)** (`edge/`, a card at the bottom of the Background setup screen): a thin purple bar on the screen edge, over other apps. Tap it to open Munin's search with the keyboard ready; drag it up or down to move it (a drag never
+opens search). **Off until you switch it on.** It needs the phone's *Display over other apps* permission (`SYSTEM_ALERT_WINDOW`); the switch sends you to that screen and the handle starts when you return with it allowed. While it
+is on it runs as a **visible foreground service** with an ongoing notification that has a **Turn off** button (Android adds its own "displaying over other apps" notice too). It does no work while idle: it is one static view, with no timers or
+polling. It starts only while Munin is open and is not restarted by the system after a kill, so it never comes back unseen: open Munin to bring it back. No accessibility service is used. Checked on the emulator: permission screen,
+the handle over the home screen, tap opens search, a drag moves it without opening anything, and Turn off removes the service, the overlay and the saved setting. Limits: not checked on an iQOO, where Funtouch OS may hide or block overlays or
+close the service (see Background setup); it uses Android's `specialUse` foreground-service type, which Google Play would require a justification for.
 force-stop from Settings cancels all scheduled work until Munin is next opened; it indexes every new image, not only screenshots; the Android 12+ rules mean the progress notification may not show for a wake-up run.

@@ -46,6 +46,11 @@ class MainActivity : ComponentActivity() {
         (i.getParcelableExtra<android.net.Uri>(android.content.Intent.EXTRA_STREAM))?.toString(),
     )
 
+    override fun onResume() {
+        super.onResume()
+        com.munin.app.edge.EdgeHandle.sync(this) // in the foreground, so a switched-on handle can be (re)started
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) incoming = readIncoming(intent)
