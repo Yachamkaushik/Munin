@@ -22,6 +22,8 @@ data class SearchResult(
     val keywordRank: Int?,
     val keywordScore: Float?,
     val score: Double,
+    /** When the file was added to the phone (epoch seconds), for "from 12 Sep". */
+    val itemDate: Long? = null,
 )
 
 data class SearchTimings(
@@ -101,7 +103,7 @@ class SearchEngine(
             if (!seen.add(row.itemId)) continue
             results += SearchResult(
                 row.itemId, row.uri, row.displayName, chunkId, Snippets.build(row.text, tokens),
-                meaningRank[chunkId], meaningScores[chunkId], keywordRank[chunkId], keywordScores[chunkId], score,
+                meaningRank[chunkId], meaningScores[chunkId], keywordRank[chunkId], keywordScores[chunkId], score, row.addedAt.takeIf { it > 0 },
             )
             if (results.size == limit) break
         }

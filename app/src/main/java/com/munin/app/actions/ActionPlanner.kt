@@ -10,7 +10,7 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-enum class ActionKind { CALENDAR, CALL, MAPS, SHARE }
+enum class ActionKind { CALENDAR, CALL, MAPS, SHARE, WEB }
 
 /** A fact plus enough context to act on it. Built from an answer card or from the item detail screen. */
 data class ActionSubject(
@@ -33,6 +33,7 @@ sealed interface ActionPayload {
     data class Call(val number: String) : ActionPayload
     data class Maps(val query: String) : ActionPayload
     data class Share(val text: String, val subject: String) : ActionPayload
+    data class Web(val query: String) : ActionPayload
 }
 
 /**
@@ -63,6 +64,16 @@ class ActionPlanner(
         }
         add(share(s))
     }
+
+    /**
+     * The one action that sends something off the phone: it hands the search text to the browser. Munin itself never goes online (it has no
+     * internet permission); the dialog says exactly what leaves the phone and where it goes.
+     */
+    fun webSearch(query: String) = ActionPlan(
+        ActionKind.WEB, "Search the web", "Search the web?", "Open browser", listOf("Search text" to query),
+        listOf("This leaves your phone: your browser sends this text to its search engine. Nothing from your files is sent, only the words above."),
+        ActionPayload.Web(query),
+    )
 
     // ---- calendar --------------------------------------------------------------------------------------------------
 

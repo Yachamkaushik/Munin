@@ -80,12 +80,12 @@ interface ItemDao {
 }
 
 /** A chunk with the item it belongs to, for showing a search result. */
-data class ChunkWithItem(val chunkId: Long, val itemId: Long, val text: String, val uri: String, val displayName: String)
+data class ChunkWithItem(val chunkId: Long, val itemId: Long, val text: String, val uri: String, val displayName: String, val addedAt: Long)
 
 @Dao
 interface ChunkDao {
     @Query(
-        """SELECT c.id AS chunkId, c.itemId AS itemId, c.text AS text, i.uri AS uri, i.displayName AS displayName
+        """SELECT c.id AS chunkId, c.itemId AS itemId, c.text AS text, i.uri AS uri, i.displayName AS displayName, i.addedAt AS addedAt
            FROM chunks c JOIN items i ON i.id = c.itemId WHERE c.id IN (:ids)""",
     )
     suspend fun withItems(ids: List<Long>): List<ChunkWithItem>

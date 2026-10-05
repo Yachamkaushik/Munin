@@ -45,33 +45,38 @@ fun ActionButtons(subject: ActionSubject, modifier: Modifier = Modifier) {
         }
     }
 
-    pending?.let { plan ->
-        AlertDialog(
-            onDismissRequest = { pending = null },
-            title = { Text(plan.dialogTitle) },
-            text = {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    for ((k, v) in plan.details) {
-                        Column {
-                            Text(k, style = MaterialTheme.typography.labelSmall)
-                            Text(v, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
-                        }
+    pending?.let { plan -> ActionConfirmDialog(plan) { pending = null } }
+}
+
+/** Shows what an action will do and, only on confirm, hands it to another app. Cancel and dismiss do nothing. */
+@Composable
+fun ActionConfirmDialog(plan: ActionPlan, onClose: () -> Unit) {
+    val context = LocalContext.current
+    AlertDialog(
+        onDismissRequest = onClose,
+        title = { Text(plan.dialogTitle) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                for ((k, v) in plan.details) {
+                    Column {
+                        Text(k, style = MaterialTheme.typography.labelSmall)
+                        Text(v, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
                     }
-                    for (n in plan.notes) Text(n, style = MaterialTheme.typography.bodySmall)
-                    Text("Values are read from the image by OCR.", style = MaterialTheme.typography.labelSmall)
                 }
-            },
-            confirmButton = {
-                TextButton(onClick = {
-                    pending = null
-                    try {
-                        context.startActivity(IntentFactory.build(plan.payload))
-                    } catch (e: ActivityNotFoundException) {
-                        Toast.makeText(context, "No app on this phone can do that (${plan.buttonLabel.lowercase()}).", Toast.LENGTH_LONG).show()
-                    }
-                }) { Text(plan.confirmLabel) }
-            },
-            dismissButton = { TextButton(onClick = { pending = null }) { Text("Cancel") } },
-        )
-    }
+                for (n in plan.notes) Text(n, style = MaterialTheme.typography.bodySmall)
+                if (plan.kind != ActionKind.WEB) Text("Values are read from the image by OCR.", style = MaterialTheme.typography.labelSmall)
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                onClose()
+                try {
+                    context.startActivity(IntentFactory.build(plan.payload))
+                } catch (e: ActivityNotFoundException) {
+                    Toast.makeText(context, "No app on this phone can do that (${plan.buttonLabel.lowercase()}).", Toast.LENGTH_LONG).show()
+                }
+            }) { Text(plan.confirmLabel) }
+        },
+        dismissButton = { TextButton(onClick = onClose) { Text("Cancel") } },
+    )
 }

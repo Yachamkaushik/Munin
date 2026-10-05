@@ -49,6 +49,13 @@ class IntentFactoryTest {
         assertTrue(inner.getStringExtra(Intent.EXTRA_TEXT)!!.startsWith("Electricity Bill - Amount due: ₹1,250"))
     }
 
+    @Test fun webSearchIsAWebSearchIntentCarryingOnlyTheTypedText() {
+        val i = IntentFactory.build(ActionPlanner().webSearch("hostel fee receipt").payload)
+        assertEquals(Intent.ACTION_WEB_SEARCH, i.action)
+        assertEquals("hostel fee receipt", i.getStringExtra(android.app.SearchManager.QUERY))
+        assertEquals(setOf(android.app.SearchManager.QUERY), i.extras!!.keySet()) // nothing else travels with it
+    }
+
     @Test fun nothingDialsOrSavesByItself() {
         for ((kind, value, action) in listOf(Triple(FactType.DATE, "2026-10-15", ActionKind.CALENDAR), Triple(FactType.PHONE, "+919876543210", ActionKind.CALL), Triple(FactType.ADDRESS, "x y", ActionKind.MAPS))) {
             assertFalse(intent(kind, value, action).action, intent(kind, value, action).action == Intent.ACTION_CALL)

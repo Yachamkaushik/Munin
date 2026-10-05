@@ -12,6 +12,7 @@ import com.munin.app.ledger.SpendingQuery
 import com.munin.app.ledger.toRow
 import java.time.LocalDate
 import java.time.YearMonth
+import com.munin.app.router.QueryRouter
 import com.munin.app.search.SearchEngine
 import com.munin.app.voice.AndroidSpeechBackend
 import com.munin.app.voice.MainScheduler
@@ -52,6 +53,8 @@ data class SearchUiState(
     /** Whether the query was a value question, and what we answered; null until a search has run. */
     val answer: AnswerOutcome? = null,
     val spending: SpendingAnswer? = null,
+    /** The router's plain-words reading of the input, shown under the search box; null for an empty box. */
+    val understood: String? = null,
     val error: String? = null,
     val showDebug: Boolean = true,
     val voice: VoiceState = VoiceState.Idle,
@@ -72,7 +75,7 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
     // Partial text only fills the box while talking; the search runs once, on the final text.
     private val voice by lazy {
         VoiceSession(speech, MainScheduler()) { text, final ->
-            _state.update { it.copy(query = text) }
+            _state.update { it.copy(query = text).routed() }
             if (final) run(debounce = false)
         }
     }
@@ -100,8 +103,10 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
 
     override fun onCleared() { voice.destroy() }
 
-    fun onQuery(q: String) { _state.update { it.copy(query = q) }; run(debounce = true) }
-    fun onMode(m: SearchMode) { _state.update { it.copy(mode = m) }; run(debounce = false) }
+    private fun SearchUiState.routed() = copy(understood = QueryRouter.route(query, mode).understood)
+
+    fun onQuery(q: String) { _state.update { it.copy(query = q).routed() }; run(debounce = true) }
+    fun onMode(m: SearchMode) { _state.update { it.copy(mode = m).routed() }; run(debounce = false) }
     fun onDebug(on: Boolean) { _state.update { it.copy(showDebug = on) } }
 
     /** Re-runs the current query, e.g. after indexing added items. */

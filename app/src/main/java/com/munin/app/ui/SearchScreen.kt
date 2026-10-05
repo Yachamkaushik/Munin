@@ -28,6 +28,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
@@ -38,6 +41,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.munin.app.actions.ActionPlan
+import com.munin.app.actions.ActionPlanner
 import com.munin.app.actions.toSubject
 import com.munin.app.answer.Answer
 import com.munin.app.answer.AnswerOutcome
@@ -48,6 +53,7 @@ import com.munin.app.voice.VoiceState
 import com.munin.app.search.SearchResult
 import com.munin.app.search.SearchTimings
 import com.munin.app.search.Snippet
+import com.munin.app.search.WhyThis
 
 @Composable
 fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?) -> Unit, vm: SearchViewModel = viewModel(), indexVersion: Int = 0) {
@@ -61,6 +67,8 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
             label = { Text("Describe what you are looking for") },
             placeholder = { Text("Telugu, Hindi, English or a mix") },
         )
+        // What the router made of the input, in plain words, so a surprising result is never a mystery.
+        ui.understood?.let { Text(it, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant) }
         VoiceBar(ui, vm)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
             for ((mode, label) in listOf(SearchMode.MERGED to "Merged", SearchMode.MEANING to "Meaning only", SearchMode.KEYWORDS to "Keywords only")) {
@@ -74,29 +82,60 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
         val r = ui.response
         if (ui.showDebug && r != null) Text(debugLine(r.mode, r.timings), style = MaterialTheme.typography.labelSmall)
 
-        when {
-            ui.error != null -> Text(ui.error!!, color = MaterialTheme.colorScheme.error)
-            !ui.modelReady -> Text("Loading the on-device language model…")
-            ui.indexedChunks == 0 -> Text("Nothing is indexed yet. Open the Index tab and scan your photos first.")
-            ui.query.isBlank() -> Text("Search by what the text says, not by file name.", style = MaterialTheme.typography.bodyMedium)
-            r != null && r.results.isEmpty() -> Text("No matches for “${r.query}”.")
-            r != null -> LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                ui.spending?.let { sp -> item { SpendingCard(sp, onOpenLedger) } }
-                when (val a = ui.answer) {
-                    is AnswerOutcome.Found -> item { AnswerCard(a.answer, onOpenItem) }
-                    // It was a question but we will not guess: say so, then fall back to the list.
-                    is AnswerOutcome.Declined -> item {
-                        Text(
-                            "No direct answer: ${a.reason}. Showing matching items instead.",
-                            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
+        if (ui.query.isBlank()) {
+            Text("Search by what the text says, not by file name.", style = MaterialTheme.typography.bodyMedium)
+        } else {
+            LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                when {
+                    ui.error != null -> item { Text(ui.error!!, color = MaterialTheme.colorScheme.error) }
+                    !ui.modelReady -> item { Text("Loading the on-device language model…") }
+                    ui.indexedChunks == 0 -> item { Text("Nothing is indexed yet. Open the Index tab and scan your photos first.") }
+                    r != null -> {
+                        val spending = ui.spending
+                        val answer = ui.answer
+                        if (spending != null || answer is AnswerOutcome.Found || answer is AnswerOutcome.Declined) item { GroupHeader("Answer") }
+                        spending?.let { sp -> item { SpendingCard(sp, onOpenLedger) } }
+                        when (answer) {
+                            is AnswerOutcome.Found -> item { AnswerCard(answer.answer, onOpenItem) }
+                            // It was a question but we will not guess: say so, then fall back to the list.
+                            is AnswerOutcome.Declined -> item {
+                                Text(
+                                    "No direct answer: ${answer.reason}. Showing matching files instead.",
+                                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
+                            else -> Unit
+                        }
+                        item { GroupHeader(if (r.results.isEmpty()) "Files" else "Files (${r.results.size})") }
+                        if (r.results.isEmpty()) item { Text("No matches for “${r.query}” in your files.") }
+                        items(r.results, key = { it.itemId }) { ResultRow(it, ui.showDebug, onOpenItem) }
                     }
                     else -> Unit
                 }
-                items(r.results, key = { it.itemId }) { ResultRow(it, ui.showDebug, onOpenItem) }
+                // The only thing in the app that leaves the phone, so it sits apart and says so.
+                item { GroupHeader("Web") }
+                item { WebSearchRow(ui.query) }
             }
         }
     }
+}
+
+@Composable
+private fun GroupHeader(title: String) {
+    Text(title, style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 4.dp))
+}
+
+/** A clearly labelled hand-off to the browser. Tapping it asks first and shows the exact text that would leave the phone. */
+@Composable
+private fun WebSearchRow(query: String) {
+    var plan by remember { mutableStateOf<ActionPlan?>(null) }
+    Card(Modifier.fillMaxWidth().clickable { plan = ActionPlanner().webSearch(query.trim()) }) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text("Search the web for “${query.trim()}”", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
+            Text("Leaves your phone: opens your browser.", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.error)
+        }
+    }
+    plan?.let { ActionConfirmDialog(it) { plan = null } }
 }
 
 /**
@@ -205,6 +244,7 @@ private fun ResultRow(r: SearchResult, debug: Boolean, onOpen: (Long) -> Unit) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(r.displayName, style = MaterialTheme.typography.labelMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
             Text(highlighted(r.snippet), style = MaterialTheme.typography.bodyMedium, maxLines = 3, overflow = TextOverflow.Ellipsis)
+            Text(WhyThis.explain(r), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             if (debug) {
                 val meaning = r.meaningRank?.let { "meaning #$it (%.2f)".format(r.meaningScore) } ?: "meaning –"
                 val keywords = r.keywordRank?.let { "keywords #$it (%.1f)".format(r.keywordScore) } ?: "keywords –"
