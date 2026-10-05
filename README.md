@@ -3,8 +3,9 @@
 Offline, on-device semantic search for screenshots, document photos and PDFs on Android, in Telugu, Hindi,
 English, Roman-script Telugu, or a mix. No INTERNET permission; models are bundled in the APK.
 
-Status: **step 6 of 7** (payment ledger). Photos are indexed and searchable, value questions are answered with the source,
-facts offer confirm-first actions, and UPI payment screenshots feed an exact monthly ledger. No voice yet.
+Status: **steps 1-7 built** (tokenizer parity, indexing, hybrid search, answers, actions, payment ledger, voice query).
+**Not built yet: the evaluation harness** (about 300 synthetic files, 50-60 queries, recall/MRR/extraction/latency, keyword vs
+embeddings vs merged). Until it exists, none of the quality claims below are measured on a proper test set.
 
 ## Setup
 
@@ -273,3 +274,45 @@ how many flagged and unreadable screenshots were left out.
 - A screenshot with no readable date cannot be placed in a month, so it is listed as unreadable and never summed.
 - OCR can still misread digits in a way no confidence flag reveals (e.g. a 5 read as 6); the source image is one tap away from every row.
 - The ledger covers screenshots only: no bank access, no SMS, nothing outside the images indexed on this phone.
+
+## Step 7: voice query
+
+A **Speak** button next to the search box, with an English / हिन्दी / తెలుగు choice. Speech goes to Android's `SpeechRecognizer`:
+on Android 12+ the **on-device recognizer** is used when the phone has one (it cannot fall back to the network); otherwise the
+system recognizer is asked to prefer offline, which is a request, not a guarantee. The text appears in the (editable) search
+box while you talk and the search runs once on the final text. Munin asks for the microphone only when Speak is pressed, never
+records otherwise, and stores no audio. Munin still has no internet permission: if audio ever goes online, the phone's own speech
+service does it, which is why the UI says so.
+
+**The UI is honest about offline.** Under the buttons a line states what the phone's speech service reported for the selected
+language (Android 13+ `checkRecognitionSupport`): pack installed (speech stays on the phone) / not installed (audio may go over the
+internet via the speech service) / downloading / online-only / not offered / unknown on older Android. A generic failure adds the
+likely cause when the pack is known to be missing. Typed search is always fully offline, and says so.
+
+| Check | Result |
+|---|---|
+| Tests | 145 JVM and 45 on-device, all pass |
+| Session state machine (fake recognizer, fake clock) | normal flow, one attempt at a time, stop waits for the text, blank result = nothing heard, cancel and stale callbacks ignored, every watchdog |
+| Emulator, real speech service | support check answers: English and Hindi on-device but **packs not installed**, Telugu **not offered**; the UI says exactly that |
+| Permission flow | prompt appears on first Speak; Deny -> "Microphone permission is needed… you can still type"; Allow -> listening starts |
+| No pack installed (real recognizer) | the service fails or goes silent; the app ends with a clear message naming the missing pack instead of hanging |
+
+### What a real recognizer taught us
+
+The emulator's speech service logged `LANGUAGE_PACK_ERROR` internally and, in some runs, **never told the app**: the screen sat on
+"Listening…" and Stop gave a vague "stopped unexpectedly". Voice now has watchdogs (8 s to start, 20 s of silence before an
+automatic stop, 6 s from Stop to a result) that end in "the speech service did not respond; this often means the offline language
+pack is not installed", plus the pack hint above.
+
+### Limits (please read)
+
+- **I have not heard a single transcription work.** This emulator has no microphone input and no installed language pack, so the
+  path from speech to text to search is covered only by the fake-recognizer tests and by seeing the real service's failures
+  handled. **Test voice on a real phone, with the language pack installed, before demoing it.**
+- **Telugu voice depends entirely on the phone.** The emulator's service does not list Telugu. On a real phone it varies by device
+  and Google speech-services version.
+- **Mixed-language speech** (Telugu + English in one sentence) is transcribed in the one language you pick, so the other
+  part may come out garbled. Edit the text, or type.
+- **"Offline" for voice is only true with the pack installed.** Without it the phone's speech service may use the internet.
+  Android 12 and below cannot report pack status at all (shown as unknown).
+- Munin does not download language packs (it has no network access); installing them is done in the phone's speech settings.

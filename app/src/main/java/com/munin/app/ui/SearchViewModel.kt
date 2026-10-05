@@ -13,6 +13,13 @@ import com.munin.app.ledger.toRow
 import java.time.LocalDate
 import java.time.YearMonth
 import com.munin.app.search.SearchEngine
+import com.munin.app.voice.AndroidSpeechBackend
+import com.munin.app.voice.MainScheduler
+import com.munin.app.voice.VoiceError
+import com.munin.app.voice.VoiceLang
+import com.munin.app.voice.VoiceSession
+import com.munin.app.voice.VoiceState
+import com.munin.app.voice.VoiceSupport
 import com.munin.app.search.SearchMode
 import com.munin.app.search.SearchResponse
 import kotlinx.coroutines.Dispatchers
@@ -47,6 +54,10 @@ data class SearchUiState(
     val spending: SpendingAnswer? = null,
     val error: String? = null,
     val showDebug: Boolean = true,
+    val voice: VoiceState = VoiceState.Idle,
+    val voiceLang: VoiceLang = VoiceLang.ENGLISH,
+    /** What the phone's speech service supports; null until the system has answered. */
+    val voiceSupport: VoiceSupport? = null,
 )
 
 class SearchViewModel(app: Application) : AndroidViewModel(app) {
@@ -57,7 +68,18 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
     val state: StateFlow<SearchUiState> = _state
     private var job: Job? = null
 
+    private val speech by lazy { AndroidSpeechBackend(app) }
+    // Partial text only fills the box while talking; the search runs once, on the final text.
+    private val voice by lazy {
+        VoiceSession(speech, MainScheduler()) { text, final ->
+            _state.update { it.copy(query = text) }
+            if (final) run(debounce = false)
+        }
+    }
+
     init {
+        viewModelScope.launch { voice.state.collect { v -> _state.update { it.copy(voice = v) } } }
+        refreshVoiceSupport()
         // Loading the model takes seconds the first time; do it now so the first search is not the slow one.
         viewModelScope.launch(Dispatchers.Default) {
             runCatching { muninApp.embedder }
@@ -67,6 +89,16 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
         }
         viewModelScope.launch(Dispatchers.IO) { muninApp.database.backfillFacts() }
     }
+
+    fun startVoice() = voice.start(_state.value.voiceLang)
+    fun stopVoice() = voice.stop()
+    fun cancelVoice() = voice.cancel()
+    fun voicePermissionDenied() = voice.fail(VoiceError.NO_PERMISSION)
+    fun dismissVoiceError() = voice.dismissError()
+    fun onVoiceLang(l: VoiceLang) { _state.update { it.copy(voiceLang = l) }; refreshVoiceSupport() }
+    fun refreshVoiceSupport() = speech.checkSupport { s -> _state.update { it.copy(voiceSupport = s) } }
+
+    override fun onCleared() { voice.destroy() }
 
     fun onQuery(q: String) { _state.update { it.copy(query = q) }; run(debounce = true) }
     fun onMode(m: SearchMode) { _state.update { it.copy(mode = m) }; run(debounce = false) }

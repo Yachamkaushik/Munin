@@ -1,14 +1,21 @@
 package com.munin.app.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
+import androidx.core.content.ContextCompat
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
@@ -35,6 +42,9 @@ import com.munin.app.actions.toSubject
 import com.munin.app.answer.Answer
 import com.munin.app.answer.AnswerOutcome
 import com.munin.app.search.SearchMode
+import com.munin.app.voice.PackStatuses
+import com.munin.app.voice.VoiceLang
+import com.munin.app.voice.VoiceState
 import com.munin.app.search.SearchResult
 import com.munin.app.search.SearchTimings
 import com.munin.app.search.Snippet
@@ -51,6 +61,7 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
             label = { Text("Describe what you are looking for") },
             placeholder = { Text("Telugu, Hindi, English or a mix") },
         )
+        VoiceBar(ui, vm)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
             for ((mode, label) in listOf(SearchMode.MERGED to "Merged", SearchMode.MEANING to "Meaning only", SearchMode.KEYWORDS to "Keywords only")) {
                 FilterChip(selected = ui.mode == mode, onClick = { vm.onMode(mode) }, label = { Text(label) })
@@ -85,6 +96,49 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
                 items(r.results, key = { it.itemId }) { ResultRow(it, ui.showDebug, onOpenItem) }
             }
         }
+    }
+}
+
+/**
+ * Speak button, language choice and an honest status line. Voice goes through the phone's speech service, so the line says
+ * whether the offline pack is installed rather than promising privacy it cannot guarantee. Typing is always fully offline.
+ */
+@Composable
+private fun VoiceBar(ui: SearchUiState, vm: SearchViewModel) {
+    val context = LocalContext.current
+    val micPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted -> if (granted) vm.startVoice() else vm.voicePermissionDenied() }
+    val busy = ui.voice is VoiceState.Starting || ui.voice is VoiceState.Listening || ui.voice is VoiceState.Processing
+    val available = ui.voiceSupport?.available != false
+
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            when (ui.voice) {
+                is VoiceState.Listening -> Button(onClick = vm::stopVoice) { Text("Stop") }
+                is VoiceState.Starting, is VoiceState.Processing -> Button(onClick = {}, enabled = false) { Text("Please wait") }
+                else -> Button(enabled = available, onClick = {
+                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) vm.startVoice()
+                    else micPermission.launch(Manifest.permission.RECORD_AUDIO)
+                }) { Text("Speak") }
+            }
+            if (busy) TextButton(onClick = vm::cancelVoice) { Text("Cancel") }
+            for (lang in VoiceLang.entries) FilterChip(selected = ui.voiceLang == lang, enabled = !busy, onClick = { vm.onVoiceLang(lang) }, label = { Text(lang.label) })
+        }
+        val status = when (val v = ui.voice) {
+            is VoiceState.Starting -> "Starting the microphone…"
+            is VoiceState.Listening -> "Listening… speak now, then tap Stop."
+            is VoiceState.Processing -> "Working out what you said…"
+            is VoiceState.Failed -> listOfNotNull(v.error.message, PackStatuses.failureHint(v.error, ui.voiceSupport, ui.voiceLang)).joinToString(" ")
+            VoiceState.Idle -> ui.voiceSupport?.let { PackStatuses.explain(it, ui.voiceLang) } ?: "Checking what voice input this phone supports…"
+        }
+        Text(
+            status, style = MaterialTheme.typography.labelSmall,
+            color = if (ui.voice is VoiceState.Failed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        if (ui.voice is VoiceState.Failed) TextButton(onClick = vm::dismissVoiceError) { Text("Dismiss") }
+        Text(
+            "Typed searches never leave the phone. Pick the language you will speak; mixed-language speech may be heard imperfectly, and you can edit the text before searching again.",
+            style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }
 
