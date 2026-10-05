@@ -62,6 +62,27 @@
             </intent-filter>
         </activity>
 
+        <!-- Digital-assistant door: the assist gesture opens Munin's search once the user picks Munin as the assistant in system settings. -->
+        <service
+            android:name=".assist.MuninInteractionService"
+            android:exported="true"
+            android:label="Munin"
+            android:permission="android.permission.BIND_VOICE_INTERACTION">
+            <meta-data android:name="android.voice_interaction" android:resource="@xml/interaction_service" />
+            <intent-filter>
+                <action android:name="android.service.voice.VoiceInteractionService" />
+            </intent-filter>
+        </service>
+        <!-- Required by Android for any assistant; no intent filter, so it is not offered as a speech recognizer, and it recognises nothing. -->
+        <service
+            android:name=".assist.MuninNoRecognizer"
+            android:exported="true"
+            android:permission="android.permission.BIND_VOICE_INTERACTION" />
+        <service
+            android:name=".assist.MuninSessionService"
+            android:exported="true"
+            android:permission="android.permission.BIND_VOICE_INTERACTION" />
+
         <!-- Quick Settings tile. Only reacts to a tap; runs nothing in the background. -->
         <service
             android:name=".launch.SearchTileService"

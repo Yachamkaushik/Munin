@@ -17,14 +17,14 @@ class BackgroundSetupTest {
 
     @Test fun otherPhonesGetOnlyStandardScreens() {
         val ids = BackgroundSetup.steps("samsung", "samsung").map { it.id }
-        assertEquals(listOf("battery", "app_info"), ids)
+        assertEquals(listOf("battery", "assistant", "app_info"), ids)
         assertTrue(BackgroundSetup.steps("samsung", "samsung").none { it.vendorOnly })
         assertNull(BackgroundSetup.recentsTip("samsung", "samsung"))
     }
 
     @Test fun iqooGetsAutoStartAndPowerScreensToo() {
         val steps = BackgroundSetup.steps("vivo", "iQOO")
-        assertEquals(listOf("battery", "autostart", "highpower", "app_info"), steps.map { it.id })
+        assertEquals(listOf("battery", "assistant", "autostart", "highpower", "app_info"), steps.map { it.id })
         assertTrue(steps.filter { it.vendorOnly }.all { s -> s.intents.all { it.pkg != null && it.cls != null } })
         assertTrue(BackgroundSetup.recentsTip("vivo", "iQOO") != null)
     }

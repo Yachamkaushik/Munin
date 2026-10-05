@@ -39,6 +39,7 @@ fun SetupScreen(onBack: () -> Unit) {
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { refresh++ } // coming back from a settings screen
     val steps = remember { BackgroundSetup.steps(Build.MANUFACTURER, Build.BRAND) }
     val tip = remember { BackgroundSetup.recentsTip(Build.MANUFACTURER, Build.BRAND) }
+    val isAssistant = remember(refresh) { com.munin.app.assist.AssistRole.isHeld(context) }
     val unrestricted = remember(refresh) { SetupLauncher.ignoringBatteryOptimisations(context) }
 
     LazyColumn(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -61,6 +62,8 @@ fun SetupScreen(onBack: () -> Unit) {
                     Text(step.title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
                     if (step.id == "battery") {
                         Text(if (unrestricted) "Now: not restricted for battery." else "Now: Android may restrict Munin to save battery.", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
+                    } else if (step.id == "assistant") {
+                        Text(if (isAssistant) "Now: Munin is your digital assistant." else "Now: Munin is not your digital assistant.", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
                     } else {
                         Text("Munin cannot see this setting. Check it yourself.", style = MaterialTheme.typography.labelMedium)
                     }

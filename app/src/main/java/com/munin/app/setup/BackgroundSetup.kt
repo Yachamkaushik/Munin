@@ -51,11 +51,18 @@ object BackgroundSetup {
         vendorOnly = true,
     )
 
+    private val assistant = SetupStep(
+        "assistant", "Open Munin with the assist gesture", "Optional. Choose Munin as the phone's digital assistant and the assist gesture (long-press power or home, depending on the phone) opens Munin's search. " +
+            "This replaces your current assistant, and Munin is only a search door: it does not listen or answer by voice. You can switch back in the same place.",
+        "Choose digital assistant", listOf(IntentSpec(action = "android.settings.VOICE_INPUT_SETTINGS"), IntentSpec(action = "android.settings.MANAGE_DEFAULT_APPS_SETTINGS")),
+    )
+
     /** What to show for this phone: standard steps always, vendor steps only on vivo/iQOO. */
     fun steps(manufacturer: String?, brand: String?): List<SetupStep> {
         val vendor = isVivoFamily(manufacturer, brand)
         return buildList {
             add(batteryList)
+            add(assistant)
             if (vendor) { add(autoStart); add(highPower) }
             add(appInfo)
         }

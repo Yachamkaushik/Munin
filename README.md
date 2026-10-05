@@ -402,5 +402,11 @@ non-existent screen, which falls back correctly). It adds no permission, in part
 **Open from anywhere: Quick Settings tile and home widget** (`launch/`): add the **Search Munin** tile (pull down the shade, pencil icon, drag it in) and/or the **Search Munin** widget (long-press the home screen,
 Widgets). Either one opens Munin on the search screen with the field focused and the keyboard up, also from a cold start. Both only react to a tap: the tile service runs nothing in the background, and the widget is static
 (`updatePeriodMillis=0`), so neither costs battery. No new permission beyond the system's own tile binding. Checked on the emulator: tile tap and widget tap both open the focused search with the keyboard shown.
-Limits: some launchers (including customised ones) place widgets differently; the widget is a simple shortcut, it does not show results. The default-assistant role and the edge-handle overlay are separate steps and are **not** built yet.
+Limits: some launchers (including customised ones) place widgets differently; the widget is a simple shortcut, it does not show results. The edge-handle overlay is a separate step and is **not** built.
+
+**Digital assistant door** (`assist/`): on the Background setup screen, *Choose digital assistant* opens the phone's own assistant picker. If you pick Munin, the assist gesture (long-press power or home, depending on the
+phone) opens Munin's search with the keyboard ready; the setup screen shows whether Munin is currently the assistant. **This replaces your current assistant (for example Google's) until you switch back in the same place, and Munin is only
+a search door: it does not listen, understand speech or answer by voice.** It does nothing until you pick it, and the system starts it only when you use the gesture. Android refuses an assistant that does not declare a recognition
+service, so a stub is declared; it has no intent filter (checked: it is not listed as a speech recognizer) and answers every request with "not supported". Checked on the emulator by selecting Munin as the assistant
+and firing the assist key. Limits: the gesture and the picker's wording differ per phone (not checked on an iQOO), and some phones tie the gesture to another app.
 force-stop from Settings cancels all scheduled work until Munin is next opened; it indexes every new image, not only screenshots; the Android 12+ rules mean the progress notification may not show for a wake-up run.
