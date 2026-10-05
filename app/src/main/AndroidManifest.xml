@@ -62,6 +62,29 @@
             </intent-filter>
         </activity>
 
+        <!-- Quick Settings tile. Only reacts to a tap; runs nothing in the background. -->
+        <service
+            android:name=".launch.SearchTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_search_tile"
+            android:label="Search Munin"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <!-- Home-screen search bar widget. Static: no update schedule. -->
+        <receiver
+            android:name=".launch.SearchWidgetProvider"
+            android:exported="true"
+            android:label="Search Munin">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/search_widget_info" />
+        </receiver>
+
         <!-- "Ask Munin" in the text-selection menu of other apps. It only reads the selected text; it never changes it. -->
         <activity-alias
             android:name=".AskMunin"

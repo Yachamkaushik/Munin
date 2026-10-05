@@ -15,6 +15,8 @@ class IncomingParserTest {
         assertEquals(Incoming.Image("content://x/1"), p(IncomingParser.ACTION_SEND, type = "image/png", uri = "content://x/1"))
     }
 
+    @Test fun theTileAndWidgetActionOpensSearch() = assertEquals(Incoming.OpenSearch, p(IncomingParser.ACTION_OPEN_SEARCH, type = null))
+
     @Test fun otherThingsAreIgnored() {
         assertNull(p(IncomingParser.ACTION_SEND, type = "application/pdf", uri = "content://x/2")) // PDFs are not read yet
         assertNull(p(IncomingParser.ACTION_SEND, type = "image/png", uri = null))

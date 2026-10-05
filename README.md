@@ -398,4 +398,9 @@ the battery-optimisation list (with the one thing Munin can read, whether it is 
 the Funtouch OS **auto-start** and **background power** screens and a tip about locking Munin in the recent-apps view. Munin cannot change or read those settings; it says so. **The Funtouch screens use component names other apps
 are known to use and have not been verified on a real iQOO by Munin's author.** Each button tries its candidates in turn and, if none exists, opens Munin's app info page and says so (checked on the emulator with a
 non-existent screen, which falls back correctly). It adds no permission, in particular not the restricted "ignore battery optimisations" permission, which Play policy limits.
+
+**Open from anywhere: Quick Settings tile and home widget** (`launch/`): add the **Search Munin** tile (pull down the shade, pencil icon, drag it in) and/or the **Search Munin** widget (long-press the home screen,
+Widgets). Either one opens Munin on the search screen with the field focused and the keyboard up, also from a cold start. Both only react to a tap: the tile service runs nothing in the background, and the widget is static
+(`updatePeriodMillis=0`), so neither costs battery. No new permission beyond the system's own tile binding. Checked on the emulator: tile tap and widget tap both open the focused search with the keyboard shown.
+Limits: some launchers (including customised ones) place widgets differently; the widget is a simple shortcut, it does not show results. The default-assistant role and the edge-handle overlay are separate steps and are **not** built yet.
 force-stop from Settings cancels all scheduled work until Munin is next opened; it indexes every new image, not only screenshots; the Android 12+ rules mean the progress notification may not show for a wake-up run.

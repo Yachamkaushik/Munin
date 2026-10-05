@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.lifecycle.Lifecycle
@@ -65,10 +66,13 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
     val ui by vm.state.collectAsState()
     val context = LocalContext.current
     LaunchedEffect(indexVersion) { vm.refresh() }
+    val keyboard = androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
+    val searchFocus = remember { androidx.compose.ui.focus.FocusRequester() }
     LaunchedEffect(incoming) {
         when (incoming) {
             is com.munin.app.incoming.Incoming.Text -> vm.searchFor(incoming.text)
             is com.munin.app.incoming.Incoming.Image -> vm.readSharedImage(incoming.uri)
+            com.munin.app.incoming.Incoming.OpenSearch -> { runCatching { searchFocus.requestFocus() }; keyboard?.show() } // field focused and keyboard up, ready to type
             null -> return@LaunchedEffect
         }
         onIncomingTaken()
@@ -78,7 +82,7 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
     Column(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text("Munin", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(top = 24.dp))
         OutlinedTextField(
-            value = ui.query, onValueChange = vm::onQuery, modifier = Modifier.fillMaxWidth(), singleLine = true,
+            value = ui.query, onValueChange = vm::onQuery, modifier = Modifier.fillMaxWidth().focusRequester(searchFocus), singleLine = true,
             label = { Text("Describe what you are looking for") },
             placeholder = { Text("Telugu, Hindi, English or a mix") },
         )

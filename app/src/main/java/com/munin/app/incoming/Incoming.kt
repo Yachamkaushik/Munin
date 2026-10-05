@@ -4,6 +4,9 @@ package com.munin.app.incoming
 sealed interface Incoming {
     data class Text(val text: String) : Incoming
     data class Image(val uri: String) : Incoming
+
+    /** Opened from the Quick Settings tile or the home-screen widget: show search with the keyboard ready. */
+    data object OpenSearch : Incoming
 }
 
 /**
@@ -13,9 +16,11 @@ sealed interface Incoming {
 object IncomingParser {
     const val ACTION_PROCESS_TEXT = "android.intent.action.PROCESS_TEXT"
     const val ACTION_SEND = "android.intent.action.SEND"
+    const val ACTION_OPEN_SEARCH = "com.munin.app.action.OPEN_SEARCH"
     const val MAX_QUERY_CHARS = 300
 
     fun parse(action: String?, type: String?, processText: String?, sendText: String?, streamUri: String?): Incoming? = when (action) {
+        ACTION_OPEN_SEARCH -> Incoming.OpenSearch
         ACTION_PROCESS_TEXT -> cleanText(processText)?.let { Incoming.Text(it) }
         ACTION_SEND -> when {
             type?.startsWith("image/") == true -> streamUri?.takeIf { it.isNotBlank() }?.let { Incoming.Image(it) }
