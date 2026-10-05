@@ -11,8 +11,8 @@ import com.munin.app.extract.PaymentExtractor
 import com.munin.app.extract.FactExtractor
 
 @Database(
-    entities = [ItemEntity::class, ChunkEntity::class, EmbeddingEntity::class, FactEntity::class, PaymentEntity::class],
-    version = 3,
+    entities = [ItemEntity::class, ChunkEntity::class, EmbeddingEntity::class, FactEntity::class, PaymentEntity::class, NotificationEntity::class],
+    version = 4,
     exportSchema = false,
 )
 abstract class MuninDatabase : RoomDatabase() {
@@ -21,6 +21,7 @@ abstract class MuninDatabase : RoomDatabase() {
     abstract fun embeddings(): EmbeddingDao
     abstract fun facts(): FactDao
     abstract fun payments(): PaymentDao
+    abstract fun notifications(): NotificationDao
 
     /** FTS5 or FTS4, decided when the database is opened. */
     @Volatile var keywordEngine: KeywordIndex.Engine = KeywordIndex.Engine.FTS4
@@ -112,11 +113,23 @@ abstract class MuninDatabase : RoomDatabase() {
             }
         }
 
+        /** v3 -> v4: the optional notification history. Only adds a table; nothing existing is touched. */
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `notifications` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `packageName` TEXT NOT NULL, " +
+                        "`appLabel` TEXT NOT NULL, `title` TEXT NOT NULL, `text` TEXT NOT NULL, `postedAt` INTEGER NOT NULL)",
+                )
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_notifications_postedAt` ON `notifications` (`postedAt`)")
+                db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_notifications_packageName_postedAt_title_text` ON `notifications` (`packageName`, `postedAt`, `title`, `text`)")
+            }
+        }
+
         fun create(context: Context, name: String? = "munin.db"): MuninDatabase {
             val builder = if (name == null) Room.inMemoryDatabaseBuilder(context, MuninDatabase::class.java)
             else Room.databaseBuilder(context, MuninDatabase::class.java, name)
             lateinit var db: MuninDatabase
-            db = builder.addMigrations(MIGRATION_1_2, MIGRATION_2_3).addCallback(object : Callback() {
+            db = builder.addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4).addCallback(object : Callback() {
                 override fun onOpen(db0: SupportSQLiteDatabase) {
                     db.keywordEngine = KeywordIndex.ensure(db0)
                 }

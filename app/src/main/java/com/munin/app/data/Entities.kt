@@ -100,6 +100,24 @@ data class FactEntity(
 )
 
 /**
+ * A notification the user chose to keep (opt-in, see notifications/). Stored on the phone only. The unique index makes re-delivery of the same
+ * notification a no-op.
+ */
+@Entity(
+    tableName = "notifications",
+    indices = [Index(value = ["postedAt"]), Index(value = ["packageName", "postedAt", "title", "text"], unique = true)],
+)
+data class NotificationEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val packageName: String,
+    val appLabel: String,
+    val title: String,
+    val text: String,
+    /** When the app posted it, epoch millis. */
+    val postedAt: Long,
+)
+
+/**
  * One row per item that was recognized as a UPI payment screenshot (readable or not). Amounts are whole paise, so
  * sums are exact. [userDecision] ("INCLUDE" / "EXCLUDE") is the user's override and survives re-extraction.
  */

@@ -81,6 +81,8 @@ data class SearchUiState(
     val shared: SharedImage? = null,
     /** Upcoming deadlines found in indexed images, offered as optional calendar entries. Nothing is created until the user confirms. */
     val reminders: List<ReminderCard> = emptyList(),
+    /** Saved notifications matching the input; only when the user has switched on notification history. */
+    val notifications: List<com.munin.app.data.NotificationEntity> = emptyList(),
     val contactsGranted: Boolean = false,
     /** The user said no to the contacts permission this session; Munin will not ask again until the app restarts. */
     val contactsDenied: Boolean = false,
@@ -223,9 +225,9 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
         job = viewModelScope.launch {
             if (debounce) delay(DEBOUNCE_MS)
             val s = _state.value
-            if (s.query.isBlank()) { _state.update { it.copy(response = null, answer = null, spending = null, error = null) }; return@launch }
+            if (s.query.isBlank()) { _state.update { it.copy(response = null, answer = null, spending = null, notifications = emptyList(), error = null) }; return@launch }
             // A calculation is answered on the spot and never searched for in files.
-            if (s.calc != null) { _state.update { it.copy(response = null, answer = null, spending = null, error = null) }; return@launch }
+            if (s.calc != null) { _state.update { it.copy(response = null, answer = null, spending = null, notifications = emptyList(), error = null) }; return@launch }
             if (!s.modelReady) return@launch
             try {
                 val (r, a) = withContext(Dispatchers.Default) {
@@ -234,7 +236,9 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
                     r to if (s.mode == SearchMode.MERGED) answers.answer(s.query, r) else AnswerOutcome.NotAQuestion
                 }
                 val spending = withContext(Dispatchers.Default) { spendingAnswer(s.query) }
-                _state.update { it.copy(response = r, answer = a, spending = spending, error = null) }
+                val notes = if (com.munin.app.notifications.NotificationSettings.enabled(muninApp))
+                    withContext(Dispatchers.IO) { muninApp.database.notifications().search(com.munin.app.notifications.NotificationFilter.terms(s.query)) } else emptyList()
+                _state.update { it.copy(response = r, answer = a, spending = spending, notifications = notes, error = null) }
             } catch (e: kotlinx.coroutines.CancellationException) {
                 throw e
             } catch (e: Exception) {

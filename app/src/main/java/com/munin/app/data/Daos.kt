@@ -1,5 +1,7 @@
 package com.munin.app.data
 
+import androidx.room.RawQuery
+import com.munin.app.notifications.NotificationFilter
 import androidx.room.Dao
 import androidx.room.Embedded
 import androidx.room.Insert
@@ -117,6 +119,36 @@ interface EmbeddingDao {
 
     @Query("SELECT COUNT(*) FROM embeddings WHERE modelVersion != :version")
     suspend fun countOtherVersions(version: String): Int
+}
+
+@Dao
+interface NotificationDao {
+    @Insert(onConflict = androidx.room.OnConflictStrategy.IGNORE)
+    suspend fun insert(n: NotificationEntity): Long
+
+    @RawQuery
+    suspend fun rawSearch(query: androidx.sqlite.db.SupportSQLiteQuery): List<NotificationEntity>
+
+    @Query("SELECT COUNT(*) FROM notifications")
+    suspend fun count(): Int
+
+    @Query("DELETE FROM notifications")
+    suspend fun deleteAll()
+
+    @Query("DELETE FROM notifications WHERE postedAt < :cutoff")
+    suspend fun deleteOlderThan(cutoff: Long)
+
+    /** Keeps only the newest [keep] rows. */
+    @Query("DELETE FROM notifications WHERE id NOT IN (SELECT id FROM notifications ORDER BY postedAt DESC, id DESC LIMIT :keep)")
+    suspend fun trimTo(keep: Int)
+
+    /** Every term must appear in the app name, title or text. */
+    suspend fun search(terms: List<String>, limit: Int = NotificationFilter.RESULT_LIMIT): List<NotificationEntity> {
+        if (terms.isEmpty()) return emptyList()
+        val where = terms.joinToString(" AND ") { "(title LIKE ? ESCAPE '\\' OR text LIKE ? ESCAPE '\\' OR appLabel LIKE ? ESCAPE '\\')" }
+        val args = terms.flatMap { t -> val p = "%" + NotificationFilter.escapeLike(t) + "%"; listOf(p, p, p) }
+        return rawSearch(androidx.sqlite.db.SimpleSQLiteQuery("SELECT * FROM notifications WHERE $where ORDER BY postedAt DESC LIMIT $limit", args.toTypedArray()))
+    }
 }
 
 @Dao

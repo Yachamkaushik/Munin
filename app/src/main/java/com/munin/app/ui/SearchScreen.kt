@@ -125,6 +125,10 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
                     item { GroupHeader("Apps") }
                     items(ui.apps, key = { it.app.component }) { AppRow(it.app) { app -> if (!vm.openApp(app)) android.widget.Toast.makeText(context, "Could not open ${app.label}.", android.widget.Toast.LENGTH_SHORT).show() } }
                 }
+                if (ui.notifications.isNotEmpty()) {
+                    item { GroupHeader("Saved notifications (${ui.notifications.size})") }
+                    items(ui.notifications, key = { "n${it.id}" }) { NotificationRow(it) }
+                }
                 val calc = ui.calc
                 when {
                     calc != null -> {
@@ -263,6 +267,19 @@ private fun RemindersCard(cards: List<ReminderCard>, onHandled: (String) -> Unit
         }
     }
     open?.let { c -> c.plan?.let { ActionConfirmDialog(it, onClose = { open = null }, onConfirmed = { onHandled(c.key) }) } }
+}
+
+/** A notification the user chose to keep. Read-only: it is a record of what was shown, not a link into the other app. */
+@Composable
+private fun NotificationRow(n: com.munin.app.data.NotificationEntity) {
+    val whenText = remember(n.postedAt) { java.time.format.DateTimeFormatter.ofPattern("d MMM, HH:mm").format(java.time.Instant.ofEpochMilli(n.postedAt).atZone(java.time.ZoneId.systemDefault())) }
+    Card(Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text("${n.appLabel} · $whenText", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            if (n.title.isNotBlank()) Text(n.title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
+            if (n.text.isNotBlank()) Text(n.text, style = MaterialTheme.typography.bodyMedium, maxLines = 4)
+        }
+    }
 }
 
 @Composable

@@ -19,9 +19,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import kotlinx.coroutines.launch
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -61,6 +63,7 @@ fun IndexScreen(vm: IndexViewModel = viewModel(), onOpenSetup: () -> Unit = {}) 
         item { AccessCard(ui.access, onGrant = ::requestAccess) }
         item { ProgressCard(ui, onStart = { if (ui.access == MediaAccessState.NONE) requestAccess() else vm.startIndexing() }, onClear = vm::clearIndex) }
         item { AutoCard(ui.autoOn, enabled = ui.access != MediaAccessState.NONE, onChange = vm::setAuto, onOpenSetup = onOpenSetup) }
+        item { NotificationHistoryCard() }
         item { TeluguCard(ui.teluguOn, vm::setTelugu) }
         item {
             Text(
@@ -89,6 +92,51 @@ private fun AutoCard(on: Boolean, enabled: Boolean, onChange: (Boolean) -> Unit,
                 if (enabled) androidx.compose.material3.TextButton(onClick = onOpenSetup) { Text("Background setup: help it run on time") }
             }
             androidx.compose.material3.Switch(checked = on, onCheckedChange = onChange, enabled = enabled)
+        }
+    }
+}
+
+/** Optional notification history. Two switches must both be on (the phone's Notification access and this one); either can be turned off at any time. */
+@Composable
+private fun NotificationHistoryCard() {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    val db = (context.applicationContext as com.munin.app.MuninApp).database
+    var on by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(com.munin.app.notifications.NotificationSettings.enabled(context)) }
+    var access by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(com.munin.app.notifications.NotificationSettings.accessGranted(context)) }
+    var saved by androidx.compose.runtime.remember { androidx.compose.runtime.mutableIntStateOf(0) }
+    fun reload() { access = com.munin.app.notifications.NotificationSettings.accessGranted(context); scope.launch { saved = db.notifications().count() } }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { reload() }
+    Card(Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text("Search my notifications (optional)", style = MaterialTheme.typography.titleSmall)
+                    Text(
+                        "Keeps the title and text of notifications that arrive from now on, on this phone only, for ${com.munin.app.notifications.NotificationFilter.RETENTION_DAYS} days, so you can search them. " +
+                            "Ongoing notifications and messages that look like one-time codes are skipped; other private messages are kept, so only switch this on if you are comfortable with that. " +
+                            "Needs the phone's Notification access for Munin.",
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+                androidx.compose.material3.Switch(checked = on, onCheckedChange = { want ->
+                    com.munin.app.notifications.NotificationSettings.setEnabled(context, want); on = want; reload()
+                })
+            }
+            Text(
+                when {
+                    !on -> "Off. Nothing is being saved."
+                    !access -> "Waiting for Notification access. Allow it below, or nothing will be saved."
+                    else -> "On. $saved saved."
+                },
+                style = MaterialTheme.typography.labelMedium,
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                if (!access) OutlinedButton(onClick = {
+                    runCatching { context.startActivity(android.content.Intent(android.provider.Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)) }
+                }) { Text("Open notification access") }
+                if (saved > 0) OutlinedButton(onClick = { scope.launch { db.notifications().deleteAll(); reload() } }) { Text("Delete saved notifications") }
+            }
         }
     }
 }
