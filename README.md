@@ -3,8 +3,8 @@
 Offline, on-device semantic search for screenshots, document photos and PDFs on Android, in Telugu, Hindi,
 English, Roman-script Telugu, or a mix. No INTERNET permission; models are bundled in the APK.
 
-Status: **step 2 of 7** (indexing pipeline). Photos are scanned, OCR'd, chunked, embedded and stored, with progress.
-There is no search UI yet (step 3).
+Status: **step 3 of 7** (search). Photos are indexed (step 2) and searchable by meaning and by keywords, merged.
+No answer extraction, actions, ledger or voice yet.
 
 ## Setup
 
@@ -94,3 +94,37 @@ adb push tools/sample_images /sdcard/Pictures/MuninSamples  # then open Munin an
 - With partial photo access the scan can only see the shared photos, so it does not delete rows for files it cannot see.
 - The first OCR call costs about 30 s on the emulator (model load). The worker warms the models up before item 1 and the
   UI shows medians, so that one-off cost is not mixed into per-item time.
+
+## Step 3: search
+
+One search box. Each query is embedded (`query: ` prefix), then two legs run: **meaning** (cosine over every stored
+vector, brute force) and **keywords** (BM25 over the FTS4 table, computed from `matchinfo` because FTS4 has no
+`bm25()`). The legs' top 50 chunks are merged with reciprocal rank fusion (k = 60), grouped to one result per item,
+and shown as thumbnail + snippet with matched words in bold. The debug line shows per-stage time. "Merged", "Meaning
+only" and "Keywords only" chips switch legs (used for the later keyword vs embeddings vs merged comparison).
+
+| Check (Pixel 8 emulator) | Result |
+|---|---|
+| `hostel fee receipt` over the real UI index (39 vectors) | English receipt #1 (meaning #1, keywords #1); Hindi receipt #2 by meaning only |
+| Telugu `హాస్టల్ ఫీజు రసీదు` over a test corpus | Telugu receipt #1 |
+| Exact id `4821937560` | found by keywords (and merged) |
+| Keyword leg across languages | `hostel fee` never returns the Telugu receipt, and vice versa |
+| Meaning leg across languages | Hindi `छात्रावास शुल्क` -> Hindi, Telugu, English receipts top 3; Roman Telugu `current bill entha` -> electricity bill #1 |
+| Search time, 8 vectors | median 20 ms (query embedding ~15 ms, scan ~1 ms) |
+| Brute-force scan, random unit vectors | 5,000 vectors: 4.4 ms; 20,000 vectors: 17.6 ms (index load 76 ms / 532 ms) |
+| Tests | 24 JVM + 20 on-device, all pass |
+
+### Known weaknesses (not fixed yet)
+
+- **No relevance cutoff.** The meaning leg always returns its nearest neighbours, so a nonsense query such as
+  `qwertyzzz` still lists five items, and in the UI a query that matches one receipt also lists unrelated ones further
+  down (E5 cosine scores sit in a narrow 0.8-0.9 band, so an absolute threshold is fragile). Fusion keeps genuine
+  double matches on top, but the tail is noise. The evaluation step should choose a cutoff from data.
+- **A Telugu image is not searchable by its own text** because OCR cannot read it (step 2). The Telugu receipt in the
+  UI index was dropped as low-confidence OCR junk, so it never appears. Telugu *queries* work against the text that was
+  read, and against Telugu text that is typed in (as in the test corpus).
+- **Stopword-only queries** ("how much was the") have no keyword terms, so only the meaning leg answers, loosely.
+- **The FTS5 query path is untested**: Android's SQLite has no FTS5, so only the FTS4 path runs on devices.
+- First query after launch pays the model load (the screen says so) and a cold embedding (~150 ms in the UI).
+- Tapping a result opens the file in the gallery app. There is no item detail screen yet.
+- The mode chips and debug switch are developer controls, not final UI.

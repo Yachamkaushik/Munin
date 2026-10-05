@@ -1,20 +1,15 @@
 package com.munin.app.ui
 
 import android.Manifest
-import android.net.Uri
 import android.os.Build
-import android.util.Size
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -27,11 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -41,8 +32,6 @@ import com.munin.app.data.ItemStatus
 import com.munin.app.data.RecentItem
 import com.munin.app.index.MediaAccess
 import com.munin.app.index.MediaAccessState
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 @Composable
 fun IndexScreen(vm: IndexViewModel = viewModel()) {
@@ -133,7 +122,7 @@ private fun ProgressCard(ui: IndexUiState, onStart: () -> Unit, onClear: () -> U
 @Composable
 private fun RecentRow(item: RecentItem) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        Thumbnail(item.uri)
+        Thumbnail(item.uri, 56)
         Column(Modifier.weight(1f)) {
             Text(item.displayName, maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.bodyMedium)
             val timing = if (item.ocrMs != null) " · OCR ${item.ocrMs} ms" else ""
@@ -148,18 +137,5 @@ private fun RecentRow(item: RecentItem) {
             )
             item.snippet?.let { Text(it.replace('\n', ' '), maxLines = 2, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.bodySmall) }
         }
-    }
-}
-
-@Composable
-private fun Thumbnail(uri: String) {
-    val context = LocalContext.current
-    val bitmap by produceState<androidx.compose.ui.graphics.ImageBitmap?>(null, uri) {
-        value = withContext(Dispatchers.IO) {
-            runCatching { context.contentResolver.loadThumbnail(Uri.parse(uri), Size(160, 160), null).asImageBitmap() }.getOrNull()
-        }
-    }
-    Box(Modifier.size(56.dp)) {
-        bitmap?.let { Image(it, null, Modifier.fillMaxSize(), contentScale = ContentScale.Crop) }
     }
 }

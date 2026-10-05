@@ -75,8 +75,17 @@ interface ItemDao {
     fun recent(limit: Int): Flow<List<RecentItem>>
 }
 
+/** A chunk with the item it belongs to, for showing a search result. */
+data class ChunkWithItem(val chunkId: Long, val itemId: Long, val text: String, val uri: String, val displayName: String)
+
 @Dao
 interface ChunkDao {
+    @Query(
+        """SELECT c.id AS chunkId, c.itemId AS itemId, c.text AS text, i.uri AS uri, i.displayName AS displayName
+           FROM chunks c JOIN items i ON i.id = c.itemId WHERE c.id IN (:ids)""",
+    )
+    suspend fun withItems(ids: List<Long>): List<ChunkWithItem>
+
     @Insert
     suspend fun insertAll(chunks: List<ChunkEntity>): List<Long>
 

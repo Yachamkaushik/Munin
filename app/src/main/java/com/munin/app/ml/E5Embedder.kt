@@ -5,6 +5,7 @@ import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
 import android.content.Context
 import com.munin.app.index.PassageEmbedder
+import com.munin.app.search.QueryEmbedder
 import java.io.File
 import kotlin.math.sqrt
 
@@ -13,7 +14,7 @@ class E5Embedder private constructor(
     val tokenizer: E5Tokenizer,
     private val env: OrtEnvironment,
     private val session: OrtSession,
-) : PassageEmbedder, AutoCloseable {
+) : PassageEmbedder, QueryEmbedder, AutoCloseable {
 
     override val modelVersion: String = MODEL_VERSION
 
@@ -21,7 +22,7 @@ class E5Embedder private constructor(
 
     override fun embedPassage(text: String): FloatArray = embedRaw(E5Tokenizer.PASSAGE_PREFIX + text)
 
-    fun embedQuery(text: String): FloatArray = embedRaw(E5Tokenizer.QUERY_PREFIX + text)
+    override fun embedQuery(text: String): FloatArray = embedRaw(E5Tokenizer.QUERY_PREFIX + text)
 
     /** Embeds [inputText] verbatim, i.e. with the "query: "/"passage: " prefix already applied. */
     fun embedRaw(inputText: String): FloatArray = embedIds(tokenizer.encodeForModel(inputText))
