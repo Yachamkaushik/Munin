@@ -4,6 +4,7 @@ import ai.onnxruntime.OnnxTensor
 import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
 import android.content.Context
+import com.munin.app.index.PassageEmbedder
 import java.io.File
 import kotlin.math.sqrt
 
@@ -12,9 +13,13 @@ class E5Embedder private constructor(
     val tokenizer: E5Tokenizer,
     private val env: OrtEnvironment,
     private val session: OrtSession,
-) : AutoCloseable {
+) : PassageEmbedder, AutoCloseable {
 
-    fun embedPassage(text: String): FloatArray = embedRaw(E5Tokenizer.PASSAGE_PREFIX + text)
+    override val modelVersion: String = MODEL_VERSION
+
+    override fun countTokens(text: String): Int = tokenizer.encode(text).size
+
+    override fun embedPassage(text: String): FloatArray = embedRaw(E5Tokenizer.PASSAGE_PREFIX + text)
 
     fun embedQuery(text: String): FloatArray = embedRaw(E5Tokenizer.QUERY_PREFIX + text)
 

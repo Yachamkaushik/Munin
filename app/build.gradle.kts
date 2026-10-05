@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -41,12 +42,21 @@ dependencies {
     debugImplementation(libs.compose.tooling)
     implementation(libs.activity.compose)
     implementation(libs.lifecycle.runtime.compose)
+    implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.coroutines.android)
     implementation(libs.onnxruntime.android)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    implementation(libs.work.runtime.ktx)
+    implementation(libs.mlkit.text)
+    implementation(libs.mlkit.text.devanagari)
 
     testImplementation(libs.junit)
     testImplementation(libs.json)
+    testImplementation(libs.coroutines.test)
     androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.coroutines.test)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.androidx.test.ext.junit)
 }

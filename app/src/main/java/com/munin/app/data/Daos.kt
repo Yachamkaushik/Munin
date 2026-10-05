@@ -1,0 +1,109 @@
+package com.munin.app.data
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
+
+data class StatusCount(val status: String, val count: Int)
+
+/** A processed item for the progress screen: the first chunk's text stands in as a snippet. */
+data class RecentItem(
+    val id: Long,
+    val uri: String,
+    val displayName: String,
+    val status: String,
+    val error: String?,
+    val ocrMs: Long?,
+    val embedMs: Long?,
+    val snippet: String?,
+)
+
+data class ExistingItem(val id: Long, val uri: String, val modifiedAt: Long, val sizeBytes: Long)
+
+@Dao
+interface ItemDao {
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertIgnore(item: ItemEntity): Long
+
+    @Update
+    suspend fun update(item: ItemEntity)
+
+    @Query("SELECT * FROM items WHERE status = 'PENDING' ORDER BY addedAt DESC, id DESC LIMIT 1")
+    suspend fun nextPending(): ItemEntity?
+
+    @Query("SELECT COUNT(*) FROM items WHERE status = 'PENDING'")
+    suspend fun pendingCount(): Int
+
+    @Query("SELECT COUNT(*) FROM items")
+    suspend fun totalCount(): Int
+
+    @Query("SELECT id, uri, modifiedAt, sizeBytes FROM items")
+    suspend fun allExisting(): List<ExistingItem>
+
+    @Query("SELECT COUNT(*) FROM items WHERE contentHash = :hash AND id != :excludeId AND status IN ('INDEXED', 'NO_TEXT')")
+    suspend fun countIndexedWithHash(hash: String, excludeId: Long): Int
+
+    @Query("DELETE FROM items WHERE id IN (:ids)")
+    suspend fun deleteByIds(ids: List<Long>)
+
+    @Query("DELETE FROM items")
+    suspend fun deleteAll()
+
+    @Query("UPDATE items SET status = 'PENDING', error = NULL WHERE status = 'FAILED'")
+    suspend fun retryFailed()
+
+    @Query("SELECT status, COUNT(*) AS count FROM items GROUP BY status")
+    fun statusCounts(): Flow<List<StatusCount>>
+
+    @Query("SELECT ocrMs FROM items WHERE ocrMs IS NOT NULL ORDER BY ocrMs")
+    fun ocrTimes(): Flow<List<Long>>
+
+    @Query("SELECT embedMs FROM items WHERE embedMs IS NOT NULL ORDER BY embedMs")
+    fun embedTimes(): Flow<List<Long>>
+
+    @Query("SELECT displayName FROM items WHERE status = 'PENDING' ORDER BY addedAt DESC, id DESC LIMIT 1")
+    fun nextPendingName(): Flow<String?>
+
+    @Query(
+        """SELECT i.id, i.uri, i.displayName, i.status, i.error, i.ocrMs, i.embedMs, c.text AS snippet
+           FROM items i LEFT JOIN chunks c ON c.itemId = i.id AND c.ordinal = 0
+           WHERE i.status != 'PENDING' ORDER BY i.indexedAt DESC, i.id DESC LIMIT :limit""",
+    )
+    fun recent(limit: Int): Flow<List<RecentItem>>
+}
+
+@Dao
+interface ChunkDao {
+    @Insert
+    suspend fun insertAll(chunks: List<ChunkEntity>): List<Long>
+
+    @Query("SELECT id FROM chunks WHERE itemId IN (:itemIds)")
+    suspend fun idsForItems(itemIds: List<Long>): List<Long>
+
+    @Query("SELECT id FROM chunks")
+    suspend fun allIds(): List<Long>
+
+    @Query("SELECT COUNT(*) FROM chunks")
+    suspend fun count(): Int
+}
+
+@Dao
+interface EmbeddingDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(rows: List<EmbeddingEntity>)
+
+    @Query("SELECT COUNT(*) FROM embeddings")
+    suspend fun count(): Int
+
+    @Query("SELECT COUNT(*) FROM embeddings WHERE modelVersion != :version")
+    suspend fun countOtherVersions(version: String): Int
+}
+
+@Dao
+interface FactDao {
+    @Query("SELECT COUNT(*) FROM facts")
+    suspend fun count(): Int
+}

@@ -10,8 +10,17 @@
     <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove" />
 
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
     <application
+        android:name=".MuninApp"
         android:allowBackup="false"
+        android:largeHeap="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:label="Munin"
         android:theme="@android:style/Theme.Material.Light.NoActionBar">
@@ -20,6 +29,12 @@
             android:name="ai.onnxruntime.TelemetryInitializer"
             android:authorities="${applicationId}.onnxruntime_telemetry_initializer"
             tools:node="remove" />
+
+        <!-- Lets the WorkManager indexing job run as a foreground service (type dataSync). -->
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync"
+            tools:node="merge" />
 
         <activity
             android:name=".MainActivity"
