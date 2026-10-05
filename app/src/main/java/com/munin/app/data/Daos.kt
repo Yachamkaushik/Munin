@@ -1,6 +1,7 @@
 package com.munin.app.data
 
 import androidx.room.Dao
+import androidx.room.Embedded
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -140,4 +141,31 @@ interface FactDao {
 
     @Query("UPDATE items SET factsVersion = :version WHERE id = :itemId")
     suspend fun markExtracted(itemId: Long, version: Int)
+}
+
+/** A stored payment with where it came from, for the ledger screen. */
+data class PaymentWithItem(@Embedded val payment: PaymentEntity, val uri: String, val displayName: String)
+
+@Dao
+interface PaymentDao {
+    @Insert
+    suspend fun insert(payment: PaymentEntity)
+
+    @Query("SELECT * FROM payments WHERE itemId = :itemId")
+    suspend fun byItem(itemId: Long): PaymentEntity?
+
+    @Query("DELETE FROM payments WHERE itemId = :itemId")
+    suspend fun deleteForItem(itemId: Long)
+
+    @Query("UPDATE payments SET userDecision = :decision WHERE id = :id")
+    suspend fun setDecision(id: Long, decision: String?)
+
+    @Query("SELECT p.*, i.uri AS uri, i.displayName AS displayName FROM payments p JOIN items i ON i.id = p.itemId")
+    fun all(): Flow<List<PaymentWithItem>>
+
+    @Query("SELECT p.*, i.uri AS uri, i.displayName AS displayName FROM payments p JOIN items i ON i.id = p.itemId")
+    suspend fun allNow(): List<PaymentWithItem>
+
+    @Query("SELECT COUNT(*) FROM payments")
+    suspend fun count(): Int
 }

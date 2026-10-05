@@ -5,7 +5,6 @@ import com.munin.app.data.ItemEntity
 import com.munin.app.data.ItemStatus
 import com.munin.app.data.MuninDatabase
 import com.munin.app.data.VectorCodec
-import com.munin.app.extract.FactExtractor
 import java.io.InputStream
 import java.security.MessageDigest
 import kotlinx.coroutines.CancellationException
@@ -74,7 +73,7 @@ class Indexer(
             )
             // After the item update, which would otherwise reset factsVersion. If we die before this line the
             // item has no facts and factsVersion 0, and the next backfill fills them in from the saved chunks.
-            db.replaceFacts(item.id, FactExtractor.extract(chunks.joinToString("\n")))
+            db.replaceFacts(item.id, chunks.joinToString("\n"))
         } catch (e: CancellationException) {
             throw e // stays PENDING and is picked up again
         } catch (e: Exception) {

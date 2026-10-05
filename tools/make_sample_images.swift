@@ -44,6 +44,27 @@ render("sample_te_hostel_fee", lines: [
 render("sample_en_clinic_card", lines: [
     ("Apollo Clinic", 70, true), ("Appointment card", 52, false), ("Address: Road No 36, Jubilee Hills", 52, false),
     ("Hyderabad 500033", 52, false), ("Phone: 98765 43210", 56, true), ("Appointment: 20 Sep 2026, 10:30 AM", 52, false)])
+// ---- synthetic UPI payment screenshots in three layouts (A: amount first, B: status first, C: label then payee) ----
+func payLines(_ layout: Int, amount: String, payee: String, date: String, ref: String, status: String? = nil, received: Bool = false, hideDate: Bool = false) -> [(String, CGFloat, Bool)] {
+    let d: [(String, CGFloat, Bool)] = hideDate ? [] : [(date, 48, false)]
+    switch layout {
+    case 0: return [("Google Pay", 54, true), (amount, 100, true), (status ?? "Completed", 52, false),
+                    (received ? "From \(payee)" : "To \(payee)", 56, true)] + d + [("UPI transaction ID", 44, false), (ref, 48, false)]
+    case 1: return [("PhonePe", 54, true), (status ?? "Payment Successful", 56, true), (amount, 100, true),
+                    (received ? "Received from \(payee)" : "Paid to \(payee)", 56, false)] + d + [("UTR: \(ref)", 48, false), ("Debited from XXXX1234", 44, false)]
+    default: return [("Paytm UPI", 54, true), (status ?? "Paid Successfully", 56, true), (received ? "Received from" : "Paid to", 50, false),
+                     (payee, 56, true), (amount, 100, true)] + d + [("UPI Ref No: \(ref)", 48, false)]
+    }
+}
+render("sample_pay_a_chaipoint", lines: payLines(0, amount: "₹ 180", payee: "Chai Point", date: "21 Sep 2026, 9:10 AM", ref: "618800112233"))
+render("sample_pay_b_ravitea", lines: payLines(1, amount: "₹ 450", payee: "Ravi Tea Stall", date: "Sep 18, 2026 at 08:15 AM", ref: "609123456789"))
+render("sample_pay_c_pharmacy", lines: payLines(2, amount: "₹ 1,275.50", payee: "Sunrise Pharmacy", date: "22 Sep 2026, 11:02 AM", ref: "609876543210"))
+render("sample_pay_b_chaipoint_again", lines: payLines(1, amount: "₹180", payee: "Chai Point", date: "Sep 21, 2026 at 09:10 AM", ref: "618800112233"))
+render("sample_pay_b_failed", lines: payLines(1, amount: "₹ 300", payee: "Metro Mart", date: "Sep 19, 2026 at 04:20 PM", ref: "611100223344", status: "Payment failed"))
+render("sample_pay_a_received", lines: payLines(0, amount: "₹ 500", payee: "Priya Sharma", date: "23 Sep 2026, 2:00 PM", ref: "612200334455", status: "Money received", received: true))
+render("sample_pay_a_nodate", lines: payLines(0, amount: "₹ 210", payee: "Campus Canteen", date: "", ref: "613300445566", hideDate: true))
+render("sample_pay_c_aug_hotel", lines: payLines(2, amount: "₹ 3,200", payee: "Hotel Annapurna", date: "12 Aug 2026, 7:30 PM", ref: "607700112244"))
+render("sample_pay_a_aug_chai", lines: payLines(0, amount: "₹ 95", payee: "Chai Point", date: "28 Aug 2026, 5:05 PM", ref: "607711223344"))
 render("sample_no_text", lines: [], footer: false)
 render("sample_tiny_icon", width: 96, height: 96, lines: [("Hi", 30, true)], footer: false)
 print("wrote images to \(out)")

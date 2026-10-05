@@ -12,7 +12,10 @@ import java.time.LocalDate
  */
 object FactExtractor {
     /** Bump when the rules change; stored items with an older version are re-extracted from their saved text. */
-    const val VERSION = 2
+    const val VERSION = 4
+
+    /** 1..12 for an English, Hindi or Telugu month name or abbreviation, else null. */
+    fun monthNumber(word: String): Int? = MONTHS[word.lowercase()]
 
     /** Splits text into the same trimmed, non-empty lines the chunker produces, so line numbers agree. */
     fun lines(text: String): List<String> = text.lines().map { it.trim().replace(WS, " ") }.filter { it.isNotEmpty() }
@@ -146,7 +149,7 @@ object FactExtractor {
     private val CUR_PREFIX = Regex("$CUR\\s?($NUM)", RegexOption.IGNORE_CASE)
     private val CUR_SUFFIX = Regex("($NUM)\\s?(?:/-|rs\\b|rupees|रुपये|రూపాయలు)", RegexOption.IGNORE_CASE)
     private val PLAIN_NUM = Regex("(?<![\\d,.])($NUM)(?![\\d,]|\\.\\d)")
-    private val STANDALONE = Regex("^[₹ITt?|]?\\s?($NUM)$")
+    private val STANDALONE = Regex("^[₹ITt?|\u0966-\u096F\u0C66-\u0C6F\u0660-\u0669]?\\s?($NUM)$")
     private val AMOUNT_LABEL = Regex(
         "amount|paid|total|fees?\\b|due|balance|payable|price|charges?|bill|cost|राशि|रकम|शुल्क|कुल|जमा|मूल्य|మొత్తం|ఫీజు|చెల్లించిన|ధర",
         RegexOption.IGNORE_CASE,

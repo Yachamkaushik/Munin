@@ -98,3 +98,34 @@ data class FactEntity(
     val label: String? = null,
     @ColumnInfo(defaultValue = "0") val lineIndex: Int = 0,
 )
+
+/**
+ * One row per item that was recognized as a UPI payment screenshot (readable or not). Amounts are whole paise, so
+ * sums are exact. [userDecision] ("INCLUDE" / "EXCLUDE") is the user's override and survives re-extraction.
+ */
+@Entity(
+    tableName = "payments",
+    foreignKeys = [ForeignKey(ItemEntity::class, ["id"], ["itemId"], onDelete = ForeignKey.CASCADE)],
+    indices = [Index("itemId", unique = true), Index("paidDate")],
+)
+data class PaymentEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val itemId: Long,
+    val app: String?,
+    /** A [com.munin.app.extract.PaymentOutcome] name. */
+    val outcome: String,
+    /** A [com.munin.app.extract.PaymentDirection] name. */
+    val direction: String,
+    val amountPaise: Long?,
+    val amountConfidence: Float,
+    val amountRaw: String?,
+    val payee: String?,
+    val upiId: String?,
+    /** ISO date (yyyy-MM-dd); decides which month the payment belongs to. */
+    val paidDate: String?,
+    val paidTime: String?,
+    val reference: String?,
+    /** Why the ledger cannot use this screenshot (e.g. "date not read"), or null if it is readable. */
+    val problem: String?,
+    val userDecision: String?,
+)

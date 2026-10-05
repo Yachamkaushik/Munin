@@ -3,8 +3,8 @@
 Offline, on-device semantic search for screenshots, document photos and PDFs on Android, in Telugu, Hindi,
 English, Roman-script Telugu, or a mix. No INTERNET permission; models are bundled in the APK.
 
-Status: **step 5 of 7** (smart actions). Photos are indexed, searchable by meaning and keywords, value questions are
-answered with the source, and facts offer confirm-first actions (calendar, call, maps, share). No ledger or voice yet.
+Status: **step 6 of 7** (payment ledger). Photos are indexed and searchable, value questions are answered with the source,
+facts offer confirm-first actions, and UPI payment screenshots feed an exact monthly ledger. No voice yet.
 
 ## Setup
 
@@ -221,3 +221,55 @@ no network permission. Low-confidence values (a guessed amount, a missing year, 
 
 Bugs found on the way: `AnswerFormat.display` threw on a malformed stored date (now falls back to the stored text); address labels
 kept their colon ("Address::"), fixed and re-extracted via `FactExtractor.VERSION = 2`.
+
+## Step 6: payment screenshot ledger
+
+UPI payment screenshots are recognised by rules (`extract/PaymentExtractor`): a UPI signal (UPI / UTR / an app name / a UPI id)
+plus a payment cue ("Paid to", "Payment successful", ...) plus evidence (a reference label or a currency marker). A receipt,
+bill or note that only mentions "paid to" is not a payment. Amount, payee, date and time, and the reference number
+(UTR / UPI ref, preferred over a generic "Transaction ID") are read per label rather than per position, because apps lay the
+same fields out differently. Failed, pending and *received* payments are recognised and kept out of spending.
+
+**Totals are exact.** Money is stored as whole paise (`Long`), so a total is a plain integer sum with no float rounding
+(a test adds 10p + 20p + ...). Every payment screenshot lands in exactly one bucket, and only the first is summed:
+
+| Bucket | Why it is there |
+|---|---|
+| **Counted** | readable, successful, paid by you, amount read with explicit evidence, not a duplicate |
+| Needs a check | the amount was a guess (the ₹ sign was not read); you can Include or Exclude it |
+| Duplicates | the same payment screenshotted again, matched by reference (or by a full timestamp when there is none) |
+| Failed / pending / received | not money you spent |
+| Could not be read | recognised as a payment but missing an amount or a dated month, with the reason |
+| Excluded by you | your override; it survives re-extraction |
+
+The Ledger tab shows the monthly chart, the selected month's exact total, the counted screenshots with an Exclude button, top
+payees, and every bucket above. It is titled "Spending from your screenshots" with a note that it is not total spending.
+"how much did I spend in September" (also in Hindi/Telugu, or "this month", "last month") is answered from the same numbers, with
+how many flagged and unreadable screenshots were left out.
+
+| Check | Result |
+|---|---|
+| Tests | 120 JVM, 43 on-device, all pass |
+| Synthetic corpus: 60 payments x 3 layouts x 5 currency styles, plus 10 re-screenshotted duplicates, 12 failed/pending/received/date-less | every field exact; monthly and overall totals equal the true sums to the paisa; 10 duplicates, 9 not-spending, 3 unreadable |
+| Real OCR on 9 synthetic payment screenshots (emulator) | 9/9 detected as payments, 44 of 45 fields exact (the miss: a failed payment's time) |
+| Real UI | "how much did I spend in September" -> ₹630 (₹450 + ₹180) with 2 flagged and 1 unreadable noted; Including the flagged ₹1,275.50 payment -> ₹1,905.50, all months ₹2,000.50 |
+| Upgrade from a real schema-v2 database (43 items) | migrated in place, every indexed item re-extracted from saved text |
+
+### What real OCR taught us (and the fixes)
+
+- ₹ came back as `३` (a Devanagari digit), so "₹180" was read as 3,180. Digit runs that mix scripts are no longer converted,
+  so it reads 180 and, because the rupee sign was not read, is flagged "needs a check" rather than counted. In this run 3 of 9
+  amounts were flagged that way (two of them correct), so the guard costs recall but protected the one that was wrong.
+- "UPI transaction ID" came back as `UP transaction ।D` and `UPI transaction lD`; the reference label now tolerates I/l/1/|/danda.
+
+### Limits
+
+- **Only synthetic layouts have been tested.** The three layouts (amount first / status first / label then payee) are written from
+  general knowledge of UPI receipts, not from real app screenshots, and real ones will differ. Rules are label-driven to cope, but expect misses
+  until they are tried on real screenshots (blanked of private details).
+- Payee extraction is English-only; Hindi/Telugu payment screens would be recognised only if they also contain the English UPI wording.
+- Without a reference number, only an exact amount + payee + date + time match counts as a duplicate. Two real purchases of the same
+  amount from the same payee in the same minute would be merged; two screenshots with no time would not be merged at all.
+- A screenshot with no readable date cannot be placed in a month, so it is listed as unreadable and never summed.
+- OCR can still misread digits in a way no confidence flag reveals (e.g. a 5 read as 6); the source image is one tap away from every row.
+- The ledger covers screenshots only: no bank access, no SMS, nothing outside the images indexed on this phone.

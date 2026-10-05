@@ -35,6 +35,13 @@ class FactExtractorTest {
         assertEquals(listOf("1250"), values("మొత్తం: రూ. ౧,౨౫౦", AMOUNT))
     }
 
+    @Test fun mixedScriptDigitRunsAreNotConverted() {
+        assertEquals("३180", Digits.toAscii("३180")) // OCR's rendering of ₹180
+        assertEquals("45,000 45,000", Digits.toAscii("४५,००० ४५,०००")) // separate pure runs convert independently
+        assertEquals("45,000", Digits.toAscii("४५,०००"))
+        assertEquals("12/09/2026", Digits.toAscii("१२/०९/२०२६"))
+    }
+
     @Test fun amountWhenTheRupeeSignWasLostByOcr() { // real OCR output from the emulator run
         assertEquals(listOf("1250"), values("Amount due: 1,250", AMOUNT))
         assertEquals(listOf("45000"), values("जमा राशिः ₹45,000", AMOUNT))

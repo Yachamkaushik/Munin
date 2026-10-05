@@ -15,11 +15,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.munin.app.ui.IndexScreen
 import com.munin.app.ui.ItemDetailScreen
+import com.munin.app.ui.LedgerScreen
 import com.munin.app.ui.SearchScreen
 
 class MainActivity : ComponentActivity() {
@@ -30,19 +32,22 @@ class MainActivity : ComponentActivity() {
                 Surface(Modifier.fillMaxSize()) {
                     var tab by rememberSaveable { mutableStateOf(0) }
                     var indexVersion by rememberSaveable { mutableIntStateOf(0) }
+                    var ledgerMonth by remember { mutableStateOf<java.time.YearMonth?>(null) }
                     var detailId by rememberSaveable { mutableStateOf<Long?>(null) }
                     BackHandler(enabled = detailId != null) { detailId = null }
                     Scaffold(bottomBar = {
                         NavigationBar {
                             NavigationBarItem(selected = tab == 0, onClick = { tab = 0; indexVersion++ }, icon = {}, label = { Text("Search") })
                             NavigationBarItem(selected = tab == 1, onClick = { tab = 1 }, icon = {}, label = { Text("Index") })
+                            NavigationBarItem(selected = tab == 2, onClick = { tab = 2 }, icon = {}, label = { Text("Ledger") })
                         }
                     }) { padding ->
                         Surface(Modifier.padding(padding)) {
                             val open = detailId
                             when {
                                 open != null -> ItemDetailScreen(open, onBack = { detailId = null })
-                                tab == 0 -> SearchScreen(onOpenItem = { detailId = it }, indexVersion = indexVersion)
+                                tab == 0 -> SearchScreen(onOpenItem = { detailId = it }, onOpenLedger = { ledgerMonth = it; tab = 2 }, indexVersion = indexVersion)
+                                tab == 2 -> LedgerScreen(initialMonth = ledgerMonth, onOpenItem = { detailId = it })
                                 else -> IndexScreen()
                             }
                         }

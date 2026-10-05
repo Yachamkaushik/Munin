@@ -6,6 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.munin.app.MuninApp
 import com.munin.app.answer.AnswerEngine
 import com.munin.app.answer.AnswerOutcome
+import com.munin.app.ledger.LedgerCalc
+import com.munin.app.ledger.Money
+import com.munin.app.ledger.SpendingQuery
+import com.munin.app.ledger.toRow
+import java.time.LocalDate
+import java.time.YearMonth
 import com.munin.app.search.SearchEngine
 import com.munin.app.search.SearchMode
 import com.munin.app.search.SearchResponse
@@ -18,6 +24,18 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/** The ledger's answer to "how much did I spend ...": an exact sum of counted payment screenshots, never an estimate. */
+data class SpendingAnswer(
+    val scope: String,
+    val month: YearMonth?,
+    val totalPaise: Long,
+    val count: Int,
+    val needsCheck: Int,
+    val unreadable: Int,
+) {
+    val display get() = Money.format(totalPaise)
+}
+
 data class SearchUiState(
     val query: String = "",
     val mode: SearchMode = SearchMode.MERGED,
@@ -26,6 +44,7 @@ data class SearchUiState(
     val response: SearchResponse? = null,
     /** Whether the query was a value question, and what we answered; null until a search has run. */
     val answer: AnswerOutcome? = null,
+    val spending: SpendingAnswer? = null,
     val error: String? = null,
     val showDebug: Boolean = true,
 )
@@ -61,7 +80,7 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
         job = viewModelScope.launch {
             if (debounce) delay(DEBOUNCE_MS)
             val s = _state.value
-            if (s.query.isBlank()) { _state.update { it.copy(response = null, answer = null, error = null) }; return@launch }
+            if (s.query.isBlank()) { _state.update { it.copy(response = null, answer = null, spending = null, error = null) }; return@launch }
             if (!s.modelReady) return@launch
             try {
                 val (r, a) = withContext(Dispatchers.Default) {
@@ -69,7 +88,8 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
                     // Answers come from the merged ranking only; the single-leg modes are for comparing retrieval.
                     r to if (s.mode == SearchMode.MERGED) answers.answer(s.query, r) else AnswerOutcome.NotAQuestion
                 }
-                _state.update { it.copy(response = r, answer = a, error = null) }
+                val spending = withContext(Dispatchers.Default) { spendingAnswer(s.query) }
+                _state.update { it.copy(response = r, answer = a, spending = spending, error = null) }
             } catch (e: kotlinx.coroutines.CancellationException) {
                 throw e
             } catch (e: Exception) {
@@ -77,6 +97,16 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
             }
             refreshCounts()
         }
+    }
+
+    private suspend fun spendingAnswer(query: String): SpendingAnswer? {
+        val q = SpendingQuery.parse(query) ?: return null
+        val summary = LedgerCalc.summarize(muninApp.database.payments().allNow().map { it.toRow() })
+        val month = q.resolve(LocalDate.now(), summary.months.map { it.month })
+        val rows = summary.countedIn(month)
+        return SpendingAnswer(month?.let { "in ${it.month.getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.ENGLISH)} ${it.year}" } ?: "in all the payments read", month, rows.sumOf { it.amountPaise!! }, rows.size,
+            // flagged payments are counted for the month asked about; unreadable ones have no date, so they cannot belong to a month
+            summary.needsCheck.count { month == null || it.month == month }, summary.unreadable.size)
     }
 
     private suspend fun refreshCounts() {

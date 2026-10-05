@@ -14,6 +14,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,7 +40,7 @@ import com.munin.app.search.SearchTimings
 import com.munin.app.search.Snippet
 
 @Composable
-fun SearchScreen(onOpenItem: (Long) -> Unit, vm: SearchViewModel = viewModel(), indexVersion: Int = 0) {
+fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?) -> Unit, vm: SearchViewModel = viewModel(), indexVersion: Int = 0) {
     val ui by vm.state.collectAsState()
     LaunchedEffect(indexVersion) { vm.refresh() }
 
@@ -69,6 +70,7 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, vm: SearchViewModel = viewModel(), 
             ui.query.isBlank() -> Text("Search by what the text says, not by file name.", style = MaterialTheme.typography.bodyMedium)
             r != null && r.results.isEmpty() -> Text("No matches for “${r.query}”.")
             r != null -> LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                ui.spending?.let { sp -> item { SpendingCard(sp, onOpenLedger) } }
                 when (val a = ui.answer) {
                     is AnswerOutcome.Found -> item { AnswerCard(a.answer, onOpenItem) }
                     // It was a question but we will not guess: say so, then fall back to the list.
@@ -82,6 +84,24 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, vm: SearchViewModel = viewModel(), 
                 }
                 items(r.results, key = { it.itemId }) { ResultRow(it, ui.showDebug, onOpenItem) }
             }
+        }
+    }
+}
+
+@Composable
+private fun SpendingCard(sp: SpendingAnswer, onOpenLedger: (java.time.YearMonth?) -> Unit) {
+    Card(Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            if (sp.count == 0) {
+                Text("No payment screenshots read ${sp.scope}.", style = MaterialTheme.typography.titleMedium)
+            } else {
+                Text(sp.display, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+                Text("Spent ${sp.scope}, from ${sp.count} payment screenshot${if (sp.count == 1) "" else "s"}.", style = MaterialTheme.typography.bodyMedium)
+            }
+            Text("This is spending from your screenshots, not your total spending.", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Medium)
+            if (sp.needsCheck > 0) Text("${sp.needsCheck} more payment${if (sp.needsCheck == 1) " has" else "s have"} an amount that was not clearly read and ${if (sp.needsCheck == 1) "is" else "are"} not included.", style = MaterialTheme.typography.labelSmall)
+            if (sp.unreadable > 0) Text("${sp.unreadable} payment screenshot${if (sp.unreadable == 1) "" else "s"} could not be read and ${if (sp.unreadable == 1) "is" else "are"} not included.", style = MaterialTheme.typography.labelSmall)
+            TextButton(onClick = { onOpenLedger(sp.month) }) { Text("Open ledger") }
         }
     }
 }
