@@ -44,6 +44,10 @@ interface ItemDao {
     @Query("SELECT COUNT(*) FROM items")
     suspend fun totalCount(): Int
 
+    /** MediaStore DATE_ADDED (seconds) of the newest image Munin knows about; null when nothing has been scanned. */
+    @Query("SELECT MAX(addedAt) FROM items")
+    suspend fun newestAddedAt(): Long?
+
     @Query("SELECT id, uri, modifiedAt, sizeBytes FROM items")
     suspend fun allExisting(): List<ExistingItem>
 

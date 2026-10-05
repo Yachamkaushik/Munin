@@ -60,6 +60,7 @@ fun IndexScreen(vm: IndexViewModel = viewModel()) {
         }
         item { AccessCard(ui.access, onGrant = ::requestAccess) }
         item { ProgressCard(ui, onStart = { if (ui.access == MediaAccessState.NONE) requestAccess() else vm.startIndexing() }, onClear = vm::clearIndex) }
+        item { AutoCard(ui.autoOn, enabled = ui.access != MediaAccessState.NONE, onChange = vm::setAuto) }
         item { TeluguCard(ui.teluguOn, vm::setTelugu) }
         item {
             Text(
@@ -70,6 +71,24 @@ fun IndexScreen(vm: IndexViewModel = viewModel()) {
         }
         if (ui.recent.isNotEmpty()) item { Text("Recently processed", style = MaterialTheme.typography.titleMedium) }
         items(ui.recent, key = { it.id }) { RecentRow(it) }
+    }
+}
+
+@Composable
+private fun AutoCard(on: Boolean, enabled: Boolean, onChange: (Boolean) -> Unit) {
+    Card(Modifier.fillMaxWidth()) {
+        Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text("Index new photos and screenshots automatically", style = MaterialTheme.typography.titleSmall)
+                Text(
+                    if (enabled) "When a new image appears, Munin reads it a few seconds later. Nothing runs in the background while nothing changes: the system wakes Munin only when " +
+                        "your photo library changes. The phone's own battery settings may delay it (see the phone's battery optimisation for Munin)."
+                    else "Allow photo access first.",
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
+            androidx.compose.material3.Switch(checked = on, onCheckedChange = onChange, enabled = enabled)
+        }
     }
 }
 

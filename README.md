@@ -375,3 +375,10 @@ only the whole input is matched, so "amma" will not find a contact saved as "Amm
 only its confirm button opens your clock app with the time or length filled in, and the alarm or timer exists only after you save or start it there. A time with no am/pm ("alarm 7") offers both
 7:00 AM and 7:00 PM instead of guessing; a timer needs a unit ("timer 10" is not guessed). Calling is the contacts feature above ("call ravi"). This uses the install-time `SET_ALARM`
 permission (a normal permission: no prompt, and the clock app does the actual setting). Limits: no "tomorrow"/weekday alarms, no alarm labels, number words ("ten minutes") are not read yet, and a clock app must be installed.
+
+**Instant indexing** (`index/AutoIndex.kt`): an optional switch on the Index screen (off until you turn it on; needs photo access). When on, Android's job scheduler watches the photo library for us
+and wakes Munin a few seconds after a new image appears (a burst of screenshots counts as one wake-up); Munin then queues the usual indexing run. No service of its own runs between changes, so
+there is no standing battery cost. WorkManager keeps the watch across the app being killed and the phone restarting, and indexing resumes from the database. On each start Munin also checks whether the
+library has anything newer than what is indexed and, if so, queues a run, because the system start-up can swallow the very trigger that woke it (found by testing with a hard kill). Checked on the emulator:
+with the process killed and the app never opened, a new screenshot was indexed within about 45 seconds. Limits: a phone's own battery management (Funtouch OS especially) may delay or block the wake-up; a
+force-stop from Settings cancels all scheduled work until Munin is next opened; it indexes every new image, not only screenshots; the Android 12+ rules mean the progress notification may not show for a wake-up run.

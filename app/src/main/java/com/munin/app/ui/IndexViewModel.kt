@@ -31,12 +31,13 @@ data class IndexUiState(
     val nextName: String? = null,
     val recent: List<RecentItem> = emptyList(),
     val teluguOn: Boolean = false,
+    val autoOn: Boolean = false,
 ) {
     val total get() = indexed + noText + duplicates + failed + pending
     val done get() = total - pending
 }
 
-private class Extras(val ocr: List<Long>, val embed: List<Long>, val next: String?, val telugu: Boolean)
+private class Extras(val ocr: List<Long>, val embed: List<Long>, val next: String?, val telugu: Boolean, val auto: Boolean)
 
 private fun median(sorted: List<Long>): Long? = if (sorted.isEmpty()) null else sorted[sorted.size / 2]
 
@@ -45,23 +46,31 @@ class IndexViewModel(app: Application) : AndroidViewModel(app) {
     private val db get() = muninApp.database
     private val access = MutableStateFlow(MediaAccess.state(app))
     private val teluguOn = MutableStateFlow(OcrSettings.policy(app) != TeluguPolicy.OFF)
+    private val autoOn = MutableStateFlow(com.munin.app.index.AutoIndex.isOn(app))
 
     val state: StateFlow<IndexUiState> = combine(
         access,
         IndexScheduler.isRunning(app),
         db.items().statusCounts(),
-        combine(db.items().ocrTimes(), db.items().embedTimes(), db.items().nextPendingName(), teluguOn) { o, e, n, t -> Extras(o, e, n, t) },
+        combine(db.items().ocrTimes(), db.items().embedTimes(), db.items().nextPendingName(), combine(teluguOn, autoOn) { t, a -> t to a }) { o, e, n, ta -> Extras(o, e, n, ta.first, ta.second) },
         db.items().recent(30),
     ) { access, running, counts, extras, recent ->
         fun n(s: String) = counts.firstOrNull { it.status == s }?.count ?: 0
         IndexUiState(
             access, running, n(ItemStatus.INDEXED), n(ItemStatus.NO_TEXT), n(ItemStatus.DUPLICATE), n(ItemStatus.FAILED), n(ItemStatus.PENDING),
-            median(extras.ocr), median(extras.embed), extras.next, recent, extras.telugu,
+            median(extras.ocr), median(extras.embed), extras.next, recent, extras.telugu, extras.auto,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), IndexUiState())
 
     /** Applies to items indexed from now on; use Clear index and scan again to re-read existing ones. */
     fun setTelugu(enabled: Boolean) { OcrSettings.setTeluguEnabled(getApplication(), enabled); teluguOn.value = enabled }
+
+    /** Instant indexing of new photos. Only possible with photo access; the switch is disabled without it. */
+    fun setAuto(enabled: Boolean) {
+        val on = enabled && MediaAccess.state(getApplication()) != MediaAccessState.NONE
+        com.munin.app.index.AutoIndex.setOn(getApplication(), on); autoOn.value = on
+        if (on) IndexScheduler.enqueue(getApplication()) // catch up on anything taken while it was off
+    }
 
     fun refreshAccess() { access.value = MediaAccess.state(getApplication()) }
 
