@@ -82,3 +82,33 @@ class GroundingTest {
         assertEquals(ItemEvidence.NONE, AnswerSelector.itemEvidence(listOf(strong), q, "Health insurance premium due Rs 8,600", ungrounded = true))
     }
 }
+
+class GroundingTopicTest {
+    private fun topic(q: String, fn: Boolean, gen: Boolean) = com.munin.app.answer.QuestionParser.groundingTopic(com.munin.app.answer.QuestionParser.parse(q)!!, fn, gen)
+
+    @Test fun defaultsKeepTheOriginalTopic() {
+        assertEquals(listOf("pay", "hostel", "fee"), topic("when did I pay the hostel fee", fn = false, gen = false))
+        assertEquals(listOf("छात्रावास", "शुल्क", "था"), topic("छात्रावास शुल्क कितना था", fn = false, gen = false))
+    }
+
+    @Test fun functionWordsAreDroppedFromTheTopic() {
+        assertEquals(listOf("छात्रावास", "शुल्क"), topic("छात्रावास शुल्क कितना था", fn = true, gen = false))
+        assertEquals(listOf("pay", "hostel", "fee"), topic("when did I pay the hostel fee", fn = true, gen = false)) // "pay" is not a function word
+    }
+
+    @Test fun genericPaymentVerbsAreDroppedOnlyWhenAsked() {
+        assertEquals(listOf("hostel", "fee"), topic("when did I pay the hostel fee", fn = true, gen = true))
+        assertEquals(listOf("hostel", "fee", "కట్టాను"), topic("hostel fee ఎంత కట్టాను", fn = false, gen = false))
+        assertEquals(listOf("hostel", "fee"), topic("hostel fee ఎంత కట్టాను", fn = true, gen = false)) // this verb is already on the Telugu function-word list
+        assertEquals(listOf("hostel", "fee"), topic("hostel fee ఎంత కట్టాను", fn = true, gen = true))
+    }
+
+    @Test fun contentWordsAreNeverDropped() {
+        assertEquals(listOf("car", "insurance"), topic("how much was the car insurance", fn = true, gen = true))
+        assertEquals(listOf("gym", "membership"), topic("how much did I pay for the gym membership", fn = true, gen = true))
+    }
+
+    @Test fun functionWordLookupMatchesTheStopwordList() {
+        assertTrue(QueryTerms.isFunctionWord("था")); assertTrue(QueryTerms.isFunctionWord("entha")); assertFalse(QueryTerms.isFunctionWord("hostel"))
+    }
+}

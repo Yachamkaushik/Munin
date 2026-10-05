@@ -209,7 +209,8 @@ def headline(analyses):
 # ------------------------------------------------------------------------------------------- fix experiments
 VARIANTS = {"B0": "baseline (as shipped)", "S1": "+ Hindi/Telugu/Roman stopwords", "C1": "+ keyword coverage gate (>= half the query words)",
             "S2": "stopwords + coverage gate", "S3": "stopwords + coverage gate + keyword weight 0.5"}
-GATES = {"A0": "answer gate as shipped", "A1": "+ grounding (every rare question word must be in the document)"}
+GATES = {"A0": "original gate", "A1": "grounding (every rare question word must be in the document)", "A2": "A1, topic without Hindi/Telugu/Roman function words",
+         "A3": "A2, topic also without generic payment verbs (pay, spend, भरना, కట్టాను ...)"}
 
 def same_language(q):
     t = q["target_lang"]
@@ -226,7 +227,8 @@ def variant_stats(rep, vname):
     same = [r for r in fv if same_language(byid[r["id"]])]; cross = [r for r in fv if not same_language(byid[r["id"]])]
     out["same_r1"] = (sum(merged(r) == 1 for r in same), len(same)); out["cross"] = m(merged, cross); out["same"] = m(merged, same)
     out["gates"] = {}
-    for g in GATES:
+    have = set.intersection(*[set(r["ans"]) for r in rows if "ans" in r])  # gates this run actually measured (older reports lack A2/A3)
+    for g in [g for g in GATES if g in have]:
         cnt = collections.Counter(); neg = 0
         for r in rows:
             q = byid[r["id"]]
@@ -246,9 +248,20 @@ def select(dev_reps):
     base_same = sum(x["same_r1"][0] for x in stats["B0"])
     eligible = {v: sum(x["merged"]["mrr"] for x in st) / len(st) for v, st in stats.items() if sum(x["same_r1"][0] for x in st) >= base_same - len(st)}
     best = max(eligible, key=lambda v: (round(eligible[v], 6), -list(VARIANTS).index(v)))
-    gate_score = {g: (sum(x["gates"][g]["wrong"] + x["gates"][g]["negatives_answered"] for x in stats[best]), -sum(x["gates"][g]["correct"] for x in stats[best])) for g in GATES}
-    gate = min(gate_score, key=lambda g: (gate_score[g], list(GATES).index(g)))
+    gate_score = {g: (sum(x["gates"][g]["wrong"] + x["gates"][g]["negatives_answered"] for x in stats[best]), -sum(x["gates"][g]["correct"] for x in stats[best])) for g in ("A0", "A1")}
+    gate = min(gate_score, key=lambda g: (gate_score[g], list(gate_score).index(g)))
     return best, gate, stats
+
+def select_gate2(seen_reps, retrieval="C1"):
+    """Round 2 rule, written before any fresh-set result existed. Over the already-seen sets (dev and held-out, both modes), with the shipped retrieval
+    variant, among the grounding gates A1-A3: fewest (wrong answers + made-up answers to no-answer questions), then most correct answers, then the simpler gate."""
+    cand = ("A1", "A2", "A3")
+    tot = {g: [0, 0, 0] for g in cand}
+    for rep in seen_reps:
+        x = variant_stats(rep, retrieval)["gates"]
+        for g in cand: tot[g][0] += x[g]["wrong"] + x[g]["negatives_answered"]; tot[g][1] += x[g]["correct"]; tot[g][2] += x[g]["n_value"]
+    best = min(cand, key=lambda g: (tot[g][0], -tot[g][1], cand.index(g)))
+    return best, tot
 
 def variant_section(reps, title, best=None, gate=None):
     L = [f"#### {title}\n"]
@@ -260,14 +273,26 @@ def variant_section(reps, title, best=None, gate=None):
             meaning["r1"] += r == 1; meaning["r5"] += bool(r and r <= 5); meaning["mrr"] += 1 / r if r else 0
         n = len(qs); rows = []
         for v, desc in VARIANTS.items():
-            st = variant_stats(rep, v); g0, g1 = st["gates"]["A0"], st["gates"]["A1"]
+            st = variant_stats(rep, v)
             flag = " **(selected on dev)**" if v == best else ""
             rows.append([f"{v}: {desc}{flag}", f"{pct(st['merged']['r1'])} / {pct(st['merged']['r5'])} / {st['merged']['mrr']:.2f}", f"{pct(st['same']['r1'])} / {pct(st['same']['r5'])}", f"{pct(st['cross']['r1'])} / {pct(st['cross']['r5'])}",
-                         f"{pct(st['keywords']['r1'])} / {pct(st['keywords']['r5'])}", f"{g0['correct']} / {g0['wrong']} / {g0['negatives_answered']}", f"{g1['correct']} / {g1['wrong']} / {g1['negatives_answered']}"])
-        rows.append(["Meaning only (reference, unchanged)", f"{pct(meaning['r1'] / n)} / {pct(meaning['r5'] / n)} / {meaning['mrr'] / n:.2f}", "", "", "", "", ""])
+                         f"{pct(st['keywords']['r1'])} / {pct(st['keywords']['r5'])}"])
+        rows.append(["Meaning only (reference, unchanged)", f"{pct(meaning['r1'] / n)} / {pct(meaning['r5'] / n)} / {meaning['mrr'] / n:.2f}", "", "", ""])
         L.append(f"**{mode}**\n")
-        L.append(table(["Variant", "Merged R@1 / R@5 / MRR", f"Same-language ({st['same']['n']}) R@1 / R@5", f"Cross-language ({st['cross']['n']}) R@1 / R@5", "Keywords-only R@1 / R@5",
-                        "Answers, gate A0: correct / wrong / false-on-no-answer", "Answers, gate A1 (grounding): correct / wrong / false-on-no-answer"], rows) + "\n")
+        L.append(table(["Variant", "Merged R@1 / R@5 / MRR", f"Same-language ({st['same']['n']}) R@1 / R@5", f"Cross-language ({st['cross']['n']}) R@1 / R@5", "Keywords-only R@1 / R@5"], rows) + "\n")
+    return "\n".join(L)
+
+def gate_section(reps, title, selected=None, retrieval="C1"):
+    L = [f"#### {title}\n"]
+    for rep in reps:
+        mode = "Perfect text" if rep["mode"] == "oracle" else "Real OCR"; rows = []
+        vs = variant_stats(rep, retrieval)
+        for g, desc in GATES.items():
+            if g not in vs["gates"]: continue
+            x = vs["gates"][g]
+            rows.append([f"{g}: {desc}" + (" **(selected)**" if g == selected else ""), f"{x['correct']} / {x['n_value']}", x["wrong"], x["declined"], f"{x['negatives_answered']} / {x['n_neg']}"])
+        L.append(f"**{mode}** (shipped retrieval {retrieval})\n")
+        L.append(table(["Answer gate", "Correct", "Wrong answer shown", "Declined", "Made-up answers to no-answer questions"], rows) + "\n")
     return "\n".join(L)
 
 def fix_chart(by_set, best):
@@ -328,9 +353,22 @@ def main():
         sel = f"**Selected on the dev set by the pre-declared rule: retrieval variant {best} ({VARIANTS[best]}), answer gate {gate} ({GATES[gate]}).**"
     else:
         sel = ""
+    gate2_md = ""
+    def has_gate(r, g): return "variants" in r and all(g in x["ans"] for x in r["variants"]["C1"] if "ans" in x)
+    if "heldout" in by_set and all(has_gate(r, "A3") for r in dev + list(by_set["heldout"].values())):
+        seen = dev + [by_set["heldout"][m] for m in ("oracle", "image") if m in by_set["heldout"]]
+        g2, tot = select_gate2(seen)
+        sel2 = "**Selected by the round-2 rule on the already-seen sets (dev + held-out, both modes): answer gate " + g2 + f" ({GATES[g2]}).** Totals over those four runs, as (wrong + made-up answers, correct answers of {tot[g2][2]}): " + "; ".join(f"{g}: {tot[g][0]}, {tot[g][1]}" for g in ("A1", "A2", "A3")) + "."
+        tabs = gate_section(dev, "Dev set: answer gates", g2) + "\n" + gate_section([by_set["heldout"][m] for m in ("oracle", "image") if m in by_set["heldout"]], "Held-out set: answer gates", g2)
+        fresh_tabs = ""
+        if "fresh" in by_set and all("variants" in r for r in by_set["fresh"].values()):
+            fr = [by_set["fresh"][m] for m in ("oracle", "image") if m in by_set["fresh"]]
+            fresh_tabs = gate_section(fr, "Fresh set: answer gates, measured once", g2) + "\n" + variant_section(fr, "Fresh set: retrieval variants (a third check of round 1)", best if "best" in dir() else None)
+        t2 = ROOT / "tools/eval/fixes2.md"
+        if t2.exists(): gate2_md = t2.read_text().replace("{{GATE_SELECTION}}", sel2).replace("{{SEEN_TABLES}}", tabs).replace("{{FRESH_TABLES}}", fresh_tabs)
     intro = (ROOT / "tools/eval/intro.md").read_text().replace("{{CORPUS}}", corpus_summary()).replace("{{HEADLINE}}", headline(analyses))
     fixes_md = (ROOT / "tools/eval/fixes.md").read_text().replace("{{SELECTION}}", sel).replace("{{TABLES}}", fixes) if (ROOT / "tools/eval/fixes.md").exists() and fixes else ""
-    (DOCS / "EVALUATION.md").write_text(intro + "\n\n" + fixes_md + "\n\n---\n\n## Detailed baseline results (generated by tools/eval/report.py)\n\n![Recall by query style](eval_retrieval.png)\n\n" + body + "\n")
+    (DOCS / "EVALUATION.md").write_text(intro + "\n\n" + fixes_md + "\n\n" + gate2_md + "\n\n---\n\n## Detailed baseline results (generated by tools/eval/report.py)\n\n![Recall by query style](eval_retrieval.png)\n\n" + body + "\n")
     print(body if not fixes else fixes)
 
 main()

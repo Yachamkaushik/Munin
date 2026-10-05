@@ -11,12 +11,14 @@ script asserts that, so each query has exactly one correct document.
 """
 import json, random, pathlib, collections, sys
 
-SET = sys.argv[1] if len(sys.argv) > 1 else "dev"      # "dev" (tuning set) or "heldout" (new anchors, new queries, new seed)
+SET = sys.argv[1] if len(sys.argv) > 1 else "dev"      # "dev", "heldout", or "fresh" (each: its own anchors, queries and seed)
 HELD = SET == "heldout"
-PREFIX = "heldout_" if HELD else ""
+FRESH = SET == "fresh"
+PREFIX = {"dev": "", "heldout": "heldout_", "fresh": "fresh_"}[SET]
 
 OUT = pathlib.Path(__file__).parent / "data"
-R = random.Random(7777 if HELD else 2026)
+SEED = {"dev": 2026, "heldout": 7777, "fresh": 4242}[SET]
+R = random.Random(SEED)
 
 MONTH_EN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 MONTH_HI = ["जनवरी","फरवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"]
@@ -88,7 +90,23 @@ def heldout_anchors():
     add("appointment", "te", [("శ్రీ లక్ష్మి డెంటల్ క్లినిక్", "b"), "అపాయింట్‌మెంట్ కార్డ్", "డాక్టర్ రమ్య", "ఫోన్: 90000 11122", "తేదీ: 14 నవంబర్ 2026"], {"PHONE": "+919000011122", "DATE": "2026-11-14"}, anchor="H10")
     add("notes", "te", [("చరిత్ర - విజయనగర సామ్రాజ్యం", "b"), "శ్రీకృష్ణదేవరాయలు పాలన", "హంపి శిల్పకళ", "వాణిజ్యం మరియు పన్నులు"], anchor="H11")
 
-(heldout_anchors if HELD else dev_anchors)()
+def fresh_anchors():
+    add("fee_receipt", "en", [("Sri Gayatri Coaching Centre", "b"), "Fee Receipt", "Student: Ananya Sharma", "Course: Foundation batch", "Amount paid: Rs 36,000", "Paid on: 7 Oct 2026", "Receipt No: GC-4417"],
+        {"AMOUNT": "36000", "DATE": "2026-10-07"}, anchor="F1")
+    add("credit_card", "en", [("Metro Credit Card", "b"), "Statement summary", "Card ending 4521", "Total due: Rs 22,480", "Minimum due: Rs 1,124", "Due date: 26 Oct 2026"], {"DATE": "2026-10-26"}, anchor="F2")
+    add("vet", "en", [("Paws & Care Veterinary Clinic", "b"), "Visit card", "Dr. Suman Rao", "Address: Lane 4, Kukatpally", "Hyderabad 500072", "Phone: 94400 77889"],
+        {"PHONE": "+919440077889", "ADDRESS": "Lane 4, Kukatpally, Hyderabad 500072"}, anchor="F3")
+    add("utility_bill", "hi", [("भारत गैस एजेंसी", "b"), "गैस सिलेंडर बिल", "उपभोक्ता संख्या: 7710234", "देय राशि: ₹1,150", "अंतिम तिथि: 12 अक्टूबर 2026"], {"AMOUNT": "1150", "DATE": "2026-10-12"}, anchor="F4")
+    add("hall_ticket", "te", [("ఆంధ్ర విశ్వవిద్యాలయం", "b"), "పరీక్ష హాల్ టికెట్", "విద్యార్థి: సుమలత రెడ్డి", "పరీక్ష తేదీ: 8 డిసెంబర్ 2026", "సమయం: 10:00"], {"DATE": "2026-12-08"}, anchor="F5")
+    add("appointment", "en", [("Sub-Registrar Office", "b"), "Registration appointment", "Address: Plot 7, Station Road", "Guntur 522002", "Appointment: 13 Nov 2026, 11:30 AM"],
+        {"DATE": "2026-11-13", "ADDRESS": "Plot 7, Station Road, Guntur 522002"}, anchor="F6")
+    add("notes", "en", [("Economics - Monetary Policy", "b"), "Inflation and interest rates", "Role of the central bank", "Repo rate and liquidity", "Revision: money supply"], anchor="F7")
+    add("ticket", "en", [("APSRTC Garuda", "b"), "Bus ticket", "Hyderabad to Tirupati", "Date: 12 Nov 2026", "Seat 14A", "Booking id: 664210"], {"DATE": "2026-11-12"}, anchor="F8")
+    # F9 is a UPI payment, added with the other payments
+    add("notes", "te", [("భౌతిక శాస్త్రం - కాంతి వక్రీభవనం", "b"), "స్నెల్ నియమం", "వక్రీభవన గుణకం", "లెన్స్ సూత్రం"], anchor="F10")
+
+ANCHOR_FN = {"dev": dev_anchors, "heldout": heldout_anchors, "fresh": fresh_anchors}
+(ANCHOR_FN[SET])()
 
 # ---------------------------------------------------------------- fillers ----------------------------------------------
 def pick(seq): return R.choice(seq)
@@ -243,13 +261,17 @@ def add_upi(payee, paise, y, m, d, hh, mm, layout, style, outcome="success", rec
 def upi_batch():
     # A7: the anchor payment
     if HELD: add_upi("Kamat Medical Store", 64000, 2026, 10, 6, 17, 40, 2, 1, anchor="H6")
+    elif FRESH: add_upi("Raju Auto Garage", 385000, 2026, 10, 11, 12, 15, 0, 2, anchor="F9")
     else: add_upi("Lakshmi Tiffins", 24000, 2026, 9, 14, 8, 20, 1, 0, anchor="A7")
     for i in range(34):  # ordinary successful payments across Aug-Oct 2026
         add_upi(pick(PAYEES), R.randint(20, 3200) * 100 + R.choice([0, 0, 0, 50]), 2026, R.randint(8, 10), R.randint(1, 28), R.randint(7, 22), R.randint(0, 59), R.randint(0, 2), R.randint(0, 2))
     firsts = [d for d in docs if d["type"] == "upi_payment" and d["upi"]["outcome"] == "SUCCESS" and d["anchor"] is None][:3]
     for f in firsts:  # the same payment screenshotted again in another layout: the ledger must count it once
         u = f["upi"]; y, m, d = map(int, u["date"].split("-")); hh, mm = map(int, u["time"].split(":"))
-        add_upi(u["payee"], u["paise"], y, m, d, hh, mm, (R.randint(0, 2) + 1) % 3, R.randint(0, 2), ref=u["ref"], dup_of=f["id"])
+        while True:  # a re-screenshot must look different from every existing document (retry only on a collision)
+            add_upi(u["payee"], u["paise"], y, m, d, hh, mm, (R.randint(0, 2) + 1) % 3, R.randint(0, 2), ref=u["ref"], dup_of=f["id"])
+            if sum(1 for x in docs if x["lines"] == docs[-1]["lines"]) == 1: break
+            docs.pop()
     for outcome, rec in [("failed", False)] * 3 + [("pending", False)] * 2 + [(" success", True)] * 3:
         add_upi(pick(PAYEES), R.randint(50, 2500) * 100, 2026, R.randint(8, 10), R.randint(1, 28), R.randint(8, 21), R.randint(0, 59), R.randint(0, 2), R.randint(0, 2), outcome=outcome.strip(), received=rec)
 
@@ -265,11 +287,18 @@ for fn, n in plan:
         fn()
         if _text(docs[-1]) in seen_text: docs.pop(); continue
         seen_text.add(_text(docs[-1])); made += 1
+while FRESH and len(docs) < 300:  # the fresh set has 10 anchors, not 11
+    shopping()
+    if _text(docs[-1]) in seen_text: docs.pop()
+    else: seen_text.add(_text(docs[-1]))
 assert len(docs) == 300, len(docs)
 
 # ---------------------------------------------------------------- uniqueness guards ------------------------------------------
 def text(d): return "\n".join(l if isinstance(l, str) else l[0] for l in d["lines"])
-if HELD:
+if FRESH:
+    anchor_keys = {"F1": ["Gayatri"], "F2": ["Credit Card"], "F3": ["Veterinary"], "F4": ["भारत गैस"], "F5": ["ఆంధ్ర విశ్వవిద్యాలయం"], "F6": ["Registrar"], "F7": ["Monetary"], "F8": ["Tirupati"],
+                   "F9": ["Raju Auto"], "F10": ["వక్రీభవనం"]}
+elif HELD:
     anchor_keys = {"H1": ["Gokul Residency"], "H2": ["Madurai"], "H3": ["Bright Life"], "H4": ["TCP"], "H5": ["Vikram Shetty"], "H6": ["Kamat Medical"], "H7": ["Gongura"],
                    "H8": ["पश्चिम विद्युत"], "H9": ["अम्ल"], "H10": ["డెంటల్"], "H11": ["విజయనగర"]}
 else:
@@ -278,11 +307,15 @@ else:
 for a, keys in anchor_keys.items():
     owners = [d["id"] for d in docs if any(k in text(d) for k in keys)]
     assert len(owners) == 1 and docs[int(owners[0][1:]) - 1]["anchor"] == a, (a, owners)
-if not HELD:
+if SET == "dev":
     assert not [d for d in docs if d["type"] == "utility_bill" and d["lang"] == "en" and "Electricity" in text(d) and "15 Oct 2026" in text(d) and d["anchor"] != "A2"]
-assert len({text(d) for d in docs}) == 300, "two documents have identical text (they would be deduplicated by the indexer)"
-NEG_WORD = "bike" if HELD else "car"
-assert not [d for d in docs if NEG_WORD in text(d).lower().split() and "insurance" in text(d).lower()], f"negative query '{NEG_WORD} insurance' must have no such document"
+_c = collections.Counter(text(d) for d in docs); _dups = [(k[:50], v, [d["id"] for d in docs if text(d) == k]) for k, v in _c.items() if v > 1]
+assert not _dups, _dups
+if FRESH:
+    for w in ("gym", "passport"): assert not [d for d in docs if w in text(d).lower()], f"negative query about '{w}' must have no such document"
+else:
+    NEG_WORD = "bike" if HELD else "car"
+    assert not [d for d in docs if NEG_WORD in text(d).lower().split() and "insurance" in text(d).lower()], f"negative query '{NEG_WORD} insurance' must have no such document"
 
 # ---------------------------------------------------------------- ledger truth --------------------------------------------------
 ledger = collections.defaultdict(int); upi_docs = [d for d in docs if d["type"] == "upi_payment"]
@@ -293,7 +326,7 @@ for d in upi_docs:
         seen.add(u["ref"]); ledger[u["date"][:7]] += u["paise"]
 
 by_anchor = {d["anchor"]: d["id"] for d in docs if d["anchor"]}
-json.dump({"seed": 7777 if HELD else 2026, "set": SET, "docs": docs, "ledger_truth_paise": dict(sorted(ledger.items())), "n_docs": len(docs)}, open(OUT / (PREFIX + "manifest.json"), "w"), ensure_ascii=False, indent=1)
+json.dump({"seed": SEED, "set": SET, "docs": docs, "ledger_truth_paise": dict(sorted(ledger.items())), "n_docs": len(docs)}, open(OUT / (PREFIX + "manifest.json"), "w"), ensure_ascii=False, indent=1)
 
 # ---------------------------------------------------------------- queries -----------------------------------------------------------
 # 11 intents x 5 styles. style: en, te (Telugu script), hi (Devanagari), rt (Roman-script Telugu), mix (code-mixed).
@@ -327,6 +360,21 @@ HELD_Q = [
  (None, "negative", None, {"en": "how much was the bike insurance", "te": "బైక్ ఇన్సూరెన్స్ ఎంత", "hi": "बाइक बीमा कितना था", "rt": "bike insurance entha", "mix": "bike insurance ఎంత కట్టాను"}),
 ]
 if HELD: Q = HELD_Q
+FRESH_Q = [
+ ("F1", "value", {"type": "AMOUNT", "value": "36000"}, {"en": "how much did I pay for the Gayatri coaching centre fee", "te": "గాయత్రి కోచింగ్ సెంటర్ ఫీజు ఎంత కట్టాను", "hi": "गायत्री कोचिंग सेंटर की फीस कितनी भरी", "rt": "gayatri coaching centre fee entha kattanu", "mix": "Gayatri coaching centre fee ఎంత pay చేశాను"}),
+ ("F2", "value", {"type": "DATE", "value": "2026-10-26"}, {"en": "when do I have to pay the credit card bill", "te": "క్రెడిట్ కార్డ్ బిల్లు ఎప్పుడు కట్టాలి", "hi": "क्रेडिट कार्ड का बिल कब भरना है", "rt": "credit card bill eppudu kattali", "mix": "credit card bill ఎప్పుడు due"}),
+ ("F3", "value", {"type": "PHONE", "value": "+919440077889"}, {"en": "what is the vet clinic phone number", "te": "పశువైద్య క్లినిక్ ఫోన్ నంబర్ ఎంత", "hi": "पशु चिकित्सालय का फोन नंबर क्या है", "rt": "vet clinic phone number enti", "mix": "vet clinic ఫోన్ number"}),
+ ("F4", "value", {"type": "AMOUNT", "value": "1150"}, {"en": "how much was the Bharat Gas cylinder bill", "te": "భారత్ గ్యాస్ సిలిండర్ బిల్లు ఎంత", "hi": "भारत गैस सिलेंडर का बिल कितना आया", "rt": "bharat gas cylinder bill entha", "mix": "Bharat Gas bill कितना लगा"}),
+ ("F5", "value", {"type": "DATE", "value": "2026-12-08"}, {"en": "when is the Andhra University exam", "te": "ఆంధ్ర విశ్వవిద్యాలయం పరీక్ష ఎప్పుడు", "hi": "आंध्र विश्वविद्यालय की परीक्षा कब है", "rt": "andhra university exam eppudu", "mix": "Andhra University exam ఎప్పుడు"}),
+ ("F6", "value", {"type": "ADDRESS", "value": "Plot 7, Station Road, Guntur 522002"}, {"en": "what is the address of the Sub Registrar office", "te": "సబ్ రిజిస్ట్రార్ ఆఫీస్ చిరునామా ఏమిటి", "hi": "सब रजिस्ट्रार कार्यालय का पता क्या है", "rt": "sub registrar office address enti", "mix": "Sub Registrar office చిరునామా"}),
+ ("F7", "find", None, {"en": "notes on monetary policy and inflation", "te": "ద్రవ్య విధానం ద్రవ్యోల్బణం నోట్స్", "hi": "मौद्रिक नीति और मुद्रास्फीति के नोट्स", "rt": "monetary policy inflation notes", "mix": "monetary policy గురించి notes"}),
+ ("F8", "find", None, {"en": "bus ticket to Tirupati", "te": "తిరుపతి బస్సు టికెట్", "hi": "तिरुपति की बस का टिकट", "rt": "tirupati bus ticket", "mix": "Tirupati కి bus ticket"}),
+ ("F9", "find", None, {"en": "payment to Raju Auto Garage", "te": "రాజు ఆటో గ్యారేజ్ కి చెల్లింపు", "hi": "राजू ऑटो गैराज को भुगतान", "rt": "Raju Auto Garage ki payment", "mix": "Raju Auto Garage కి payment"}),
+ ("F10", "find", None, {"en": "physics notes on refraction of light", "te": "కాంతి వక్రీభవనం భౌతిక శాస్త్రం నోట్స్", "hi": "प्रकाश के अपवर्तन पर भौतिकी के नोट्स", "rt": "kaanthi vakreebhavanam physics notes", "mix": "refraction of light గురించి physics notes"}),
+ (None, "negative", None, {"en": "how much was the gym membership", "te": "జిమ్ మెంబర్‌షిప్ ఎంత", "hi": "जिम की सदस्यता कितनी थी", "rt": "gym membership entha", "mix": "gym membership ఎంత కట్టాను"}),
+ (None, "negative", None, {"en": "when is the passport renewal due", "te": "పాస్‌పోర్ట్ రెన్యూవల్ ఎప్పుడు", "hi": "पासपोर्ट नवीनीकरण कब है", "rt": "passport renewal eppudu", "mix": "passport renewal ఎప్పుడు due"}),
+]
+if FRESH: Q = FRESH_Q
 anchor_ids = {a: d["id"] for d in docs if (a := d["anchor"])}
 queries = []
 for intent, kind, answer, texts in Q:

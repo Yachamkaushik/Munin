@@ -8,6 +8,9 @@ object QueryTerms {
         "how", "what", "when", "where", "which", "who", "show", "find", "get", "did", "do", "does", "much", "many",
     )
 
+    /** True for a Hindi, Telugu or Roman-script function/question word (the same list [tokens] drops when `extended`). */
+    fun isFunctionWord(token: String) = token in EXTENDED_STOPWORDS
+
     /**
      * Function words and question words of Hindi, Telugu and their Roman-script spellings, dropped only when asked for
      * ([extended]). They carry no topic: "का/की/కి/ki" and "कितना/ఎంత/entha" (how much) match half the corpus.

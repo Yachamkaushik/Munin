@@ -51,6 +51,25 @@ object QuestionParser {
         "kitni", "kitne", "eppudu", "kab", "tarikh", "tareekh", "ka", "pata", "is", "was", "the", "of", "me", "my",
     )
 
+    /**
+     * Everyday words about *paying* that say what is being asked, not which document: "when do I **pay**" while the receipt says "paid",
+     * Hindi भरना/जमा, Telugu కట్టాను/కట్టాలి, Roman kattanu/bharna. Written from general knowledge of how these questions are phrased.
+     */
+    private val GENERIC_WORDS = setOf(
+        "pay", "paid", "paying", "payment", "payments", "spend", "spent", "cost", "costs", "charge", "charged", "buy", "bought", "purchase", "purchased",
+        "give", "gave", "get", "got", "take", "took", "need", "needed", "money", "rupees", "rs",
+        "भरना", "भरनी", "भरी", "भरा", "भरे", "जमा", "दिया", "दी", "चुकाया", "चुकाई", "लगा", "लगी", "लगे", "दें",
+        "కట్టాను", "కట్టాలి", "కట్టాం", "చెల్లించాను", "చెల్లించాలి", "ఇచ్చాను", "అయ్యింది", "అయింది",
+        "kattanu", "kattali", "chellinchanu", "ichchanu", "ayyindi", "bhara", "bharna", "bhari", "jama", "diya", "chukaya", "laga", "lagi",
+    )
+
+    /**
+     * The question's topic words for the grounding gate. [functionWords] drops Hindi/Telugu/Roman function words (so "था" or "కి" is not a
+     * topic); [genericWords] also drops everyday payment verbs. Both default to off, which is the topic the original gate used.
+     */
+    fun groundingTopic(q: Question, functionWords: Boolean, genericWords: Boolean): List<String> =
+        q.topic.filterNot { functionWords && QueryTerms.isFunctionWord(it) }.filterNot { genericWords && it in GENERIC_WORDS }
+
     fun parse(query: String): Question? {
         val q = query.trim()
         if (q.isEmpty() || SPENDING.containsMatchIn(q)) return null

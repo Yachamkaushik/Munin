@@ -6,7 +6,7 @@ the headline claim "merging keyword and meaning search beats either alone" does 
 
 > The sections from "What was measured" to "How far to trust this" describe the **original, untuned behaviour** (the baseline).
 > Two fixes were developed afterwards and checked on a separate held-out set: see **Fix experiments** below, which also says what
-> now ships. Re-running `tools/eval/run_eval.sh` regenerates the tables and charts but not the hand-written commentary.
+> now ships. Round 2 (the answer gate's topic words, on a third, fresh set) follows it. Re-running `tools/eval/run_eval.sh` regenerates the tables and charts but not the hand-written commentary.
 
 ## What was measured
 
@@ -75,9 +75,8 @@ the headline claim "merging keyword and meaning search beats either alone" does 
 
 ## What to try next (not done)
 
-1. Stop the answer gate treating generic words as topic words: apply the Hindi/Telugu stopword lists and a small list of generic verbs
-   ("pay", "spend", "cost") when extracting a question's topic. This should win back correct answers without bringing back wrong ones, but
-   it changes behaviour that was just measured, so it needs a *new* held-out set.
+1. ~~Stop the answer gate treating generic words as topic words~~ (done in round 2, with a fresh set; the remaining wrong answers come from OCR misreading
+   the rupee sign, which a topic gate cannot fix: a confidence check on the amount's *magnitude* or a second OCR read would).
 2. Score-aware fusion: merged currently only ties meaning-only, so the keyword leg is not yet earning its place beyond same-language names.
 3. Add a Tesseract Telugu pass behind the `OcrEngine` interface and measure it with this harness (Telugu documents are currently 0%).
 4. Get the non-English queries reviewed by native speakers and build a third, independently written query set.

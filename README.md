@@ -10,8 +10,9 @@ ledger, voice query, and a 300-document / 60-query evaluation).
 > the hand-picked checks in the per-step sections below suggest. The original behaviour had merged search (recall@5 67% with perfect text)
 > *worse* than meaning-only (85%), made-up answers to 2 of 5 "no such document" questions, and Telugu documents unreadable by OCR. Two
 > fixes were then tried and checked on a separate held-out set: a keyword **coverage gate** (merged recall@5 73% -> 87% held-out, now level with
-> meaning-only, not better) and an answer **grounding gate** (no wrong or made-up answers, but only 6 of 25 value questions answered
-> correctly instead of 10). Both are now the app's defaults. Telugu text in images is still not read.
+> meaning-only, not better) and an answer **grounding gate**, refined in a second round and checked on a third, fresh set (it avoids made-up
+> answers and most wrong ones but answers fewer questions: 9 of 30 fresh value questions correct instead of 11). Both are now the app's defaults.
+> One wrong answer remains from OCR misreading the rupee sign. Telugu text in images is still not read.
 > The per-step sections below report what each step was checked against, not accuracy.
 
 ## Setup

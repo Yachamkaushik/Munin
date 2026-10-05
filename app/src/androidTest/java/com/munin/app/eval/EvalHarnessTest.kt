@@ -46,7 +46,7 @@ class EvalHarnessTest {
     private fun json(name: String) = assets.open(name).bufferedReader().readText()
 
     private val set = InstrumentationRegistry.getArguments().getString("eval_set") ?: "dev"
-    private val prefix = if (set == "heldout") "heldout_" else ""
+    private val prefix = mapOf("dev" to "", "heldout" to "heldout_", "fresh" to "fresh_").getOrElse(set) { error("unknown eval_set '$set' (dev, heldout or fresh)") }
 
     /** Candidate fixes, declared before the held-out set was measured. B0 is today's behaviour. */
     private val retrievalVariants = linkedMapOf(
@@ -56,11 +56,18 @@ class EvalHarnessTest {
         "S2" to SearchOptions(stopwords = true, minKeywordCoverage = 0.5f),
         "S3" to SearchOptions(stopwords = true, minKeywordCoverage = 0.5f, keywordWeight = 0.5),
     )
-    private val answerGates = linkedMapOf("A0" to AnswerOptions(), "A1" to AnswerOptions(grounding = true))
+    private val answerGates = linkedMapOf(
+        "A0" to AnswerOptions(),
+        "A1" to AnswerOptions(grounding = true),
+        "A2" to AnswerOptions(grounding = true, topicFunctionWords = true),
+        "A3" to AnswerOptions(grounding = true, topicFunctionWords = true, topicGenericWords = true),
+    )
 
     @Test fun runEvaluation() {
         val modes = (InstrumentationRegistry.getArguments().getString("eval_modes") ?: "oracle").split(",").map { it.trim() }.filter { it.isNotEmpty() }
         val manifest = JSONObject(json(prefix + "manifest.json"))
+        // a silent fall-back to another set once produced a "fresh" report that was really the dev set
+        require(manifest.optString("set", "dev") == set) { "manifest is for set '${manifest.optString("set", "dev")}', not '$set'" }
         val queries = JSONObject(json(prefix + "queries.json")).getJSONArray("queries")
         val embedder = E5Embedder.load(target)
         try {
@@ -102,6 +109,18 @@ class EvalHarnessTest {
         val indexSeconds = (System.nanoTime() - t0) / 1e9
         val idOfItem = db.items().allExisting().associate { it.id to it.uri }.mapValues { (_, uri) -> uriOf.entries.first { it.value == uri }.key }
         val itemOfDoc = idOfItem.entries.associate { it.value to it.key }
+
+        if (mode != "oracle") {
+            // The OCR'd text must be the manifest's document: a mix-up of image folders once produced a whole "fresh" run on dev images.
+            var matched = 0; var checked = 0
+            for (i in 0 until docs.length()) {
+                val d = docs.getJSONObject(i); if (d.getString("lang") != "en") continue
+                val itemId = itemOfDoc[d.getString("id")] ?: continue
+                val first = lines(d).first().lowercase().filter { it.isLetterOrDigit() }.take(5)
+                checked++; if (first in db.facts().chunkTexts(itemId).joinToString(" ").lowercase().filter { it.isLetterOrDigit() }) matched++
+            }
+            require(checked > 0 && matched >= checked * 0.7) { "OCR text does not match the manifest ($matched of $checked English documents): wrong image folder for set '$set'?" }
+        }
 
         val report = JSONObject().put("set", set).put("mode", mode).put("n_docs", docs.length()).put("index_seconds", indexSeconds)
         report.put("indexing", indexingStats(db, idOfItem))

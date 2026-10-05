@@ -34,7 +34,7 @@ from the second set existed:
    to "bike insurance" 2 of 5 -> 0 of 5 (dev: 3 -> 0 and 2 -> 0). But correct answers fell from 10 to 6 of 25 (perfect text) and 8 to 5
    (real OCR), and on dev from 10 to 7 and 9 to 6. The cost has a known cause: the gate treats any question word that is rare in the
    collection and absent from the document as a missing topic, and it cannot tell a generic word from a topic word, e.g. "pay" when the
-   receipt says "paid", Hindi "था", or the Telugu verb "కట్టాను". It is shipped exactly as measured so the numbers describe the app.
+   receipt says "paid", Hindi "था", or the Telugu verb "కట్టాను". It was shipped exactly as measured in round 1; **round 2 below refines this gate and is what ships now.**
 
 ### Caveats specific to this experiment
 

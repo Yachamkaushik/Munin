@@ -46,14 +46,23 @@ sealed interface AnswerOutcome {
  * comes from. The evaluation showed the original gate answering "how much was the car insurance" from a health-insurance premium,
  * because the common-ish word "insurance" matched and the unknown word "car" was simply ignored.
  */
-data class AnswerOptions(val grounding: Boolean = false, val rareDocFrequency: Double = 0.05) {
+data class AnswerOptions(
+    val grounding: Boolean = false,
+    val rareDocFrequency: Double = 0.05,
+    /** Grounding ignores Hindi/Telugu/Roman function words when picking the question's topic words. */
+    val topicFunctionWords: Boolean = false,
+    /** Grounding also ignores everyday payment verbs (pay, paid, spend, भरना, కట్టాను ...). */
+    val topicGenericWords: Boolean = false,
+) {
     companion object {
         val BASELINE = AnswerOptions()
         /**
-         * Selected on the dev set by a rule declared in advance (docs/EVALUATION.md). On the held-out set it removed every wrong and every
-         * made-up answer, at the cost of answering fewer questions (correct answers 10 -> 6 of 25 with perfect text, 8 -> 5 with real OCR).
+         * Round 2 (docs/EVALUATION.md): grounding with the question's topic taken without Hindi/Telugu/Roman function words ("था", "కి", "entha"),
+         * chosen by a rule written before the fresh set was measured. Against the original gate, on the fresh set it avoided 3 wrong answers
+         * (perfect text) / 2 (real OCR) at the cost of 2 correct answers each, and on the earlier sets it removed every made-up answer.
+         * Adding a list of generic payment verbs (AnswerOptions.topicGenericWords) changed nothing on any set and is not used.
          */
-        val RECOMMENDED = AnswerOptions(grounding = true)
+        val RECOMMENDED = AnswerOptions(grounding = true, topicFunctionWords = true)
     }
 }
 
@@ -94,7 +103,7 @@ class AnswerEngine(private val db: MuninDatabase, private val options: AnswerOpt
     private suspend fun hasUngroundedRareWord(q: Question, itemText: String): Boolean {
         val total = db.chunks().count().coerceAtLeast(1)
         val limit = maxOf(3.0, options.rareDocFrequency * total)
-        return q.topic.any { word ->
+        return QuestionParser.groundingTopic(q, options.topicFunctionWords, options.topicGenericWords).any { word ->
             val docFrequency = runCatching { db.matchCount("\"$word\"") }.getOrDefault(0) // 0 for a word the collection has never seen
             docFrequency <= limit && !AnswerSelector.hasWord(word, itemText)
         }

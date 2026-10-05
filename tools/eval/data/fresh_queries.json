@@ -1,0 +1,801 @@
+{
+ "queries": [
+  {
+   "id": "q01",
+   "intent": "F1",
+   "style": "en",
+   "kind": "value",
+   "text": "how much did I pay for the Gayatri coaching centre fee",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "36000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q02",
+   "intent": "F1",
+   "style": "te",
+   "kind": "value",
+   "text": "గాయత్రి కోచింగ్ సెంటర్ ఫీజు ఎంత కట్టాను",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "36000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q03",
+   "intent": "F1",
+   "style": "hi",
+   "kind": "value",
+   "text": "गायत्री कोचिंग सेंटर की फीस कितनी भरी",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "36000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q04",
+   "intent": "F1",
+   "style": "rt",
+   "kind": "value",
+   "text": "gayatri coaching centre fee entha kattanu",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "36000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q05",
+   "intent": "F1",
+   "style": "mix",
+   "kind": "value",
+   "text": "Gayatri coaching centre fee ఎంత pay చేశాను",
+   "relevant": [
+    "d001"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "36000"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q06",
+   "intent": "F2",
+   "style": "en",
+   "kind": "value",
+   "text": "when do I have to pay the credit card bill",
+   "relevant": [
+    "d002"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-10-26"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q07",
+   "intent": "F2",
+   "style": "te",
+   "kind": "value",
+   "text": "క్రెడిట్ కార్డ్ బిల్లు ఎప్పుడు కట్టాలి",
+   "relevant": [
+    "d002"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-10-26"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q08",
+   "intent": "F2",
+   "style": "hi",
+   "kind": "value",
+   "text": "क्रेडिट कार्ड का बिल कब भरना है",
+   "relevant": [
+    "d002"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-10-26"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q09",
+   "intent": "F2",
+   "style": "rt",
+   "kind": "value",
+   "text": "credit card bill eppudu kattali",
+   "relevant": [
+    "d002"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-10-26"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q10",
+   "intent": "F2",
+   "style": "mix",
+   "kind": "value",
+   "text": "credit card bill ఎప్పుడు due",
+   "relevant": [
+    "d002"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-10-26"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q11",
+   "intent": "F3",
+   "style": "en",
+   "kind": "value",
+   "text": "what is the vet clinic phone number",
+   "relevant": [
+    "d003"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919440077889"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q12",
+   "intent": "F3",
+   "style": "te",
+   "kind": "value",
+   "text": "పశువైద్య క్లినిక్ ఫోన్ నంబర్ ఎంత",
+   "relevant": [
+    "d003"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919440077889"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q13",
+   "intent": "F3",
+   "style": "hi",
+   "kind": "value",
+   "text": "पशु चिकित्सालय का फोन नंबर क्या है",
+   "relevant": [
+    "d003"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919440077889"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q14",
+   "intent": "F3",
+   "style": "rt",
+   "kind": "value",
+   "text": "vet clinic phone number enti",
+   "relevant": [
+    "d003"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919440077889"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q15",
+   "intent": "F3",
+   "style": "mix",
+   "kind": "value",
+   "text": "vet clinic ఫోన్ number",
+   "relevant": [
+    "d003"
+   ],
+   "answer": {
+    "type": "PHONE",
+    "value": "+919440077889"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q16",
+   "intent": "F4",
+   "style": "en",
+   "kind": "value",
+   "text": "how much was the Bharat Gas cylinder bill",
+   "relevant": [
+    "d004"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "1150"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q17",
+   "intent": "F4",
+   "style": "te",
+   "kind": "value",
+   "text": "భారత్ గ్యాస్ సిలిండర్ బిల్లు ఎంత",
+   "relevant": [
+    "d004"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "1150"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q18",
+   "intent": "F4",
+   "style": "hi",
+   "kind": "value",
+   "text": "भारत गैस सिलेंडर का बिल कितना आया",
+   "relevant": [
+    "d004"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "1150"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q19",
+   "intent": "F4",
+   "style": "rt",
+   "kind": "value",
+   "text": "bharat gas cylinder bill entha",
+   "relevant": [
+    "d004"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "1150"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q20",
+   "intent": "F4",
+   "style": "mix",
+   "kind": "value",
+   "text": "Bharat Gas bill कितना लगा",
+   "relevant": [
+    "d004"
+   ],
+   "answer": {
+    "type": "AMOUNT",
+    "value": "1150"
+   },
+   "target_lang": "hi"
+  },
+  {
+   "id": "q21",
+   "intent": "F5",
+   "style": "en",
+   "kind": "value",
+   "text": "when is the Andhra University exam",
+   "relevant": [
+    "d005"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-12-08"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q22",
+   "intent": "F5",
+   "style": "te",
+   "kind": "value",
+   "text": "ఆంధ్ర విశ్వవిద్యాలయం పరీక్ష ఎప్పుడు",
+   "relevant": [
+    "d005"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-12-08"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q23",
+   "intent": "F5",
+   "style": "hi",
+   "kind": "value",
+   "text": "आंध्र विश्वविद्यालय की परीक्षा कब है",
+   "relevant": [
+    "d005"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-12-08"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q24",
+   "intent": "F5",
+   "style": "rt",
+   "kind": "value",
+   "text": "andhra university exam eppudu",
+   "relevant": [
+    "d005"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-12-08"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q25",
+   "intent": "F5",
+   "style": "mix",
+   "kind": "value",
+   "text": "Andhra University exam ఎప్పుడు",
+   "relevant": [
+    "d005"
+   ],
+   "answer": {
+    "type": "DATE",
+    "value": "2026-12-08"
+   },
+   "target_lang": "te"
+  },
+  {
+   "id": "q26",
+   "intent": "F6",
+   "style": "en",
+   "kind": "value",
+   "text": "what is the address of the Sub Registrar office",
+   "relevant": [
+    "d006"
+   ],
+   "answer": {
+    "type": "ADDRESS",
+    "value": "Plot 7, Station Road, Guntur 522002"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q27",
+   "intent": "F6",
+   "style": "te",
+   "kind": "value",
+   "text": "సబ్ రిజిస్ట్రార్ ఆఫీస్ చిరునామా ఏమిటి",
+   "relevant": [
+    "d006"
+   ],
+   "answer": {
+    "type": "ADDRESS",
+    "value": "Plot 7, Station Road, Guntur 522002"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q28",
+   "intent": "F6",
+   "style": "hi",
+   "kind": "value",
+   "text": "सब रजिस्ट्रार कार्यालय का पता क्या है",
+   "relevant": [
+    "d006"
+   ],
+   "answer": {
+    "type": "ADDRESS",
+    "value": "Plot 7, Station Road, Guntur 522002"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q29",
+   "intent": "F6",
+   "style": "rt",
+   "kind": "value",
+   "text": "sub registrar office address enti",
+   "relevant": [
+    "d006"
+   ],
+   "answer": {
+    "type": "ADDRESS",
+    "value": "Plot 7, Station Road, Guntur 522002"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q30",
+   "intent": "F6",
+   "style": "mix",
+   "kind": "value",
+   "text": "Sub Registrar office చిరునామా",
+   "relevant": [
+    "d006"
+   ],
+   "answer": {
+    "type": "ADDRESS",
+    "value": "Plot 7, Station Road, Guntur 522002"
+   },
+   "target_lang": "en"
+  },
+  {
+   "id": "q31",
+   "intent": "F7",
+   "style": "en",
+   "kind": "find",
+   "text": "notes on monetary policy and inflation",
+   "relevant": [
+    "d007"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q32",
+   "intent": "F7",
+   "style": "te",
+   "kind": "find",
+   "text": "ద్రవ్య విధానం ద్రవ్యోల్బణం నోట్స్",
+   "relevant": [
+    "d007"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q33",
+   "intent": "F7",
+   "style": "hi",
+   "kind": "find",
+   "text": "मौद्रिक नीति और मुद्रास्फीति के नोट्स",
+   "relevant": [
+    "d007"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q34",
+   "intent": "F7",
+   "style": "rt",
+   "kind": "find",
+   "text": "monetary policy inflation notes",
+   "relevant": [
+    "d007"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q35",
+   "intent": "F7",
+   "style": "mix",
+   "kind": "find",
+   "text": "monetary policy గురించి notes",
+   "relevant": [
+    "d007"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q36",
+   "intent": "F8",
+   "style": "en",
+   "kind": "find",
+   "text": "bus ticket to Tirupati",
+   "relevant": [
+    "d008"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q37",
+   "intent": "F8",
+   "style": "te",
+   "kind": "find",
+   "text": "తిరుపతి బస్సు టికెట్",
+   "relevant": [
+    "d008"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q38",
+   "intent": "F8",
+   "style": "hi",
+   "kind": "find",
+   "text": "तिरुपति की बस का टिकट",
+   "relevant": [
+    "d008"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q39",
+   "intent": "F8",
+   "style": "rt",
+   "kind": "find",
+   "text": "tirupati bus ticket",
+   "relevant": [
+    "d008"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q40",
+   "intent": "F8",
+   "style": "mix",
+   "kind": "find",
+   "text": "Tirupati కి bus ticket",
+   "relevant": [
+    "d008"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q41",
+   "intent": "F9",
+   "style": "en",
+   "kind": "find",
+   "text": "payment to Raju Auto Garage",
+   "relevant": [
+    "d010"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q42",
+   "intent": "F9",
+   "style": "te",
+   "kind": "find",
+   "text": "రాజు ఆటో గ్యారేజ్ కి చెల్లింపు",
+   "relevant": [
+    "d010"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q43",
+   "intent": "F9",
+   "style": "hi",
+   "kind": "find",
+   "text": "राजू ऑटो गैराज को भुगतान",
+   "relevant": [
+    "d010"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q44",
+   "intent": "F9",
+   "style": "rt",
+   "kind": "find",
+   "text": "Raju Auto Garage ki payment",
+   "relevant": [
+    "d010"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q45",
+   "intent": "F9",
+   "style": "mix",
+   "kind": "find",
+   "text": "Raju Auto Garage కి payment",
+   "relevant": [
+    "d010"
+   ],
+   "answer": null,
+   "target_lang": "en"
+  },
+  {
+   "id": "q46",
+   "intent": "F10",
+   "style": "en",
+   "kind": "find",
+   "text": "physics notes on refraction of light",
+   "relevant": [
+    "d009"
+   ],
+   "answer": null,
+   "target_lang": "te"
+  },
+  {
+   "id": "q47",
+   "intent": "F10",
+   "style": "te",
+   "kind": "find",
+   "text": "కాంతి వక్రీభవనం భౌతిక శాస్త్రం నోట్స్",
+   "relevant": [
+    "d009"
+   ],
+   "answer": null,
+   "target_lang": "te"
+  },
+  {
+   "id": "q48",
+   "intent": "F10",
+   "style": "hi",
+   "kind": "find",
+   "text": "प्रकाश के अपवर्तन पर भौतिकी के नोट्स",
+   "relevant": [
+    "d009"
+   ],
+   "answer": null,
+   "target_lang": "te"
+  },
+  {
+   "id": "q49",
+   "intent": "F10",
+   "style": "rt",
+   "kind": "find",
+   "text": "kaanthi vakreebhavanam physics notes",
+   "relevant": [
+    "d009"
+   ],
+   "answer": null,
+   "target_lang": "te"
+  },
+  {
+   "id": "q50",
+   "intent": "F10",
+   "style": "mix",
+   "kind": "find",
+   "text": "refraction of light గురించి physics notes",
+   "relevant": [
+    "d009"
+   ],
+   "answer": null,
+   "target_lang": "te"
+  },
+  {
+   "id": "q51",
+   "intent": "NEG",
+   "style": "en",
+   "kind": "negative",
+   "text": "how much was the gym membership",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q52",
+   "intent": "NEG",
+   "style": "te",
+   "kind": "negative",
+   "text": "జిమ్ మెంబర్‌షిప్ ఎంత",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q53",
+   "intent": "NEG",
+   "style": "hi",
+   "kind": "negative",
+   "text": "जिम की सदस्यता कितनी थी",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q54",
+   "intent": "NEG",
+   "style": "rt",
+   "kind": "negative",
+   "text": "gym membership entha",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q55",
+   "intent": "NEG",
+   "style": "mix",
+   "kind": "negative",
+   "text": "gym membership ఎంత కట్టాను",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q56",
+   "intent": "NEG",
+   "style": "en",
+   "kind": "negative",
+   "text": "when is the passport renewal due",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q57",
+   "intent": "NEG",
+   "style": "te",
+   "kind": "negative",
+   "text": "పాస్‌పోర్ట్ రెన్యూవల్ ఎప్పుడు",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q58",
+   "intent": "NEG",
+   "style": "hi",
+   "kind": "negative",
+   "text": "पासपोर्ट नवीनीकरण कब है",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q59",
+   "intent": "NEG",
+   "style": "rt",
+   "kind": "negative",
+   "text": "passport renewal eppudu",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  },
+  {
+   "id": "q60",
+   "intent": "NEG",
+   "style": "mix",
+   "kind": "negative",
+   "text": "passport renewal ఎప్పుడు due",
+   "relevant": [],
+   "answer": null,
+   "target_lang": null
+  }
+ ],
+ "styles": [
+  "en",
+  "te",
+  "hi",
+  "rt",
+  "mix"
+ ]
+}

@@ -6,7 +6,7 @@ the headline claim "merging keyword and meaning search beats either alone" does 
 
 > The sections from "What was measured" to "How far to trust this" describe the **original, untuned behaviour** (the baseline).
 > Two fixes were developed afterwards and checked on a separate held-out set: see **Fix experiments** below, which also says what
-> now ships. Re-running `tools/eval/run_eval.sh` regenerates the tables and charts but not the hand-written commentary.
+> now ships. Round 2 (the answer gate's topic words, on a third, fresh set) follows it. Re-running `tools/eval/run_eval.sh` regenerates the tables and charts but not the hand-written commentary.
 
 ## What was measured
 
@@ -26,12 +26,12 @@ the headline claim "merging keyword and meaning search beats either alone" does 
 
 | Mode | Configuration | Recall@1 | Recall@5 | MRR | Median search time |
 |---|---:|---:|---:|---:|---:|
-| Perfect text | Keywords only | 49% | 51% | 0.50 | 5 ms |
-| Perfect text | Meaning only (embeddings) | 69% | 85% | 0.77 | 19 ms |
-| Perfect text | Merged (RRF) | 58% | 67% | 0.62 | 20 ms |
-| Real OCR | Keywords only | 47% | 49% | 0.48 | 5 ms |
-| Real OCR | Meaning only (embeddings) | 67% | 76% | 0.71 | 20 ms |
-| Real OCR | Merged (RRF) | 56% | 71% | 0.63 | 20 ms |
+| Perfect text | Keywords only | 49% | 51% | 0.50 | 1 ms |
+| Perfect text | Meaning only (embeddings) | 69% | 85% | 0.77 | 5 ms |
+| Perfect text | Merged (RRF) | 58% | 67% | 0.62 | 5 ms |
+| Real OCR | Keywords only | 47% | 49% | 0.48 | 1 ms |
+| Real OCR | Meaning only (embeddings) | 67% | 76% | 0.71 | 4 ms |
+| Real OCR | Merged (RRF) | 56% | 71% | 0.63 | 4 ms |
 
 | Mode | Value questions | Wrongly answered when no document exists | Document fields extracted (truth present) | Ledger |
 |---|---:|---:|---:|---:|
@@ -87,9 +87,8 @@ the headline claim "merging keyword and meaning search beats either alone" does 
 
 ## What to try next (not done)
 
-1. Stop the answer gate treating generic words as topic words: apply the Hindi/Telugu stopword lists and a small list of generic verbs
-   ("pay", "spend", "cost") when extracting a question's topic. This should win back correct answers without bringing back wrong ones, but
-   it changes behaviour that was just measured, so it needs a *new* held-out set.
+1. ~~Stop the answer gate treating generic words as topic words~~ (done in round 2, with a fresh set; the remaining wrong answers come from OCR misreading
+   the rupee sign, which a topic gate cannot fix: a confidence check on the amount's *magnitude* or a second OCR read would).
 2. Score-aware fusion: merged currently only ties meaning-only, so the keyword leg is not yet earning its place beyond same-language names.
 3. Add a Tesseract Telugu pass behind the `OcrEngine` interface and measure it with this harness (Telugu documents are currently 0%).
 4. Get the non-English queries reviewed by native speakers and build a third, independently written query set.
@@ -124,7 +123,7 @@ from the second set existed:
    wrong plus made-up answers, ties to more correct answers.
 4. The held-out set was then measured once, for all variants, and the app now ships the dev-selected ones.
 
-**Selected on the dev set by the pre-declared rule: retrieval variant C1 (+ keyword coverage gate (>= half the query words)), answer gate A1 (+ grounding (every rare question word must be in the document)).**
+**Selected on the dev set by the pre-declared rule: retrieval variant C1 (+ keyword coverage gate (>= half the query words)), answer gate A1 (grounding (every rare question word must be in the document)).**
 
 ![Recall@5 by query style: meaning only, merged as shipped, merged fixed](eval_fixes.png)
 
@@ -143,7 +142,7 @@ from the second set existed:
    to "bike insurance" 2 of 5 -> 0 of 5 (dev: 3 -> 0 and 2 -> 0). But correct answers fell from 10 to 6 of 25 (perfect text) and 8 to 5
    (real OCR), and on dev from 10 to 7 and 9 to 6. The cost has a known cause: the gate treats any question word that is rare in the
    collection and absent from the document as a missing topic, and it cannot tell a generic word from a topic word, e.g. "pay" when the
-   receipt says "paid", Hindi "था", or the Telugu verb "కట్టాను". It is shipped exactly as measured so the numbers describe the app.
+   receipt says "paid", Hindi "था", or the Telugu verb "కట్టాను". It was shipped exactly as measured in round 1; **round 2 below refines this gate and is what ships now.**
 
 ### Caveats specific to this experiment
 
@@ -158,50 +157,186 @@ from the second set existed:
 
 **Perfect text**
 
-| Variant | Merged R@1 / R@5 / MRR | Same-language (27) R@1 / R@5 | Cross-language (28) R@1 / R@5 | Keywords-only R@1 / R@5 | Answers, gate A0: correct / wrong / false-on-no-answer | Answers, gate A1 (grounding): correct / wrong / false-on-no-answer |
-|---|---:|---:|---:|---:|---:|---:|
-| B0: baseline (as shipped) | 58% / 67% / 0.62 | 100% / 100% | 18% / 36% | 49% / 51% | 10 / 3 / 2 | 7 / 0 / 0 |
-| S1: + Hindi/Telugu/Roman stopwords | 58% / 67% / 0.62 | 100% / 100% | 18% / 36% | 51% / 51% | 10 / 3 / 2 | 7 / 0 / 0 |
-| C1: + keyword coverage gate (>= half the query words) **(selected on dev)** | 73% / 85% / 0.79 | 100% / 100% | 46% / 71% | 47% / 47% | 10 / 3 / 1 | 7 / 0 / 0 |
-| S2: stopwords + coverage gate | 73% / 84% / 0.78 | 100% / 100% | 46% / 68% | 47% / 47% | 10 / 3 / 2 | 7 / 0 / 0 |
-| S3: stopwords + coverage gate + keyword weight 0.5 | 71% / 84% / 0.77 | 96% / 100% | 46% / 68% | 47% / 47% | 10 / 3 / 2 | 7 / 0 / 0 |
-| Meaning only (reference, unchanged) | 69% / 85% / 0.77 |  |  |  |  |  |
+| Variant | Merged R@1 / R@5 / MRR | Same-language (27) R@1 / R@5 | Cross-language (28) R@1 / R@5 | Keywords-only R@1 / R@5 |
+|---|---:|---:|---:|---:|
+| B0: baseline (as shipped) | 58% / 67% / 0.62 | 100% / 100% | 18% / 36% | 49% / 51% |
+| S1: + Hindi/Telugu/Roman stopwords | 58% / 67% / 0.62 | 100% / 100% | 18% / 36% | 51% / 51% |
+| C1: + keyword coverage gate (>= half the query words) **(selected on dev)** | 73% / 85% / 0.79 | 100% / 100% | 46% / 71% | 47% / 47% |
+| S2: stopwords + coverage gate | 73% / 84% / 0.78 | 100% / 100% | 46% / 68% | 47% / 47% |
+| S3: stopwords + coverage gate + keyword weight 0.5 | 71% / 84% / 0.77 | 96% / 100% | 46% / 68% | 47% / 47% |
+| Meaning only (reference, unchanged) | 69% / 85% / 0.77 |  |  |  |
 
 **Real OCR**
 
-| Variant | Merged R@1 / R@5 / MRR | Same-language (27) R@1 / R@5 | Cross-language (28) R@1 / R@5 | Keywords-only R@1 / R@5 | Answers, gate A0: correct / wrong / false-on-no-answer | Answers, gate A1 (grounding): correct / wrong / false-on-no-answer |
-|---|---:|---:|---:|---:|---:|---:|
-| B0: baseline (as shipped) | 56% / 71% / 0.63 | 93% / 96% | 21% / 46% | 47% / 49% | 9 / 0 / 2 | 6 / 0 / 0 |
-| S1: + Hindi/Telugu/Roman stopwords | 58% / 73% / 0.64 | 93% / 96% | 25% / 50% | 49% / 49% | 9 / 0 / 2 | 6 / 0 / 0 |
-| C1: + keyword coverage gate (>= half the query words) **(selected on dev)** | 67% / 78% / 0.72 | 93% / 96% | 43% / 61% | 45% / 45% | 9 / 0 / 2 | 6 / 0 / 0 |
-| S2: stopwords + coverage gate | 67% / 78% / 0.72 | 93% / 96% | 43% / 61% | 45% / 45% | 9 / 0 / 2 | 6 / 0 / 0 |
-| S3: stopwords + coverage gate + keyword weight 0.5 | 67% / 78% / 0.72 | 93% / 96% | 43% / 61% | 45% / 45% | 9 / 0 / 2 | 6 / 0 / 0 |
-| Meaning only (reference, unchanged) | 67% / 76% / 0.71 |  |  |  |  |  |
+| Variant | Merged R@1 / R@5 / MRR | Same-language (27) R@1 / R@5 | Cross-language (28) R@1 / R@5 | Keywords-only R@1 / R@5 |
+|---|---:|---:|---:|---:|
+| B0: baseline (as shipped) | 56% / 71% / 0.63 | 93% / 96% | 21% / 46% | 47% / 49% |
+| S1: + Hindi/Telugu/Roman stopwords | 58% / 73% / 0.64 | 93% / 96% | 25% / 50% | 49% / 49% |
+| C1: + keyword coverage gate (>= half the query words) **(selected on dev)** | 67% / 78% / 0.72 | 93% / 96% | 43% / 61% | 45% / 45% |
+| S2: stopwords + coverage gate | 67% / 78% / 0.72 | 93% / 96% | 43% / 61% | 45% / 45% |
+| S3: stopwords + coverage gate + keyword weight 0.5 | 67% / 78% / 0.72 | 93% / 96% | 43% / 61% | 45% / 45% |
+| Meaning only (reference, unchanged) | 67% / 76% / 0.71 |  |  |  |
 
 #### Held-out set: measured once, after the selection above (selected variant flagged)
 
 **Perfect text**
 
-| Variant | Merged R@1 / R@5 / MRR | Same-language (25) R@1 / R@5 | Cross-language (30) R@1 / R@5 | Keywords-only R@1 / R@5 | Answers, gate A0: correct / wrong / false-on-no-answer | Answers, gate A1 (grounding): correct / wrong / false-on-no-answer |
-|---|---:|---:|---:|---:|---:|---:|
-| B0: baseline (as shipped) | 62% / 73% / 0.67 | 100% / 100% | 30% / 50% | 47% / 47% | 10 / 1 / 2 | 6 / 0 / 0 |
-| S1: + Hindi/Telugu/Roman stopwords | 69% / 76% / 0.72 | 100% / 100% | 43% / 57% | 47% / 47% | 10 / 1 / 2 | 6 / 0 / 0 |
-| C1: + keyword coverage gate (>= half the query words) **(selected on dev)** | 82% / 87% / 0.84 | 100% / 100% | 67% / 77% | 45% / 45% | 10 / 1 / 2 | 6 / 0 / 0 |
-| S2: stopwords + coverage gate | 80% / 87% / 0.83 | 100% / 100% | 63% / 77% | 45% / 45% | 10 / 1 / 2 | 6 / 0 / 0 |
-| S3: stopwords + coverage gate + keyword weight 0.5 | 80% / 87% / 0.83 | 100% / 100% | 63% / 77% | 45% / 45% | 10 / 1 / 2 | 6 / 0 / 0 |
-| Meaning only (reference, unchanged) | 85% / 89% / 0.87 |  |  |  |  |  |
+| Variant | Merged R@1 / R@5 / MRR | Same-language (25) R@1 / R@5 | Cross-language (30) R@1 / R@5 | Keywords-only R@1 / R@5 |
+|---|---:|---:|---:|---:|
+| B0: baseline (as shipped) | 62% / 73% / 0.67 | 100% / 100% | 30% / 50% | 47% / 47% |
+| S1: + Hindi/Telugu/Roman stopwords | 69% / 76% / 0.72 | 100% / 100% | 43% / 57% | 47% / 47% |
+| C1: + keyword coverage gate (>= half the query words) **(selected on dev)** | 82% / 87% / 0.84 | 100% / 100% | 67% / 77% | 45% / 45% |
+| S2: stopwords + coverage gate | 80% / 87% / 0.83 | 100% / 100% | 63% / 77% | 45% / 45% |
+| S3: stopwords + coverage gate + keyword weight 0.5 | 80% / 87% / 0.83 | 100% / 100% | 63% / 77% | 45% / 45% |
+| Meaning only (reference, unchanged) | 85% / 89% / 0.87 |  |  |  |
 
 **Real OCR**
 
-| Variant | Merged R@1 / R@5 / MRR | Same-language (25) R@1 / R@5 | Cross-language (30) R@1 / R@5 | Keywords-only R@1 / R@5 | Answers, gate A0: correct / wrong / false-on-no-answer | Answers, gate A1 (grounding): correct / wrong / false-on-no-answer |
-|---|---:|---:|---:|---:|---:|---:|
-| B0: baseline (as shipped) | 56% / 64% / 0.61 | 92% / 92% | 27% / 40% | 44% / 44% | 8 / 1 / 2 | 5 / 0 / 0 |
-| S1: + Hindi/Telugu/Roman stopwords | 62% / 71% / 0.66 | 92% / 92% | 37% / 53% | 44% / 44% | 8 / 1 / 2 | 5 / 0 / 0 |
-| C1: + keyword coverage gate (>= half the query words) **(selected on dev)** | 65% / 80% / 0.70 | 92% / 92% | 43% / 70% | 42% / 42% | 8 / 1 / 2 | 5 / 0 / 0 |
-| S2: stopwords + coverage gate | 65% / 78% / 0.70 | 92% / 92% | 43% / 67% | 42% / 42% | 8 / 1 / 2 | 5 / 0 / 0 |
-| S3: stopwords + coverage gate + keyword weight 0.5 | 65% / 78% / 0.70 | 92% / 92% | 43% / 67% | 42% / 42% | 8 / 1 / 2 | 5 / 0 / 0 |
-| Meaning only (reference, unchanged) | 65% / 80% / 0.70 |  |  |  |  |  |
+| Variant | Merged R@1 / R@5 / MRR | Same-language (25) R@1 / R@5 | Cross-language (30) R@1 / R@5 | Keywords-only R@1 / R@5 |
+|---|---:|---:|---:|---:|
+| B0: baseline (as shipped) | 56% / 64% / 0.61 | 92% / 92% | 27% / 40% | 44% / 44% |
+| S1: + Hindi/Telugu/Roman stopwords | 62% / 71% / 0.66 | 92% / 92% | 37% / 53% | 44% / 44% |
+| C1: + keyword coverage gate (>= half the query words) **(selected on dev)** | 65% / 80% / 0.70 | 92% / 92% | 43% / 70% | 42% / 42% |
+| S2: stopwords + coverage gate | 65% / 78% / 0.70 | 92% / 92% | 43% / 67% | 42% / 42% |
+| S3: stopwords + coverage gate + keyword weight 0.5 | 65% / 78% / 0.70 | 92% / 92% | 43% / 67% | 42% / 42% |
+| Meaning only (reference, unchanged) | 65% / 80% / 0.70 |  |  |  |
 
+
+
+## Round 2: the generic-word problem in the answer gate (fresh set)
+
+Round 1 shipped a grounding gate that declined whenever a *rare* word of the question was missing from the document. It over-declined because
+it could not tell topic words from function words ("था", "కి") and everyday payment verbs ("pay" vs "paid"). This round tried to win those
+answers back without bringing wrong ones back. Same discipline as round 1, because **both earlier sets had by now been seen** and so could
+no longer judge a fix designed from their failures:
+
+1. A **third corpus ("fresh")** was generated first: 300 new documents, 60 new queries (10 intents x 5 styles + 2 no-answer questions x 5), new
+   seed. Six of its ten intents are value questions, written in natural phrasing with payment verbs ("how much did I pay", Telugu
+   "ఎంత కట్టాను", Hindi "कितनी भरी"). Its non-English wording is the author's and unreviewed.
+2. **Three variants and a selection rule were fixed in code before any fresh result existed**: A1 (the round-1 gate), A2 (A1 with the question's
+   topic taken without Hindi/Telugu/Roman function words), A3 (A2 plus a list of generic payment verbs). Rule: over the already-seen sets (dev and
+   held-out, both modes), the gate with the fewest wrong plus made-up answers, then the most correct answers, then the simpler gate.
+3. The fresh set was then measured once.
+
+**Selected by the round-2 rule on the already-seen sets (dev + held-out, both modes): answer gate A2 (A1, topic without Hindi/Telugu/Roman function words).** Totals over those four runs, as (wrong + made-up answers, correct answers of 100): A1: 0, 24; A2: 0, 33; A3: 0, 33.
+
+#### Dev set: answer gates
+
+**Perfect text** (shipped retrieval C1)
+
+| Answer gate | Correct | Wrong answer shown | Declined | Made-up answers to no-answer questions |
+|---|---:|---:|---:|---:|
+| A0: original gate | 10 / 25 | 3 | 11 | 1 / 5 |
+| A1: grounding (every rare question word must be in the document) | 7 / 25 | 0 | 17 | 0 / 5 |
+| A2: A1, topic without Hindi/Telugu/Roman function words **(selected)** | 9 / 25 | 0 | 15 | 0 / 5 |
+| A3: A2, topic also without generic payment verbs (pay, spend, भरना, కట్టాను ...) | 9 / 25 | 0 | 15 | 0 / 5 |
+
+**Real OCR** (shipped retrieval C1)
+
+| Answer gate | Correct | Wrong answer shown | Declined | Made-up answers to no-answer questions |
+|---|---:|---:|---:|---:|
+| A0: original gate | 9 / 25 | 0 | 15 | 2 / 5 |
+| A1: grounding (every rare question word must be in the document) | 6 / 25 | 0 | 18 | 0 / 5 |
+| A2: A1, topic without Hindi/Telugu/Roman function words **(selected)** | 8 / 25 | 0 | 16 | 0 / 5 |
+| A3: A2, topic also without generic payment verbs (pay, spend, भरना, కట్టాను ...) | 8 / 25 | 0 | 16 | 0 / 5 |
+
+#### Held-out set: answer gates
+
+**Perfect text** (shipped retrieval C1)
+
+| Answer gate | Correct | Wrong answer shown | Declined | Made-up answers to no-answer questions |
+|---|---:|---:|---:|---:|
+| A0: original gate | 10 / 25 | 1 | 13 | 2 / 5 |
+| A1: grounding (every rare question word must be in the document) | 6 / 25 | 0 | 18 | 0 / 5 |
+| A2: A1, topic without Hindi/Telugu/Roman function words **(selected)** | 9 / 25 | 0 | 15 | 0 / 5 |
+| A3: A2, topic also without generic payment verbs (pay, spend, भरना, కట్టాను ...) | 9 / 25 | 0 | 15 | 0 / 5 |
+
+**Real OCR** (shipped retrieval C1)
+
+| Answer gate | Correct | Wrong answer shown | Declined | Made-up answers to no-answer questions |
+|---|---:|---:|---:|---:|
+| A0: original gate | 8 / 25 | 1 | 15 | 2 / 5 |
+| A1: grounding (every rare question word must be in the document) | 5 / 25 | 0 | 19 | 0 / 5 |
+| A2: A1, topic without Hindi/Telugu/Roman function words **(selected)** | 7 / 25 | 0 | 17 | 0 / 5 |
+| A3: A2, topic also without generic payment verbs (pay, spend, भरना, కట్టాను ...) | 7 / 25 | 0 | 17 | 0 / 5 |
+
+
+#### Fresh set: answer gates, measured once
+
+**Perfect text** (shipped retrieval C1)
+
+| Answer gate | Correct | Wrong answer shown | Declined | Made-up answers to no-answer questions |
+|---|---:|---:|---:|---:|
+| A0: original gate | 11 / 30 | 3 | 15 | 0 / 10 |
+| A1: grounding (every rare question word must be in the document) | 6 / 30 | 0 | 23 | 0 / 10 |
+| A2: A1, topic without Hindi/Telugu/Roman function words **(selected)** | 9 / 30 | 0 | 20 | 0 / 10 |
+| A3: A2, topic also without generic payment verbs (pay, spend, भरना, కట్టాను ...) | 9 / 30 | 0 | 20 | 0 / 10 |
+
+**Real OCR** (shipped retrieval C1)
+
+| Answer gate | Correct | Wrong answer shown | Declined | Made-up answers to no-answer questions |
+|---|---:|---:|---:|---:|
+| A0: original gate | 9 / 30 | 3 | 17 | 0 / 10 |
+| A1: grounding (every rare question word must be in the document) | 5 / 30 | 0 | 24 | 0 / 10 |
+| A2: A1, topic without Hindi/Telugu/Roman function words **(selected)** | 7 / 30 | 1 | 21 | 0 / 10 |
+| A3: A2, topic also without generic payment verbs (pay, spend, भरना, కట్టాను ...) | 7 / 30 | 1 | 21 | 0 / 10 |
+
+#### Fresh set: retrieval variants (a third check of round 1)
+
+**Perfect text**
+
+| Variant | Merged R@1 / R@5 / MRR | Same-language (24) R@1 / R@5 | Cross-language (26) R@1 / R@5 | Keywords-only R@1 / R@5 |
+|---|---:|---:|---:|---:|
+| B0: baseline (as shipped) | 54% / 64% / 0.60 | 96% / 96% | 15% / 35% | 48% / 48% |
+| S1: + Hindi/Telugu/Roman stopwords | 58% / 68% / 0.63 | 96% / 96% | 23% / 42% | 48% / 48% |
+| C1: + keyword coverage gate (>= half the query words) **(selected on dev)** | 78% / 86% / 0.81 | 96% / 96% | 62% / 77% | 44% / 44% |
+| S2: stopwords + coverage gate | 80% / 88% / 0.83 | 100% / 100% | 62% / 77% | 46% / 46% |
+| S3: stopwords + coverage gate + keyword weight 0.5 | 78% / 86% / 0.81 | 96% / 96% | 62% / 77% | 46% / 46% |
+| Meaning only (reference, unchanged) | 78% / 86% / 0.81 |  |  |  |
+
+**Real OCR**
+
+| Variant | Merged R@1 / R@5 / MRR | Same-language (24) R@1 / R@5 | Cross-language (26) R@1 / R@5 | Keywords-only R@1 / R@5 |
+|---|---:|---:|---:|---:|
+| B0: baseline (as shipped) | 54% / 58% / 0.56 | 88% / 88% | 23% / 31% | 44% / 44% |
+| S1: + Hindi/Telugu/Roman stopwords | 58% / 62% / 0.60 | 88% / 88% | 31% / 38% | 44% / 44% |
+| C1: + keyword coverage gate (>= half the query words) **(selected on dev)** | 64% / 68% / 0.66 | 88% / 88% | 42% / 50% | 40% / 40% |
+| S2: stopwords + coverage gate | 64% / 70% / 0.67 | 92% / 92% | 38% / 50% | 42% / 42% |
+| S3: stopwords + coverage gate + keyword weight 0.5 | 62% / 68% / 0.65 | 88% / 88% | 38% / 50% | 42% / 42% |
+| Meaning only (reference, unchanged) | 64% / 68% / 0.66 |  |  |  |
+
+
+### What round 2 showed
+
+1. **A2 wins back answers consistently.** Against A1 it adds 2 to 3 correct answers in every one of the six runs (dev, held-out, fresh, in both
+   modes): fresh 6 -> 9 of 30 with perfect text and 5 -> 7 with real OCR. On the seen sets it did so with zero wrong and zero made-up answers.
+2. **On the fresh set it is not perfectly safe.** With real OCR A2 showed **one wrong answer** that A1 did not (`q18`, Hindi "how much was the
+   Bharat Gas cylinder bill"). The document was the right one, but the extracted amount was 21,150 instead of 1,150: an extra leading "2" where the rupee sign
+   is, which is how the OCR garbled that sign in other runs (the raw OCR text is not stored, so this is an inference). The
+   original gate gave the same wrong answer, and A1 avoided it only by accident, because its topic still contained the function word "आया" so it
+   declined. That is the known rupee-sign weakness, which a topic gate cannot catch.
+3. **Against the original gate**, A2 on the fresh set gives up 2 correct answers (11 -> 9 perfect text, 9 -> 7 real OCR) and avoids 3 wrong ones (3 -> 0
+   perfect text; 3 -> 1 real OCR). It is the shipped default.
+4. **The generic-verb list (A3) changed nothing in any of the six runs** and is not used. The reason is a property of the rarity rule: a word is
+   "rare" if it appears in at most 5% of chunks (never fewer than 3 documents), so in a few-hundred-document collection "pay" is not rare and cannot
+   cause a decline. It still does in a tiny collection: with only 8 documents (the unit-test corpus) "when did I pay the hostel fee" is declined
+   because the receipt says "paid". With a small personal library the same would happen.
+5. **The made-up-answer failure was re-tested only weakly.** The fresh no-answer questions (gym membership, passport renewal) have no near-miss document,
+   so even the original gate answered them correctly (0 of 10 made-up). The failure mode that mattered, "car/bike insurance" answered from a health
+   insurance premium, lives in the dev and held-out sets, where A2 gives 0 of 5 made-up answers.
+6. **Round 1 replicated a third time.** On the fresh set the keyword coverage gate lifts merged recall@5 from 64% to 86% (perfect text) and from 58% to 68% (real
+   OCR), exactly level with meaning-only search (86% and 68%), with across-language recall@5 35% -> 77% and 31% -> 50%. Merged still does not beat
+   meaning-only. Stopwords plus the coverage gate (S2) came out marginally higher on the fresh set (88% and 70%, one query each) but it was not the
+   dev-selected variant, so it was not adopted; that would be choosing after looking.
+
+### Two measurement bugs found along the way
+
+Both were in the evaluation tooling and both are fixed; neither affects the published numbers, because the affected runs were discarded:
+
+- The harness and runner chose the corpus files for the `heldout` set only, so a first "fresh" run silently used the **dev** manifest and dev images.
+  It was caught because its numbers were identical to the dev numbers to the digit. (No fresh result had been seen at that point, so the selection was
+  not influenced.) The harness now fails if the manifest is not the requested set, and in image mode if the OCR'd text does not match the manifest.
+- That same mix-up put dev images in the fresh image folder; they were re-rendered from the fresh manifest.
 
 
 ---
@@ -212,7 +347,7 @@ from the second set existed:
 
 ### Mode 1: perfect text (isolates retrieval and extraction from OCR)
 
-Indexed 300 of 300 documents (0 with no text found, 0 duplicates, 0 failed) in 14 s; this mode uses the true text, so there is no OCR step.
+Indexed 300 of 300 documents (0 with no text found, 0 duplicates, 0 failed) in 3 s; this mode uses the true text, so there is no OCR step.
 
 **Retrieval** (55 find/value queries; the 5 negative queries are scored separately). Recall@1 / recall@5 / MRR:
 
@@ -275,7 +410,7 @@ Wrong answers shown: q02 "సాయి విద్య హాస్టల్ ఫ
 | 2026-09 | ₹14,959.50 | ₹14,959.50 | ₹14,959.50 | exact | 100.0% |
 | 2026-10 | ₹25,021.00 | ₹25,021.00 | ₹25,021.00 | exact | 100.0% |
 
-**Search latency** (end to end, emulator): Keywords only: median 5 ms, p95 14 ms; Meaning only (embeddings): median 19 ms, p95 34 ms; Merged (RRF): median 20 ms, p95 34 ms.
+**Search latency** (end to end, emulator): Keywords only: median 1 ms, p95 5 ms; Meaning only (embeddings): median 5 ms, p95 9 ms; Merged (RRF): median 5 ms, p95 8 ms.
 
 **Rank of the correct document per query intent**, written `merged (meaning-only, keywords-only)`; `-` means not in the top 20; 1 is best:
 
@@ -323,7 +458,7 @@ Wrong answers shown: q02 "సాయి విద్య హాస్టల్ ఫ
 
 ### Mode 2: real OCR on the rendered images (end to end)
 
-Indexed 300 of 300 documents (0 with no text found, 0 duplicates, 0 failed) in 46 s; median OCR 91 ms and embedding 32 ms per document.
+Indexed 300 of 300 documents (0 with no text found, 0 duplicates, 0 failed) in 15 s; median OCR 31 ms and embedding 8 ms per document.
 
 **Retrieval** (55 find/value queries; the 5 negative queries are scored separately). Recall@1 / recall@5 / MRR:
 
@@ -384,7 +519,7 @@ By the language of the *document* being looked for:
 | 2026-09 | ₹14,959.50 | ₹5,469.50 | ₹5,469.50 | exact | 36.6% |
 | 2026-10 | ₹25,021.00 | ₹11,097.00 | ₹11,097.00 | exact | 44.4% |
 
-**Search latency** (end to end, emulator): Keywords only: median 5 ms, p95 10 ms; Meaning only (embeddings): median 20 ms, p95 31 ms; Merged (RRF): median 20 ms, p95 28 ms.
+**Search latency** (end to end, emulator): Keywords only: median 1 ms, p95 2 ms; Meaning only (embeddings): median 4 ms, p95 6 ms; Merged (RRF): median 4 ms, p95 7 ms.
 
 **Rank of the correct document per query intent**, written `merged (meaning-only, keywords-only)`; `-` means not in the top 20; 1 is best:
 
