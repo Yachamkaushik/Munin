@@ -386,4 +386,10 @@ with the process killed and the app never opened, a new screenshot was indexed w
 text (whitespace tidied, cut at 300 characters) becomes the search and Munin only reads it, never changes it. Sharing an **image** to Munin reads its text on the phone and shows it with a
 **Search my files for this text** button; the image is **not** added to the index (a shared image's access ends with the share, so it could not be read again later). Limits: one image at a time, no PDFs yet, and
 the OCR text can contain mistakes (the card says so). Tested with adb intents; the image case needs the sender's read grant, which a real share sheet provides.
+
+**Due-date reminder suggestions** (`reminders/`): on the empty search screen a **Coming up** card lists dates Munin already read whose label looks like a deadline ("Due date", "Valid till", "Last date", "Expires",
+"Renewal", "Pay by", and Telugu/Hindi equivalents) and that fall in the next 60 days, soonest first, at most five. **Nothing is created automatically.** *Add to calendar* shows the exact title and date
+and, only on confirm, opens your calendar app pre-filled (you save it there; Munin has no calendar permission); *Not now* hides it for good. Copies of one document with the same date and label count once.
+It is a read-only query over existing data (no schema change). Limits: dates without a year are skipped; the label must look like a deadline, so a bare "Date" is never suggested; it is an event, not a timed
+alarm (your calendar's default reminder applies); OCR can misread a date, which the card and dialog say.
 force-stop from Settings cancels all scheduled work until Munin is next opened; it indexes every new image, not only screenshots; the Android 12+ rules mean the progress notification may not show for a wake-up run.

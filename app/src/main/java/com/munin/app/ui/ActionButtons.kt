@@ -50,7 +50,7 @@ fun ActionButtons(subject: ActionSubject, modifier: Modifier = Modifier) {
 
 /** Shows what an action will do and, only on confirm, hands it to another app. Cancel and dismiss do nothing. */
 @Composable
-fun ActionConfirmDialog(plan: ActionPlan, onClose: () -> Unit) {
+fun ActionConfirmDialog(plan: ActionPlan, onConfirmed: () -> Unit = {}, onClose: () -> Unit) {
     val context = LocalContext.current
     AlertDialog(
         onDismissRequest = onClose,
@@ -70,6 +70,7 @@ fun ActionConfirmDialog(plan: ActionPlan, onClose: () -> Unit) {
         confirmButton = {
             TextButton(onClick = {
                 onClose()
+                onConfirmed()
                 try {
                     context.startActivity(IntentFactory.build(plan.payload))
                 } catch (e: ActivityNotFoundException) {

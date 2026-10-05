@@ -130,6 +130,13 @@ interface FactDao {
     @Query("SELECT * FROM facts WHERE itemId IN (:itemIds) AND name = :type ORDER BY lineIndex, id")
     suspend fun forItems(itemIds: List<Long>, type: String): List<FactEntity>
 
+    /** Every full date read from an indexed image, for picking deadlines (see reminders/DueDates). No schema change: a read-only join. */
+    @Query(
+        "SELECT f.id AS factId, f.itemId AS itemId, f.label AS label, f.value AS isoDate, f.raw AS raw, f.confidence AS confidence, i.displayName AS itemName " +
+            "FROM facts f JOIN items i ON i.id = f.itemId WHERE f.name = 'DATE' AND f.value NOT LIKE '--%' AND i.status = 'INDEXED' AND f.label IS NOT NULL",
+    )
+    suspend fun dateCandidates(): List<com.munin.app.reminders.DueCandidate>
+
     @Query("SELECT * FROM facts WHERE itemId = :itemId ORDER BY lineIndex, id")
     suspend fun allForItem(itemId: Long): List<FactEntity>
 

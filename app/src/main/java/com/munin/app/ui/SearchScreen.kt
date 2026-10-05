@@ -98,6 +98,7 @@ fun SearchScreen(onOpenItem: (Long) -> Unit, onOpenLedger: (java.time.YearMonth?
         if (ui.showDebug && r != null) Text(debugLine(r.mode, r.timings), style = MaterialTheme.typography.labelSmall)
 
         ui.shared?.let { sh -> SharedImageCard(sh, onSearch = { vm.searchFor(it) }, onDismiss = vm::dismissShared) }
+        if (ui.query.isBlank() && ui.reminders.isNotEmpty()) RemindersCard(ui.reminders, vm::reminderHandled)
         if (ui.query.isBlank()) {
             Text("Search by what the text says, not by file name.", style = MaterialTheme.typography.bodyMedium)
         } else {
@@ -235,6 +236,29 @@ private fun SharedImageCard(sh: SharedImage, onSearch: (String) -> Unit, onDismi
             androidx.compose.material3.TextButton(onClick = onDismiss) { Text("Dismiss") }
         }
     }
+}
+
+/** Deadlines found in your images. Each one is only a suggestion: it goes to your calendar only after you confirm, and you save it there. */
+@Composable
+private fun RemindersCard(cards: List<ReminderCard>, onHandled: (String) -> Unit) {
+    var open by remember { mutableStateOf<ReminderCard?>(null) }
+    Card(Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Text("Coming up", style = MaterialTheme.typography.titleSmall)
+            Text("Dates that look like deadlines in your images. Read by OCR, so check them. Nothing is added unless you choose to.", style = MaterialTheme.typography.labelSmall)
+            for (c in cards) {
+                Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    Text(c.title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
+                    Text(c.whenText, style = MaterialTheme.typography.bodySmall)
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        androidx.compose.material3.OutlinedButton(onClick = { open = c }) { Text("Add to calendar") }
+                        TextButton(onClick = { onHandled(c.key) }) { Text("Not now") }
+                    }
+                }
+            }
+        }
+    }
+    open?.let { c -> c.plan?.let { ActionConfirmDialog(it, onClose = { open = null }, onConfirmed = { onHandled(c.key) }) } }
 }
 
 @Composable

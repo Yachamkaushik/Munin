@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.munin.app.MuninApp
+import com.munin.app.actions.toSubject
 import com.munin.app.answer.AnswerEngine
 import com.munin.app.answer.AnswerOutcome
 import com.munin.app.ledger.LedgerCalc
@@ -50,6 +51,9 @@ data class SpendingAnswer(
 /** The result of reading a shared image. [text] is null while reading; [failed] means the image could not be opened or read. */
 data class SharedImage(val uri: String, val text: String?, val failed: Boolean = false)
 
+/** A suggested reminder with the planner's calendar plan already built, so the screen only has to show it. */
+data class ReminderCard(val key: String, val title: String, val whenText: String, val plan: com.munin.app.actions.ActionPlan?)
+
 data class SearchUiState(
     val query: String = "",
     val mode: SearchMode = SearchMode.MERGED,
@@ -75,6 +79,8 @@ data class SearchUiState(
     val commands: List<com.munin.app.commands.QuickCommand> = emptyList(),
     /** An image shared into Munin: its text is read on the phone and shown for the user to search with. */
     val shared: SharedImage? = null,
+    /** Upcoming deadlines found in indexed images, offered as optional calendar entries. Nothing is created until the user confirms. */
+    val reminders: List<ReminderCard> = emptyList(),
     val contactsGranted: Boolean = false,
     /** The user said no to the contacts permission this session; Munin will not ask again until the app restarts. */
     val contactsDenied: Boolean = false,
@@ -185,7 +191,32 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
     fun onDebug(on: Boolean) { _state.update { it.copy(showDebug = on) } }
 
     /** Re-runs the current query, e.g. after indexing added items. */
-    fun refresh() = run(debounce = false)
+    fun refresh() { run(debounce = false); refreshReminders() }
+
+    /** Looks for upcoming deadlines among the dates already read. Read-only; the user decides what, if anything, goes to the calendar. */
+    fun refreshReminders() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val today = LocalDate.now()
+            val facts = muninApp.database.facts()
+            val picks = com.munin.app.reminders.DueDates.suggest(facts.dateCandidates(), today, com.munin.app.reminders.ReminderPrefs.handled(muninApp))
+            val planner = com.munin.app.actions.ActionPlanner()
+            val cards = picks.map { s ->
+                val c = s.candidate
+                val entity = facts.allForItem(c.itemId).firstOrNull { it.id == c.factId }
+                val title = com.munin.app.extract.FactExtractor.lines(facts.chunkTexts(c.itemId).firstOrNull().orEmpty()).firstOrNull().orEmpty()
+                val plan = entity?.let { planner.plans(it.toSubject(title, c.itemName)).firstOrNull { p -> p.kind == com.munin.app.actions.ActionKind.CALENDAR } }
+                val days = when (s.daysAway) { 0L -> "today"; 1L -> "tomorrow"; else -> "in ${s.daysAway} days" }
+                ReminderCard(s.key, listOfNotNull(title.takeIf { it.isNotBlank() } ?: c.itemName, c.label?.trim()?.trimEnd(':')).joinToString(": "), "${com.munin.app.answer.AnswerFormat.display(com.munin.app.extract.FactType.DATE, c.isoDate)} ($days)", plan)
+            }.filter { it.plan != null }
+            _state.update { it.copy(reminders = cards) }
+        }
+    }
+
+    /** The user dismissed a suggestion, or confirmed it and went to the calendar: do not offer it again. */
+    fun reminderHandled(key: String) {
+        com.munin.app.reminders.ReminderPrefs.markHandled(muninApp, key)
+        _state.update { s -> s.copy(reminders = s.reminders.filterNot { it.key == key }) }
+    }
 
     private fun run(debounce: Boolean) {
         job?.cancel()
