@@ -7,8 +7,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,6 +20,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.runtime.LaunchedEffect
 import com.munin.app.incoming.Incoming
 import com.munin.app.incoming.IncomingParser
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.munin.app.ui.theme.Icon
+import com.munin.app.ui.theme.IosIcons
+import com.munin.app.ui.theme.Munin
+import com.munin.app.ui.theme.MuninTheme
 import com.munin.app.ui.IndexScreen
 import com.munin.app.ui.ItemDetailScreen
 import com.munin.app.ui.LedgerScreen
@@ -54,35 +75,61 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) incoming = readIncoming(intent)
+        enableEdgeToEdge()
         setContent {
-            MaterialTheme {
-                Surface(Modifier.fillMaxSize()) {
-                    var tab by rememberSaveable { mutableStateOf(0) }
-                    var indexVersion by rememberSaveable { mutableIntStateOf(0) }
-                    var ledgerMonth by remember { mutableStateOf<java.time.YearMonth?>(null) }
-                    var detailId by rememberSaveable { mutableStateOf<Long?>(null) }
-                    var showSetup by rememberSaveable { mutableStateOf(false) }
-                    // Something arrived from another app: show the search tab, where the search screen picks it up.
-                    LaunchedEffect(incoming) { if (incoming != null) { tab = 0; detailId = null } }
-                    BackHandler(enabled = detailId != null || showSetup) { if (showSetup) showSetup = false else detailId = null }
-                    Scaffold(bottomBar = {
-                        NavigationBar {
-                            NavigationBarItem(selected = tab == 0, onClick = { tab = 0; indexVersion++ }, icon = {}, label = { Text("Search") })
-                            NavigationBarItem(selected = tab == 1, onClick = { tab = 1; showSetup = false }, icon = {}, label = { Text("Index") })
-                            NavigationBarItem(selected = tab == 2, onClick = { tab = 2 }, icon = {}, label = { Text("Ledger") })
+            MuninTheme {
+                var tab by rememberSaveable { mutableStateOf(0) }
+                var indexVersion by rememberSaveable { mutableIntStateOf(0) }
+                var ledgerMonth by remember { mutableStateOf<java.time.YearMonth?>(null) }
+                var detailId by rememberSaveable { mutableStateOf<Long?>(null) }
+                var showSetup by rememberSaveable { mutableStateOf(false) }
+                // Something arrived from another app: show the search tab, where the search screen picks it up.
+                LaunchedEffect(incoming) { if (incoming != null) { tab = 0; detailId = null } }
+                BackHandler(enabled = detailId != null || showSetup) { if (showSetup) showSetup = false else detailId = null }
+                Scaffold(
+                    containerColor = Munin.colors.groupedBackground,
+                    bottomBar = {
+                        TabBar(
+                            selected = tab,
+                            onSelect = { i -> if (i == 0) indexVersion++; if (i == 1) showSetup = false; tab = i; detailId = null },
+                        )
+                    },
+                ) { padding ->
+                    Box(Modifier.fillMaxSize()) {
+                      Box(Modifier.fillMaxSize().padding(padding)) {
+                        val open = detailId
+                        when {
+                            open != null -> ItemDetailScreen(open, onBack = { detailId = null })
+                            tab == 0 -> SearchScreen(onOpenItem = { detailId = it }, onOpenLedger = { ledgerMonth = it; tab = 2 }, indexVersion = indexVersion, incoming = incoming, onIncomingTaken = { incoming = null })
+                            tab == 2 -> LedgerScreen(initialMonth = ledgerMonth, onOpenItem = { detailId = it })
+                            showSetup && tab == 1 -> SetupScreen(onBack = { showSetup = false })
+                            else -> IndexScreen(onOpenSetup = { showSetup = true })
                         }
-                    }) { padding ->
-                        Surface(Modifier.padding(padding)) {
-                            val open = detailId
-                            when {
-                                open != null -> ItemDetailScreen(open, onBack = { detailId = null })
-                                tab == 0 -> SearchScreen(onOpenItem = { detailId = it }, onOpenLedger = { ledgerMonth = it; tab = 2 }, indexVersion = indexVersion, incoming = incoming, onIncomingTaken = { incoming = null })
-                                tab == 2 -> LedgerScreen(initialMonth = ledgerMonth, onOpenItem = { detailId = it })
-                                showSetup && tab == 1 -> SetupScreen(onBack = { showSetup = false })
-                                else -> IndexScreen(onOpenSetup = { showSetup = true })
-                            }
-                        }
+                      }
+                      // A soft cover behind the status bar so scrolled content does not run under the clock and icons.
+                      Box(Modifier.fillMaxWidth().windowInsetsTopHeight(WindowInsets.statusBars).background(Munin.colors.groupedBackground.copy(alpha = 0.94f)))
                     }
+                }
+            }
+        }
+    }
+}
+
+/** The bottom tab bar, iOS style: a translucent bar with a hairline above it, a thin-line icon and a small label per tab, the chosen one in the tint colour. */
+@Composable
+private fun TabBar(selected: Int, onSelect: (Int) -> Unit) {
+    val tabs = listOf("Search" to IosIcons.Search, "Index" to IosIcons.Photos, "Ledger" to IosIcons.Ledger)
+    Column(Modifier.background(Munin.colors.bar)) {
+        Box(Modifier.fillMaxWidth().height(0.5.dp).background(Munin.colors.separator))
+        Row(Modifier.fillMaxWidth().navigationBarsPadding().padding(top = 6.dp, bottom = 4.dp)) {
+            tabs.forEachIndexed { i, (label, icon) ->
+                val color = if (i == selected) Munin.colors.tint else Munin.colors.secondaryLabel
+                Column(
+                    Modifier.weight(1f).clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) { onSelect(i) }.padding(vertical = 2.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(2.dp),
+                ) {
+                    Icon(icon, color, 26.dp)
+                    Text(label, style = MaterialTheme.typography.labelSmall, color = color, fontWeight = if (i == selected) FontWeight.SemiBold else FontWeight.Medium, fontSize = 10.sp)
                 }
             }
         }

@@ -346,6 +346,13 @@ The table is the **original, untuned baseline**. A second, held-out corpus (new 
 were selected on this one by a rule declared in advance; see "Fix experiments" in the write-up, which also lists the limits (synthetic, small,
 not native-reviewed, emulator timing).
 
+## Look and feel
+
+The interface follows Apple's iOS design language, drawn in Jetpack Compose with **no new library** and no Apple assets: a quiet grey background with white rounded cards (inset grouped lists with hairline separators and small uppercase headers), large bold titles,
+a single blue tint with green switches, an iOS-style search field with the mic inside it, a segmented control for the search mode and voice language, capsule buttons that spring when pressed, iOS-style alerts for every confirm-first action, a translucent bottom tab bar with thin
+line icons, and automatic light and dark themes (`ui/theme/`). Text uses the phone's own sans-serif at iOS text sizes, because Apple's San Francisco font is not licensed for other platforms, and the icons are drawn here as simple vector paths rather than copied from SF Symbols.
+Nothing about what the app does or says changed: every disclosure, caveat and confirmation is still there, only laid out differently (for example the long voice and notification explanations are now the footnotes under their sections). Checked on the emulator in light and dark; not yet on a real phone.
+
 ## Search-box features (added after step 7)
 
 The search box now routes what you type (see `router/QueryRouter`): a plain description searches files; a value question or a spending question

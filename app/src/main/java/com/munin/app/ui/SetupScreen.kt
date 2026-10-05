@@ -4,16 +4,9 @@ import android.os.Build
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -22,34 +15,35 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import com.munin.app.setup.BackgroundSetup
 import com.munin.app.setup.SetupLauncher
+import com.munin.app.ui.theme.BackBar
+import com.munin.app.ui.theme.Footnote
+import com.munin.app.ui.theme.GroupDivider
+import com.munin.app.ui.theme.IosSwitch
+import com.munin.app.ui.theme.LargeTitle
+import com.munin.app.ui.theme.ListRow
+import com.munin.app.ui.theme.Munin
+import com.munin.app.ui.theme.Section
 
-/**
- * Helps new screenshots get indexed on time. Munin starts nothing by itself in the background; the phone has to be allowed to wake it. These are
- * links to the phone's own settings: Munin cannot change them, and (except battery optimisation) cannot even see their state.
- */
 /** The optional edge handle. Needs "Display over other apps"; shows a notification while on; off until switched on. */
 @Composable
-private fun EdgeHandleCard(refresh: Int) {
+private fun EdgeHandleSection(refresh: Int) {
     val context = LocalContext.current
     var on by remember(refresh) { mutableStateOf(com.munin.app.edge.EdgeHandle.wanted(context) && com.munin.app.edge.EdgeHandle.canDraw(context)) }
     val canDraw = remember(refresh, on) { com.munin.app.edge.EdgeHandle.canDraw(context) }
-    Card(Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            Text("Edge handle (optional)", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
-            Text(
-                "A thin bar on the screen edge, over other apps. Tap it to open Munin's search; drag it up or down to move it. While it is on, Munin shows a notification with a Turn off button. " +
-                    "It does nothing in the background otherwise. It needs the phone's \"Display over other apps\" permission.",
-                style = MaterialTheme.typography.bodySmall,
-            )
-            Text(if (canDraw) "Display over other apps: allowed." else "Display over other apps: not allowed yet.", style = MaterialTheme.typography.labelMedium)
-            androidx.compose.foundation.layout.Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                androidx.compose.material3.Switch(checked = on, onCheckedChange = { want ->
+    Section(
+        "Edge handle (optional)",
+        footer = "A thin bar on the screen edge, over other apps. Tap it to open Munin's search; drag it up or down to move it. While it is on, Munin shows a notification with a Turn off button. " +
+            "It does nothing in the background otherwise. It needs the phone's \"Display over other apps\" permission.",
+    ) {
+        ListRow(
+            "Show the edge handle", subtitle = if (canDraw) "Display over other apps: allowed." else "Display over other apps: not allowed yet.",
+            trailing = {
+                IosSwitch(on, { want ->
                     com.munin.app.edge.EdgeHandle.setWanted(context, want)
                     if (want && !com.munin.app.edge.EdgeHandle.canDraw(context)) {
                         // Ask the phone's settings; the handle starts when the user comes back with the permission allowed.
@@ -58,9 +52,8 @@ private fun EdgeHandleCard(refresh: Int) {
                     on = want && com.munin.app.edge.EdgeHandle.canDraw(context)
                     com.munin.app.edge.EdgeHandle.sync(context)
                 })
-                Text(if (on) "On" else "Off", style = MaterialTheme.typography.bodyMedium)
-            }
-        }
+            },
+        )
     }
 }
 
@@ -74,44 +67,38 @@ fun SetupScreen(onBack: () -> Unit) {
     val isAssistant = remember(refresh) { com.munin.app.assist.AssistRole.isHeld(context) }
     val unrestricted = remember(refresh) { SetupLauncher.ignoringBatteryOptimisations(context) }
 
-    LazyColumn(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    LazyColumn(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
         item {
-            Column(Modifier.padding(top = 24.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text("Background setup", style = MaterialTheme.typography.headlineMedium)
-                Text(
+            Column {
+                BackBar("Index", onBack)
+                LargeTitle("Background setup")
+                Footnote(
                     "Instant indexing relies on the phone waking Munin when a new screenshot appears. Phones often block that to save battery. These buttons open your phone's own settings; " +
-                        "Munin cannot change them for you.",
-                    style = MaterialTheme.typography.bodyMedium,
+                        "Munin cannot change them for you." +
+                        if (BackgroundSetup.isVivoFamily(Build.MANUFACTURER, Build.BRAND)) " This looks like a vivo or iQOO phone, so the Funtouch OS screens are listed too. They have not been checked on a real iQOO: if a button cannot open the exact screen, Munin opens its app info page instead." else "",
                 )
-                if (BackgroundSetup.isVivoFamily(Build.MANUFACTURER, Build.BRAND)) {
-                    Text("This looks like a vivo or iQOO phone, so the Funtouch OS screens are listed too. They have not been checked on a real iQOO: if a button cannot open the exact screen, Munin opens its app info page instead.", style = MaterialTheme.typography.bodySmall)
-                }
             }
         }
-        items(steps, key = { it.id }) { step ->
-            Card(Modifier.fillMaxWidth()) {
-                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Text(step.title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
-                    if (step.id == "battery") {
-                        Text(if (unrestricted) "Now: not restricted for battery." else "Now: Android may restrict Munin to save battery.", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
-                    } else if (step.id == "assistant") {
-                        Text(if (isAssistant) "Now: Munin is your digital assistant." else "Now: Munin is not your digital assistant.", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
-                    } else {
-                        Text("Munin cannot see this setting. Check it yourself.", style = MaterialTheme.typography.labelMedium)
+        for (step in steps) item(key = step.id) {
+            val status = when (step.id) {
+                "battery" -> if (unrestricted) "Now: not restricted for battery." else "Now: Android may restrict Munin to save battery."
+                "assistant" -> if (isAssistant) "Now: Munin is your digital assistant." else "Now: Munin is not your digital assistant."
+                else -> "Munin cannot see this setting. Check it yourself."
+            }
+            Section(step.title, footer = step.why) {
+                ListRow(status, titleMaxLines = 3)
+                GroupDivider()
+                ListRow(step.button, titleColor = Munin.colors.tint, chevron = true, onClick = {
+                    when (SetupLauncher.open(context, step)) {
+                        SetupLauncher.Result.OPENED -> Unit
+                        SetupLauncher.Result.FELL_BACK -> Toast.makeText(context, "That screen is not on this phone. Opened Munin's app info instead.", Toast.LENGTH_LONG).show()
+                        SetupLauncher.Result.FAILED -> Toast.makeText(context, "Could not open any settings screen for this.", Toast.LENGTH_LONG).show()
                     }
-                    Text(step.why, style = MaterialTheme.typography.bodySmall)
-                    Button(onClick = {
-                        when (SetupLauncher.open(context, step)) {
-                            SetupLauncher.Result.OPENED -> Unit
-                            SetupLauncher.Result.FELL_BACK -> Toast.makeText(context, "That screen is not on this phone. Opened Munin's app info instead.", Toast.LENGTH_LONG).show()
-                            SetupLauncher.Result.FAILED -> Toast.makeText(context, "Could not open any settings screen for this.", Toast.LENGTH_LONG).show()
-                        }
-                    }) { Text(step.button) }
-                }
+                })
             }
         }
-        item { EdgeHandleCard(refresh) }
-        tip?.let { item { Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp)) { Text("Keep Munin from being cleared", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold); Text(it, style = MaterialTheme.typography.bodySmall) } } } }
-        item { OutlinedButton(onClick = onBack, modifier = Modifier.fillMaxWidth()) { Text("Back") } }
+        item { EdgeHandleSection(refresh) }
+        tip?.let { item { Section("Keep Munin from being cleared") { ListRow(it, titleMaxLines = 8) } } }
+        item { androidx.compose.foundation.layout.Box(Modifier.padding(bottom = 12.dp)) }
     }
 }
